@@ -3,7 +3,6 @@
 const createConfirm = {
   "groupName"      : false,
   "groupIntroduce" : false,
-  "groupImg"       : false,// 이미지 필수아니라면 삭제
   "category"       : false,
   "groupLimit"     : false
 };
@@ -122,18 +121,9 @@ const imgName = document.querySelector("#imgName");
 
 // 마지막으로 선택했던 이미지
 let lastInputImg = null;
-// 기본이미지 or 선택이미지 상태변수
-// 기본이미지 가능하게 할거면 createConfirm 에서 groupImg 제거해야함
-// -1 : 기본이미지
-// +1 : 사용자 정의 이미지
-let imgStatus = -1;
-
 
 // 이미지를 선택하여 미리보기 함수를 호출할 경우
 const inputPreview = (img) => {
-
-  // 이미지 상태변수 => 사용자 정의이미지
-  imgStatus = 1;
 
   lastInputImg = img;
 
@@ -194,8 +184,6 @@ deleteImg.addEventListener("click", () => {
   imgInput.files = ''; // 기본이미지는 없으면 기본이 뜨니까 파일 저장해 줄 필요 없음
   lastInputImg = null;
 
-  // 프로필 이미지 상태 구분용 변수 수정
-  statusCheck = -1;
 });
 
 
@@ -207,13 +195,34 @@ deleteImg.addEventListener("click", () => {
 /* 카테고리 */
 
 // 카테고리 라디오버튼 아무거나 선택하면 true
-document.querySelectorAll('[name="category"]').forEach(e => {
-  e.addEventListener("click", ()=>{
-    createConfirm.category = true;
-  });
-});
+const categoryInputArr = document.querySelectorAll('[name="category"]')
 
-/* 카테고리 리스트 */
+for(let category of categoryInputArr){
+
+  category.addEventListener("click", ()=>{
+    createConfirm.category = true;
+
+    /* 카테고리 리스트 불러오기 */
+    const categoryNo = category.value;
+
+    // console.log(categoryNo);
+    fetch("/groupManage/#")
+    .then(response => {
+      if(response.ok)return response.json();
+      throw new Error("카테고리 불러오기 오류")
+    })
+    .then(categoryList => {
+      console.log(categoryList);
+    })
+    .catch( err => console.error(err));
+
+  });
+
+}
+
+
+
+
 
 /********************************************************************** */
 /********************************************************************** */
@@ -224,3 +233,28 @@ document.querySelectorAll('[name="category"]').forEach(e => {
 제한 없음 이외의 태그들을 체크했을때
 제한사항에 대해 작성하지 않으면 createConfirm false
 */
+
+
+/********************************************************************** */
+/********************************************************************** */
+
+
+/* 제출될 때 */
+
+// 제출 될 form태그
+const submitGroupCreate = document.querySelector("#submitGroupCreate");
+
+// 제출할 때 유효성검사 확인
+submitGroupCreate.addEventListener("submit", e => {
+  
+  // 제출 막음
+  e.preventDefault();
+
+  console.log("막음");
+
+  if(!createConfirm.groupName ) console.log("groupName flase 입니다.");
+  if(!createConfirm.groupIntroduce ) console.log("groupIntroduce flase 입니다.");
+  if(!createConfirm.category ) console.log("category flase 입니다.");
+  if(!createConfirm.groupLimit ) console.log("groupLimit flase 입니다.");
+
+});
