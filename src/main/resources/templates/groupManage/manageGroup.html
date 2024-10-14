@@ -10,7 +10,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>모임 생성</title>
+  <title>상세정보 수정</title>
 
   <link rel="stylesheet" href="/css/groupManage/createGroup.css">
 
@@ -21,7 +21,21 @@
 
   <main>
 
-    <!-- 생성할 모임 정보 입력 -->
+    <!-- 
+    [필요한 기능]
+
+    ** 수정할 내용들
+    - 모임명
+    - 모임소개
+    - 대표사진
+    - 상단사진
+    - 활동사진
+    - 공지사항
+    - 게시판
+    - 댓글
+    - 알림
+    
+    -->
     <section class="mainSec">
 
       <form action="/groupManage/createGroup" method="POST" id="submitGroupCreate" enctype="multipart/form-data">
@@ -94,40 +108,11 @@
               </th:block>
             </div>
             <!-- 첫 카테고리 선택시 하위 카테고리 리스트 받아오기 -->
-            <div id="categoryText"></div>
             <div id="categoryListView"></div>
           </section>
         </section>
 
 
-        <!-- ********** 모임 참여제한기능 ********** -->
-
-        <!-- <label for="limitAge">나이제한</label>
-        <input type="checkbox" id="limit-age">
-        <section class="display-none" id="limit-ageSec">
-          <input type="number" name="floorAge">
-          <span id="floorAgeText" class="grey">세 이상</span>
-          <br>
-          <input type="number" name="roofAge">
-          <span id="roofAgeText" class="grey">세 이하</span>
-          <div id="limit-ageMessage">최소나이와 최대나이 중 필요한 나이를 입력 하세요</div>
-        </section>
-
-        <br>
-        <label for="limitGender">성별</label>
-        <input type="checkbox" id="limit-gender">
-        <section class="display-none" id="limit-genderSec">
-          <label for="gender-m">모두</label>
-          <input type="radio" name="gender" id="gender-all" value="0" checked>
-          <br>
-          <label for="gender-m">남성만</label>
-          <input type="radio" name="gender" id="gender-m" value="1">
-          <br>
-          <label for="gender-w">여성만</label>
-          <input type="radio" name="gender" id="gender-w" value="2">
-        </section>
-        
-        <hr> -->
         <!-- 완료 버튼 -->
         <i class="fa-solid fa-gear" style="color: #ff0000;"></i>
         <div class="divInline">: 필수입력정보입니다.</div>
@@ -150,7 +135,7 @@
     const groupDefaultImage = /*[[#{group.default.image}]]*/ "모임 기본 이미지";
   </script>
 
-  <script src="/js/groupManage/createGroup.js"></script>
+  <script src="/js/groupManage/manageGroup.js"></script>
   <script src="https://kit.fontawesome.com/8695e357e4.js" crossorigin="anonymous"></script>
 </body>
 </html>
