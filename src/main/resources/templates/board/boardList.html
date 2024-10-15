@@ -4,80 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>모임배경사진</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-            margin: 0;
-            padding: 0;
-        }
-        .header {
-            background-color: #d9d9d9;
-            height: 200px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .header h1 {
-            font-size: 24px;
-            color: white;
-        }
-        .container {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-        }
-        .main-content {
-            width: 70%;
-        }
-        .sidebar {
-            width: 20%;
-            margin-left: 20px;
-        }
-        .post {
-            background-color: white;
-            padding: 15px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        .post .profile {
-            display: flex;
-            align-items: center;
-        }
-        .post img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            margin-right: 10px;
-        }
-        .post .description {
-            font-size: 12px;
-            color: gray;
-        }
-        .post .comments {
-            text-align: right;
-            color: gray;
-            font-size: 12px;
-        }
-        .sidebar-box {
-            background-color: #e0e0e0;
-            padding: 15px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-        }
-        .sidebar-box h3 {
-            margin: 0 0 10px 0;
-        }
-        .btn-write {
-            background-color: black;
-            color: white;
-            padding: 10px;
-            text-align: center;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-    </style>
+    <link rel="stylesheet" href="/css/board/boardList.css">
 </head>
 <body>
     <!-- Header -->
@@ -89,7 +16,7 @@
     <div class="container">
         <div class="main-content">
             <!-- Post 1 -->
-            <div class="post">
+            <div class="post" id="first">
                 <div class="profile">
                     <img src="profile1.jpg" alt="프로필">
                     <div>
@@ -102,7 +29,7 @@
                 </div>
             </div>
             <!-- Post 2 -->
-            <div class="post">
+            <div class="post" id="second">
                 <div class="profile">
                     <img src="profile2.jpg" alt="프로필">
                     <div>
@@ -115,7 +42,7 @@
                 </div>
             </div>
             <!-- Post 3 -->
-            <div class="post">
+            <div class="post" id="third">
                 <div class="profile">
                     <img src="profile3.jpg" alt="프로필">
                     <div>
@@ -144,5 +71,7 @@
             </div>
         </div>
     </div>
+
+    <script src="/js/board/boardList.js"></script>
 </body>
 </html>
