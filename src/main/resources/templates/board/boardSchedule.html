@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>모임 일정 페이지</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header img {
+            width: 100px;
+            height: auto;
+        }
+
+        .schedule-box {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+
+        .schedule-box h3 {
+            color: red;
+            margin: 0 0 10px 0;
+        }
+
+        .schedule-box p {
+            margin: 5px 0;
+        }
+
+        .action-btn {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .action-btn button {
+            padding: 10px 20px;
+            margin-left: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .action-btn .attend {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .action-btn .cancel {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .attendees {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .attendees img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+
+        .create-button {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .create-button button {
+            padding: 10px 30px;
+            background-color: black;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <img src="https://www.url.com/모임배경사진.png" alt="모임 배경사진">
+        </div>
+
+        <div class="schedule-box">
+            <h3>D-Day</h3>
+            <p><strong>일정 날짜:</strong> MM/dd (요일)</p>
+            <p><strong>상세 일시:</strong> MM/dd (요일) 오전/오후 hh:mm</p>
+            <p><strong>위치:</strong> 위치 API</p>
+            <p><strong>비용:</strong> 000000원</p>
+            <p><strong>참석 인원:</strong> 참석버튼 누른 사람 수 / 설정한 총 인원 수</p>
+            <div class="attendees">
+                <img src="https://www.url.com/profile1.png" alt="참석자 프로필">
+                <img src="https://www.url.com/profile2.png" alt="참석자 프로필">
+                <!-- 더 많은 참석자 이미지를 여기에 추가 -->
+            </div>
+            <div class="action-btn">
+                <button class="attend">참석</button>
+                <button class="cancel">취소</button>
+            </div>
+        </div>
+
+        <div class="schedule-box">
+            <h3>D-Day</h3>
+            <p><strong>일정 날짜:</strong> MM/dd (요일)</p>
+            <p><strong>상세 일시:</strong> MM/dd (요일) 오전/오후 hh:mm</p>
+            <p><strong>위치:</strong> 위치 API</p>
+            <p><strong>비용:</strong> 000000원</p>
+            <p><strong>참석 인원:</strong> 참석버튼 누른 사람 수 / 설정한 총 인원 수</p>
+            <div class="attendees">
+                <img src="https://www.url.com/profile1.png" alt="참석자 프로필">
+                <img src="https://www.url.com/profile2.png" alt="참석자 프로필">
+                <!-- 더 많은 참석자 이미지를 여기에 추가 -->
+            </div>
+            <div class="action-btn">
+                <button class="attend">참석</button>
+                <button class="cancel">취소</button>
+            </div>
+        </div>
+
+        <div class="create-button">
+            <button>일정 만들기</button>
+        </div>
+    </div>
+
+</body>
+</html>
