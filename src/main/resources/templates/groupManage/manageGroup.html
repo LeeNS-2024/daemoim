@@ -7,19 +7,31 @@
 -->
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>상세정보 수정</title>
+  <title>모임 상세정보 수정</title>
 
-  <link rel="stylesheet" href="/css/groupManage/createGroup.css">
+  <link rel="stylesheet" href="/css/groupManage/manageGroup.css">
 
 </head>
-<body>
-  
-  <header>해더 들어갈 자리</header>
 
-  <main>
+<body>
+
+  <header style="height: 148.5px;
+                 background-color: white;
+                 border: 3px dotted grey;
+                 color: blue;
+                 display: flex;
+                 justify-content: center;
+                 align-items: center;
+                 position: sticky;
+                 top:0">
+    <div>해더 들어갈 자리</div>
+  </header>
+
+  <main class="row-between">
 
     <!-- 
     [필요한 기능]
@@ -30,102 +42,318 @@
     - 대표사진
     - 상단사진
     - 활동사진
-    - 공지사항
-    - 게시판
-    - 댓글
+    - 공지사항 - 게시판에서
+    - 게시판 - 게시판에서
+    - 댓글 - 댓글에서
     - 알림
     
+    ** 사이드바
+    - 모임 및 회원정보 관리
+    ㄴ 모임 상세정보 수정
+    ㄴ 회원정보 수정
     -->
+    <section class="sideSec">
+
+      <div class="sideStiky" id="sideLinkList">
+        <h4>모임 및 회원정보 관리</h4>
+  
+        <ul id="linkList">
+          <li>모임 상세정보 수정</li>
+          <li><a th:href="@{/groupMemberManage/{groupNo}/memberManage(groupNo=${group.groupNo})}">회원관리 페이지</a></li>
+        </ul>
+      </div>
+
+    </section>
     <section class="mainSec">
 
-      <form action="/groupManage/createGroup" method="POST" id="submitGroupCreate" enctype="multipart/form-data">
-        
-        <label for="groupName">
-          <i class="fa-solid fa-gear" style="color: #ff0000;"></i>
+      <h1>모임정보 상세수정</h1>
+      
+      <form action="#" method="POST" enctype="multipart/form-data" th:object="${group}">
+
+
+        <!-- ********** 모임 이름 ********** -->
+        <div class="title">
+          <i class="fa-solid fa-gear"></i>
           모임 이름
-        </label>
+        </div>
+
         <section class="createContent">
-          <!-- ********** 모임 이름 ********** -->
-          <input type="text" name="groupName" id="groupName" placeholder="모임 이름">
+          <div class="serviceIntroduce">
+            <span>모임의 이름을 변경하실 수 있습니다.</span>
+          </div>
+
+          <input type="text" name="groupName" id="groupName" th:value="*{groupName}">
           <br>
           <div>
-            <span id="groupNameMessage">500byte 이내의 이름을 입력해주세요</span>
+            <span id="groupNameMessage">현재 모임에서 사용중인 모임명 입니다.</span>
+            <br>
+            <span id="countName"></span>
           </div>
         </section>
         
-        <label for="groupIntroduce">
-          <i class="fa-solid fa-gear" style="color: #ff0000;"></i>
+        
+        <!-- ********** 모임 소개 ********** -->
+        <div class="title">
+          <i class="fa-solid fa-gear"></i>
           모임 소개
-        </label>
+        </div>
+        
         <section class="createContent">
-          <!-- ********** 모임 소개 ********** -->
-          <textarea type="text" cols="50" rows="5" name="groupIntroduce" id="groupIntroduce" placeholder="모임 소개 글"></textarea>
+          <div class="serviceIntroduce">
+            <span>모임 메인페이지의 소개글을 변경하실 수 있습니다.</span>
+          </div>
+          <textarea type="text" cols="127" rows="5" name="groupIntroduce" id="groupIntroduce"
+          th:text="*{groupIntroduce}"></textarea>
           <br>
           <div>
-            <span id="groupIntroduceMessage">4000byte 이내의 소개를 입력해주세요</span>
+            <span id="groupIntroduceMessage">모임의 소개글을 입력해 주세요.</span>
+            <br>
+            <span id="countIntroduce"> </span>
           </div>
         </section>
 
+
+        <!-- ********** 이미지 수정 ********** -->
         <div class="title">
           <i class="fa-solid fa-gear"></i>
-          모임 대표 이미지
+          이미지 변경
         </div>
+
         <section class="createContent">
-          <!-- ********** 모임 이미지 ********** -->
-  
+          <section>
+            <div class="serviceIntroduce">
+              <span>모임에 대한 이미지들을 변경할 수 있습니다.</span>
+            </div>
+            <table>
+              <tr>
+                <td>모임 대표 이미지</td>
+                <td>- 모임 검색시 노출되는 사각형모양의 대표이미지 입니다</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td>- 비율 : 1 x 1</td>
+              </tr>
+              <tr>
+                <td>모임 상단 이미지</td>
+                <td>- 모임 메인화면 상단배너에 노출되는 이미지 입니다</td>
+              </tr>
+              <tr>
+                <td>모임 활동사진</td>
+                <td>- 모임 메인화면에서 보여주는 활동사진 입니다</td>
+              </tr>
+            </table>
+
+          </section>
           <section id="imageSec">
-  
-            <section id="imageSec-left">
-              <img th:src="#{group.default.image}" alt="이미지표시 없음" id="inputImg">
+            <section>
+
+              <!-- 모임 대표 이미지 -->
+              <div class="title">
+                <i class="fa-solid fa-gear"></i>
+                모임 대표 이미지
+                <br>
+                <img th:with="group=#{group.default.image}" class="inputImgPreview"
+                     th:src="${groupMainImg ?: group }" alt="이미지표시 없음" id="inputImgPreview1">
+              </div>
+
+              <div>
+                <div id="imgName1" class="inputName" th:text="*{groupMainImg} ? *{groupMainImg} : 기본이미지 ">선택된 이미지 파일명.jpg</div>
+                <label class="hoverPoint" for="inputImg1">
+                  이미지 선택
+                </label>
+                <div class="hoverPoint divInline" id="deleteImg">선택 취소</div>
+                <br>
+                <input type="file" name="inputImg" id="inputImg1" accept="image/*" style="display: none;">
+              </div>
+
             </section>
-  
-            <section id="imageSec-right">
-              <label class="hoverPoint" for="imgInput">
+
+            <section>
+              <!-- 모임 상단 이미지 -->
+              <div class="title">
+                <i class="fa-solid fa-gear"></i>
+                모임 상단 이미지
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                  <img th:with="groupHeader=#{group.default.image}" class="inputImgPreview"
+                       th:src="${groupHeaderImg ?: groupHeader }" alt="이미지표시 없음" id="inputImgPreview2">
+                </div>
+              </div>
+
+
+              <div>
+                <div id="imgName2" class="inputName"  th:text="*{groupMainImg} ? *{groupMainImg} : 기본이미지 ">선택된 이미지 파일명.jpg</div>
+                <label class="hoverPoint" for="inputImg2">
                 이미지 선택
-              </label>
-              <!-- 선택취소버튼, 모임이미자가 필수라면 삭제 -->
-              <div class="hoverPoint divInline" id="deleteImg">선택 취소</div>
-              <br>
-              <input type="file" name="groupImg" id="imgInput" accept="image/*" style="display: none;">
-              <div id="imgName">선택된 이미지 파일명.jpg</div>
-  
+                </label>
+                <div class="hoverPoint divInline" id="deleteImg2">선택 취소</div>
+                <br>
+                <input type="file" name="inputImg" id="inputImg2" accept="image/*" style="display: none;">
+              </div>
+
             </section>
+
+            <!-- <section>
+              <div class="title">
+                <i class="fa-solid fa-gear"></i>
+                활동사진
+                <br>
+                <label class="hoverPoint" for="groupActImgInput1">이미지 선택</label>
+                <span id="groupActImgName1">선택된 이미지 파일명.jpg</span><br>
+                <label class="hoverPoint" for="groupActImgInput2">이미지 선택</label>
+                <span id="groupActImgName2">선택된 이미지 파일명.jpg</span><br>
+                <label class="hoverPoint" for="groupActImgInput3">이미지 선택</label>
+                <span id="groupActImgName3">선택된 이미지 파일명.jpg</span><br>
+                <label class="hoverPoint" for="groupActImgInput4">이미지 선택</label>
+                <span id="groupActImgName4">선택된 이미지 파일명.jpg</span><br>
+              </div>
+
+              <div>
+                <br>
+                <div class="hoverPoint divInline" id="deleteImg">선택 취소</div>
+                <input type="file" name="groupActImg" id="groupActImgInput1" accept="image/*" style="display: none;">
+                <input type="file" name="groupActImg" id="groupActImgInput2" accept="image/*" style="display: none;">
+                <input type="file" name="groupActImg" id="groupActImgInput3" accept="image/*" style="display: none;">
+                <input type="file" name="groupActImg" id="groupActImgInput4" accept="image/*" style="display: none;">
+              </div>
+
+            </section> -->
+          </section> <!-- img input end -->
+
+          <section class="displayCenter">
+
+            <div class="preViewer">
+
+              <div style="display: flex; flex-direction: column; align-items: center;">
+                <img th:with="groupHeader=#{group.default.image}" class="inputImgPreview"
+                     th:src="${groupHeaderImg ?: groupHeader }" alt="이미지표시 없음" id="inputImgPreview3" style="display: block;">
+              </div>
+              <div id="preViewIntroduce" th:text="*{groupIntroduce}">
+                소개글
+              </div>
+
+              <div class="row-between">
+
+                <div class="preViewDiv" id="preViewDiv1">
+                  <i class="fa-solid fa-bars"></i>공지사항
+                  <div id="preViewDiv1-1">
+                    일반 게시판<br>
+                    사진첩<br>
+                    일정<br>
+                  </div>
+                </div>
+
+                <div class="preViewDiv" id="preViewDiv2">
+                  <div>공지사항</div>
+                  <div>사진첩</div>
+                </div>
+
+                <div class="preViewDiv" id="preViewDiv3">
+                  <div><span>일정 상세보기</span></div>
+                  <div>
+                    <div>모임일정</div>
+                    <div>모임일정</div>
+                  </div>
+                  <div>
+                    <div>모임일정</div>
+                    <div>모임일정</div>
+                  </div>
+                </div>
+                
+              </div>
+
+            </div>
+
           </section>
         </section>
-        
-        <div class="divInline title">
-          <i class="fa-solid fa-gear" style="color: #ff0000;"></i>
+
+
+
+
+
+
+        <!-- ********** 모임 카테고리 ********** -->
+        <div class="title">
+          <i class="fa-solid fa-gear"></i>
           카테고리 선택
         </div>
+
         <section class="createContent">
-          <!-- ********** 모임 카테고리 ********** -->
-          <section>
-            <!-- 페이지 로딩시 카테고리 목록 받아오기 -->
-            <div>
-              <th:block th:each="category : ${categoryArr}" th:object="${category}">
-                <label th:for= "*{categoryNo}" th:text="*{categoryName}"></label>
-                <input type="radio" th:id= "*{categoryNo}" name="categoryNo" th:value="*{categoryNo}">
-              </th:block>
-            </div>
-            <!-- 첫 카테고리 선택시 하위 카테고리 리스트 받아오기 -->
-            <div id="categoryListView"></div>
-          </section>
+            <!-- 현재 카테고리 -->
+            <section>
+              <div>
+                <span class="categoryTitleSpan">현재 카테고리</span>
+              </div>
+
+              <div id="categoryBefore">
+                <span class="categoryNameSpan" th:text="*{categoryName}">1</span>
+                <button type="button" id="categoryBtn">변경하기</button>
+              </div>
+
+              <div class="categoryBox display-none" id="categoryAfter">
+                <th:block th:each="category : ${categoryArr}" th:object="${category}">
+                  <div>
+                    
+                    <input type="radio"
+                          class="categoryRadio"
+                          th:id= "*{categoryNo}"
+                          name="categoryNo"
+                          th:value="*{categoryNo}"
+                          th:checked= "${group.categoryNo} == *{categoryNo}">
+
+                    <label class="categoryLabel" th:for= "*{categoryNo}" th:text="*{categoryName}"></label>
+
+                  </div>
+                </th:block>
+              </div>
+            </section>
+            
+            <!-- 현재 세부 카테고리 -->
+            <section>
+              <div>
+                <span class="categoryTitleSpan">현재 세부 카테고리</span>
+              </div>
+
+              <div id="categoryListBefore">
+                <span class="categoryNameSpan" th:text="*{categoryListName}">1</span>
+                <button type="button" id="categoryListBtn">변경하기</button>
+              </div>
+
+              <div  class="display-none" id="categoryListAfter">
+                <div class="categoryBox" id="CategoryListTr">
+
+                </div>
+                <div>
+                  <span>직접입력</span>
+                  <input type="radio" id="userInput" name="categoryListNo">
+                  <label for="userInput" style="width: 199px;">
+                    <input type="text" id="userInputcategoryList">
+                  </label>
+                </div>
+              </div>
+
+            </section>
         </section>
 
 
         <!-- 완료 버튼 -->
-        <i class="fa-solid fa-gear" style="color: #ff0000;"></i>
-        <div class="divInline">: 필수입력정보입니다.</div>
-        
+
         <div id="btnDiv">
-          <button>생성하기</button>
-          <button type="button" id="comeback">돌아가기</button>
+          <div>수정하기</div>
         </div>
-      </form>
-      
+
+      </form><!-- form end -->
+
 
     </section>
 
+    
+    <section class="sideSec">
+      <div class="sideStiky">
+        <h5>우측영역입니다</h5>
+
+      </div>
+
+    </section>
   </main>
 
   <footer>푸터 들어갈 자리</footer>
@@ -133,9 +361,12 @@
   <script th:inline="javascript">
     // 기본이미지 호출용, 모임 이미지가 필수라면 삭제
     const groupDefaultImage = /*[[#{group.default.image}]]*/ "모임 기본 이미지";
+    const groupOriginalMainImg = /*[[${group.groupMainImg}]]*/ "변경전 모임 대표이미지";
+    const beforeCategoryListNo = /*[[${group.categoryListNo}]]*/ "변경전 카테고리 리스트 번호";
   </script>
 
   <script src="/js/groupManage/manageGroup.js"></script>
   <script src="https://kit.fontawesome.com/8695e357e4.js" crossorigin="anonymous"></script>
 </body>
+
 </html>

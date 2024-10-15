@@ -91,8 +91,19 @@ public class GroupManageController {
 	 * @return
 	 */
 	@GetMapping("/{groupNo}/manageGroup")
-	public String manageGroup(Model model) {
+	public String manageGroup(
+			@PathVariable("groupNo") int groupNo,
+			Model model) {
 		
+		// 모임정보 불러오기
+		GroupManageDto group = service.selectGroup(groupNo);
+		
+		// 전달받은 모임정보를 전달하기위해 세팅
+		model.addAttribute("group", group);
+		
+		// 카테고리리스트 세팅
+		List<ManageCategory> categoryArr = service.getCategoryArr();
+		model.addAttribute("categoryArr", categoryArr);
 		
 		return "groupManage/manageGroup";
 	}

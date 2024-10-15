@@ -56,7 +56,7 @@ public class GroupManageServiceImpl implements GroupManageService {
 		String groupMainRename = null;
 		
 		if(groupImg.isEmpty()) {
-			inputGroup.setGroupMainImg("NULL");
+			inputGroup.setGroupMainImg("");
 		} else {
 			// 파일 리네임
 			groupMainRename = FileUtil.rename( groupImg.getOriginalFilename() );
@@ -68,6 +68,10 @@ public class GroupManageServiceImpl implements GroupManageService {
 		int result = mapper.createGroup(inputGroup);
 		
 		if(result == 0) return 0;
+		
+		// 모임장 그룹 가입시키기
+		result = mapper.insertGroupLeader(inputGroup);
+		
 		
 		if(groupImg.isEmpty() == false) {
 			// 파일저장
@@ -82,6 +86,13 @@ public class GroupManageServiceImpl implements GroupManageService {
 			}
 		}
 		return result;
+	}
+	
+	// 모임정보 불러오기
+	@Override
+	public GroupManageDto selectGroup(int groupNo) {
+		
+		return mapper.selectGroup(groupNo);
 	}
 
 }
