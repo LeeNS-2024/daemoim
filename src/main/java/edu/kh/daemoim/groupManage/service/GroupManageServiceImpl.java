@@ -21,10 +21,10 @@ public class GroupManageServiceImpl implements GroupManageService {
 	
 	private final GroupManageMapper mapper;
 	
-	@Value("${deamoim.groupMain.web-path}")
+	@Value("${daemoim.groupMain.web-path}")
 	private String webPath;
 	
-	@Value("${deamoim.groupMain.folder-path}")
+	@Value("${daemoim.groupMain.folder-path}")
 	private String folderPath;
 
 	// 모임이름 중복검사
