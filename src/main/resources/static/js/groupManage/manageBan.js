@@ -31,13 +31,12 @@ paginations?.forEach( (e) => {
   });
 });
 
-
 //------------------------------------------------------------------
 //------------------------------------------------------------------
 
 
-/* 오름차순 1아이디 2닉네임 3가입일 4탈퇴여부 5 벤
-내림차순 -1아이디 -2닉네임 -3가입일 -4탈퇴여부 5벤 */
+/* 오름차순 1아이디 2닉네임 3가입일
+내림차순 -1아이디 -2닉네임 -3가입일*/
 
 // 화면정렬 변경하기
 const orderBtnArr = document.querySelectorAll(".orderBtn");
@@ -61,7 +60,7 @@ orderBtnArr.forEach( (orderBtn, index) => {
 })
 
 //----------------------------------------------------------------
-/* 강퇴 버튼 */
+/* 차단해제 버튼 */
 
 const removeMemberArr = document.querySelectorAll(".removeMember");
 
@@ -70,18 +69,17 @@ removeMemberArr.forEach( (btn) => {
 
     const btnMemberNo = btn.dataset.memberNo;
 
-    // alert(btnMemberNo + "번 멤버 탈퇴 클릭됨");
-    if(confirm("해당 회원을 모임에서 강퇴 하시겠습니까?") == false) return;
+    if(confirm("해당 회원을 차단해제 하시겠습니까?") == false) return;
 
-    memberRemove(btnMemberNo);
+    memberBan(btnMemberNo);
 
   });
 });
 
-const memberRemove = (memberNo) => {
+const memberBan = (memberNo) => {
 
   fetch("/groupMember", {
-    method : "DELETE",
+    method : "PUT",
     headers : {"Content-Type" : "application/json"},
     body : memberNo
   })
@@ -97,8 +95,8 @@ const memberRemove = (memberNo) => {
      3 : 모임장 불일치
     */
     switch(result){
-      case '0' : alert("회원을 강퇴에 실패 하였습니다."); break;
-      case '1' : alert("회원을 강퇴 시켰습니다."); break;
+      case '0' : alert("작업 실패 하였습니다."); break;
+      case '1' : alert("회원을 차단해제 시켰습니다."); break;
       case '2' : alert("모임번호를 불러오는데 실패하였습니다."); break;
       case '3' : alert("모임장만 강퇴할 수 있습니다."); location.href="/"; break;
       default : alert("알 수 없는 오류가 발생하였습니다.");
@@ -109,49 +107,3 @@ const memberRemove = (memberNo) => {
   .catch( err => console.error(err) );
 
 };
-
-//----------------------------------------------------------------
-/* 권한위임 버튼 */
-
-const delegateArr = document.querySelectorAll(".delegate");
-
-delegateArr.forEach( (btn) => {
-  btn.addEventListener("click", ()=>{
-    
-    if(confirm("모임장 권한을 이임하시겠습니까?") === false) return;
-
-    // 클릭버튼에서 얻어온 회원번호
-    const btnMemberNo = btn.dataset.memberNo;
-
-    let memberNickname;
-
-    // 위임하려는 회원정보 얻어오기
-    fetch("/groupMember?memberNo=" + btnMemberNo)
-    .then( response => {
-      if(response.ok) return response.text();
-      throw new Error("멤버조회 비동기통신 실패")
-    })
-    .then( result => {
-
-      memberNickname = result;
-
-      if(confirm( "[ " + memberNickname + " ] 회원에게 모임장의 권한을 양도하는것이 맞습니까?") === false) return;
-      
-      // body태그에 form태그 만들어서 제출
-      const form = document.createElement("form");
-      form.action = "/groupMemberManage/changeLeader";
-      form.method = "POST";
-      const input = document.createElement("input");
-      input.type = "hidden";
-      input.name = "nextLeader";
-      input.value = btnMemberNo;
-      form.append(input);
-      document.querySelector("body").append(form);
-      form.submit();
-
-    })
-    .catch( err => console.error(err) );
-
-
-  });
-});
