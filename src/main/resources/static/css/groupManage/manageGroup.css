@@ -28,18 +28,28 @@
 }
 
 /* 메인 */
-.row-between{
+main{
+  font-family: 'Pretendard-Regular';
+  min-height: 63vh;
+}
+.space-around{
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 .mainSec{
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: center;  
+  padding: 15px;
+  margin: 15px;
+  background-color: rgb(245, 245, 245);
+  border-radius: 10px;
 }
 .mainSec > h1{
   margin: 15px 0 20px 0;
+  font-family: 'MinSans-Regular';
+  font-weight: 700;
 }
 .divInline{
   display: inline;
@@ -50,7 +60,7 @@
   border-radius: 5px;
   padding: 30px;
   margin: 10px;
-  background-color: #f0f0f0;
+  background-color: rgb(230, 230, 230);
 }
 .serviceIntroduce{
   margin: 0 0 10px;
@@ -74,6 +84,8 @@
 }
 .title{
   margin: 50px 0 20px 0;
+  font-family: 'AssacomFreeGothicTTF-Regular';
+  font-size: 18px;
 }
 /* 이미지 수정 */
 #imageSec{
@@ -215,8 +227,47 @@ input[type="radio"]:checked + label { /* 라벨이 꼭 뒤에잇어야함 */
 }
 
 
-/* 사이드바 */
-.sideSec{
+/* ****************************** */
+/* ********** 사이드바 ********** */
+#sideSec1{
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  white-space: nowrap;
+  /* overflow: hidden; */
+}
+#sideSec1 > div{
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  white-space: nowrap;
+}
+#sideSec1 a{
+  padding: 15px;
+  margin: 10px;
+  width: 170px;
+  height: 50px;
+  border-radius: 3px;
+  justify-content: center;
+  
+  border: 1px solid rgb(116, 116, 116);
+  background-color: rgb(230, 230, 230);
+  box-shadow: 2px 2px 4px grey;
+
+  font-family: 'MinSans-Regular';
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  color: black;
+}
+#sideSec1 a:nth-of-type(2n){   align-self: flex-start;}
+#sideSec1 a:nth-of-type(2n-1){ align-self: flex-end;}
+
+#sideSec2{
   width: 250px;
   display: flex;
   flex-direction: column;
@@ -226,10 +277,9 @@ input[type="radio"]:checked + label { /* 라벨이 꼭 뒤에잇어야함 */
   /* overflow: hidden; */
 }
 .sideStiky{
-  position: sticky;
   top: 185px; /* 해더높이 + 간격 */
 }
-#sideLinkList{
+/* #sideLinkList{
   background-color: #e6e6e6;
   width: 200px;
   border-radius: 7px;
@@ -244,7 +294,9 @@ input[type="radio"]:checked + label { /* 라벨이 꼭 뒤에잇어야함 */
 #sideLinkList ul{
   margin-inline-start: 0px;
   padding-inline-start: 15px;
-}
+} */
+
+
 
 /* 표 */
 #memberManageTable{
@@ -256,9 +308,7 @@ tr th{height: 40px; background-color: #A0937D;}
 #tableTr > th:nth-child(3){ min-width: 90px;}   /* 닉네임 */
 #tableTr > th:nth-child(4){ min-width: 140px;}  /* 가입일 */
 #tableTr > th:nth-child(5){ min-width: 70px;}   /* 탈퇴여부 */
-#tableTr > th:nth-child(6){ min-width: 40px;}   /* 권한 */
-#tableTr > th:nth-child(7){ min-width: 40px;}   /* 벤 */
-#tableTr > th:nth-child(8){ min-width: 50px;}   /* 권한1 */
+#tableTr > th:nth-child(6){ min-width: 50px;}   /* 권한1 */
 #tableTr > th:last-child{ min-width: 50px;}     /* 권한2 */
 .orderBtn:hover{
   background-color: #a18e6e;
@@ -289,4 +339,25 @@ tbody tr:hover{
 .pagination li{
   list-style: none;
   margin: 10px;
+}
+
+
+/* *********************************** */
+@font-face {
+  font-family: 'MinSans-Regular';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/MinSans-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'AssacomFreeGothicTTF-Regular';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2410-1@1.0/AssacomFreeGothicTTF-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Pretendard-Regular';
+  src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
 }
