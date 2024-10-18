@@ -5,141 +5,136 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title th:text="#{app.name}">messages.properties 값 출력</title>
 
+  <link rel="stylesheet" href="/css/main-style.css/">
+  
   <!-- templates/common/common.html 조각으로 추가 -->
   <th:block th:replace="~{common/common}"></th:block>
 </head>
 <body>
 
-  <main>
+  <main class="main">
 
     <!-- common/header.html 을 조각으로 추가 -->
     <th:block th:replace="~{common/header}"></th:block>
 
-
-    <!-- 메인 페이지 내용  -->
-    <section class="content">
-
-      <section class="content-1">
-
-        <table border="1" style="border-collapse: collapse;" 
-              class="list-table">
-          <thead>
-            <tr>
-              <th>회원 번호</th>
-              <th>이메일</th>
-              <th>탈퇴 상태</th>
-              <th>로그인</th>
-              <th>비밀번호 초기화</th>
-              <th>상태 변경</th>
-            </tr>
-          </thead>
-
-          <tbody id="memberList">
-            <tr>
-              <th>1</th>
-              <td>member01@kh.or.kr</td>
-              <th>N</th>
-              <th> <button>로그인</button> </th>
-              <th> <button>비밀번호 초기화</button> </th>
-              <th> <button>탈퇴 상태 변경</button> </th>
-            </tr>
-          </tbody>
-
-        </table>
-
-      </section>
-
-
-
-      <section class="content-2">
-        <!-- 로그인, 회원가입 버튼 -->
-
-        <!-- th:unless : 조건식이 false인 경우 실행 -->
-        <!-- session에 loginMember가 없을 경우 -->
-        <th:block th:unless="${session.loginMember}">
-
-          <!-- 로그인 박스 -->
-          <form action="/member/login" method="POST" id="loginForm">
-            <fieldset class="id-pw-area">
-  
-              <!-- 아이디/비밀번호 입력 -->
-              <section>
-                <input type="text" 
-                       name="memberEmail"
-                       placeholder="이메일">
-  
-                <input type="password" 
-                       name="memberPw" 
-                       placeholder="비밀번호">
-              </section>
-  
-              <!-- 로그인 버튼 -->
-              <section>
-                <button>로그인</button>
-              </section>
-            </fieldset>
-  
-            <label>
-              <!-- label 태그 : input 태그의 제목을 나타내는 태그  -->
-              <input type="checkbox" name="saveEmail">
-              이메일 저장
-            </label>
-  
-            <article class="signup-find-area">
-              <a href="/member/signUp">회원가입</a>
+    <section class="login-section">
+      <form action="/signin">
+        <fieldset>
+          <div class="login-box">
+            <button>로그인</button>
+            <hr>
+            <article>
+              <a href="#">아이디 찾기</a>
               <span> | </span>
-              <a href="#">ID/PW 찾기</a>
+              <a href="#">비밀번호 찾기</a>
+              <span> | </span>
+              <a href="#">회원가입</a>
             </article>
-  
-          </form>
-        </th:block>
-
-
-        <!-- session에 loginMember가 있을 경우 -->
-        <th:block th:if="${session.loginMember}">
-
-          <article class="login-area">
-            
-            <a href="/myPage/profile">
-              <!-- 프로필 이미지 -->
-
-              <!-- messages.properties에 작성된 기본 사용자 이미지 -->
-              <img th:with="user=#{user.default.image}" 
-                   th:src="${session.loginMember.profileImg ?: user }"
-                   id="memberProfile"
-                   alt="프로필 이미지" >
-            </a>
-
-            <!-- 닉네임, 이메일, 로그아웃 버튼 영역 -->
-            <div class="my-info" th:object="${session.loginMember}">
-
-              <div>
-                <a href="/myPage/info" id="nickname" th:text="*{memberNickname}">닉네임</a>
-
-                <a href="/member/logout" id="logoutBtn">로그아웃</a>
-              </div>
-
-              <p th:text="*{memberEmail}">이메일</p>
-
-            </div>
-          </article>
-
-        </th:block>
-
-
-
-      </section>
-
+          </div>
+        </fieldset>
+      </form>
     </section>
+
+    <section class="popup-section">
+      <div class="popup-overlay" id="popupOverlay"></div>
+      <!-- 팝업창  매번 x 눌러야해서 주석처리 해야함-->
+      <!-- <div class="popup" id="popup">
+        <button class="close-btn" id="closePopup">X</button>
+        <h2>공지사항</h2>
+        <p>팝업창 내용</p>
+        <img src="../../static/images/group.png" alt="팝업 이미지" style="width:100%;">
+      </div> -->
+    </section>
+
+    <!-- 로그인 전 추천 모임 / 로그인 후 본인 모임 추후 수정예정 -->
+    <section class="group-section">
+      <div class="group-box">
+        <section class="groupMainImage">
+          <img src="#" alt="모임 대표 사진">
+        </section>
+        <section class="group-info">
+          <a href="#">모임 이름</a>
+          <h1>모임 소개</h1>
+          <br>
+          <a href="#">모임 카테고리</a> <a href="#">위치</a><span> | </span>  <a href="#">인원수</a>
+        </section>
+      </div>
+
+      <div class="group-box">
+        <section class="groupMainImage">
+          <img src="#" alt="모임 대표 사진">
+        </section>
+        <section class="group-info">
+          <a href="#">모임 이름</a>
+          <h1>모임 소개</h1>
+          <br>
+          <a href="#">모임 카테고리</a> <a href="#">위치</a><span> | </span>  <a href="#">인원수</a>
+        </section>
+      </div>
+
+      <div class="group-box">
+        <section class="groupMainImage">
+          <img src="#" alt="모임 대표 사진">
+        </section>
+        <section class="group-info">
+          <a href="#">모임 이름</a>
+          <h1>모임 소개</h1>
+          <br>
+          <a href="#">모임 카테고리</a> <a href="#">위치</a><span> | </span>  <a href="#">인원수</a>
+        </section>
+      </div>
+
+      <div class="group-box">
+        <section class="groupMainImage">
+          <img src="#" alt="모임 대표 사진">
+        </section>
+        <section class="group-info">
+          <a href="#">모임 이름</a>
+          <h1>모임 소개</h1>
+          <br>
+          <a href="#">모임 카테고리</a> <a href="#">위치</a><span> | </span>  <a href="#">인원수</a>
+        </section>
+      </div>
+
+      <div class="group-box">
+        <section class="groupMainImage">
+          <img src="#" alt="모임 대표 사진">
+        </section>
+        <section class="group-info">
+          <a href="#">모임 이름</a>
+          <h1>모임 소개</h1>
+          <br>
+          <a href="#">모임 카테고리</a> <a href="#">위치</a><span> | </span>  <a href="#">인원수</a>
+        </section>
+      </div>
+
+      <div class="group-box">
+        <section class="groupMainImage">
+          <img src="#" alt="모임 대표 사진">
+        </section>
+        <section class="group-info">
+          <a href="#">모임 이름</a>
+          <h1>모임 소개</h1>
+          <br>
+          <a href="#">모임 카테고리</a> <a href="#">위치</a><span> | </span>  <a href="#">인원수</a>
+        </section>
+      </div>
+
+      
+    </section>
+
+    <section class="scroll-top">
+      <button>^</button>
+    </section>
+
   </main>
-
-
+  
   <!-- common/footer.html 추가 -->
   <th:block th:replace="~{common/footer}"></th:block>
 
 
-  <script src="/js/main.js"></script>
 
+  <script src="../static/js/main.js"></script>
 
 </body>
 </html>
