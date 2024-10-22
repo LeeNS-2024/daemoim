@@ -24,10 +24,17 @@ public class GroupManageServiceImpl implements GroupManageService {
 	private final GroupManageMapper mapper;
 	
 	@Value("${daemoim.groupMain.web-path}")
-	private String webPath;
+	private String groupMainWebPath;
 	
 	@Value("${daemoim.groupMain.folder-path}")
-	private String folderPath;
+	private String groupMainFolderPath;
+	
+	@Value("${daemoim.groupHeader.web-path}")
+	private String groupHeaderWebPath;
+	
+	@Value("${daemoim.groupHeader.folder-path}")
+	private String groupHeaderFolderPath;
+	
 
 	// 모임이름 중복검사
 	@Override
@@ -63,7 +70,7 @@ public class GroupManageServiceImpl implements GroupManageService {
 			// 파일 리네임
 			groupMainRename = FileUtil.rename( groupImg.getOriginalFilename() );
 			// 파일 요청경로 저장
-			inputGroup.setGroupMainImg(webPath + groupMainRename);
+			inputGroup.setGroupMainImg(groupMainWebPath + groupMainRename);
 		}
 		
 		// mapper에 모임 등록하고 결과 반환받기
@@ -77,11 +84,11 @@ public class GroupManageServiceImpl implements GroupManageService {
 		
 		if(groupImg.isEmpty() == false) {
 			// 파일저장
-			File folder = new File(folderPath);
+			File folder = new File(groupMainFolderPath);
 			if(folder.exists() == false) folder.mkdirs();
 			
 			try {
-				groupImg.transferTo( new File( folderPath + groupMainRename ) );
+				groupImg.transferTo( new File( groupMainFolderPath + groupMainRename ) );
 			} catch (Exception e) {
 				result = 0;
 				throw new RuntimeException();
