@@ -66,6 +66,8 @@ function findAddress() {
   }else{
     memberTel.classList.remove("red");
    memberTel.classList.add("green");
+
+   
   
    checkObj.memberTel = true;
   }
