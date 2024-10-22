@@ -39,12 +39,11 @@
             <th>프로필사진</th>
             <th class="orderBtn">닉네임</th>
             <th class="orderBtn">가입일</th>
-            <th class="orderBtn">탈퇴여부</th>
             <th>권한1</th>
             <th>권한2</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody class="tableBody">
 
           <th:block th:each= "member:${memberList}" th:object="${member}">
             <tr>
@@ -52,7 +51,6 @@
               <td th:text="*{memberImg}"></td>
               <td th:text="*{memberNickname}"></td>
               <td th:text="*{memberGroupEnrollDate}"></td>
-              <td th:text="*{memberGroupDelFl}"></td>
               <td>
                 <th:block th:unless= "*{memberNo} == ${group.memberNo}"><button class="removeMember" th:data-member-no="*{memberNo}">강퇴</button></th:block>
               </td>
@@ -115,13 +113,7 @@
   <!-- 푸터 -->
   <th:block th:replace= "~{common/footer}" ></th:block>
   <th:block th:replace= "~{common/common}" ></th:block>
+  <th:block th:replace= "~{groupManage/manageGroup :: th-manageGroupFooter }" ></th:block>
 
-  <script th:inline="javascript">
-    const pagination = /*[[${pagination}]]*/ "페이지네이션 객체"
-
-
-
-  </script>
-  <script src="/js/groupManage/manageGroupMember.js"></script>
 </body>
 </html>
