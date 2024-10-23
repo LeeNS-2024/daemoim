@@ -21,117 +21,77 @@
       <form action="/signin">
         <fieldset>
           <div class="login-box">
-            <button>로그인</button>
+            <div class="wrapLoginButton">
+              <button class="mainLoginButton">로그인</button>
+            </div>
             <hr>
-            <article>
-              <a href="findIdPw">아이디 비밀번호 찾기</a>
+            <article class="pwjoin">
+              <a href="findIdPw" style="color: black; text-decoration: none; text-decoration-line: none;">아이디 비밀번호 찾기</a>
               <span> | </span>
-              <a href="tacou">회원가입</a>
+              <a href="tacou" style="color: black; text-decoration: none; text-decoration-line: none;">회원가입</a>
             </article>
           </div>
         </fieldset>
       </form>
     </section>
 
-    <section class="popup-section">
-      <div class="popup-overlay" id="popupOverlay"></div>
+    <!-- <section class="popup-section">
+      <div class="popup-overlay" id="popupOverlay"></div> -->
       <!-- 팝업창  매번 x 눌러야해서 주석처리 해야함-->
       <!-- <div class="popup" id="popup">
         <button class="close-btn" id="closePopup">X</button>
         <h2>공지사항</h2>
         <p>팝업창 내용</p>
         <img src="../../static/images/group.png" alt="팝업 이미지" style="width:100%;">
-      </div> -->
-    </section>
-
-    <!-- 로그인 전 추천 모임 / 로그인 후 본인 모임 추후 수정예정 -->
-    <section class="group-section">
-      <div class="group-box">
-        <section class="groupMainImage">
-          <img src="/images/group.png" alt="모임 대표 사진" style="width: 100px" height="50px">
-        </section>
-        <section class="group-info">
-          <a href="/groupMain">모임 이름</a>
-          <h1>모임 소개</h1>
-          <br>
-          <a href="#">모임 카테고리</a> <a href="#">위치</a><span> | </span>  <a href="#">인원수</a>
-        </section>
       </div>
+    </section> -->
 
-
-      <div class="group-box">
-        <section class="groupMainImage">
-          <img src="/images/group.png" alt="모임 대표 사진" style="width: 100px" height="50px">
+     <!-- 로그인 전 추천 모임 보여주기 페이지 -->
+     <th:block th:unless="${recommendedGroups != null && !#lists.isEmpty(recommendedGroups)}">
+      <p>추천할 모임이 없습니다.</p>
+    </th:block>
+    
+    <!-- 추천 모임 목록 출력 -->
+    <th:block th:if="${recommendedGroups != null && !#lists.isEmpty(recommendedGroups)}">
+        <section class="activity-section">
+            <div class="category-container">
+                <div class="category-box" th:each="group : ${recommendedGroups}">
+                    <div class="icon">
+                        <img th:src="${group != null && group.groupMainImg != null ? group.groupMainImg : '/images/default.png'}" alt="[[${group.groupName}]] 아이콘" />
+                    </div>
+                    <div class="details">
+                        <a th:href="@{/groupMain/{groupName}(groupName=${group.groupName})}" class="activity-name" style="color: black; text-decoration: none; text-decoration-line: none;">[[${group.groupName}]]</a>
+                        <div class="group-name">[[${group.groupIntroduce}]]</div>
+                        <div class="location">카테고리: [[${group.categoryName}]]</div>
+                        <div class="participants">
+                            <i class="fa-solid fa-users"> &nbsp;</i>
+                            <div>
+                                [[${group.currentPopulation}]] / [[${group.maxPopulation}]]
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
-        <section class="group-info">
-          <a href="/groupMain">모임 이름</a>
-          <h1>모임 소개</h1>
-          <br>
-          <a href="#">모임 카테고리</a> <a href="#">위치</a><span> | </span>  <a href="#">인원수</a>
-        </section>
-      </div>
-
-      <div class="group-box">
-        <section class="groupMainImage">
-          <img src="/images/group.png" alt="모임 대표 사진" style="width: 100px" height="50px">
-        </section>
-        <section class="group-info">
-          <a href="/groupMain">모임 이름</a>
-          <h1>모임 소개</h1>
-          <br>
-          <a href="#">모임 카테고리</a> <a href="#">위치</a><span> | </span>  <a href="#">인원수</a>
-        </section>
-      </div>
-
-      <div class="group-box">
-        <section class="groupMainImage">
-          <img src="/images/group.png" alt="모임 대표 사진" style="width: 100px" height="50px">
-        </section>
-        <section class="group-info">
-          <a href="/groupMain">모임 이름</a>
-          <h1>모임 소개</h1>
-          <br>
-          <a href="#">모임 카테고리</a> <a href="#">위치</a><span> | </span>  <a href="#">인원수</a>
-        </section>
-      </div>
-
-      <div class="group-box">
-        <section class="groupMainImage">
-          <img src="/images/group.png" alt="모임 대표 사진" style="width: 100px" height="50px">
-        </section>
-        <section class="group-info">
-          <a href="/groupMain">모임 이름</a>
-          <h1>모임 소개</h1>
-          <br>
-          <a href="#">모임 카테고리</a> <a href="#">위치</a><span> | </span>  <a href="#">인원수</a>
-        </section>
-      </div>
-
-      <div class="group-box">
-        <section class="groupMainImage">
-          <img src="/images/group.png" alt="모임 대표 사진" style="width: 100px" height="50px">
-        </section>
-        <section class="group-info">
-          <a href="/groupMain">모임 이름</a>
-          <h1>모임 소개</h1>
-          <br>
-          <a href="#">모임 카테고리</a> <a href="#">위치</a><span> | </span>  <a href="#">인원수</a>
-        </section>
-      </div>
-
-      
-    </section>
+    </th:block>
+    <!-- 로그인 했을 시 가입한 목록 보여주기~ 추가 예정 -->
 
     <section class="scroll-top">
-      <button>^</button>
+      <button id="scrollTopBtn"><i class="fa-solid fa-circle-chevron-up"></i></button>
     </section>
 
   </main>
   
-  <!-- common/footer.html 추가 -->
+  <script>
+    document.getElementById('scrollTopBtn').addEventListener('click', function() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth' 
+      });
+    });
+    </script>
+
   <th:block th:replace="~{common/footer}"></th:block>
-
-
 
   <script src="../static/js/main.js"></script>
 
