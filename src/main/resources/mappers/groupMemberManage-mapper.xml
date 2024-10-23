@@ -52,5 +52,14 @@
 			MEMBER_NO = #{memberNo}
 		AND GROUP_NO = #{groupNo}
 	</delete>
+	
+	<!-- 현재 모임인원 확인 -->
+	<select id="checkPopulation" resultType="_int">
+		SELECT COUNT(*)
+		FROM "MEMBER_GROUP"
+		WHERE
+			GROUP_NO = #{groupNo}
+		AND MEMBER_GROUP_DEL_FL = 'N'
+	</select>
 
 </mapper>
