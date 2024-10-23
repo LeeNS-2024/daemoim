@@ -3,11 +3,14 @@
       margin: 0;
       padding: 0;
       background-color: white;
+      width: 100%;
   }
 
   /* 전체 레이아웃 컨테이너 */
   .main-container {
       display: flex;
+      width: 100%;
+      
   }
 
   /* 사이드바 스타일 */
@@ -34,10 +37,14 @@
       background-color: #c7c7c7;
   }
 
-  .container {
+  .container-row {
       margin-left: 220px; /* 사이드바 공간 확보 */
       padding: 20px;
       width: calc(100% - 220px);
+
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
 
   }
 
@@ -58,9 +65,11 @@
 
   /* 박스 레이아웃 */
   .box-container {
-      display: grid;
+      display: flex;
+      flex-direction: column;
       grid-template-columns: repeat(3, 1fr);
       gap: 20px;
+      width: 50%;
   }
 
   .notice {
@@ -110,14 +119,14 @@
     color: gray;
   }
   
-  .photobox{
-      background-color: #d7e8d4;
+  .photo-box{
+      background-color: white;
       padding: 20px;
       height: 250px;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
       display: flex;
       justify-content: center;
-      align-items: center;
+      align-items: flex-end;
       font-size: 18px;
   }
 
@@ -159,7 +168,72 @@
       }
   }
 
+  .group-section {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 두 개씩 나란히 표시 */
+    grid-gap: 30px; /* 그룹 간의 간격 설정 */
+    justify-items: auto;
+    width: 500px;
+  }
+  
+  .schedule-box {
+    display: flex;
+    padding: 20px;
+    align-items: center;
+    min-width: 500px;
+    max-width: 80000px;
+    width: 100%; 
+  }
+  
+  
+  
+  .group-info {
+    flex: 3;
+    padding-left: 20px;
+  }
+  
+  .group-info a {
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: bold;
+  }
+  
+  .group-info h1 {
+    font-size: 16px;
+    margin: 10px 0;
+  }
+  
+  /* 기존 스타일 유지 */
 
+/* 사진첩 섹션 */
+.photo-gallery {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+}
 
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2개의 열 */
+    grid-template-rows: repeat(2, auto); /* 2개의 행 */
+    gap: 10px; /* 사진 간의 간격 */
+}
+
+.photo-item {
+    text-align: center;
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.gallery-photo {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+.photo-item p {
+    margin: 5px 0;
+}
 
 
