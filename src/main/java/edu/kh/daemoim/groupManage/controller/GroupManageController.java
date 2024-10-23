@@ -1,7 +1,6 @@
 package edu.kh.daemoim.groupManage.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -92,7 +91,7 @@ public class GroupManageController {
 	/** 모임 관리- 상세정보수정 페이지로 이동
 	 * @return
 	 */
-	@GetMapping("/{groupNo:[0-9]+}/manageGroup")
+	@GetMapping("/{groupNo}/manageGroup")
 	public String manageGroup(
 			@PathVariable("groupNo") int groupNo,
 			Model model) {
@@ -103,36 +102,14 @@ public class GroupManageController {
 		// 전달받은 모임정보를 전달하기위해 세팅
 		model.addAttribute("group", group);
 		
+		log.info("메인 이미지 : {}", group.getGroupMainImg());
+		log.info("해더 이미지 : {}", group.getGroupHeaderImg());
+		
 		// 카테고리리스트 세팅
 		List<ManageCategory> categoryArr = service.getCategoryArr();
 		model.addAttribute("categoryArr", categoryArr);
 		
 		return "groupManage/manageGroup";
-	}
-	
-	
-	/** 모임 상세정보 수정하기
-	 * @param updateGroup : 수정할 모임정보
-	 * @param images : 대표, 해더 이미지
-	 * @param deleteOrderList : 삭제한 이미지 순서
-	 * @return
-	 */
-	@PostMapping("/{groupNo:[0-9]+}/manageGroup")
-	public String updateGroup(
-			@ModelAttribute GroupManageDto updateGroup,
-			@RequestParam("inputImg") List<MultipartFile> images,
-			@RequestParam("deleteOrderList") List<Integer> deleteOrderList) {
-		
-		int result = service.updateGroup(updateGroup, images, deleteOrderList);
-		
-		String path = null;
-		if(result > 0) {
-			path = "redirect:/groupMain";
-		} else {
-			path = "redirect:/groupManage/" + updateGroup.getGroupNo() + "/manageGroup";
-		}
-		
-		return path;
 	}
 
 }

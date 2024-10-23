@@ -39,12 +39,4 @@ public interface GroupManageService {
 	 */
 	GroupManageDto selectGroup(int groupNo);
 
-	/** 모임 상세정보 수정
-	 * @param updateGroup
-	 * @param images
-	 * @param deleteOrderList
-	 * @return
-	 */
-	int updateGroup(GroupManageDto updateGroup, List<MultipartFile> images, List<Integer> deleteOrderList);
-
 }
