@@ -4,7 +4,7 @@
 
 
 <!-- 이메일 체크  -->
- <select id="emailCheck"
+ <select id="memberEmailCheck"
   resultType="_int">
   	SELECT
   		COUNT(*)
@@ -40,6 +40,18 @@
   		"MEMBER"
   	WHERE 
   		MEMBER_NICKNAME = #{nickname}
+  	AND
+  		MEMBER_DEL_FL = 'N'
+  </select>
+  
+  <!-- 전화번호 체크  -->
+  <select id="telCheck" resultType="_int">
+  	SELECT
+  		COUNT(*)
+  	FROM 
+  		"MEMBER"
+  	WHERE 
+  		MEMBER_TEL = #{tel}
   	AND
   		MEMBER_DEL_FL = 'N'
   </select>
