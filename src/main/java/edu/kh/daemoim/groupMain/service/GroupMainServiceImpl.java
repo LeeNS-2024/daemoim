@@ -37,6 +37,7 @@ public class GroupMainServiceImpl implements GroupMainService {
 	public List<PhotoBox> getPhotos(int groupNo) {
 		
 		return mapper.getPhotos(groupNo);
+
 	}
 	
 

@@ -12,11 +12,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 
+import edu.kh.daemoim.board.dto.Board;
 import edu.kh.daemoim.groupManage.dto.GroupManageDto;
 import edu.kh.daemoim.groupManage.dto.ManageCategory;
 import edu.kh.daemoim.groupManage.service.GroupManageService;
+import edu.kh.daemoim.main.dto.MainDTO;
+import edu.kh.daemoim.myPage.dto.MyPage;
 import jakarta.servlet.annotation.MultipartConfig;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,7 +42,6 @@ public class GroupManageController {
 		List<ManageCategory> categoryArr = service.getCategoryArr();
 		model.addAttribute("categoryArr", categoryArr);
 		
-		// 비로그인 회원 메인화면으로 리다이랙트하는 구문 추가
 		return "groupManage/createGroup";
 	}
 	
@@ -72,13 +75,14 @@ public class GroupManageController {
 	@PostMapping("createGroup")
 	public String createGroup(
 			@ModelAttribute GroupManageDto inputGroup,
-			@RequestParam("groupImg") MultipartFile groupImg) {
+			@RequestParam("groupImg") MultipartFile groupImg,
+			@SessionAttribute("loginMember") MyPage loginMember ) {
 		System.out.println("연결확인");
 		// 이미지, 가입제한사항 빼고 다들어갈거임
 		// 모임이름, 소개, 카테고리넘버, 카테고리리스트넘버
 
 		// 세션에서 로그인한 멤버의 멤버넘를 받아와 input그룹에 저장
-		inputGroup.setMemberNo(1);
+		inputGroup.setMemberNo( loginMember.getMemberNo() );
 		
 		System.out.println(inputGroup.toString());
 		int result = service.createGroup(inputGroup, groupImg);
@@ -92,7 +96,7 @@ public class GroupManageController {
 	/** 모임 관리- 상세정보수정 페이지로 이동
 	 * @return
 	 */
-	@GetMapping("/{groupNo:[0-9]+}/manageGroup")
+	@GetMapping("{groupNo:[0-9]+}/manageGroup")
 	public String manageGroup(
 			@PathVariable("groupNo") int groupNo,
 			Model model) {
@@ -117,7 +121,7 @@ public class GroupManageController {
 	 * @param deleteOrderList : 삭제한 이미지 순서
 	 * @return
 	 */
-	@PostMapping("/{groupNo:[0-9]+}/manageGroup")
+	@PostMapping("{groupNo:[0-9]+}/manageGroup")
 	public String updateGroup(
 			@ModelAttribute GroupManageDto updateGroup,
 			@RequestParam("inputImg") List<MultipartFile> images,
@@ -134,5 +138,79 @@ public class GroupManageController {
 		
 		return path;
 	}
+	
+	
+	/** 공지사항 관리페이지 들어가기
+	 * @return
+	 */
+	@GetMapping("{groupNo:[0-9]+}/manageOrder")
+	public String manageOrder(
+			Model model,
+			@PathVariable("groupNo") int groupNo) {
+		
+		// 모임정보 불러오기
+		GroupManageDto group = service.selectGroup(groupNo);
+		
+		// 전달받은 모임정보를 전달하기위해 세팅
+		model.addAttribute("group", group);
+		
+		// 공지글 불러오기
+		List<Board> boardList = service.getOrderBoard(groupNo);
+		
+		// 공지사항 세팅
+		model.addAttribute("boardList", boardList);
+				
+		return "groupManage/manageOrder";
+	}
+	
+	/** 최근글 관리페이지 들어가기
+	 * @return
+	 */
+	@GetMapping("{groupNo:[0-9]+}/recentBoard")
+	public String recentBoard(
+			Model model,
+			@PathVariable("groupNo") int groupNo) {
+		
+		// 모임정보 불러오기
+		GroupManageDto group = service.selectGroup(groupNo);
+		
+		// 전달받은 모임정보를 전달하기위해 세팅
+		model.addAttribute("group", group);
+		
+		// 최근 게시글 불러오기
+		List<Board> boardList = service.getRecentBoard(groupNo);
+		
+		// 최근 게시글 세팅
+		model.addAttribute("boardList", boardList);
+		
+		return "groupManage/manageRecentBoard";
+	}
+	
+	/** 인기글 관리페이지 들어가기
+	 * @param period : 조회할 기간
+	 * @return
+	 */
+	@GetMapping("{groupNo:[0-9]+}/popularBoard")
+	public String popularBoard(
+			Model model,
+			@PathVariable("groupNo") int groupNo,
+			@RequestParam(name="period", required=false, defaultValue="30") int period ) {
+		
+		// 모임정보 불러오기
+		GroupManageDto group = service.selectGroup(groupNo);
+		
+		// 전달받은 모임정보를 전달하기위해 세팅
+		model.addAttribute("group", group);
+		
+		// 인기글 불러오기
+		List<Board> boardList = service.getPopularBoard(groupNo, period);
+		
+		// 인기글 세팅
+		model.addAttribute("boardList", boardList);
+		model.addAttribute("period", period);
+		
+		return "groupManage/managePopularBoard";
+	}
+	
 
 }

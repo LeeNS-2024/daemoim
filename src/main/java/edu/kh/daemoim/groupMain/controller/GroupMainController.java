@@ -23,6 +23,7 @@ public class GroupMainController {
      * @param model
      * @return
      */
+
     @GetMapping("groupMain/{groupNo}")
     public String groupMain(Model model,
     					@PathVariable("groupNo") int groupNo) {
@@ -39,8 +40,10 @@ public class GroupMainController {
      * @return
      */
     @GetMapping("/board/boardList")
-    @ResponseBody  // JSON으로 응답s
+    @ResponseBody  // JSON으로 응답
     public List<Notice> selectBoardList() {
         return service.selectBoardList();
     }
+    
+
 }

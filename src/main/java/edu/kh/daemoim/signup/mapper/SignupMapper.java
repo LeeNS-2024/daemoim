@@ -15,6 +15,11 @@ public interface SignupMapper {
 	// 닉네임 체크
 	int nicknameCheck(String nickname);
 
+	// 전화번호 체크
+	int telCheck(String tel);
+	
+	
+
 	
 
 

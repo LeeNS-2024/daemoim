@@ -27,10 +27,12 @@
   border-radius: 4px;
 }
 
-/* 메인 */
+/* ****************************** */
+/* ************ 메인 ************ */
 main{
-  font-family: 'Pretendard-Regular';
+  margin: 180px; /* 해더에 밀림 ㅜㅜ */
   min-height: 63vh;
+  font-family: 'Pretendard-Regular';
 }
 .space-around{
   display: flex;
@@ -100,12 +102,25 @@ main{
   justify-content: center;
   align-items: center;
 }
+#btnDiv > div:hover{
+  cursor: pointer;
+}
 .title{
   margin: 50px 0 20px 0;
   font-family: 'AssacomFreeGothicTTF-Regular';
   font-size: 18px;
 }
-/* 이미지 수정 */
+/* ************************************************ */
+/* ***************모임명********************** */
+.createContent > #groupName{
+  height: 35px;
+  width: 870px;
+}
+#searchKey + input{ /* 회원검색창 */
+  height: 31px;
+}
+/* ************************************************ */
+/* ***************이미지 수정********************** */
 #imageSec{
   display: flex;
   flex-direction: row;
@@ -216,7 +231,8 @@ main{
   flex-direction: row;
 }
 
-/* 카테고리 */
+/* ********************************************************* */
+/* *********************** 카테고리 ************************/
 .categoryTitleSpan{
   display: block;
   margin: 10px 0 10px;
@@ -261,8 +277,8 @@ input[type="radio"]:checked + label { /* 라벨이 꼭 뒤에잇어야함 */
   cursor: pointer;
 }
 
-/* ****************************** */
-/* ********** 사이드바 ********** */
+/* ************************************************** */
+/* ****************** 사이드바 ********************** */
 #sideSec1{
   width: 250px;
   display: flex;
@@ -306,8 +322,20 @@ input[type="radio"]:checked + label { /* 라벨이 꼭 뒤에잇어야함 */
   text-align: left;
   text-decoration: none;
   color: black;
+  white-space: nowrap;
+  display: flex; /* p태그 정렬용 */
 }
-
+#sideSec1 > #sideCommentList > a > .commentNickname{
+  font-size: 0.8em;
+  font-weight: bold;
+}
+#sideSec1 > #sideCommentList > a > .commentContent{
+  font-size: 0.8em;
+}
+#sideSec1 > #sideCommentList > a > .commentWriteDate{
+  font-size: 0.6em;
+  color: red;
+}
 #sideSec2{
   width: 250px;
   display: flex;
@@ -338,8 +366,8 @@ input[type="radio"]:checked + label { /* 라벨이 꼭 뒤에잇어야함 */
 } */
 
 
-
-/* 표 */
+/* ********************************************** */
+/* ******************표************************** */
 #memberManageTable{
   border-collapse: collapse;
 }
@@ -380,8 +408,29 @@ tbody tr:hover{
   list-style: none;
   margin: 10px;
 }
-
-
+.tableBody button{
+  width: 80px;
+  border: #333;
+}
+/* 공지게시판미리보기 */
+.boardTr > th:first-child{ min-width: 90px;}    /* 게시글번호 */
+.boardTr > th:nth-child(2){ min-width: 350px;}   /* 제목 */
+.boardTr > td:nth-child(2){ text-align: left;}   /* 제목 */
+.boardTr > th:nth-child(3){ min-width: 80px;}   /* 조회수 */
+.boardTr > th:nth-child(4){ min-width: 150px;}  /* 작성일 */
+.boardTr .likeCount{
+  font-size: 0.8em;
+  color: red;
+}
+.boardTr .commentCount{
+  font-size: 0.8em;
+  color: grey;
+}
+.boardTr a{
+  text-decoration: none;
+  color: black;
+  white-space: nowrap;
+}
 /* *********************************** */
 @font-face {
   font-family: 'MinSans-Regular';

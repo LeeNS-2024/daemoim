@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import edu.kh.daemoim.board.dto.Board;
+import edu.kh.daemoim.board.dto.Comment;
 import edu.kh.daemoim.common.util.FileUtil;
 import edu.kh.daemoim.groupManage.dto.GroupManageDto;
 import edu.kh.daemoim.groupManage.dto.ManageCategory;
@@ -202,6 +204,31 @@ public class GroupManageServiceImpl implements GroupManageService {
 		result = mapper.updateGroup(updateGroup);
 		
 		return result;
+	}
+	
+	
+	// [인터페이스] 최근작성댓글 얻어오기
+	@Override
+	public List<Comment> getRecentComments(String groupNo) {
+		return mapper.getRecentComments(groupNo);
+	}
+	
+	// 공지글 불러오기
+	@Override
+	public List<Board> getOrderBoard(int groupNo) {
+		return mapper.getOrderBoard(groupNo);
+	}
+	
+	// 최근글 불러오기
+	@Override
+	public List<Board> getRecentBoard(int groupNo) {
+		return mapper.getRecentBoard(groupNo);
+	}
+	
+	// 인기글 불러오기
+	@Override
+	public List<Board> getPopularBoard(int groupNo, int period) {
+		return mapper.getPopularBoard(groupNo, period);
 	}
 
 }

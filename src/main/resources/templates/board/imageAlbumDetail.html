@@ -5,13 +5,13 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>게시판 이름</title>
+  <title>사진첩</title>
 
   <th:block th:replace="~{common/common}"></th:block>
 
 
-  <link rel="stylesheet" href="/css/board/boardDetail-style.css">
-  <link rel="stylesheet" href="/css/board/comment-style.css">
+  <link rel="stylesheet" href="/css/board/imageAlbumDetail.css">
+  <link rel="stylesheet" href="/css/board/comment.css">
 
 </head>
 
@@ -20,7 +20,7 @@
   <main>
     <th:block th:replace="~{common/header}"></th:block>
 
-    <section class="board-detail" th:object="${board}">
+    <section class="image-board-detail" th:object="${board}">
       <!-- 제목 -->
       <h1 class="board-title" th:text="*{boardTitle}">게시글 제목</h1>
 

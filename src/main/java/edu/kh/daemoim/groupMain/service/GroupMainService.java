@@ -15,7 +15,9 @@ public interface GroupMainService {
 	List<Notice> selectBoardList();
 
 	// 사진불러오기
+
 	List<PhotoBox> getPhotos(int groupNo);
+
 
 
 	

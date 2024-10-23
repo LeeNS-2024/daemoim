@@ -109,6 +109,12 @@ public class GroupMemberManageController {
 	/** 모임가입 승인, 거절
 	 * @param map 모임번호, 신청한 멤버번호, 승인Y,거절N 가 담긴 map
 	 * @return result
+	 *  0 : 실패
+     	1 : 성공
+     	2 : 모임인원초과
+     	3 : 모임장 불일치
+     	4 : 강퇴인원
+     	5 : 이미 가입된 회원
 	 */
 	@PostMapping("")
 	public int inviteMember(

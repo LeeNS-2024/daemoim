@@ -38,7 +38,7 @@
       <div class="sideStiky" id="sideLinkList">
         <h4>모임 및 회원정보 관리</h4>
   
-        <a href="#">
+        <a th:href="@{/groupManage/{groupNo}/manageOrder(groupNo=${group.groupNo})}">
           <i class="fa-solid fa-list" style="color: #fc6e55;"></i>
           모임공지
         </a>
@@ -48,12 +48,12 @@
           모임알림
         </a>
 
-        <a href="#">
+        <a th:href="@{/groupManage/{groupNo}/recentBoard(groupNo=${group.groupNo})}">
           <i class="fa-solid fa-square-poll-horizontal" style="color: #74C0FC;"></i>
           최근게시글
         </a>
 
-        <a href="#">
+        <a th:href="@{/groupManage/{groupNo}/popularBoard(groupNo=${group.groupNo})}">
           <i class="fa-solid fa-square-poll-horizontal" style="color: #fc6e55;"></i>
           인기게시글
         </a>
@@ -82,11 +82,23 @@
 
       <div id="sideCommentList">
         <h4><i class="fa-solid fa-message" style="color: #74C0FC;"></i> 최근댓글</h4>
-        <a href="#">댓글1</a>
-        <a href="#">댓글2</a>
-        <a href="#">댓글3</a>
-        <a href="#">댓글4</a>
-        <a href="#">댓글5</a>
+        <th:block th:if="${commentList}" th:each= "comment:${commentList}" th:object="${comment}">
+          <a href="#">
+            <p class="commentNickname" th:text="|*{memberNickname}&nbsp;|">
+              작성자
+            </p>
+            <p class="commentContent" th:text="*{commentContent}">
+              댓글내용
+            </p>
+            <p class="commentWriteDate" th:text="*{commentWriteDate}">
+              작성일
+            </p>
+          </a>
+        </th:block>
+        <th:block th:if= "${commentList.isEmpty}">
+          <p>- 최근 작성된 댓글이 없습니다 -</p>
+        </th:block>
+        
       </div>
     </section>
 
@@ -271,7 +283,7 @@
 
               <div style="display: flex; flex-direction: column; align-items: center;">
                 <img th:with="groupHeaderDefault=#{groupHeader.default.image}" class="inputImgPreview"
-                     th:src="${groupHeaderImg ?: groupHeaderDefault }" alt="이미지표시 없음" id="inputImgPreview3" style="display: block;">
+                     th:src="${group.groupHeaderImg ?: groupHeaderDefault }" alt="이미지표시 없음" id="inputImgPreview3" style="display: block;">
               </div>
               <div id="preViewIntroduce" th:text="*{groupIntroduce}">
                 소개글
