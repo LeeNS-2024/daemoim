@@ -29,5 +29,8 @@ public interface GroupMemberManageMapper {
 	// 가입신청내역 지우기
 	int deleteInvite(Map<String, Object> map);
 
+	// 현재 모임인원 수 확인
+	int checkPopulation(int groupNo);
+
 
 }

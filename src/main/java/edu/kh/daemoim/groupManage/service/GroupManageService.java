@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import edu.kh.daemoim.board.dto.Board;
+import edu.kh.daemoim.board.dto.Comment;
 import edu.kh.daemoim.groupManage.dto.GroupManageDto;
 import edu.kh.daemoim.groupManage.dto.ManageCategory;
 
@@ -46,5 +48,32 @@ public interface GroupManageService {
 	 * @return
 	 */
 	int updateGroup(GroupManageDto updateGroup, List<MultipartFile> images, List<Integer> deleteOrderList);
+
+	/** [인터페이스] 최근작성댓글 얻어오기
+	 * @param groupNo
+	 * @return
+	 */
+	List<Comment> getRecentComments(String groupNo);
+
+	
+	/**공시글 불러오기
+	 * @param groupNo
+	 * @return
+	 */
+	List<Board> getOrderBoard(int groupNo);
+
+	/** 최근글 불러오기
+	 * @param groupNo
+	 * @return
+	 */
+	List<Board> getRecentBoard(int groupNo);
+
+	/** 인기글 불러오기
+	 * @param groupNo
+	 * @param period
+	 * @return
+	 */
+	List<Board> getPopularBoard(int groupNo, int period);
+
 
 }

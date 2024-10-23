@@ -5,7 +5,10 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import edu.kh.daemoim.groupManage.dto.GroupManageDto;
+import edu.kh.daemoim.groupManage.mapper.GroupManageMapper;
 import edu.kh.daemoim.groupManage.mapper.GroupMemberManageMapper;
+import edu.kh.daemoim.groupManage.mapper.GroupMemberMapper;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -14,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 public class GroupMemberManageServiceImpl implements GroupMemberManageService{
 	
 	private final GroupMemberManageMapper mapper;
+	private final GroupManageMapper groupManageMapper;
 	
 	
 	
@@ -60,13 +64,17 @@ public class GroupMemberManageServiceImpl implements GroupMemberManageService{
 	public int inviteMember(int loginMemberNo, Map<String, Object> map) {
 		
 		// 로그인 한 회원이 해당 모임장인지 확인
-		int leaderNo = mapper.getLeaderNo( (int)map.get("groupNo") );
-		if(leaderNo != loginMemberNo ) return 3;	// 모임장 불일치 return;
+		GroupManageDto group = groupManageMapper.selectGroup( (int)map.get("groupNo") );
+		if(group.getMemberNo() != loginMemberNo ) return 3;	// 모임장 불일치 return;
 		
 		int result = 0;
 		
 		// inviteDelFl == 'Y' 면 승인 'N'면 거절
 		if( map.get("inviteDelFl").toString().equals("Y") ) {
+
+			// 만약 현재 모임인원이 최대인원이라면 그대로 리턴
+			int population = mapper.checkPopulation( (int)map.get("groupNo") );
+			if(population > group.getGroupMaxPopulation()) return 2;
 			
 			// MEMBER_GROUP 테이블에 회원 추가
 			result = mapper.insertMember( map );

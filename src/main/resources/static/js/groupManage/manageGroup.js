@@ -73,7 +73,7 @@ const checkedCategoryList = () => {
 // CategoryNo을 넘겨받아 비동기로 카테고리리스트의 화면을 최신화 하기
 const getCategoryList = (categoryNo)=> {
 
-  fetch("/groupManage/getCategoryList?categoryNo=" + categoryNo)
+  fetch("getCategoryList?categoryNo=" + categoryNo)
   .then(response => {
     if(response.ok)return response.json();
     throw new Error("카테고리 불러오기 오류")
@@ -709,6 +709,8 @@ const memberBan = (memberNo) => {
 /********************************************************************** */
 
 
+/* 모임 가입 수락/거절 */
+
 const inviteAgreeBtns = document.querySelectorAll(".inviteAgree");
 const inviteRefuseBtns = document.querySelectorAll(".inviteRefuse");
 
@@ -774,8 +776,16 @@ const inviteSubmit = (inviteObj) => {
     /*
      0 : 실패
      1 : 성공
+     2 : 모임인원초과
      3 : 모임장 불일치
     */
+     switch(result){
+      case '0' : alert("작업 실패 하였습니다."); break;
+      case '1' : alert("회원이 가입되었습니다."); break;
+      case '2' : alert("현재 모임의 정원이 초과되었습니다."); break;
+      case '3' : alert("모임장의 권한입니다."); location.href="/"; break;
+      default : alert("알 수 없는 오류가 발생하였습니다.");
+    }
     // 화면 초기화 함수 호출
     tableAjaxRequest(2);
   })

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import edu.kh.daemoim.board.dto.Board;
 import edu.kh.daemoim.groupManage.dto.GroupManageDto;
 import edu.kh.daemoim.groupManage.dto.ManageCategory;
 import edu.kh.daemoim.groupManage.service.GroupManageService;
@@ -58,7 +59,7 @@ public class GroupManageController {
 	 * @return categoryList
 	 */
 	@ResponseBody
-	@GetMapping("getCategoryList")
+	@GetMapping("/{groupNo:[0-9]+}/getCategoryList")
 	public List<ManageCategory> getCategoryList(
 			@RequestParam("categoryNo") int categoryNo ){
 		return service.getCategoryList(categoryNo);
@@ -92,7 +93,7 @@ public class GroupManageController {
 	/** 모임 관리- 상세정보수정 페이지로 이동
 	 * @return
 	 */
-	@GetMapping("/{groupNo:[0-9]+}/manageGroup")
+	@GetMapping("{groupNo:[0-9]+}/manageGroup")
 	public String manageGroup(
 			@PathVariable("groupNo") int groupNo,
 			Model model) {
@@ -117,7 +118,7 @@ public class GroupManageController {
 	 * @param deleteOrderList : 삭제한 이미지 순서
 	 * @return
 	 */
-	@PostMapping("/{groupNo:[0-9]+}/manageGroup")
+	@PostMapping("{groupNo:[0-9]+}/manageGroup")
 	public String updateGroup(
 			@ModelAttribute GroupManageDto updateGroup,
 			@RequestParam("inputImg") List<MultipartFile> images,
@@ -134,5 +135,79 @@ public class GroupManageController {
 		
 		return path;
 	}
+	
+	
+	/** 공지사항 관리페이지 들어가기
+	 * @return
+	 */
+	@GetMapping("{groupNo:[0-9]+}/manageOrder")
+	public String manageOrder(
+			Model model,
+			@PathVariable("groupNo") int groupNo) {
+		
+		// 모임정보 불러오기
+		GroupManageDto group = service.selectGroup(groupNo);
+		
+		// 전달받은 모임정보를 전달하기위해 세팅
+		model.addAttribute("group", group);
+		
+		// 공지글 불러오기
+		List<Board> boardList = service.getOrderBoard(groupNo);
+		
+		// 공지사항 세팅
+		model.addAttribute("boardList", boardList);
+				
+		return "groupManage/manageOrder";
+	}
+	
+	/** 최근글 관리페이지 들어가기
+	 * @return
+	 */
+	@GetMapping("{groupNo:[0-9]+}/recentBoard")
+	public String recentBoard(
+			Model model,
+			@PathVariable("groupNo") int groupNo) {
+		
+		// 모임정보 불러오기
+		GroupManageDto group = service.selectGroup(groupNo);
+		
+		// 전달받은 모임정보를 전달하기위해 세팅
+		model.addAttribute("group", group);
+		
+		// 최근 게시글 불러오기
+		List<Board> boardList = service.getRecentBoard(groupNo);
+		
+		// 최근 게시글 세팅
+		model.addAttribute("boardList", boardList);
+		
+		return "groupManage/manageRecentBoard";
+	}
+	
+	/** 인기글 관리페이지 들어가기
+	 * @param period : 조회할 기간
+	 * @return
+	 */
+	@GetMapping("{groupNo:[0-9]+}/popularBoard")
+	public String popularBoard(
+			Model model,
+			@PathVariable("groupNo") int groupNo,
+			@RequestParam(name="period", required=false, defaultValue="30") int period ) {
+		
+		// 모임정보 불러오기
+		GroupManageDto group = service.selectGroup(groupNo);
+		
+		// 전달받은 모임정보를 전달하기위해 세팅
+		model.addAttribute("group", group);
+		
+		// 인기글 불러오기
+		List<Board> boardList = service.getPopularBoard(groupNo, period);
+		
+		// 인기글 세팅
+		model.addAttribute("boardList", boardList);
+		model.addAttribute("period", period);
+		
+		return "groupManage/managePopularBoard";
+	}
+	
 
 }
