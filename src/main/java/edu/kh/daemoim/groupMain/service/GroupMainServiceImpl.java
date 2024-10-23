@@ -34,9 +34,10 @@ public class GroupMainServiceImpl implements GroupMainService {
 
 	// 사진 불러오기
 	@Override
-	public List<PhotoBox> getPhotos(int boardNo) {
+	public List<PhotoBox> getPhotos(int groupNo) {
 		
-		return mapper.getPhotos(boardNo);
+		return mapper.getPhotos(groupNo);
+
 	}
 	
 

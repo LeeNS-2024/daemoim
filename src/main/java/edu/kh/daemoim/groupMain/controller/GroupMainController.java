@@ -23,12 +23,14 @@ public class GroupMainController {
      * @param model
      * @return
      */
-    @GetMapping("groupMain/{boardNo}")
+
+    @GetMapping("groupMain/{groupNo}")
     public String groupMain(Model model,
-    						@PathVariable("boardNo") int boardNo) {
+    					@PathVariable("groupNo") int groupNo) {
         // 공지사항 목록을 미리 불러와서 model에 추가
         List<Notice> boardList = service.getBoardList();
-        List<PhotoBox> photos = service.getPhotos(boardNo);
+        List<PhotoBox> photos = service.getPhotos(groupNo);
+        
         model.addAttribute("boardList", boardList);  // 모델에 추가하여 템플릿에서 사용
         model.addAttribute("photos", photos);
         return "groupMain/main";  // 뷰 이름 반환

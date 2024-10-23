@@ -18,5 +18,7 @@ public interface GroupMainMapper {
 	List<Notice> selectBoardList();
 
 	// 사진 불러오기
-	List<PhotoBox> getPhotos(int boardNo);
+
+	List<PhotoBox> getPhotos(int groupNo);
+
 }
