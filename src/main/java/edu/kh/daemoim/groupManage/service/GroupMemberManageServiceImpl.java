@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import edu.kh.daemoim.groupManage.dto.GroupManageDto;
+import edu.kh.daemoim.groupManage.dto.GroupMemberManageDto;
 import edu.kh.daemoim.groupManage.mapper.GroupManageMapper;
 import edu.kh.daemoim.groupManage.mapper.GroupMemberManageMapper;
 import edu.kh.daemoim.groupManage.mapper.GroupMemberMapper;
@@ -66,6 +67,20 @@ public class GroupMemberManageServiceImpl implements GroupMemberManageService{
 		// 로그인 한 회원이 해당 모임장인지 확인
 		GroupManageDto group = groupManageMapper.selectGroup( (int)map.get("groupNo") );
 		if(group.getMemberNo() != loginMemberNo ) return 3;	// 모임장 불일치 return;
+		
+		// MEMBER_GROUP테이블에 이미 있는인원인지 확인
+		GroupMemberManageDto searchResult = mapper.searchMember( map );
+		if(searchResult != null) {
+			// 가입내역이 존재하는 인원이라면
+			
+			if(searchResult.getMemberGroupBan().toString().equals("Y")) return 4; // 강퇴회원 return;
+			
+			// 재가입 시키고 결과반환
+			if(searchResult.getMemberGroupDelFl().toString().equals("Y")) return mapper.updateMemberGroup(map);
+			
+			// 벤, 탈퇴 둘다 N이면 가입되어있는 회원임
+			return 5;
+		}
 		
 		int result = 0;
 		

@@ -4,7 +4,6 @@ const createConfirm = {
   "groupName"      : false,
   "groupIntroduce" : false,
   "category"       : false,
-  "categoryList"   : false,
   "groupLimitAge"  : true // 초기값이 '제한없음'
 };
 
@@ -214,61 +213,85 @@ const returnImig = () => {
 
 /* 카테고리 */
 
+
+const CategoryListTr = document.querySelector(".CategoryListTr");
+const categoryText = document.querySelector(".categoryText");
 // 카테고리 라디오버튼 아무거나 선택하면 true
 
 
-
-const categoryInputArr = document.querySelectorAll('[name="categoryNo"]');
-const categoryListView = document.querySelector("#categoryListView");
-const categoryText = document.querySelector("#categoryText");
-
-for(let category of categoryInputArr){
-
-  category.addEventListener("click", ()=>{
-    createConfirm.category = true;
-
-    /* 카테고리 리스트 불러오기 */
-    const categoryNo = category.value;
-
-    // console.log(categoryNo);
-    fetch("getCategoryList?categoryNo=" + categoryNo)
-    .then(response => {
-      if(response.ok)return response.json();
-      throw new Error("카테고리 불러오기 오류")
-    })
-    .then(categoryList => {
-      console.log("가져온 목록 수 : " + categoryList.length);
-
-      if(categoryList.length === 0) return;
-
-      categoryText.innerHTML='<div>카테고리 리스트 선택</div>';
-      categoryListView.innerHTML='';
-
-      categoryList.forEach( e => {
-        const divbox = document.createElement("div");
-        const label = document.createElement("label");
-        label.innerText = e.categoryListName;
-        const input = document.createElement("input");
-        input.type = 'radio';
-        input.name = 'categoryListNo';
-        input.value = e.categoryListNo;
-        input.id = e.categoryListNo;
-        input.addEventListener("click", ()=>{createConfirm.categoryList = true});
-        label.htmlFor = e.categoryListNo;
-        divbox.append(label, input);
-        categoryListView.append(divbox);
-      })
-
-    })
-    .catch( err => console.error(err));
-
-  });
-
+// 체크된 카테고리 라디오의 값 얻어오기
+const checkedCategory = () => {
+  // name="categoryNo"인 라디오 버튼 중에서 체크된 버튼 선택
+  const checkedRadio = document.querySelector('input[name="categoryNo"]:checked');
+  
+  // 체크된 버튼이 있으면 그 value 값을 반환, 없으면 null 반환
+  if (checkedRadio) {
+    return checkedRadio.value;
+  } else {
+    return null; // 아무 것도 체크되지 않은 경우
+  }
 }
 
+// 체크된 카테고리 리스트 라디오의 값 얻어오기(제출전확인용)
+const checkedCategoryList = () => {
+  // name="categoryNo"인 라디오 버튼 중에서 체크된 버튼 선택
+  const checkedRadio = document.querySelector('input[name="categoryListNo"]:checked');
+  
+  // 체크된 버튼이 있으면 그 value 값을 반환, 없으면 null 반환
+  if (checkedRadio) {
+    return checkedRadio.value;
+  } else {
+    return null; // 아무 것도 체크되지 않은 경우
+  }
+}
 
+// CategoryNo을 넘겨받아 비동기로 카테고리리스트의 화면을 최신화 하기
+const getCategoryList = (categoryNo)=> {
 
+  fetch("getCategoryList?categoryNo=" + categoryNo)
+  .then(response => {
+    if(response.ok)return response.json();
+    throw new Error("카테고리 불러오기 오류")
+  })
+  .then(categoryList => {
 
+    if(categoryList.length === 0) return;
+
+    categoryText.innerText = '작은 카테고리';
+    CategoryListTr.innerHTML = '';
+
+    categoryList.forEach( e => {
+      const div = document.createElement("div");
+      const label = document.createElement("label");
+      label.innerText = e.categoryListName;
+      label.classList.add("categoryLabel");
+      const input = document.createElement("input");
+      input.type = 'radio';
+      input.name = 'categoryListNo';
+      input.value = e.categoryListNo;
+      input.id = 'categoryList' + e.categoryListNo;
+      input.classList.add("categoryListRadio");
+      //input.addEventListener("click", ()=>{createConfirm.categoryList = true});
+      label.htmlFor = 'categoryList' + e.categoryListNo;
+      div.append(input, label);
+      CategoryListTr.append(div);
+    })
+
+  })
+  .catch( err => console.error(err));
+};
+
+// 카테고리 변경시 카테고리 리스트 불러오기
+const radioArr = document.querySelectorAll(".categoryRadio");
+radioArr.forEach(e=>{
+  e.addEventListener("change", e=>{
+
+    // alert("e.value : " + e.target.value + ", e.value.type" + typeof Number( e.target.value ));
+
+    getCategoryList( Number( e.target.value ) );
+    createConfirm.category = true;
+  })
+});
 
 /********************************************************************** */
 /********************************************************************** */
@@ -478,7 +501,7 @@ submitGroupCreate.addEventListener("submit", e => {
     e.preventDefault();
     return;
   }
-  if(!createConfirm.categoryList ){
+  if(checkedCategoryList() === null ){
     alert("세부카테고리를 선택해 주셔야 합니다.");
     e.preventDefault();
     return;

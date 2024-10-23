@@ -113,6 +113,8 @@ public class GroupMemberManageController {
      	1 : 성공
      	2 : 모임인원초과
      	3 : 모임장 불일치
+     	4 : 강퇴인원
+     	5 : 이미 가입된 회원
 	 */
 	@PostMapping("")
 	public int inviteMember(

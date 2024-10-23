@@ -19,7 +19,8 @@
 
 
     <section class="mainSec">
-      <h1><th:block th:text="${group.groupName}"></th:block> 회원 가입 관리 <th:block th:text="${memberAllCount}"></th:block>/<th:block th:text="${group.groupMaxPopulation}"></th:block>명</h1>
+      <h1><th:block th:text="${group.groupName}"></th:block> 회원 가입 관리</h1>
+      <h3>가입신청인원 : <th:block th:text="${memberCount}"></th:block>명, 모임 총원 : <th:block th:text="${memberAllCount}"></th:block>/<th:block th:text="${group.groupMaxPopulation}"></th:block>명</h3>
       <table border="1" id="memberManageTable">
         <thead>
           <tr id="tableTr">
