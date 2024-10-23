@@ -34,9 +34,16 @@ public class BoardController {
 	public String selectBoardList(
 		@PathVariable("boardTypeCode") int boardTypeCode,
 		@RequestParam(value = "cp", required = false, defaultValue = "1") int cp,
-		Model model) {
+		Model model,
+		@RequestParam Map<String, Object> paramMap) {
 		
-		Map<String, Object> map = service.selectBoardList(boardTypeCode, cp);
+		Map<String, Object> map = null;
+		
+		if(paramMap.get("key") == null) { // 일반 목록 조회
+			map = service.selectBoardList(boardTypeCode, cp);
+		} else { // 검색 목록 조회
+			map = service.selectSearchList(boardTypeCode, cp, paramMap);
+		}
 	
 		List<Board> boardList = (List<Board>)map.get("boardList");
 		Pagination pagination = (Pagination)map.get("pagination");

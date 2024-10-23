@@ -11,4 +11,12 @@ public interface BoardService {
 	 */
 	Map<String, Object> selectBoardList(int boardTypeCode, int cp);
 
+	/** 검색 목록 조회
+	 * @param boardTypeCode
+	 * @param cp
+	 * @param paramMap
+	 * @return
+	 */
+	Map<String, Object> selectSearchList(int boardTypeCode, int cp, Map<String, Object> paramMap);
+
 }
