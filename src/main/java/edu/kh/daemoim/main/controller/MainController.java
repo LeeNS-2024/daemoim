@@ -13,13 +13,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MainController {
 
-    private final MainService mainService;
+    private final MainService service;
 
     @RequestMapping("/")
     public String mainPage(Model model) {
         
     	// 추천 모임 목록 조회
-        List<MainDTO> recommendedGroups = mainService.getRecommendedGroups();
+        List<MainDTO> recommendedGroups = service.getRecommendedGroups();
 
         model.addAttribute("recommendedGroups", recommendedGroups);
 

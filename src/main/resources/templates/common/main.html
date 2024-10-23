@@ -7,14 +7,12 @@
 
   <link rel="stylesheet" href="/css/main-style.css/">
   
-  <!-- templates/common/common.html 조각으로 추가 -->
   <th:block th:replace="~{common/common}"></th:block>
 </head>
 <body>
 
   <main class="main">
 
-    <!-- common/header.html 을 조각으로 추가 -->
     <th:block th:replace="~{common/header}"></th:block>
 
     <section class="login-section">
@@ -46,12 +44,10 @@
       </div>
     </section> -->
 
-     <!-- 로그인 전 추천 모임 보여주기 페이지 -->
      <th:block th:unless="${recommendedGroups != null && !#lists.isEmpty(recommendedGroups)}">
       <p>추천할 모임이 없습니다.</p>
     </th:block>
     
-    <!-- 추천 모임 목록 출력 -->
     <th:block th:if="${recommendedGroups != null && !#lists.isEmpty(recommendedGroups)}">
         <section class="activity-section">
             <div class="category-container">
@@ -82,18 +78,11 @@
 
   </main>
   
-  <script>
-    document.getElementById('scrollTopBtn').addEventListener('click', function() {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth' 
-      });
-    });
-    </script>
+  
 
   <th:block th:replace="~{common/footer}"></th:block>
 
-  <script src="../static/js/main.js"></script>
+  <script src="/js/main.js"></script>
 
 </body>
 </html>

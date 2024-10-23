@@ -11,10 +11,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MainServiceImpl implements MainService {
 
-    private final MainMapper mainMapper;
+    private final MainMapper mapper;
 
     @Override
     public List<MainDTO> getRecommendedGroups() {
-        return mainMapper.selectRecommendedGroups();
+        return mapper.selectRecommendedGroups();
     }
 }
