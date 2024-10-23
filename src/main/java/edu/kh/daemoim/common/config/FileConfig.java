@@ -48,7 +48,13 @@ public class FileConfig implements WebMvcConfigurer {
 	@Value("${daemoim.groupHeader.resource-location}")
 	private String groupHeaderImgLocation;
 	
+	//--------------------------------------
+	// 모임 사진첩 이미지 요청 경로 + 서버 연결 폴더
+	@Value("${daemoim.groupPhoto.resource-handler}")
+	private String groupPhotoImgHandler;
 	
+	@Value("${daemoim.groupPhoto.resource-location}")
+	private String groupPhotoImgLocation;
 
 	/* MultipartResolver 설정 */
 	@Bean
@@ -93,7 +99,15 @@ public class FileConfig implements WebMvcConfigurer {
 		registry
 		.addResourceHandler(groupHeaderImgHandler)
 		.addResourceLocations(groupHeaderImgLocation);
+		
+		// 모임사진첩이미지
+		registry
+		.addResourceHandler(groupPhotoImgHandler)
+		.addResourceLocations(groupPhotoImgLocation);
+		
+		
 	}
+	
 	
 	
 	
