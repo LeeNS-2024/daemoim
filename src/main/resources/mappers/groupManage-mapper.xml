@@ -139,7 +139,7 @@
 	<!-- 최근 작성된 공지글 불러오기 -->
 	<select id="getOrderBoard" resultType="Board">
 		SELECT
-			ROW_NUMBER() OVER (ORDER BY BOARD_NO ASC) "LIKE_CHECK",
+			ROW_NUMBER() OVER (ORDER BY BOARD_NO ASC) "RNUM",
 			BOARD_NO,
 			BOARD_TITLE,
 			TO_CHAR(BOARD_WRITE_DATE, 'YYYY-MM-DD') AS "BOARD_WRITE_DATE",
@@ -161,7 +161,7 @@
 	<!-- 최근 게시글 불러오기 -->
 	<select id="getRecentBoard" resultType="Board">
 		SELECT
-			ROW_NUMBER() OVER (ORDER BY BOARD_NO ASC) "LIKE_CHECK",
+			ROW_NUMBER() OVER (ORDER BY BOARD_NO ASC) "RNUM",
 			BOARD_NO,
 			BOARD_TITLE,
 			TO_CHAR(BOARD_WRITE_DATE, 'YYYY-MM-DD') AS "BOARD_WRITE_DATE",
@@ -184,7 +184,7 @@
 	<!-- 인기글 불러오기 -->
 	<select id="getPopularBoard" resultType="Board">
 		SELECT
-			ROW_NUMBER() OVER (ORDER BY BOARD_NO ASC) "LIKE_CHECK",
+			ROW_NUMBER() OVER (ORDER BY BOARD_NO ASC) "RNUM",
 			BOARD_NO,
 			BOARD_TITLE,
 			TO_CHAR(BOARD_WRITE_DATE, 'YYYY-MM-DD') AS "BOARD_WRITE_DATE",
