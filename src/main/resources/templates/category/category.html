@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,17 +7,13 @@
     <link rel="stylesheet" href="/css/main-style.css">
     <link rel="stylesheet" href="/css/category/category.css">
 
-    <!-- 공통 파일 include -->
     <th:block th:replace="~{common/common}"></th:block>
     
-    <!-- JavaScript 추가 -->
     <script src="/js/category/category.js" defer></script>
 </head>
 <body>
-    <!-- 헤더 영역 (공통) -->
     <th:block th:replace="~{common/header}"></th:block>
 
-    <!-- 카테고리 탭 영역 -->
     <div class="category-tabs">
         <a href="#" class="tab-link" data-target="allCategory">전체</a>
         <a href="#" class="tab-link" data-target="activity">액티비티</a>
@@ -26,7 +22,6 @@
         <a href="#" class="tab-link" data-target="dating">연애</a>
     </div>
 
-    <!-- 카테고리 콘텐츠 영역 -->
     <div class="category-content" id="allCategory">
         <h1>&nbsp;&nbsp;<i class="fa-solid fa-bars"></i>&nbsp;&nbsp;전체</h1>
         <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;여기에서 모든 카테고리를 확인할 수 있습니다.</p>
@@ -507,7 +502,6 @@
         </section>
     </div>
 
-    <!-- 푸터 영역 (공통) -->
     <footer>
         <th:block th:replace="~{common/footer}"></th:block>
     </footer>

@@ -1,14 +1,20 @@
 package edu.kh.daemoim.main.service;
 
-import org.springframework.stereotype.Service;
-
+import edu.kh.daemoim.main.dto.MainDTO;
 import edu.kh.daemoim.main.mapper.MainMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class MainServiceImpl implements MainService{
+public class MainServiceImpl implements MainService {
 
-	private final MainMapper mapper;
-	
+    private final MainMapper mainMapper;
+
+    @Override
+    public List<MainDTO> getRecommendedGroups() {
+        return mainMapper.selectRecommendedGroups();
+    }
 }
