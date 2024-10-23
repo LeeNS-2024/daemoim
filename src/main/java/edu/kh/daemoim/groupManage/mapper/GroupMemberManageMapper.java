@@ -5,6 +5,8 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import edu.kh.daemoim.groupManage.dto.GroupMemberManageDto;
+
 @Mapper
 public interface GroupMemberManageMapper {
 
@@ -31,6 +33,12 @@ public interface GroupMemberManageMapper {
 
 	// 현재 모임인원 수 확인
 	int checkPopulation(int groupNo);
+
+	// 가입인원 확인
+	GroupMemberManageDto searchMember(Map<String, Object> map);
+
+	// 재가입 인원
+	int updateMemberGroup(Map<String, Object> map);
 
 
 }

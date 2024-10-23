@@ -55,7 +55,7 @@
 			#{categoryListNo},
 			#{memberNo},
 			#{groupMainImg},
-			NULL
+			NULL, DEFAULT
 			)
 		
   </insert>

@@ -12,12 +12,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 
 import edu.kh.daemoim.board.dto.Board;
 import edu.kh.daemoim.groupManage.dto.GroupManageDto;
 import edu.kh.daemoim.groupManage.dto.ManageCategory;
 import edu.kh.daemoim.groupManage.service.GroupManageService;
+import edu.kh.daemoim.main.dto.MainDTO;
+import edu.kh.daemoim.myPage.dto.MyPage;
 import jakarta.servlet.annotation.MultipartConfig;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,7 +42,6 @@ public class GroupManageController {
 		List<ManageCategory> categoryArr = service.getCategoryArr();
 		model.addAttribute("categoryArr", categoryArr);
 		
-		// 비로그인 회원 메인화면으로 리다이랙트하는 구문 추가
 		return "groupManage/createGroup";
 	}
 	
@@ -59,7 +61,7 @@ public class GroupManageController {
 	 * @return categoryList
 	 */
 	@ResponseBody
-	@GetMapping("/{groupNo:[0-9]+}/getCategoryList")
+	@GetMapping("getCategoryList")
 	public List<ManageCategory> getCategoryList(
 			@RequestParam("categoryNo") int categoryNo ){
 		return service.getCategoryList(categoryNo);
@@ -73,13 +75,14 @@ public class GroupManageController {
 	@PostMapping("createGroup")
 	public String createGroup(
 			@ModelAttribute GroupManageDto inputGroup,
-			@RequestParam("groupImg") MultipartFile groupImg) {
+			@RequestParam("groupImg") MultipartFile groupImg,
+			@SessionAttribute("loginMember") MyPage loginMember ) {
 		System.out.println("연결확인");
 		// 이미지, 가입제한사항 빼고 다들어갈거임
 		// 모임이름, 소개, 카테고리넘버, 카테고리리스트넘버
 
 		// 세션에서 로그인한 멤버의 멤버넘를 받아와 input그룹에 저장
-		inputGroup.setMemberNo(1);
+		inputGroup.setMemberNo( loginMember.getMemberNo() );
 		
 		System.out.println(inputGroup.toString());
 		int result = service.createGroup(inputGroup, groupImg);
