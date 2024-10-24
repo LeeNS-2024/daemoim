@@ -2,11 +2,14 @@ package edu.kh.daemoim.signup.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import edu.kh.daemoim.myPage.dto.MyPage;
 import edu.kh.daemoim.common.util.RedisUtil;
 import edu.kh.daemoim.signup.service.SignupService;
 import lombok.RequiredArgsConstructor;
@@ -51,6 +54,31 @@ public class SignupController {
 		return service.nicknameCheck(nickname);
 	}
 	
+
+	@PostMapping("signUp")
+	public String signUp(
+			@ModelAttribute MyPage inputMember,
+			RedirectAttributes ra
+			) {
+		
+		
+		int result = service.signUp(inputMember);
+		
+		String path = null;  
+		String message = null;
+		
+		if(result > 0) {
+			path = "/";
+			message = "회원 가입 실패....";
+		}else {
+			path = "signUp";
+			message = "가입 성공....";
+		}
+		
+		ra.addFlashAttribute("message",message);
+		
+		return "redirect:" + path;
+	}
 	// 전화번호 
 	@ResponseBody
 	@GetMapping("telCheck")
@@ -92,8 +120,5 @@ public class SignupController {
 		return service.sendEmail("signUp",email);
 	}
 	
-	
-	
-	
-	
+
 }

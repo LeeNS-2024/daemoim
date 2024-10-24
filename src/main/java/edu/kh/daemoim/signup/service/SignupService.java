@@ -1,5 +1,7 @@
 package edu.kh.daemoim.signup.service;
 
+import edu.kh.daemoim.myPage.dto.MyPage;
+
 public interface SignupService {
 
 	// 아이디 체크
@@ -18,5 +20,8 @@ public interface SignupService {
 	// 인증메일보내기
 	int sendEmail(String htmlName, String email);
 
+
+	//회원가입 마지막
+	int signUp(MyPage inputMember);
 
 }
