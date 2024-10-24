@@ -24,6 +24,11 @@ public class BoardController {
 	
 	private final BoardService service;
 	
+	@GetMapping("boardPage")
+	public String boardPage() {
+		return "board/boardList";
+	}
+	
 	@GetMapping("boardSchedule")
 	public String boardSchedulePage() {
 		return "board/boardSchedule";
@@ -57,7 +62,7 @@ public class BoardController {
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("pagination", pagination);
 		
-		return "/board/boardList";
+		return "/board/boardList :: list";
 	}
 	
 }

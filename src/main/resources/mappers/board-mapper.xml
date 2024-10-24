@@ -85,7 +85,7 @@
 		
 		,
 
-		(SELECT IMG_PATH || IMG_RENAME
+		(SELECT BOARD_IMG_PATH || BOARD_IMG_RENAME
 		 FROM BOARD_IMG I 
 		 WHERE BOARD_IMG_ORDER = 0 
 		 AND I.BOARD_NO = B.BOARD_NO) AS "THUMBNAIL"
@@ -186,7 +186,7 @@
 		]]>
 		
 		,
-		(SELECT IMG_PATH || IMG_RENAME 
+		(SELECT BOARD_IMG_PATH || BOARD_IMG_RENAME 
 		 FROM BOARD_IMG I 
 		 WHERE IMG_ORDER = 0 
 		 AND I.BOARD_NO = B.BOARD_NO) AS THUMBNAIL
@@ -232,48 +232,14 @@
   
   </select>
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <!-- DB에서 모든 게시판 종류를 조회 -->
+  <select id="selectBoardTypeList" resultType="map">
+  	SELECT 
+  		BOARD_TYPE_CODE "boardTypeCode",
+  		BOARD_NAME "boardName"
+  	FROM
+  		"BOARD_TYPE"
+  	ORDER BY BOARD_TYPE_CODE ASC
+  </select>
   
 </mapper>

@@ -42,5 +42,10 @@ public interface BoardMapper {
 	 * @return
 	 */
 	List<Board> selectSearchList(Map<String, Object> paramMap, RowBounds rowBounds);
+	
+	/** DB에서 모든 게시판 종류를 조회
+	 * @return
+	 */
+	List<Map<String, String>> selectBoardTypeList();
 
 }

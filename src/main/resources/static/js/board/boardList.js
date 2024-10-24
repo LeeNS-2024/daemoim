@@ -5,8 +5,16 @@ $(function() {
   $("#calendar").datepicker();
 });
 
-document.querySelector("#schedulePage").addEventListener("click", () => {
-  location.href = `/board/boardSchedule`;
+const nav = document.querySelector("nav");
+
+nav.addEventListener("click", e => {
+  e.preventDefault();
+  fetch("/board/{groupNo}/{boardTypeCode}")
+  .then(resp => resp.text())
+  .then(html => {
+      document.querySelector(".list-table").outerHTML = html
+    
+  })
 })
 
 pageNoList?.forEach( (item, index) => {
