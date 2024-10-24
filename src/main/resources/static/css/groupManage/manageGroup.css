@@ -174,13 +174,21 @@ main{
   height: 75px;
 }
 #preViewIntroduce{
+  margin: 0;
   width: 500px;
-  height: 50px;
+  height: 70px;
   background-color: #c4c4c4;
-  font-size: 0.5em;
   text-align: center;
   align-content: center;
+
+  display: flex;
+  flex-direction: column;
+
 }
+#preViewIntroduce > span{display: block;}
+#preViewIntroduce > span:first-child{font-size: 1.2em; font-weight: bold;}
+#preViewIntroduce > span:nth-child(2){font-size: 1.2em; font-weight: bold; margin: 0 0 5px;}
+#preViewIntroduce > span:nth-child(n+3){font-size: 0.4em;}
 .preViewDiv{
   display: flex;
   flex-direction: column;
