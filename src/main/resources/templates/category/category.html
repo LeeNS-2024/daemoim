@@ -8,33 +8,23 @@
     <link rel="stylesheet" href="/css/category/category.css">
     <link rel="stylesheet" href="/css/search/search.css">
     <th:block th:replace="~{common/common}"></th:block>
-    
     <script src="/js/category/category.js" defer></script>
 </head>
 <body>
     <th:block th:replace="~{common/header}"></th:block>
 
     <section class="categorySearch">
-        <div class="category-tabs">
-            <a href="#" class="category-btn" data-category="allCategory">전체</a>
-            <a href="#" class="category-btn" data-category="activity">액티비티</a>
-            <a href="#" class="category-btn" data-category="culture">문화/여가</a>
-            <a href="#" class="category-btn" data-category="develop">자기계발</a>
-            <a href="#" class="category-btn" data-category="dating">연애</a>
-        </div>
+      
     
-            <form action="#" method="get" id="search">
-                <div class="input-wrapper">
-                    <input type="text" name="query" id="searchQuery" placeholder="검색어 입력">
-                </div>
-            </form>
-    
+        <form action="#" method="get" id="search">
+            <div class="input-wrapper">
+                <input type="text" name="query" id="searchQuery" placeholder="검색어 입력">
+            </div>
+        </form>
+        
         <div id="groupContainer">
-            <section class="activity-section">
-                <div class="category-container">
-                    
-                </div>
-            </section>
+            <!-- groupList.html 조각을 초기 렌더링 시 포함 -->
+            <th:block th:replace="~{category/groupList}"></th:block>
         </div>
     </section>
 
