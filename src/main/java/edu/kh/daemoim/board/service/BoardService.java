@@ -24,12 +24,6 @@ public interface BoardService {
 	 */
 	Map<String, Object> selectSearchList(int groupNo, int boardTypeCode, int cp, Map<String, Object> paramMap);
 
-
-	/** DB에서 모든 게시판 종류를 조회
-	 * @return
-	 */
-	List<Map<String, String>> selectBoardTypeList();
-
 	/** 게시글 상세 조회
 	 * @param map
 	 * @return
@@ -42,10 +36,9 @@ public interface BoardService {
 	 */
 	int updateReadCount(int boardNo);
 
-	/** 좋아요 체크 or 해제
-	 * @param boardNo
-	 * @param memberNo
+	/** DB에서 모든 게시판 종류를 조회
 	 * @return
 	 */
-	Map<String, Object> boardLike(int boardNo, int memberNo);
+	List<Map<String, String>> selectBoardTypeList();
+
 }
