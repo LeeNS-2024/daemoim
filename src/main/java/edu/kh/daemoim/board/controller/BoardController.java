@@ -22,7 +22,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.kh.daemoim.board.service.BoardService;
 import edu.kh.daemoim.myPage.dto.MyPage;
-import edu.kh.project.member.dto.Member;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -78,7 +77,7 @@ public class BoardController {
 		return "/board/boardList";
 	}
 	
-	/**
+	/** 게시글 상세 조회하기
 	 * @param groupNo 			모임 번호
 	 * @param boardTypeCode 게시판 종류
 	 * @param boardNo				게시판 번호
