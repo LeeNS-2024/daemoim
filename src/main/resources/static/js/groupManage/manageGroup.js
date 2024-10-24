@@ -368,6 +368,7 @@ java가서만 따로따로 받으면되지 검사 자체는 뭉뚱그려서 검�
 
 // 이미지 인풋태그
 const inputImageArr = document.getElementsByName("inputImg");
+const imgName2 = document.querySelector("#imgName2");
 
 // 이미지 미리보기 창
 const imgPreview = document.querySelectorAll(".inputImgPreview");
@@ -387,45 +388,71 @@ for(let i=0; i < inputImageArr?.length ; i++){
     
     if(file === undefined){
       if(lastImg[i] === null) return;
-
-      const transfer = new DataTransfer();
-      transfer.items.add(lastImg[i]);
-      inputImageArr[i].files = transfer.files;
-
+      backupLoad(i);
       return;
     }
 
     if(file.size > 1*1024*1024*1){
       alert("파일크기가 10MB를 초과합니다");
-      const transfer = new DataTransfer();
-      transfer.items.add(lastImg[i]);
-      inputImageArr[i].files = transfer.files;
+      backupLoad(i);
       return;
     }
 
-    imgPreviewFuntion(file, i); // 미리보기 함수 호출
-  }) // inputImage event end
+    // 해더이미지 비율 확인
+    if( i > 0 ){
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
 
+      const img = new Image();
+
+      reader.addEventListener("load", e => {
+        img.src = e.target.result;
+        const width = img.width;
+        const height = img.height;
+        const ratio = width / height;
+
+        if(ratio <= 4 || ratio >= 9){
+          alert("이미지 크기가 올바르지 않습니다.\n현재비율 : " + ratio);
+          imgName2.innerText = "* 권장비율 4:1 ~ 9:1";
+          backupLoad(i);
+          return;
+        }
+        imgName2.innerText = '';
+
+        imgPreviewFunction(file, i); // 미리보기 함수 호출
+      })
+    } // 이미지 비율확인 종료
+
+  }) // inputImage event end
 } // for end
 
-const imgPreviewFuntion = (file, order) => {
+const backupLoad = (i) => {
+  const transfer = new DataTransfer();
+  if(lastImg[i] == null) return;
+  transfer.items.add(lastImg[i]);
+  inputImageArr[i].files = transfer.files;
+};
+
+const imgPreviewFunction = (file, order) => {
 
   lastImg[order] = file;
   
   // 입력받은 파일을 미리보기창에 url형태로 전달
   const reader = new FileReader();
   reader.readAsDataURL(file);
+
   reader.addEventListener("load", e => {
-    
+
     imgPreview[order].src=e.target.result;
     // 메인상단이미지는 미리보기 화면도 바꿈
     if(order === 1){
-      imgPreview[2].src=e.target.result;
+      imgPreview[2].src = e.target.result;
     }
-  })
+  });
 
   deleteOrderList.delete(order);
-} // imgPreviewFuntion() end
+
+}; // imgPreviewFuntion() end
 
 // X 버튼 클릭시 기본이미지로 변경
 const imgDelBtns = document.querySelectorAll(".imgDelBtn");

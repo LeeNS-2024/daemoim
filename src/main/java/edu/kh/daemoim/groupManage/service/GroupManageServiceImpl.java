@@ -230,5 +230,15 @@ public class GroupManageServiceImpl implements GroupManageService {
 	public List<Board> getPopularBoard(int groupNo, int period) {
 		return mapper.getPopularBoard(groupNo, period);
 	}
+	
+	// [인터페이스] 모임상단이미지 얻어오기
+	@Override
+	public String getGroupHeaderImg(String groupNo) {
+		
+		GroupManageDto group =  mapper.selectGroup( Integer.parseInt(groupNo) );
+		String headerLocation = group.getGroupHeaderImg();
+		
+		return headerLocation;
+	}
 
 }
