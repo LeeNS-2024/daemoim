@@ -66,9 +66,37 @@ public class BoardServiceImpl implements BoardService{
 		return map;
 	}
 	
+
 	//DB에서 모든 게시판 종류를 조회
 	@Override
 	public List<Map<String, String>> selectBoardTypeList() {
 		return mapper.selectBoardTypeList();
 	}
+
+	// 게시글 상세조회
+	@Override
+	public Board selectDetail(Map<String, Integer> map) {
+		return mapper.selectDetail(map);
+	}
+	
+	// 조회수 1 증가
+	@Override
+	public int updateReadCount(int boardNo) {
+		return mapper.updateReadCount(boardNo);
+	}
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
 }

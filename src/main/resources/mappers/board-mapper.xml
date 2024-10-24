@@ -95,6 +95,13 @@
 		"MEMBER" M ON (B.MEMBER_NO = M.MEMBER_NO)
 	WHERE 
 		BOARD_DEL_FL = 'N' 
+	<if test="boardTypeCode == 3">
+	AND
+		(SELECT COUNT(*)
+		 FROM BOARD_IMG I 
+		 WHERE BOARD_IMG_ORDER = 0 
+		 AND I.BOARD_NO = B.BOARD_NO) != 0
+	</if>
 	AND   
 		BOARD_TYPE_CODE = #{boardTypeCode} 
 	AND 
@@ -115,6 +122,13 @@
   	
   	WHERE 
   		BOARD_TYPE_CODE = #{boardTypeCode}
+	<if test="boardTypeCode == 3">
+	AND
+		(SELECT COUNT(*)
+		 FROM BOARD_IMG I 
+		 WHERE BOARD_IMG_ORDER = 0 
+		 AND I.BOARD_NO = B.BOARD_NO) != 0
+	</if> 
   	AND 
   		GROUP_NO = #{groupNo}
   	AND 
@@ -188,7 +202,7 @@
 		,
 		(SELECT BOARD_IMG_PATH || BOARD_IMG_RENAME 
 		 FROM BOARD_IMG I 
-		 WHERE IMG_ORDER = 0 
+		 WHERE BOARD_IMG_ORDER = 0 
 		 AND I.BOARD_NO = B.BOARD_NO) AS THUMBNAIL
 	FROM
 		"BOARD" B
@@ -198,6 +212,13 @@
 		BOARD_DEL_FL = 'N' 
 	AND   
 		BOARD_TYPE_CODE = #{boardTypeCode}
+	<if test="boardTypeCode == 3">
+	AND
+		(SELECT COUNT(*)
+		 FROM BOARD_IMG I 
+		 WHERE BOARD_IMG_ORDER = 0 
+		 AND I.BOARD_NO = B.BOARD_NO) != 0
+	</if>
 	AND 
 		GROUP_NO = #{groupNo}
 		
@@ -229,9 +250,46 @@
 		 
 	ORDER BY 
 		RNUM DESC
-  
   </select>
   
+  <!-- 게시글 상세 조회 -->
+  <select id="selectDetail" resultMap="board_rm">
+  	SELECT 
+		BOARD_NO, BOARD_TITLE, BOARD_CONTENT,
+		BOARD_CODE, READ_COUNT, B.MEMBER_NO ,
+		MEMBER_NICKNAME, PROFILE_IMG,
+		
+		TO_CHAR(BOARD_WRITE_DATE, 'YYYY"년" MM"월" DD"일" HH24:MI:SS')
+			AS "BOARD_WRITE_DATE",
+			
+		TO_CHAR(BOARD_UPDATE_DATE, 'YYYY"년" MM"월" DD"일" HH24:MI:SS')
+			AS "BOARD_UPDATE_DATE",
+			
+		(SELECT COUNT(*) 
+		 FROM BOARD_LIKE L
+		 WHERE L.BOARD_NO = #{boardNo}) AS "LIKE_COUNT",
+		 
+		(SELECT BOARD_IMG_PATH || BOARD_IMG_RENAME
+		 FROM BOARD_IMG I
+		 WHERE I.BOARD_NO = #{boardNo}
+		 AND BOARD_IMG_ORDER = 0) AS "THUMBNAIL",
+		 
+		(SELECT COUNT(*) 
+		 FROM "LIKE"
+		 WHERE BOARD_NO  = #{boardNo}
+		 AND   MEMBER_NO = #{memberNo}) AS "LIKE_CHECK"
+		
+	FROM 
+		"BOARD" B
+	JOIN 
+		"MEMBER" M ON (B.MEMBER_NO = M.MEMBER_NO)
+	WHERE 
+		BOARD_NO = #{boardNo}
+	AND   
+		BOARD_TYPE_CODE = #{boardTypeCode}
+  </select>
+  
+
   <!-- DB에서 모든 게시판 종류를 조회 -->
   <select id="selectBoardTypeList" resultType="map">
   	SELECT 
@@ -241,5 +299,65 @@
   		"BOARD_TYPE"
   	ORDER BY BOARD_TYPE_CODE ASC
   </select>
+
+  <!-- 특정 게시글의 이미지를 order 순서로 조회 -->
+  <select id="selectImageList" resultType="BoardImg">
+  	SELECT * 
+  	FROM BOARD_IMG
+  	WHERE BOARD_NO = #{boardNo}
+  	ORDER BY BOARD_IMG_ORDER ASC
+  </select>
+  
+  <update id="updateReadCount">
+  	UPDATE 
+  		"BOARD"
+  	SET
+  		READ_COUNT = READ_COUNT + 1
+  	WHERE 
+  		BOARD_NO = #{boardNo}
+  </update>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
   
 </mapper>

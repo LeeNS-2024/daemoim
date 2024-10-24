@@ -1,8 +1,5 @@
-/***** 회원 가입 유효성 검사 *****/
-
 /* 필수 입력 항목의 유효성 검사여부를 체크하기 위한 객체(체크리스트)*/
 const checkObj = {
-
   "memberEmail": false,
   "memberDomain": false,
   "memberFullEmail": false,
@@ -50,6 +47,7 @@ memberEmail.addEventListener("input", e => {
     return;
   }
 
+
   // 5) 이메일 형식이 맞는지 검사(정규 표현식을 이용한 검사)
 
   // 이메일 형식 정규 표현식 객체
@@ -61,12 +59,11 @@ memberEmail.addEventListener("input", e => {
     emailMessage.classList.add("error"); // 빨간 글씨 추가
     emailMessage.classList.remove("confirm"); // 초록 글씨 제거
     checkObj.memberEmail = false; // 유효하지 않다고 체크
-
     return;
   }
 
   // 6) 이메일 중복 검사(AJAX)
-  fetch("/member/emailCheck?email=" + inputEmail)
+  fetch("emailCheck?email=" + inputEmail)
   .then(response => {
     if(response.ok){ // HTTP 응답 상태 코드 200번(응답 성공)
       return response.text(); // 응답 결과를 text로 파싱
@@ -77,48 +74,24 @@ memberEmail.addEventListener("input", e => {
   .then(count => {
     // 매개 변수 count : 첫 번째 then에서 return된 값이 저장된 변수
 
-    if(count == 1){ // 중복인 경우
+    if(count > 1){ // 중복인 경우
       emailMessage.innerText = emailMessageObj.duplication; // 중복 메시지
       emailMessage.classList.add("error");
       emailMessage.classList.remove("confirm");
       checkObj.memberEmail = false;
       return;
     } 
-    
 
-// 인증 번호 받기 버튼 클릭 시
-sendAuthKeyBtn.addEventListener("click", () => {
+    // 중복이 아닌 경우
+    emailMessage.innerText = emailMessageObj.check; // 중복X 메시지
+    emailMessage.classList.add("confirm");
+    emailMessage.classList.remove("error");
+    checkObj.memberEmail = true; // 유효한 이메일임을 기록
 
-  checkObj.authKey = false; // 인증 안된 상태로 기록
-  authKeyMessage.innerText = ""; // 인증 관련 메시지 삭제
-
-  if(authTimer != undefined){
-    clearInterval(authTimer); // 이전 인증 타이머 없애기
-  }
-
-  // 1) 작성된 이메일이 유효하지 않은 경우
-  if(checkObj.memberEmail === false){
-    alert("유효한 이메일 작성 후 클릭하세요");
-    return;
-  }
-
-
-  // 2) 비동기로 서버에서 작성된 이메일로 인증코드 발송(AJAX)
-  fetch("/email/sendAuthKey", {
-    method : "POST",
-    headers : {"Content-Type" : "application/json"},
-    body : memberFullEmail.value
-
-    // POST 방식으로 
-    // /email/sendAuthKey 요청을 처리하는 컨트롤러에
-    // 입력된 이메일을 body에 담아서 제출
   })
   .catch( err => console.error(err) );
+
 });
-
-
-// ------------------------------------------------------------------
-// ------------------------------------------------------------
 
 /*----- 이메일 인증 -----*/
 
@@ -169,13 +142,12 @@ sendAuthKeyBtn.addEventListener("click", () => {
     // /email/sendAuthKey 요청을 처리하는 컨트롤러에
     // 입력된 이메일을 body에 담아서 제출
   })
-
   .then(response => {
     if(response.ok) return response.text();
     throw new Error("이메일 발송 실패");
   })
   .then(result => {
-    // 백엔드 작성 후 나머지 코드 작성 예정
+  
     console.log(result);
   })
   .catch(err => console.error(err));
@@ -218,6 +190,10 @@ function addZero(num){
   if(num < 10)  return "0" + num;
   else          return num;
 }
+
+
+//----------------------------------------------------------------
+
 /* 인증 번호를 입력하고 인증하기 버튼을 클릭한 경우 */
 const authKey = document.querySelector("#authKey");
 const checkAuthKeyBtn = document.querySelector("#checkAuthKeyBtn");
@@ -250,7 +226,6 @@ checkAuthKeyBtn.addEventListener("click", () => {
   
   // JSON.stringify(객체) : 객체 -> JSON 변환(문자열화)
 
-
   fetch("/email/checkAuthKey", {
     method : "POST",
     headers : {"Content-Type" : "application/json"},
@@ -261,28 +236,31 @@ checkAuthKeyBtn.addEventListener("click", () => {
     throw new Error("인증 에러");
   })
   .then(result => {
-    console.log("인증 결과 : " , result);
+    console.log("인증 결과 : " , result, typeof result);
 
     // 3) 일치하지 않는 경우
-    if(result == false){
+    if(result == 'false'){
       alert("인증 번호가 일치하지 않습니다");
-      checkObj.authKey == false;
+      checkObj.authKey = false;
       return;
+    }else{
+
+      // 4) 일치하는 경우
+      // - 타이머 멈춤
+      clearInterval(authTimer);
+
+      // + "인증 되었습니다" 화면에 초록색으로 출력
+      authKeyMessage.innerText = "인증 되었습니다";
+      authKeyMessage.classList.add("confirm");
+      authKeyMessage.classList.remove("error");
+
+      checkObj.authKey = true; // 인증 완료 표시
     }
-
-    // 4) 일치하는 경우
-    // - 타이머 멈춤
-    clearInterval(authTimer);
-
-    // + "인증 되었습니다" 화면에 초록색으로 출력
-    authKeyMessage.innerText = "인증 되었습니다";
-    authKeyMessage.classList.add("confirm");
-    authKeyMessage.classList.remove("error");
-
-    checkObj.authKey = true; // 인증 완료 표시
   })
   .catch(err => console.error(err));
+
 });
+
 
 /* ----- 아이디 유효성 검사 ----- */
 // 1) 아이디 유효성 검사에 사용되는 요소 얻어오기
@@ -448,7 +426,7 @@ const nickMessage = document.querySelector("#nickMessage");
 // 2) 닉네임 관련 메시지 작성
 const nickMessageObj = {};
 nickMessageObj.normal = "한글,영어,숫자로만 3~10글자";
-nickMessageObj.invalid = "유효하지 않은 닉네임 형식 입니다";
+nickMessageObj.invalid = "닉네임이 유효하지 않습니다";
 nickMessageObj.duplication = "이미 사용중인 닉네임 입니다.";
 nickMessageObj.check = "사용 가능한 닉네임 입니다.";
 
@@ -503,51 +481,27 @@ memberNickname.addEventListener("input", () => {
     .catch(err => console.error(err));
 });
 
-// 주소 API
-function findAddress() {
-  new daum.Postcode({
-    oncomplete: function (data) {
-      // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-      var addr = ''; // 주소 변수
+//----------------------------------------------------------------------------------------------------------------
 
-      // 사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.ㄴ
-      if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-        addr = data.roadAddress;
-      } else { // 사용자가 지번 주소를 선택했을 경우(J)
-        addr = data.jibunAddress;
-      }
-
-      // 우편번호와 주소 정보를 해당 필드에 넣는다.
-      document.getElementById('postcode').value = data.zonecode;
-      document.getElementById("address").value = addr;
-      // 커서를 상세주소 필드로 이동한다.
-      document.getElementById("detailAddress").focus();
-    }
-  }).open();
-}
-
-// 주소 검색 버튼 클릭 시
-const searchAddress = document.querySelector("#searchAddress");
-searchAddress.addEventListener("click", findAddress);
-
-/* 전화번호 유효성 검사 */
-
-const memberTel = document.getElementById("memberTel");
+// 1) 전화번호 유효성 검사에 사용되는 요소 얻어오기
+const memberTelname = document.getElementById("memberTel");
 const telMessage = document.querySelector("#telMessage");
 
+// 2) 전화번호 관련 메시지 작성
 const telMessageObj = {};
-telMessageObj.normal = "전화번호를 입력해주세요.(- 제외)";
-telMessageObj.invalid = "유효하지 않은 전화번호 형식입니다.";
-telMessageObj.check = "유효한 전화번호 형식입니다.";
-telMessageObj.duplication = "이미 등록된 전화번호 입니다.";
+telMessageObj.normal = "한글,영어,숫자로만 3~10글자";
+telMessageObj.invalid = "전화번호가 유효하지 않습니다";
+telMessageObj.duplication = "이미 사용중인 전화번호 입니다.";
+telMessageObj.check = "사용 가능한 닉네임 입니다.";
 
-
+// 3) 전화번호 입력 시 마다 유효성 검사
 memberTel.addEventListener("input", () => {
 
-  const inputMemberTel = memberTel.value.trim();
+  // 입력 받은 전화번호
+  const inputTel = memberTel.value.trim();
 
-  if (inputMemberTel.length === 0) {
-
+  // 4) 입력된 전화번호가 없을 경우
+  if (inputTel.length === 0) {
     telMessage.innerText = telMessageObj.normal;
     telMessage.classList.remove("confirm", "error");
     checkObj.memberTel = false;
@@ -555,44 +509,78 @@ memberTel.addEventListener("input", () => {
     return;
   }
 
-  const regEx = /^010[0-9]{8}$/; // 010으로 시작, 이후 숫자 8개(총 11자)
-
-  if (regEx.test(inputMemberTel) === false) {
-
+  // 5) 전화번호 유효성 검사(정규 표현식)
+  const regEx = /^[a-zA-Z0-9가-힣]{3,10}$/; // 한글,영어,숫자로만 3~10글자
+  if (regEx.test(inputTel) === false) {
     telMessage.innerText = telMessageObj.invalid;
     telMessage.classList.remove("confirm");
     telMessage.classList.add("error");
-    checkObj.memberTel = false;
+    checkObj.memberNickname = false;
     return;
+
+  } else {
+    telMessage.innerText = '유효한 전화번호 입니다'
   }
+  // 6) 전화번호 중복 검사
+  fetch("/telCheck?tel=" + inputTel)
+    .then(response => {
+      if (response.ok) return response.text();
+      throw new Error("닉네임 중복 검사 에러");
+    })
+    .then(count => {
+      if (count == 1) {
+        telMessage.innerText = telMessageObj.duplication;
+        telMessage.classList.remove("confirm");
+        telMessage.classList.add("error");
+        checkObj.memberTel = false;
+        return;
+      }
 
-  telMessage.innerText = telMessageObj.check;
-  telMessage.classList.remove("error");
-  telMessage.classList.add("confirm");
-  checkObj.memberTel = true;
+      telMessage.innerText = telMessageObj.check;
+      telMessage.classList.remove("error");
+      telMessage.classList.add("confirm");
+      checkObj.memberTel = true;
 
-  // 핸드폰 번호 중복 검사
-
-
-
-   // 6) 닉네임 중복 검사
-   fetch("/telCheck?tel=" + inputMemberTel)
-   .then(response => {
-     if (response.ok) return response.text();  // JSON이 아니라 문자열을 반환
-     throw new Error("전화번호 중복 검사 에러");
-   })
-   .then(count => {
-     if (count > 0) {
-       telMessage.innerText = telMessageObj.duplication;
-       telMessage.classList.remove("confirm");
-       telMessage.classList.add("error");
-       checkObj.memberTel = false;
-       return;
-     }
-     telMessage.innerText = telMessageObj.check;
-     telMessage.classList.remove("error");
-     telMessage.classList.add("confirm");
-     checkObj.memberTel = true;
-   })
-   .catch(err => console.error(err));
+    })
+    .catch(err => console.error(err));
 });
+
+signUpForm.addEventListener("submit", e => {
+
+  // e.preventDefault(); // 기본 이벤트(form 제출) 막기
+
+  // for(let key in 객체)
+  // -> 반복마다 객체의 키 값을 하나씩 꺼내서 key 변수에 저장
+
+  // 유효성 검사 체크리스트 객체에서 하나씩 꺼내서
+  // false인 경우가 있는지 검사
+  for(let key in checkObj){ 
+
+    if( checkObj[key] === false ){ // 유효하지 않은 경우
+      let str; // 출력할 메시지 저장
+
+      switch(key){
+        case "memberEmail"     : str = "이메일이 유효하지 않습니다"; break;
+        case "memberNickname"  : str = "닉네임이 유효하지 않습니다"; break;
+        case "memberId"        : str = "이미 사용중인 아이디 입니다"; break;
+        case "memberNickname"  : str = "이미 사용중인 닉네임 입니다."; break;
+        case "memberPw"        : str = "비밀번호가 유효하지 않습니다"; break;
+        case "memberPwConfirm" : str = "비밀번호 확인이 일치하지 않습니다"; break;
+        case "memberTel"       : str = "전화번호가 유효하지 않습니다"; break;
+        case "memberTel"       : str = "이미 사용중인 전화번호 입니다"; break;
+        case "authKey"         : str = "이메일이 인증되지 않았습니다"; break;
+      }
+
+      alert(str); // 경고 출력
+
+      // 유효하지 않은 요소로 focus 이동
+      document.getElementById(key).focus();
+
+      e.preventDefault(); // 제출 막기
+
+      return;
+    }
+  }
+});
+
+

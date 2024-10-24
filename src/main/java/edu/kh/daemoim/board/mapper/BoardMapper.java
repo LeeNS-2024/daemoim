@@ -48,4 +48,16 @@ public interface BoardMapper {
 	 */
 	List<Map<String, String>> selectBoardTypeList();
 
+	/** 게시글 상세 조회
+	 * @param map
+	 * @return
+	 */
+	Board selectDetail(Map<String, Integer> map);
+
+	/** 조회수 1 증가
+	 * @param boardNo
+	 * @return
+	 */
+	int updateReadCount(int boardNo);
+
 }

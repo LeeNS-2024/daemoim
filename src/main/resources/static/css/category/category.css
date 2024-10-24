@@ -1,34 +1,30 @@
-/* 기본적으로 모든 카테고리 콘텐츠는 숨김 */
 .category-content {
   position: absolute;
   width: 100%;
   top: 0;
-  left: 100%; /* 처음에는 화면 밖에 위치 */
+  left: 100%; 
   z-index: 10;
   visibility: hidden;
   opacity: 0;
   transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out; /* opacity와 transform 전환 */
 }
 
-/* 활성화된 콘텐츠의 기본 스타일 */
 .category-content.active {
   visibility: visible;
-  margin-top: 200px; /* 헤더와의 겹침 문제 해결 */
+  margin-top: 200px; 
   opacity: 1;
   left: 0;
-  transform: translateX(0); /* 활성화된 콘텐츠는 제자리 */
+  transform: translateX(0);
 }
 
-/* 슬라이드 인 효과: 새로운 콘텐츠가 화면 안으로 들어옴 */
 .category-content.slide-in {
-  transform: translateX(0); /* 들어오는 콘텐츠는 제자리로 이동 */
+  transform: translateX(0); 
   left: 0;
   visibility: visible;
   opacity: 1;
 }
 
-/* 슬라이드 아웃 효과: 현재 콘텐츠가 화면 밖으로 나감 */
 .category-content.slide-out {
-  transform: translateX(-100%); /* 나가는 콘텐츠는 왼쪽으로 슬라이드 아웃 */
-  opacity: 0; /* 사라지는 동안 서서히 투명화 */
+  transform: translateX(-100%); 
+  opacity: 0; 
 }

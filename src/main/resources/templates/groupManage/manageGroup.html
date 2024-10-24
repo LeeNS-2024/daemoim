@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,10 +9,11 @@
   <link rel="stylesheet" href="/css/groupManage/manageGroup.css">
 
 </head>
+
 <body>
 
   <!-- 해더 -->
-  <th:block th:replace= "~{common/header}" ></th:block>
+  <th:block th:replace="~{common/header}"></th:block>
 
   <main class="space-around">
 
@@ -34,10 +36,10 @@
     ㄴ 모임 상세정보 수정
     ㄴ 회원정보 수정
     -->
-    <section id="sideSec1" th:fragment= "th-lfSide">
+    <section id="sideSec1" th:fragment="th-lfSide">
       <div class="sideStiky" id="sideLinkList">
         <h4>모임 및 회원정보 관리</h4>
-  
+
         <a th:href="@{/groupManage/{groupNo}/manageOrder(groupNo=${group.groupNo})}">
           <i class="fa-solid fa-list" style="color: #fc6e55;"></i>
           모임공지
@@ -82,7 +84,7 @@
 
       <div id="sideCommentList">
         <h4><i class="fa-solid fa-message" style="color: #74C0FC;"></i> 최근댓글</h4>
-        <th:block th:if="${commentList}" th:each= "comment:${commentList}" th:object="${comment}">
+        <th:block th:if="${commentList}" th:each="comment:${commentList}" th:object="${comment}">
           <a href="#">
             <p class="commentNickname" th:text="|*{memberNickname}&nbsp;|">
               작성자
@@ -95,22 +97,19 @@
             </p>
           </a>
         </th:block>
-        <th:block th:if= "${commentList.isEmpty}">
+        <th:block th:if="${commentList.isEmpty}">
           <p>- 최근 작성된 댓글이 없습니다 -</p>
         </th:block>
-        
+
       </div>
     </section>
 
-    <section  class="mainSec">
+    <section class="mainSec">
 
       <h1>모임정보 상세수정</h1>
-      
-      <form th:action="@{/groupManage/{groupNo}/manageGroup (groupNo=${group.groupNo})}"
-            method="POST"
-            enctype="multipart/form-data"
-            id="updateForm"
-            th:object="${group}">
+
+      <form th:action="@{/groupManage/{groupNo}/manageGroup (groupNo=${group.groupNo})}" method="POST"
+        enctype="multipart/form-data" id="updateForm" th:object="${group}">
 
 
         <!-- ********** 모임 이름 ********** -->
@@ -132,20 +131,20 @@
             <span id="countName"></span>
           </div>
         </section>
-        
-        
+
+
         <!-- ********** 모임 소개 ********** -->
         <div class="title">
           <i class="fa-solid fa-gear"></i>
           모임 소개
         </div>
-        
+
         <section class="createContent">
           <div class="serviceIntroduce">
             <span>모임 메인페이지의 소개글을 변경하실 수 있습니다.</span>
           </div>
           <textarea type="text" cols="127" rows="5" name="groupIntroduce" id="groupIntroduce"
-          th:text="*{groupIntroduce}"></textarea>
+            th:text="*{groupIntroduce}"></textarea>
           <br>
           <div>
             <span id="groupIntroduceMessage">모임의 소개글을 입력해 주세요.</span>
@@ -200,10 +199,10 @@
                     <i class="imgDelBtn fa-solid fa-xmark" style="color: #000000;"></i>
                   </div>
                 </div>
-               
-                
+
+
                 <img th:with="groupMainDefault=#{groupMain.default.image}" class="inputImgPreview"
-                     th:src="${group.groupMainImg ?: groupMainDefault}" alt="이미지표시 없음" id="inputImgPreview1">
+                  th:src="${group.groupMainImg ?: groupMainDefault}" alt="이미지표시 없음" id="inputImgPreview1">
               </div>
 
               <div>
@@ -233,7 +232,7 @@
 
                 <div style="display: flex; flex-direction: column; align-items: center;">
                   <img th:with="groupHeaderDefault=#{groupHeader.default.image}" class="inputImgPreview"
-                       th:src="${group.groupHeaderImg ?: groupHeaderDefault}" alt="이미지표시 없음" id="inputImgPreview2">
+                    th:src="${group.groupHeaderImg ?: groupHeaderDefault}" alt="이미지표시 없음" id="inputImgPreview2">
                 </div>
               </div>
 
@@ -241,7 +240,7 @@
               <div>
                 <div id="imgName2" class="inputName"><!-- 이미지이름 --></div>
                 <label class="hoverPoint" for="inputImg2">
-                이미지 선택
+                  이미지 선택
                 </label>
                 <div class="hoverPoint divInline deleteImg">변경 취소</div>
                 <br>
@@ -283,11 +282,14 @@
 
               <div style="display: flex; flex-direction: column; align-items: center;">
                 <img th:with="groupHeaderDefault=#{groupHeader.default.image}" class="inputImgPreview"
-                     th:src="${group.groupHeaderImg ?: groupHeaderDefault }" alt="이미지표시 없음" id="inputImgPreview3" style="display: block;">
+                  th:src="${group.groupHeaderImg ?: groupHeaderDefault }" alt="이미지표시 없음" id="inputImgPreview3"
+                  style="display: block;">
               </div>
-              <div id="preViewIntroduce" th:text="*{groupIntroduce}">
-                소개글
-              </div>
+              <pre id="preViewIntroduce">
+                <th:block th:each= "line:${introduceArr}">
+                  <span th:text="${line}">소개글</span>
+                </th:block>
+              </pre>
 
               <div class="space-around">
 
@@ -316,7 +318,7 @@
                     <div>모임일정</div>
                   </div>
                 </div>
-                
+
               </div>
 
             </div>
@@ -336,60 +338,56 @@
         </div>
 
         <section class="createContent">
-            <!-- 현재 카테고리 -->
-            <section>
-              <div>
-                <span class="categoryTitleSpan">현재 카테고리</span>
-              </div>
+          <!-- 현재 카테고리 -->
+          <section>
+            <div>
+              <span class="categoryTitleSpan">현재 카테고리</span>
+            </div>
 
-              <div id="categoryBefore">
-                <span class="categoryNameSpan" th:text="*{categoryName}">1</span>
-                <button type="button" id="categoryBtn">변경하기</button>
-              </div>
+            <div id="categoryBefore">
+              <span class="categoryNameSpan" th:text="*{categoryName}">1</span>
+              <button type="button" id="categoryBtn">변경하기</button>
+            </div>
 
-              <div class="categoryBox display-none" id="categoryAfter">
-                <th:block th:each="category : ${categoryArr}" th:object="${category}">
-                  <div>
-                    
-                    <input type="radio"
-                          class="categoryRadio"
-                          th:id= "*{categoryNo}"
-                          name="categoryNo"
-                          th:value="*{categoryNo}"
-                          th:checked= "${group.categoryNo} == *{categoryNo}">
+            <div class="categoryBox display-none" id="categoryAfter">
+              <th:block th:each="category : ${categoryArr}" th:object="${category}">
+                <div>
 
-                    <label class="categoryLabel" th:for= "*{categoryNo}" th:text="*{categoryName}"></label>
+                  <input type="radio" class="categoryRadio" th:id="*{categoryNo}" name="categoryNo"
+                    th:value="*{categoryNo}" th:checked="${group.categoryNo} == *{categoryNo}">
 
-                  </div>
-                </th:block>
-              </div>
-            </section>
-            
-            <!-- 현재 세부 카테고리 -->
-            <section>
-              <div>
-                <span class="categoryTitleSpan">현재 세부 카테고리</span>
-              </div>
-
-              <div id="categoryListBefore">
-                <span class="categoryNameSpan" th:text="*{categoryListName}">1</span>
-                <button type="button" id="categoryListBtn">변경하기</button>
-              </div>
-
-              <div  class="display-none" id="categoryListAfter">
-                <div class="categoryBox" id="CategoryListTr">
+                  <label class="categoryLabel" th:for="*{categoryNo}" th:text="*{categoryName}"></label>
 
                 </div>
-                <!-- <div>
+              </th:block>
+            </div>
+          </section>
+
+          <!-- 현재 세부 카테고리 -->
+          <section>
+            <div>
+              <span class="categoryTitleSpan">현재 세부 카테고리</span>
+            </div>
+
+            <div id="categoryListBefore">
+              <span class="categoryNameSpan" th:text="*{categoryListName}">1</span>
+              <button type="button" id="categoryListBtn">변경하기</button>
+            </div>
+
+            <div class="display-none" id="categoryListAfter">
+              <div class="categoryBox" id="CategoryListTr">
+
+              </div>
+              <!-- <div>
                   <span>직접입력</span>
                   <input type="radio" id="userInput" name="categoryListNo" value="-1">
                   <label for="userInput" style="width: 199px;">
                     <input type="text" name="userInputList" id="userInputcategoryList">
                   </label>
                 </div> -->
-              </div>
+            </div>
 
-            </section>
+          </section>
         </section>
 
 
@@ -404,7 +402,7 @@
 
     </section>
 
-    
+
     <section id="sideSec2">
       <div class="sideStiky">
         <h5>우측영역</h5>
@@ -415,8 +413,8 @@
   </main>
 
   <!-- 푸터 -->
-  <th:block th:replace= "~{common/footer}" ></th:block>
-  <th:block th:replace= "~{common/common}" ></th:block>
+  <th:block th:replace="~{common/footer}"></th:block>
+  <th:block th:replace="~{common/common}"></th:block>
 
   <script th:inline="javascript">
     const originalGroupName = /*[[${group.groupName}]]*/ "변경전 모임명";
@@ -430,11 +428,11 @@
     const beforeCategoryListNo = /*[[${group.categoryListNo}]]*/ "변경전 카테고리 리스트 번호";
   </script>
 
-  <section style="display: none;" id="manageGroupFooter" th:fragment= "th-manageGroupFooter">
+  <section style="display: none;" id="manageGroupFooter" th:fragment="th-manageGroupFooter">
 
     <script th:inline="javascript">
       const pagination = /*[[${pagination}]]*/ "페이지네이션 객체";
-      const groupNo = /*[[${group.groupNo}]]*/ "그룹번호" ;
+      const groupNo = /*[[${group.groupNo}]]*/ "그룹번호";
     </script>
 
     <script src="/js/groupManage/manageGroup.js"></script>
@@ -444,4 +442,5 @@
 
 
 </body>
+
 </html>

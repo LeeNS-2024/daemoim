@@ -38,13 +38,14 @@ public class SigninController {
       MyPage loginMember = service.login(memberId, memberPw);
       
       if(loginMember == null) {// 로그인 실패
-         ra.addAttribute("message", "이메일와 비밀번호가 매치되지 않습니다.");
+    	  ra.addAttribute("message", "이메일와 비밀번호가 매치되지 않습니다.");
+    	  return "redirect:/signin";
       }else {
          model.addAttribute("loginMember", loginMember);
          
       }
       
-      return "common/main";
+      return "redirect:/";
       }
    @GetMapping("logout")
 	public String logout(SessionStatus status) {

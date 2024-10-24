@@ -15,40 +15,35 @@
 
     <th:block th:replace="~{common/header}"></th:block>
 
-    <section class="login-section">
-      <form action="/signin">
-        <fieldset>
-          <div class="login-box">
-            <div class="wrapLoginButton">
-              <button class="mainLoginButton">로그인</button>
-            </div>
-            <hr>
-            <article class="pwjoin">
-              <a href="findIdPw" style="color: black; text-decoration: none; text-decoration-line: none;">아이디 비밀번호 찾기</a>
-              <span> | </span>
-              <a href="tacou" style="color: black; text-decoration: none; text-decoration-line: none;">회원가입</a>
-            </article>
-          </div>
-        </fieldset>
-      </form>
-    </section>
+    <!-- 세션 값이 있는지 확인
+    <p th:text="${loginMember != null ? '로그인 상태입니다' : '로그인 상태가 아닙니다'}"></p>
 
-    <!-- <section class="popup-section">
-      <div class="popup-overlay" id="popupOverlay"></div> -->
-      <!-- 팝업창  매번 x 눌러야해서 주석처리 해야함-->
-      <!-- <div class="popup" id="popup">
-        <button class="close-btn" id="closePopup">X</button>
-        <h2>공지사항</h2>
-        <p>팝업창 내용</p>
-        <img src="../../static/images/group.png" alt="팝업 이미지" style="width:100%;">
-      </div>
-    </section> -->
-
-     <th:block th:unless="${recommendedGroups != null && !#lists.isEmpty(recommendedGroups)}">
-      <p>추천할 모임이 없습니다.</p>
-    </th:block>
+    세션에 저장된 loginMember의 값 출력 (디버그용)
+    <p th:text="${loginMember != null ? loginMember.memberId : '로그인 상태가 아님'}"></p> -->
     
-    <th:block th:if="${recommendedGroups != null && !#lists.isEmpty(recommendedGroups)}">
+    <!-- 로그인 상태가 아닐 때 -->
+    <th:block th:if="${loginMember == null}">
+      <!-- 로그인 섹션 -->
+      <section class="login-section">
+        <form action="/signin">
+          <fieldset>
+            <div class="login-box">
+              <div class="wrapLoginButton">
+                <button class="mainLoginButton">로그인</button>
+              </div>
+              <hr>
+              <article class="pwjoin">
+                <a href="findIdPw" style="color: black; text-decoration: none; text-decoration-line: none;">아이디 비밀번호 찾기</a>
+                <span> | </span>
+                <a href="tacou" style="color: black; text-decoration: none; text-decoration-line: none;">회원가입</a>
+              </article>
+            </div>
+          </fieldset>
+        </form>
+      </section>
+
+      <!-- 추천 모임 목록 -->
+      <th:block th:if="${recommendedGroups != null && !#lists.isEmpty(recommendedGroups)}">
         <section class="activity-section">
             <div class="category-container">
                 <div class="category-box" th:each="group : ${recommendedGroups}">
@@ -56,9 +51,9 @@
                         <img th:src="${group != null && group.groupMainImg != null ? group.groupMainImg : '/images/default.png'}" alt="[[${group.groupName}]] 아이콘" />
                     </div>
                     <div class="details">
-                        <a th:href="@{/groupMain/{groupName}(groupName=${group.groupName})}" class="activity-name" style="color: black; text-decoration: none; text-decoration-line: none;">[[${group.groupName}]]</a>
+                        <a th:href="@{/groupMain/{groupName}(groupName=${group.groupName})}" class="activity-name" style="color: black; text-decoration: none;">[[${group.groupName}]]</a>
                         <div class="group-name">[[${group.groupIntroduce}]]</div>
-                        <div class="location">카테고리: [[${group.categoryName}]]</div>
+                        <div class="location">[[${group.categoryName}]]</div>
                         <div class="participants">
                             <i class="fa-solid fa-users"> &nbsp;</i>
                             <div>
@@ -69,8 +64,41 @@
                 </div>
             </div>
         </section>
+      </th:block>
     </th:block>
-    <!-- 로그인 했을 시 가입한 목록 보여주기~ 추가 예정 -->
+
+    <!-- 로그인 상태일 때 내가 가입한 모임 목록 -->
+    <th:block th:if="${loginMember != null}">
+      <h2>내가 가입한 모임</h2>
+
+      <th:block th:unless="${joinGroups != null && !#lists.isEmpty(joinGroups)}">
+        <p>가입한 모임이 없습니다.</p>
+      </th:block>
+
+      <th:block th:if="${joinGroups != null && !#lists.isEmpty(joinGroups)}">
+        <section class="activity-section">
+            <div class="category-container">
+                <div class="category-box" th:each="group : ${joinGroups}">
+                    <div class="icon">
+                      <img th:src="${group.groupMainImg != null ? group.groupMainImg : '/images/default.png'}" alt="[[${group.groupName}]] 아이콘" />
+                    </div>
+                    <div class="details">
+                        <a th:href="@{/groupMain/{groupName}(groupName=${group.groupName})}" class="activity-name" style="color: black; text-decoration: none;">[[${group.groupName}]]</a>
+                        <div class="group-name">[[${group.groupIntroduce}]]</div>
+                        <div class="location">[[${group.categoryName}]]</div>
+                        <div class="participants">
+                          <i class="fa-solid fa-users"> &nbsp;</i>
+                          <div>
+                              [[${group.currentPopulation}]] / [[${group.maxPopulation}]]
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+      </th:block>
+    </th:block>
+
 
     <section class="scroll-top">
       <button id="scrollTopBtn"><i class="fa-solid fa-circle-chevron-up"></i></button>
@@ -78,8 +106,6 @@
 
   </main>
   
-  
-
   <th:block th:replace="~{common/footer}"></th:block>
 
   <script src="/js/main.js"></script>

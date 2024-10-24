@@ -162,20 +162,20 @@ submitDiv?.addEventListener("click", e => {
     groupName.focus();
     return;
   }
-
+  
   if(detailConfirm.groupIntroduce === false){
     alert("모임소개를 확인해 주세요.");
     groupIntroduce.focus();
     return;
   }
-
+  
   if(detailConfirm.category === false){
     if(checkedCategory() === null){// 체크된 카테고리가 없는경우
       alert("카테고리 체크를 확인해주세요");
       return;
     }
   }
-
+  
   if(detailConfirm.categoryList === false){
     if(checkedCategoryList() === null){// 체크된 카테고리가 없는경우
       alert("카테고리 리스트 체크를 확인해주세요");
@@ -184,7 +184,7 @@ submitDiv?.addEventListener("click", e => {
   }
 
   // deleteOrderList 적재
-  const input = document.querySelector("input");
+  const input = document.createElement("input");
   input.type = 'hidden';
   input.name = 'deleteOrderList';
   input.value = Array.from(deleteOrderList);
@@ -963,6 +963,11 @@ const tableAjaxRequest = (int) => {
 
 };
 
+// 게시판 전체보기버튼 클릭시
+ const gotoBoard1 = document.querySelector(".gotoBoard1"); // 공지게시판
+ const gotoBoard2 = document.querySelector(".gotoBoard2"); // 일반게시판
+ gotoBoard1?.addEventListener("click", () => {location.href = "/board/" + groupNo + "/1" });
+ gotoBoard2?.addEventListener("click", () => {location.href = "/board/" + groupNo + "/2" });
 
 document.addEventListener("DOMContentLoaded", ()=>{
 
@@ -985,6 +990,30 @@ document.addEventListener("DOMContentLoaded", ()=>{
     backupMemberArrBtn();
   }
 
+  // select태그들 초기설정
+  const params = new URLSearchParams( location.search );
+  const periodParam = params.get("period");
+  const keyParam = params.get("key");
+  const queryInput = document.querySelector("#searchQuery");
   
+  if(periodParam){
+    document.getElementById("searchPeriod").value = periodParam;
+  }
+  if(keyParam){
+    document.querySelector("#searchKey").value = keyParam;
+    queryInput.value = params.get("query");
+  }
+
+  // 회원정보 검색에서 검색내용 없으면 제출 막기
+  const searchForm = document.querySelector(".searchForm form");
+  searchForm?.addEventListener("submit", e =>{
+    if(queryInput){
+      if(queryInput.value.trim().length === 0){
+        e.preventDefault();
+        alert("검색어를 입력해 주세요");
+        return;
+      }
+    }
+  })
 
 });

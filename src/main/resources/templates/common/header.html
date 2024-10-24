@@ -5,14 +5,26 @@
         대모임 <!-- 로고 텍스트(로고를 png로 넣을지 글씨로 할지 고민) -->
       </a>
 
-      <div class="login-search-wrapper">
+      <th:block th:unless="${session.loginMember}" class="login-search-wrapper">
         <a href="/search/search" class="headerSearchBtn">
           <i class="fa-solid fa-magnifying-glass"></i>
         </a>
         <div class="loginBtnBox">
           <a href="/signin" class="headerLoginBtn">로그인</a>
         </div>
-      </div>
+      </th:block>
+
+      <th:block th:if="${session.loginMember}" class="login-search-wrapper">
+        <a href="/search/search" class="headerSearchBtn">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </a>
+        [[${session.loginMember.memberNickname}]]
+        <div class="loginBtnBox">
+          <a href="/myPage/info" class="headerLoginBtn">내정보</a>
+          <a href="/logout" class="headerLoginBtn">로그아웃</a>
+        </div>
+      </th:block>
+
     </div>
   </section>
 

@@ -107,3 +107,11 @@ label span.required {
   font-size: 14px;
   letter-spacing: -1px;
 }
+
+.err{
+  color : red;
+}
+
+.confirm{
+  color: #0056b3;
+}
