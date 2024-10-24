@@ -43,5 +43,20 @@
   	AND
   		MEMBER_DEL_FL = 'N'
   </select>
+  
+  <!-- DB에 등록 -->
+	<insert id="signUp">
+		INSERT INTO "MEMBER"
+	VALUES(
+		SEQ_MEMBER_NO.NEXTVAL, 
+		#{memberEmail},
+		#{memberId},
+		#{memberPw},
+		#{memberNickname}, 
+		#{memberTel}, 
+		#{memberAddress},
+		 NULL,DEFAULT, DEFAULT, DEFAULT)
+	</insert>
+  
 
 </mapper>
