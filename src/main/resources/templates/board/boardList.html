@@ -18,15 +18,17 @@
 
     <!-- Container -->
     <div class="container">
-        <!-- Sidebar (왼쪽 배너) -->
-        <div class="sidebar">
-            <div class="sidebar-box banner">
-                <div class="banner-item" id="noticePage">공지사항</div>
-                <div class="banner-item" id="boardListPage">일반 게시판</div>
-                <div class="banner-item" id="photoPage">사진첩</div>
-                <div class="banner-item" id="schedulePage">일정</div>
-            </div>
-        </div>
+        <nav>
+            <!-- Sidebar (왼쪽 배너) -->
+            <ul>
+                <li>
+                    <a href="/board/{boardTypeCode} (boardTypeCode = 1)">일반 게시판</a>
+                </li>
+                <li>
+                    <a href="/board/boardSchedule">일정</a>
+                </li>
+            </ul>
+        </nav>
 
         <!-- Main content -->
         <div class="main-content">
@@ -48,7 +50,7 @@
                             <td>
                                 <img th:if="*{thumbnail}" th:src="*{thumbnail}" class="img">
 
-                                <a th:href="@{board/{boardTypeCode}/{boardNo} (boardTypeCode=1, boardNo=*{boardNo})}"
+                                <a th:href="@{board/{boardTypeCode}/{boardNo} (boardTypeCode=*{boardTypeCode}, boardNo=*{boardNo})}"
                                    th:text="*{boardTitle}">게시글 제목</a>
 
                                 <th:block th:text="|[*{commentCount}]|">댓글 수</th:block>
@@ -121,8 +123,6 @@
       </div>
 
     </div>
-
-    <th:block th:replace="~{common/footer}"></th:block>
 
     <!--  
         th:inline="javascript" : java 타입의 데이터를 JS 타입으로 변경
