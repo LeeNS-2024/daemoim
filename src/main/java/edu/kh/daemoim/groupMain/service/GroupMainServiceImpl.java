@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import edu.kh.daemoim.groupMain.dto.Introduce;
 import edu.kh.daemoim.groupMain.dto.Notice;
 import edu.kh.daemoim.groupMain.dto.PhotoBox;
+import edu.kh.daemoim.groupMain.dto.Schedule;
 import edu.kh.daemoim.groupMain.mapper.GroupMainMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
@@ -39,7 +41,22 @@ public class GroupMainServiceImpl implements GroupMainService {
 		return mapper.getPhotos(groupNo);
 
 	}
+
+	// 일정 불러오기
+	@Override
+	public List<Schedule> getSchedule(int groupNo) {
+
+		return mapper.getSchedule(groupNo);
+	}
+
+	// 모임 소개 불러오기
+	@Override
+	public String getIntroduce(int groupNo) {
+		
+		return mapper.getIntroduce(groupNo);
+	}
 	
+
 
 
 }

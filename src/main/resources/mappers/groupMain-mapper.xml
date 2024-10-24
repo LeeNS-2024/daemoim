@@ -28,10 +28,6 @@
 		FETCH FIRST 5 ROWS ONLY
 	</select>
 
-	<select id="getPhotoBoxData" resultType="PhotoBox">
-		SELECT BOARD
-
-	</select>
 
 	<select id="getPhotos" resultType="PhotoBox">
 		SELECT
@@ -40,17 +36,48 @@
 		BOARD_IMG_ORIGINAL_NAME,
 		BOARD_IMG_RENAME,
 		BOARD_IMG_ORDER,
-		BI.BOARD_NO,
-		BOARD_IMG_PATH || BOARD_IMG_RENAME AS "FILE_LOCATION"
+		B.GROUP_NO,
+		BOARD_IMG_PATH || BOARD_IMG_RENAME AS
+		"FILE_LOCATION"
 
-		FROM BOARD_IMG BI
-		JOIN
-		"BOARD" B ON (B.BOARD_NO = BI.BOARD_NO)
+		FROM "BOARD_IMG" BI
+		LEFT JOIN
+		"BOARD" B ON (B.BOARD_NO =
+		BI.BOARD_NO)
 
 		WHERE
 		B.GROUP_NO = #{groupNo}
 	</select>
 
+	<select id="getSchedule" resultType="Schedule">
+
+		SELECT
+		SCHEDULE_DATE -
+		CURRENT_DATE AS D_DAY,
+		TO_CHAR(SCHEDULE_DATE, 'MM"월" DD"일" HH24"시"
+		II"분" "("DY")"') AS SCHEDULE_DATE,
+		LOCATION,
+		COST,
+		(SELECT COUNT(*) FROM
+		SCHEDULE_MEMBER SM
+		WHERE SM.SCHEDULE_NO = B.SCHEDULE_NO ) AS
+		"MEMBER_COUNT"
+
+		FROM SCHEDULE B
+
+		WHERE
+		B.GROUP_NO = #{groupNo}
+		ORDER BY
+		SCHEDULE_DATE DESC
+	</select>
+
+	<select id="getIntroduce" resultType="string">
+		SELECT GROUP_INTRODUCE
+		FROM
+		"GROUP"
+		WHERE GROUP_NO = #{groupNo}
+
+	</select>
 
 
 

@@ -1,6 +1,7 @@
 package edu.kh.daemoim.groupMain.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,17 +12,20 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class PhotoBox {
+public class Schedule {
 
-	private int boardImgNo;
-	private String boardImgPath;
-	private String boardImgOriginalName;
-	private String boardImgRename;
-	private int boardImgOrder;
-	private int boardNo;
+	private int scheduleNo;
+	private String location;
+	private String scheduleDate;
+	private String locationAddress;
+	private int cost;
 	
 	private int groupNo;
 	
+	private int memberNo;
 	
-	private String fileLocation;
+	private int memberCount;
+	
+	private int dDay;
+	
 }

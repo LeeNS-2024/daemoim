@@ -1,239 +1,296 @@
  body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: white;
-      width: 100%;
-  }
+   font-family: Arial, sans-serif;
+   margin: 0;
+   padding: 0;
+   background-color: white;
+   width: 100%;
+ }
 
-  /* 전체 레이아웃 컨테이너 */
-  .main-container {
-      display: flex;
-      width: 100%;
-      
-  }
+ /* 전체 레이아웃 컨테이너 */
+ .main-container {
+   display: flex;
+   width: 100%;
 
-  /* 사이드바 스타일 */
-  .sidebar {
-      width: 200px;
-      background-color: white;
-      height: 53vh; /* 화면 전체 높이 */
-      padding-top: 10px;
-      position: fixed;
-      bottom: 0;
-      left: 0;
-  }
+ }
 
-  .sidebar a {
-      display: block;
-      color: black;
-      padding: 15px;
-      text-decoration: none;
-      font-size: 18px;
-      transition: background-color 0.3s;
-  }
+ /* 사이드바 스타일 */
+ .sidebar {
+   width: 200px;
+   background-color: white;
+   height: 53vh;
+   /* 화면 전체 높이 */
+   padding-top: 10px;
+   padding-left: 10px;
+   bottom: 0;
+   left: 0;
+   font-size: 25px;
+ 
+ }
 
-  .sidebar a:hover {
-      background-color: #c7c7c7;
-  }
-
-  .container-row {
-      margin-left: 220px; /* 사이드바 공간 확보 */
-      padding: 20px;
-      width: calc(100% - 220px);
-
-      display: flex;
-      flex-direction: row;
-      justify-content: space-around;
-
-  }
-
-  /* 상단 배너 */
-  .screen {
-      width: 100%;
-      height: 200px;
-      background-color: lightgray;
-      margin-bottom: 20px;
-  }
-
-  .introduce {
-      width: 100%;
-      height: 150px;
-      background-color: lightgray;
-      margin-bottom: 20px;
-  }
-
-  /* 박스 레이아웃 */
-  .box-container {
-      display: flex;
-      flex-direction: column;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      width: 50%;
-  }
-
-  .notice {
-      background-color: white;
-      padding: 20px;
-      height: 120px;
-      box-shadow: 0 2px 5px white(0, 0, 0, 0.1);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 18px;
-  }
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
-  }
+ .sidebar a {
+   display: block;
+   color:black;
+   padding: 15px;
+   text-decoration: none;
   
-  table th, table td {
-    padding: 10px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  table th {
-    background-color: #f2f2f2;
-    font-weight: bold;
-  }
-  
-  table tr:hover {
-    background-color: #f1f1f1;
-  }
-  
-  table td:nth-child(1) {
-    color: red;
-    font-weight: bold;
-  }
-  
-  table td:nth-child(2) {
-    color: black;
-    font-weight: normal;
-  }
-  
-  table td:nth-child(3) {
-    text-align: right;
-    color: gray;
-  }
-  
-  .photo-box{
-      background-color: white;
-      padding: 20px;
-      height: 250px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      display: flex;
-      justify-content: center;
-      align-items: flex-end;
-      font-size: 18px;
-  }
+   transition: background-color 0.3s;
+ }
 
-  .schedule{
-      background-color: #d7e8d4;
-      padding: 20px;
-      height: 180px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 18px;
-  }
+ .sidebar a:hover {
+   background-color: #c7c7c7;
+ }
+
+ .container-row {
+   margin-left: 220px;
+   /* 사이드바 공간 확보 */
+   padding: 20px;
+   width: calc(100% - 220px);
+
+   display: flex;
+   flex-direction: row;
+   justify-content: space-around;
+
+ }
+
+ /* 상단 배너 */
+ .screen {
+   width: 100%;
+   height: 200px;
+   background-color: lightgray;
+   margin-bottom: 20px;
+ }
+
+ /* 모임소개 박스 */
+ .introduce-box {
+   width: 100%;
+   height: auto;
+
+   /* 높이를 자동으로 조정 */
+   background-color: rgb(245, 241, 241);
+   margin-bottom: 30px;
+   font-size: 18px;
+   text-align: center;
+   /* 텍스트를 가운데 정렬 */
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   /* 내부 문장을 중앙에 배치 */
+ }
 
 
+ /* 첫 번째 문장 스타일 */
+ .introduce-box>div:nth-child(1) {
+   margin-top: 90px;
+   color: black;
+   /* 첫 번째 문장을 강조 */
+   font-size: 80px;
+   font-family: "Black Han Sans", sans-serif;
+
+ }
+
+ /* 두 번째 문장 스타일 */
+ .introduce-box>div:nth-child(2) {
+   color: black;
+   /* 첫 번째 문장을 강조 */
+   font-size: 80px;
+   font-family: "Black Han Sans", sans-serif;
+   margin-bottom: 50px;
+
+ }
+
+ /* 세 번째 문장 이후의 스타일 */
+ .introduce-box>div:nth-child(n+3) {
+
+   color: black;
+   font-size: 322x;
+   font-family: "Nanum Gothic Coding", monospace;
+   font-weight: 400;
+   font-style: normal;
+   margin-top: 20px;
+   margin-bottom: 70px;
+   width: 80%;
+   margin: 25px;
+ }
 
 
-  /* 반응형 설정 */
-  @media (max-width: 768px) {
-      .box-container {
-          grid-template-columns: repeat(2, 1fr);
-      }
-  }
-
-  @media (max-width: 480px) {
-      .box-container {
-          grid-template-columns: 1fr;
-      }
-
-      /* 작은 화면에서 사이드바 숨기기 */
-      .sidebar {
-      
-          height: 1px;
-          position: fixed;
-      }
-
-      .container {
-          margin-left: 0;
-      }
-  }
-
-  .group-section {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 두 개씩 나란히 표시 */
-    grid-gap: 30px; /* 그룹 간의 간격 설정 */
-    justify-items: auto;
-    width: 500px;
-  }
-  
-  .schedule-box {
-    display: flex;
-    padding: 20px;
-    align-items: center;
-    min-width: 500px;
-    max-width: 80000px;
-    width: 100%; 
-  }
-  
-  
-  
-  .group-info {
-    flex: 3;
-    padding-left: 20px;
-  }
-  
-  .group-info a {
-    text-decoration: none;
-    font-size: 20px;
-    font-weight: bold;
-  }
-  
-  .group-info h1 {
-    font-size: 16px;
-    margin: 10px 0;
-  }
-  
-  /* 기존 스타일 유지 */
-
-/* 사진첩 섹션 */
-.photo-gallery {
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-}
-
-.gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 2개의 열 */
-    grid-template-rows: repeat(2, auto); /* 2개의 행 */
-    gap: 10px; /* 사진 간의 간격 */
-}
-
-.photo-item {
-    text-align: center;
-    background-color: #f9f9f9;
-    padding: 10px;
-    border-radius: 5px;
-}
-
-.gallery-photo {
-    width: 100%;
-    height: auto;
-    border-radius: 5px;
-}
-
-.photo-item p {
-    margin: 5px 0;
-}
 
 
+ /* 박스 레이아웃 */
+ .box-container {
+   display: flex;
+   flex-direction: column;
+   grid-template-columns: repeat(3, 1fr);
+   gap: 20px;
+   width: 50%;
+ }
+
+ .notice {
+   background-color: white;
+   padding: 20px;
+   height: 120px;
+   box-shadow: 0 2px 5px white(0, 0, 0, 0.1);
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   font-size: 18px;
+ }
+
+ table {
+   width: 100%;
+   border-collapse: collapse;
+   margin-top: 10px;
+ }
+
+ table th,
+ table td {
+   padding: 10px;
+   text-align: left;
+   border-bottom: 1px solid #ddd;
+ }
+
+ table th {
+   background-color: #f2f2f2;
+   font-weight: bold;
+ }
+
+ table tr:hover {
+   background-color: #f1f1f1;
+ }
+
+ table td:nth-child(1) {
+   color: red;
+   font-weight: bold;
+ }
+
+ table td:nth-child(2) {
+   color: black;
+   font-weight: normal;
+ }
+
+ table td:nth-child(3) {
+   text-align: right;
+   color: gray;
+ }
+
+ .photo-box {
+   background-color: white;
+   padding: 20px;
+   height: 250px;
+   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+   display: flex;
+   justify-content: center;
+   align-items: flex-end;
+   font-size: 18px;
+ }
+
+ .schedule {
+   background-color: #d7e8d4;
+   padding: 20px;
+   height: 180px;
+   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   font-size: 18px;
+ }
+
+
+
+
+ /* 반응형 설정 */
+ @media (max-width: 768px) {
+   .box-container {
+     grid-template-columns: repeat(2, 1fr);
+   }
+ }
+
+ @media (max-width: 480px) {
+   .box-container {
+     grid-template-columns: 1fr;
+   }
+
+   /* 작은 화면에서 사이드바 숨기기 */
+   .sidebar {
+
+     height: 1px;
+     position: fixed;
+   }
+
+   .container {
+     margin-left: 0;
+   }
+ }
+
+ .group-section {
+   display: grid;
+   grid-template-columns: repeat(2, 1fr);
+   /* 두 개씩 나란히 표시 */
+   grid-gap: 30px;
+   /* 그룹 간의 간격 설정 */
+   justify-items: auto;
+   width: 500px;
+ }
+
+ .schedule-box {
+   display: flex;
+   padding: 20px;
+   align-items: center;
+   min-width: 500px;
+   max-width: 80000px;
+   width: 100%;
+ }
+
+
+
+ .group-info {
+   flex: 3;
+   padding-left: 20px;
+ }
+
+ .group-info a {
+   text-decoration: none;
+   font-size: 20px;
+   font-weight: bold;
+ }
+
+ .group-info h1 {
+   font-size: 16px;
+   margin: 10px 0;
+ }
+
+ /* 기존 스타일 유지 */
+
+ /* 사진첩 섹션 */
+ .photo-gallery {
+   margin-top: 20px;
+   display: flex;
+   flex-direction: column;
+ }
+
+ .gallery-grid {
+   display: grid;
+   grid-template-columns: repeat(2, 1fr);
+   /* 2개의 열 */
+   grid-template-rows: repeat(2, auto);
+   /* 2개의 행 */
+   gap: 10px;
+   /* 사진 간의 간격 */
+ }
+
+ .photo-item {
+   text-align: center;
+   background-color: #f9f9f9;
+   padding: 10px;
+   border-radius: 5px;
+ }
+
+ .gallery-photo {
+   width: 100%;
+   height: auto;
+   border-radius: 5px;
+ }
+
+ .photo-item p {
+   margin: 5px 0;
+ }

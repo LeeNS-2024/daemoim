@@ -1,5 +1,17 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=IBM+Plex+Sans+KR&display=swap"
+  rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+  href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=IBM+Plex+Sans+KR&family=Nanum+Gothic+Coding&display=swap"
+  rel="stylesheet">
 
 <head>
   <meta charset="UTF-8">
@@ -10,24 +22,30 @@
 </head>
 
 <body>
-  <!-- 왼쪽 사이드바 -->
-  <div class="sidebar">
-    <a href="#">공지사항</a>
-    <a href="#">일반 게시판</a>
-    <a href="#">사진첩</a>
-    <a href="#">일정</a>
-  </div>
+
   <!-- 모임 배경사진 -->
-  <div class="screen">
-    <img src="" alt="모임배경사진">
-  </div>
+  <!-- <div class="screen">
+    <img src="${groupHeaderImg}" alt="모임배경사진">
+  </div> -->
 
   <!-- 모임 소개 -->
-  <div class="introduce">모임 소개</div>
+  
+  <div class="introduce-box">
+    
+    <th:block th:each="introduce : ${introduces}">
+      <div th:text="${introduce}"></div>
+    </div>
+    
+    <main class="main-container">
 
-
-  <main class="main-container">
-
+      <!-- 왼쪽 사이드바 -->
+      <div class="sidebar">
+        <a href="#">공지사항</a>
+        <a href="#">일반 게시판</a>
+        <a href="#">사진첩</a>
+        <a href="#">일정</a>
+      </div>
+      
     <!-- 컨텐츠 영역 -->
     <section class="container-row">
 
@@ -87,45 +105,26 @@
           </div> -->
       </section>
 
+      <!-- 모임일정 -->
 
       <section class="group-section">
-        <!--   <div class="schedule-box">
-            <span>
-              <div class="date">날짜 : <span th:text=""></span> </div>
-              <div class="detail-date">상세 일시</div>
-              <div class="location">위치</div>
-              <div class="cost">비용</div>
-              <div class="number">참석 버튼 누른 사람 수 / 설정한 총 인원수</div>
-            </span>
-         
-            </div> -->
 
         <div class="schedule-box">
-          <section class="groupMainImage">
-          </section>
-          <section class="group-info">
-            <a href="/groupMain">모임 일정</a>
-          </section>
-        </div>
 
-        <div class="schedule-box">
-          <section class="groupMainImage">
-          </section>
-          <section class="group-info">
-            <a href="/groupMain">모임 일정</a>
-          </section>
-        </div>
-
-        <div class="schedule-box">
-          <section class="groupMainImage">
-          </section>
-          <section class="group-info">
-            <a href="/groupMain">모임 일정</a>
-          </section>
-        </div>
-
-
+          <th:block th:each="schedule : ${schedules}" th:object="${schedule}">
+            <section>
+              <div class="date">날짜 D - <span th:text="${schedule.dDay}"></span> </div>
+              <div class="detail-date">상세 일시 <span th:text="${schedule.scheduleDate}"></span> </div>
+              <div class="location">위치 <span th:text="${schedule.location}"></span></div>
+              <div class="cost">비용 <span th:text="${schedule.cost}"></span></div>
+              <div class="number"> <span th:text="${schedule.memberCount}"></span>/50</div>
+          </th:block>
       </section>
+
+      </div>
+
+
+    </section>
 
     </section>
 
