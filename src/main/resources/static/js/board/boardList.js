@@ -5,7 +5,7 @@ $(function() {
   $("#calendar").datepicker();
 });
 
-const nav = document.querySelector("nav");
+const nav = document.querySelectorAll("banner");
 
 nav.addEventListener("click", e => {
   e.preventDefault();
