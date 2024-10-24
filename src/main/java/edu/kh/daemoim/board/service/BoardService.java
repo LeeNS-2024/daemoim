@@ -1,5 +1,6 @@
 package edu.kh.daemoim.board.service;
 
+import java.util.List;
 import java.util.Map;
 
 import edu.kh.daemoim.board.dto.Board;
@@ -23,6 +24,12 @@ public interface BoardService {
 	 */
 	Map<String, Object> selectSearchList(int groupNo, int boardTypeCode, int cp, Map<String, Object> paramMap);
 
+
+	/** DB에서 모든 게시판 종류를 조회
+	 * @return
+	 */
+	List<Map<String, String>> selectBoardTypeList();
+
 	/** 게시글 상세 조회
 	 * @param map
 	 * @return
@@ -41,5 +48,4 @@ public interface BoardService {
 	 * @return
 	 */
 	Map<String, Object> boardLike(int boardNo, int memberNo);
-
 }
