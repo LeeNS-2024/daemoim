@@ -15,7 +15,13 @@
 
     <th:block th:replace="~{common/header}"></th:block>
 
-    <!-- 로그인 상태가 아닐 때 로그인 버튼과 추천 모임 표시 -->
+    <!-- 세션 값이 있는지 확인
+    <p th:text="${loginMember != null ? '로그인 상태입니다' : '로그인 상태가 아닙니다'}"></p>
+
+    세션에 저장된 loginMember의 값 출력 (디버그용)
+    <p th:text="${loginMember != null ? loginMember.memberId : '로그인 상태가 아님'}"></p> -->
+    
+    <!-- 로그인 상태가 아닐 때 -->
     <th:block th:if="${loginMember == null}">
       <!-- 로그인 섹션 -->
       <section class="login-section">
@@ -45,7 +51,7 @@
                         <img th:src="${group != null && group.groupMainImg != null ? group.groupMainImg : '/images/default.png'}" alt="[[${group.groupName}]] 아이콘" />
                     </div>
                     <div class="details">
-                        <a th:href="@{/groupMain/{groupName}(groupName=${group.groupName})}" class="activity-name" style="color: black; text-decoration: none; text-decoration-line: none;">[[${group.groupName}]]</a>
+                        <a th:href="@{/groupMain/{groupName}(groupName=${group.groupName})}" class="activity-name" style="color: black; text-decoration: none;">[[${group.groupName}]]</a>
                         <div class="group-name">[[${group.groupIntroduce}]]</div>
                         <div class="location">[[${group.categoryName}]]</div>
                         <div class="participants">
@@ -61,36 +67,38 @@
       </th:block>
     </th:block>
 
-    <!-- 로그인 했을 때 가입한 모임 목록만 보여주기 -->
+    <!-- 로그인 상태일 때 내가 가입한 모임 목록 -->
     <th:block th:if="${loginMember != null}">
-        <h2>내가 가입한 모임</h2>
-        <th:block th:unless="${joinGroups != null && !#lists.isEmpty(joinGroups)}">
-            <p>가입한 모임이 없습니다.</p>
-        </th:block>
+      <h2>내가 가입한 모임</h2>
 
-        <th:block th:if="${joinGroups != null && !#lists.isEmpty(joinGroups)}">
-            <section class="activity-section">
-                <div class="category-container">
-                    <div class="category-box" th:each="group : ${joinGroups}">
-                        <div class="icon">
-                            <img th:src="${group.groupMainImg != null ? group.groupMainImg : '/images/default.png'}" alt="[[${group.groupName}]] 아이콘" />
-                        </div>
-                        <div class="details">
-                            <a th:href="@{/groupMain/{groupName}(groupName=${group.groupName})}" class="activity-name" style="color: black; text-decoration: none;">[[${group.groupName}]]</a>
-                            <div class="group-name">[[${group.groupIntroduce}]]</div>
-                            <div class="location">[[${group.categoryName}]]</div>
-                            <div class="participants">
-                                <i class="fa-solid fa-users"> &nbsp;</i>
-                                <div>
-                                    [[${group.currentPopulation}]] / [[${group.maxPopulation}]]
-                                </div>
-                            </div>
+      <th:block th:unless="${joinGroups != null && !#lists.isEmpty(joinGroups)}">
+        <p>가입한 모임이 없습니다.</p>
+      </th:block>
+
+      <th:block th:if="${joinGroups != null && !#lists.isEmpty(joinGroups)}">
+        <section class="activity-section">
+            <div class="category-container">
+                <div class="category-box" th:each="group : ${joinGroups}">
+                    <div class="icon">
+                      <img th:src="${group.groupMainImg != null ? group.groupMainImg : '/images/default.png'}" alt="[[${group.groupName}]] 아이콘" />
+                    </div>
+                    <div class="details">
+                        <a th:href="@{/groupMain/{groupName}(groupName=${group.groupName})}" class="activity-name" style="color: black; text-decoration: none;">[[${group.groupName}]]</a>
+                        <div class="group-name">[[${group.groupIntroduce}]]</div>
+                        <div class="location">[[${group.categoryName}]]</div>
+                        <div class="participants">
+                          <i class="fa-solid fa-users"> &nbsp;</i>
+                          <div>
+                              [[${group.currentPopulation}]] / [[${group.maxPopulation}]]
+                          </div>
                         </div>
                     </div>
                 </div>
-            </section>
-        </th:block>
+            </div>
+        </section>
+      </th:block>
     </th:block>
+
 
     <section class="scroll-top">
       <button id="scrollTopBtn"><i class="fa-solid fa-circle-chevron-up"></i></button>

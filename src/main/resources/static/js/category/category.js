@@ -1,46 +1,39 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const categoryButtons = document.querySelectorAll('.tab-link');  
-    const categoryContents = document.querySelectorAll('.category-content');  
-    let activeContent = document.querySelector('.category-content.active');
-  
-    const urlParams = new URLSearchParams(window.location.search);
-    const categoryType = urlParams.get('type') || 'allCategory';  
-  
-    categoryContents.forEach(content => content.classList.remove('active', 'slide-in', 'slide-out'));
-  
-    const targetContent = document.getElementById(categoryType);
-    if (targetContent) {
-        targetContent.classList.add('active', 'slide-in');
-        activeContent = targetContent;
-    }
-  
-    categoryButtons.forEach(button => {
-        button.addEventListener('click', function(event) {
-            event.preventDefault();  
-  
-            const targetId = this.getAttribute('data-target');
-            const targetContent = document.getElementById(targetId);
-  
-            if (targetContent && targetContent !== activeContent) {
+    const categoryButtons = document.querySelectorAll('.tab-link');
+    const groupContainer = document.getElementById('groupContainer');
+    const searchInput = document.getElementById('searchQuery');
+    let selectedCategory = 'allCategory'; 
 
-                activeContent.classList.remove('slide-in');
-                activeContent.classList.add('slide-out');
-  
-                setTimeout(() => {
-                    activeContent.classList.remove('active', 'slide-out');
-                    activeContent.style.visibility = 'hidden';
-                    activeContent.style.opacity = '0';
-                }, 500); 
-  
-                targetContent.classList.add('active', 'slide-in');
-                targetContent.style.visibility = 'visible';
-                targetContent.style.opacity = '1';
-  
-                activeContent = targetContent;
-            }
-  
-            categoryButtons.forEach(btn => btn.classList.remove('active'));
-            this.classList.add('active');
+    categoryButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            selectedCategory = button.getAttribute('data-category'); 
+            fetchGroups(); 
         });
     });
+
+    // 검색 창에 입력된 내용을 기반으로 그룹 목록을 가져오는 함수
+    function fetchGroups() {
+        const query = searchInput.value || ''; // 검색어가 없으면 빈 문자열
+        const url = `/category/category?type=${selectedCategory}&query=${query}`; 
+
+        // 서버로 요청을 보냄
+        fetch(url)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('네트워크 응답에 문제가 있습니다.');
+                }
+                return response.text(); 
+            })
+            .then(html => {
+                updateGroupList(html); 
+            })
+            .catch(error => {
+                console.error("에러: ", error);
+            });
+    }
+
+    function updateGroupList(html) {
+        groupContainer.innerHTML = html; 
+    }
 });
