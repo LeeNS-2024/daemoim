@@ -7,9 +7,8 @@ import edu.kh.daemoim.myPage.dto.MyPage;
 @Mapper
 public interface SignupMapper {
 
-	
 	// 이메일 체크
-	int memberEmailCheck(String email);
+	int emailCheck(String email);
 	
 	// 아이디 체크
 	int memberIdCheck(String memberId);
@@ -22,6 +21,8 @@ public interface SignupMapper {
 
 	// 전화번호 체크
 	int telCheck(String tel);
+
+	
 	
 
 

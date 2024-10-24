@@ -146,7 +146,7 @@ public class EmailSerciveImpl implements EmailService{
 	}
 	/** 인증번호 확인 
 	 */
-@Override
+	@Override
 	public boolean checkAuthKey(Map<String, String> map) {
 	
 		String email = map.get("email");

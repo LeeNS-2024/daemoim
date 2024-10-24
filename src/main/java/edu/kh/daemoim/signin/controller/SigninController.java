@@ -44,7 +44,7 @@ public class SigninController {
          
       }
       
-      return "common/main";
+      return "redirect:/";
       }
    @GetMapping("logout")
 	public String logout(SessionStatus status) {
