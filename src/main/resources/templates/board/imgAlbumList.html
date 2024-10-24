@@ -15,7 +15,11 @@
 
 <body>
   <main>
-    <th:block th:replace="~{common/header}"></th:block>
+    <!-- <th:block th:replace="~{common/header}"></th:block> -->
+         <!-- Header -->
+    <div>
+      <img th:src="${groupHeaderImg}" alt="보드해더이미지" style="width: 99vw;">
+    </div>
 
     <section class="image-board-list">
       <h1 class="board-name" th:text="${boardName}">이미지 게시판</h1>
