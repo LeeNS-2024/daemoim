@@ -1,0 +1,18 @@
+<section class="activity-section">
+  <div class="category-container">
+      <div class="category-box" th:each="group : ${groupList}">
+          <div class="icon">
+              <img th:src="${group.groupMainImg != null ? group.groupMainImg : '/images/default.png'}" alt="[[${group.groupName}]] 아이콘" />
+          </div>
+          <div class="details">
+              <a th:href="@{/groupMain/{groupName}(groupName=${group.groupName})}" class="activity-name" style="color: black; text-decoration: none;">[[${group.groupName}]]</a>
+              <div class="group-name">[[${group.groupIntroduce}]]</div>
+              <div class="location">[[${group.categoryName}]]</div>
+              <div class="participants">
+                  <i class="fa-solid fa-users"></i>
+                  <div>[[${group.currentPopulation}]] / [[${group.maxPopulation}]]</div>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
