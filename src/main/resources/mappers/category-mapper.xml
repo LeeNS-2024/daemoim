@@ -1,9 +1,6 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
 <mapper namespace="edu.kh.daemoim.category.mapper.CategoryMapper">
 
-	<!-- 입력된 검색어 조회하기 -->
+    <!-- 입력된 검색어 조회하기 -->
     <select id="getGroupsByCategory" resultType="CategoryDTO">
         SELECT 
             DISTINCT g.GROUP_NAME AS groupName,
@@ -22,8 +19,9 @@
             g.GROUP_DEL_FL = 'N'
         AND 
             g.GROUP_NAME LIKE '%' || #{query} || '%'
-        AND 
-            c.CATEGORY_NAME LIKE '%' || #{category} || '%'
+        <if test="category != 'allCategory'">
+            AND c.CATEGORY_NAME = #{category}
+        </if>
         GROUP BY 
             g.GROUP_NAME, g.GROUP_MAIN_IMG, g.GROUP_INTRODUCE, c.CATEGORY_NAME, g.GROUP_MAX_POPULATION
     </select>

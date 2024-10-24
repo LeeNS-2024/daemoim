@@ -32,16 +32,14 @@ public class CategoryController {
      * @return
      */
     @GetMapping("/category")
-    public String categoryPage(@RequestParam(value = "type", required = false, defaultValue = "all") String category,
+    public String categoryPage(@RequestParam(value = "type", required = false, defaultValue = "allCategory") String category,
                                @RequestParam(value = "query", required = false, defaultValue = "") String query,
                                Model model) {
-
-        
         List<CategoryDTO> groupList = service.getGroupsByCategory(category, query);
         model.addAttribute("groupList", groupList);
-
         return "category/category";  
     }
+
 
     
 }
