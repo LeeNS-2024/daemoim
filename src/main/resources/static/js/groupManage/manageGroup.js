@@ -160,21 +160,18 @@ submitDiv?.addEventListener("click", e => {
   if(detailConfirm.groupName === false){
     alert("모임명을 확인해 주세요.");
     groupName.focus();
-    e.preventDefault();
     return;
   }
   
   if(detailConfirm.groupIntroduce === false){
     alert("모임소개를 확인해 주세요.");
     groupIntroduce.focus();
-    e.preventDefault();
     return;
   }
   
   if(detailConfirm.category === false){
     if(checkedCategory() === null){// 체크된 카테고리가 없는경우
       alert("카테고리 체크를 확인해주세요");
-      e.preventDefault();
       return;
     }
   }
@@ -182,7 +179,6 @@ submitDiv?.addEventListener("click", e => {
   if(detailConfirm.categoryList === false){
     if(checkedCategoryList() === null){// 체크된 카테고리가 없는경우
       alert("카테고리 리스트 체크를 확인해주세요");
-      e.preventDefault();
       return;
     }
   }
