@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -92,6 +92,8 @@ form button {
     cursor: pointer;
 }
 </style>
+
+<body>
     <div class="container">
         <nav class="sidebar">
             <ul>
@@ -107,10 +109,24 @@ form button {
             <section id="dashboard" class="section">
                 <h2>대시보드</h2>
                 <div class="card">
-                    <div>총 모임 수</div>
-                    <p>총 회원 수</p>
-                    <p>정지된 계정</p>
-                    <p>오늘의 새 가입</p>
+                    <table border="1">
+                        <tr>
+                            <td>총 모임 수</td>
+                            <td th:text="${countList.groupAllcount}">총모임수</td>
+                        </tr>
+                        <tr>
+                            <td>총 회원 수</td>
+                            <td th:text="${countList.memberAllcount}">총회원수</td>
+                        </tr>
+                        <tr>
+                            <td>정지된 계정</td>
+                            <td th:text="${countList.outMemberCount}">정지된계정</td>
+                        </tr>
+                        <tr>
+                            <td>오늘의 새 가입</td>
+                            <td th:text="${countList.todayEnrollCount}">오늘의새가입</td>
+                        </tr>
+                    </table>
                 </div>
             </section>
 
@@ -119,6 +135,25 @@ form button {
                 <h2>모임 조회</h2>
                 <table>
                     <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>모임명</th>
+                        <th>주최자</th>
+                        <th>참가자 수</th>
+                        <th>생성일</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <th:block th:if= "${groupList}" th:each= "group:${groupList}" th:object="${group}">
+                        <tr>
+                          <td th:text="*{groupNo}">#</td>
+                          <td th:text="*{groupName}">모임명</td>
+                          <td th:text="*{memberNickname}">주최자</td>
+                          <td th:text="*{memberCount}">참가자 수</td>
+                          <td th:text="*{groupDate}">생성일</td>
+                      </tr>
+                      </th:block>
+                      <th:block th:unless= "${groupList}">
                         <tr>
                             <th>#</th>
                             <th>모임명</th>
@@ -126,22 +161,7 @@ form button {
                             <th>참가자 수</th>
                             <th>생성일</th>
                         </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+                      </th:block>
                     </tbody>
                 </table>
             </section>
@@ -160,20 +180,24 @@ form button {
                         </tr>
                     </thead>
                     <tbody>
+                      <th:block th:if= "${memberList}" th:each= "member:${memberList}" th:object="${member}">
                         <tr>
-                            <td>1</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+                          <th th:text="*{memberNo}">#</th>
+                          <th th:text="*{memberNickname}">이름</th>
+                          <th th:text="*{memberEmail}">이메일</th>
+                          <th th:text="*{enrollDate}">가입일</th>
+                          <th th:text="*{memberDelFl} == 'N' ? '가입' : '탈퇴'">상태</th>
+                      </tr>
+                      </th:block>
+                      <th:block th:unless= "${memberList}">
                         <tr>
-                            <td>2</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+                          <th>#</th>
+                          <th>이름</th>
+                          <th>이메일</th>
+                          <th>가입일</th>
+                          <th>상태</th>
+                      </tr>
+                      </th:block>
                     </tbody>
                 </table>
             </section>
@@ -212,4 +236,5 @@ form button {
     </div>
     <script src="script.js"></script>
 </body>
+
 </html>

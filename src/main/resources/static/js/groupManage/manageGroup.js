@@ -985,6 +985,29 @@ document.addEventListener("DOMContentLoaded", ()=>{
     backupMemberArrBtn();
   }
 
+  // select태그들 초기설정
+  const params = new URLSearchParams( location.search );
+  const periodParam = params.get("period");
+  const keyParam = params.get("key");
+  const queryInput = document.querySelector("#searchQuery");
   
+  if(periodParam){
+    document.getElementById("searchPeriod").value = periodParam;
+  }
+  if(keyParam){
+    document.querySelector("#searchKey").value = keyParam;
+    queryInput.value = params.get("query");
+  }
 
+  // 회원정보 검색에서 검색내용 없으면 제출 막기
+  const searchForm = document.querySelector(".searchForm form");
+  searchForm?.addEventListener("submit", e =>{
+    if(queryInput){
+      if(queryInput.value.trim().length === 0){
+        e.preventDefault();
+        alert("검색어를 입력해 주세요");
+        return;
+      }
+    }
+  })
 });
