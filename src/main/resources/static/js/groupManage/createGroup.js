@@ -21,6 +21,8 @@ const nameMessage = document.querySelector("#groupNameMessage");
 const nameMessageConfirm = {
   "nomal" : "사용할 모임명을 입력 해 주세요",
   "shortage" : "3글자 이상의 이름을 사용해 주십시오.",
+  "tooLong"  : "최대 500자까지 입력이 가능합니다.",
+  "rules"    : "한글, 알파벳, 숫자, 띄어쓰기 만 입력 가능 합니다.",
   "overlap" : "동일한 이름을 이미 사용중입니다.",
   "statusOk" : "사용 가능한 이름 입니다."
 };
@@ -50,7 +52,31 @@ groupName.addEventListener("input", () => {
     createConfirm.groupName = false;
     return;
   }
+
+  // 500글자 넘을 때
+  if(inputLength > 500){
+    nameMessage.innerText = "";
+    nameMessage.innerText = nameMessageConfirm.tooLong;
+    countName.classList.add("red");
+    nameMessage.classList.add("red");
+    nameMessage.classList.remove("green");
+    detailConfirm.groupName = false;
+    return;
+  }
   
+    
+  // 입력한거 확인
+  const pattern = /^[가-힣a-zA-Z0-9\s]+$/;
+  if(pattern.test(inputName) === false){
+    nameMessage.innerText = "";
+    nameMessage.innerText = nameMessageConfirm.rules;
+    countName.classList.add("red");
+    nameMessage.classList.add("red");
+    nameMessage.classList.remove("green");
+    detailConfirm.groupName = false;
+    return;
+  }
+
   // 중복되는 이름일때
   fetch("groupNameCheck?inputName=" + inputName)
   .then(response=>{

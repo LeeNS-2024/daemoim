@@ -116,11 +116,13 @@ main{
   border-radius: 3px;
   background-color: #fff;
 }
-.createContent > section .categoryLabel:hover{
+.createContent > section > div > div > .categoryLabel:hover{
+  background-color: #dddddd;
   cursor: pointer;
 }
 input[type="radio"]:checked + label { /* 라벨이 꼭 뒤에잇어야함 */
-  border: 2px solid #333; /* 선택된 상태에서 테두리 */
+  border: 3px solid #333; /* 선택된 상태에서 테두리 */
+  background-color: #f1f1f1;
 }
 /* *************************************************** */
 @font-face {
