@@ -3,33 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>모임 검색</title>
+  <title th:text="#{app.name}">messages.properties 값 출력</title>
 
+  <link rel="stylesheet" href="/css/main-style.css/">
   <link rel="stylesheet" href="/css/search/search.css">
   <th:block th:replace="~{common/common}"></th:block>
 </head>
 <body>
 
-  <main class="main">
-    
+  <header>
     <th:block th:replace="~{common/header}"></th:block>
+  </header>
 
+  <main class="main">
     <section class="searchBox">
       <form action="#" method="get" id="search">
-        <input type="text" name="query" id="searchQuery" placeholder="검색어 입력">
-        
-        <div class="filter-icon" onclick="toggleDropdown()">
-          <i class="fas fa-filter"></i>
-        </div>
-
-        <div class="dropdown" id="dropdownMenu" style="display: none;">
-          <a href="#">액티비티</a>
-          <a href="#">문화/여가</a>
-          <a href="#">자기계발</a>
-          <a href="#">연애</a>
+        <div class="input-wrapper">
+          <input type="text" name="query" id="searchQuery" placeholder="검색어 입력">
+          <div class="filter-icon" onclick="toggleDropdown()">
+            <i class="fas fa-filter"></i>
+          </div>
         </div>
         <button type="submit">검색</button>
       </form>
+    
+      <div class="dropdown" id="dropdownMenu" style="display: none;">
+        <a href="#">액티비티</a>
+        <a href="#">문화/여가</a>
+        <a href="#">자기계발</a>
+        <a href="#">연애</a>
+      </div>
     </section>
 
     <th:block th:if="${recommendedGroups != null && !#lists.isEmpty(recommendedGroups)}">
@@ -42,7 +45,7 @@
                   <div class="details">
                       <a th:href="@{/groupMain/{groupName}(groupName=${group.groupName})}" class="activity-name" style="color: black; text-decoration: none; text-decoration-line: none;">[[${group.groupName}]]</a>
                       <div class="group-name">[[${group.groupIntroduce}]]</div>
-                      <div class="location">카테고리: [[${group.categoryName}]]</div>
+                      <div class="location">[[${group.categoryName}]]</div>
                       <div class="participants">
                           <i class="fa-solid fa-users"> &nbsp;</i>
                           <div>
@@ -54,11 +57,13 @@
           </div>
       </section>
     </th:block>
+  </main>
 
+  <footer>
     <th:block th:replace="~{common/footer}"></th:block>
+  </footer>
 
   <script src="/js/search/search.js"></script>
   <script src="/js/main.js"></script>
-
 </body>
 </html>

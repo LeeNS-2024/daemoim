@@ -13,8 +13,16 @@ public class MainServiceImpl implements MainService {
 
     private final MainMapper mapper;
 
+    // 추천 모임 목록 조회
     @Override
     public List<MainDTO> getRecommendedGroups() {
         return mapper.selectRecommendedGroups();
+    }
+    
+    
+    // 로그인한 회원의 가입한 모임 조회
+    @Override
+    public List<MainDTO> selectJoinGroups(int memberNo) {
+        return mapper.selectJoinGroups(memberNo);
     }
 }
