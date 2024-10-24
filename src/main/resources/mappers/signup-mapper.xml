@@ -4,14 +4,14 @@
 
 
 <!-- 이메일 체크  -->
- <select id="memberEmailCheck"
+ <select id="emailCheck"
   resultType="_int">
   	SELECT
   		COUNT(*)
   	FROM 
   		"MEMBER"
   	WHERE 
-  		MEMBER_EMAIL = #{memberFullEmail}
+  		MEMBER_EMAIL = #{email}
   	AND
   		MEMBER_DEL_FL = 'N'
   	
@@ -50,13 +50,12 @@
 		INSERT INTO "MEMBER"
 	VALUES(
 		SEQ_MEMBER_NO.NEXTVAL, 
-		#{memberEmail},
 		#{memberId},
 		#{memberPw},
+		#{memberEmail},
 		#{memberNickname}, 
 		#{memberTel}, 
-		#{memberAddress},
-		 NULL,DEFAULT, DEFAULT, DEFAULT)
+		 DEFAULT,DEFAULT, DEFAULT,NULL,NULL, DEFAULT)
 	</insert>
   
   <!-- 전화번호 체크  -->
