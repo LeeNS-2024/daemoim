@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.kh.daemoim.category.mapper.CategoryMapper">
+
+	<!-- 입력된 검색어 조회하기 -->
+    <select id="getGroupsByCategory" resultType="CategoryDTO">
+        SELECT 
+            DISTINCT g.GROUP_NAME AS groupName,
+            g.GROUP_MAIN_IMG AS groupMainImg, 
+            g.GROUP_INTRODUCE AS groupIntroduce, 
+            c.CATEGORY_NAME AS categoryName,
+            COUNT(mg.MEMBER_NO) AS currentPopulation,
+            g.GROUP_MAX_POPULATION AS maxPopulation
+        FROM 
+            "GROUP" g
+        JOIN 
+            MEMBER_GROUP mg ON g.GROUP_NO = mg.GROUP_NO
+        JOIN 
+            CATEGORY c ON g.CATEGORY_NO = c.CATEGORY_NO
+        WHERE 
+            g.GROUP_DEL_FL = 'N'
+        AND 
+            g.GROUP_NAME LIKE '%' || #{query} || '%'
+        AND 
+            c.CATEGORY_NAME LIKE '%' || #{category} || '%'
+        GROUP BY 
+            g.GROUP_NAME, g.GROUP_MAIN_IMG, g.GROUP_INTRODUCE, c.CATEGORY_NAME, g.GROUP_MAX_POPULATION
+    </select>
+
+</mapper>

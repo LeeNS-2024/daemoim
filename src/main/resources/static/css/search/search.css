@@ -51,42 +51,7 @@ header {
   width: 100%; 
 }
 
-.filter-icon {
-  cursor: pointer;
-  margin-left: 10px;
-}
 
-button[type="submit"] {
-  padding: 10px 20px;
-  background-color: #ccc; 
-  border: none;
-  border-radius: 5px; 
-  cursor: pointer;
-}
-
-.dropdown {
-  margin-top: 10px;
-  display: flex;
-  flex-direction: column;
-  margin-left: 300px;
-  align-items: flex-end;
-  
-}
-
-.dropdown.active {
-  display: block;
-}
-
-.dropdown a {
-  display: block;
-  padding: 5px 10px;
-  text-decoration: none;
-  color: black;
-}
-
-.dropdown a:hover {
-  background-color: #f1f1f1;
-}
 
 
 
