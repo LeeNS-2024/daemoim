@@ -27,6 +27,7 @@ public class Notice {
 	private int boardTypeCode;
 	private int groupNo;
 	
+
 	
 
 }
