@@ -2,8 +2,8 @@
 
 <nav>
   <!-- Sidebar (왼쪽 배너) -->
-  <ul class="banner">
-      <li th:each="boardType : ${application.boardTypeList}">
+  <ul>
+      <li id="banner" th:each="boardType : ${application.boardTypeList}">
           <a th:href="@{/board/{groupNo}/{boardTypeCode}(groupNo = 1, boardTypeCode = ${boardType.boardTypeCode})}"
              th:text="${boardType.boardName}"
              th:classappend="${boardType.boardName} == ${boardName} ? current-board : ''"

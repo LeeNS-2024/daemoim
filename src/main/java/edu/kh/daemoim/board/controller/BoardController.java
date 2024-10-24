@@ -78,8 +78,9 @@ public class BoardController {
 		
 		if(boardTypeCode == 3)
 		return "/board/imgAlbumList";
-		else
-		return "/board/boardList :: list";
+		else if(boardTypeCode == 1)
+		return "/board/boardDetail";
+		else return "/board/boardList :: list";
 	}
 	
 	/** 게시글 상세 조회하기
