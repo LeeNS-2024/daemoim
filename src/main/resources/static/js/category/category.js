@@ -1,39 +1,41 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const categoryButtons = document.querySelectorAll('.tab-link');
-    const groupContainer = document.getElementById('groupContainer');
-    const searchInput = document.getElementById('searchQuery');
+document.addEventListener('DOMContentLoaded', () => {
+    const categoryButtons = document.querySelectorAll('.category-btn');  
+    const groupContainer = document.getElementById('groupContainer');   
+    const searchInput = document.getElementById('searchQuery');        
     let selectedCategory = 'allCategory'; 
 
     categoryButtons.forEach(button => {
-        button.addEventListener('click', function(e) {
+        button.addEventListener('click', (e) => {
             e.preventDefault();
             selectedCategory = button.getAttribute('data-category'); 
-            fetchGroups(); 
+            fetchGroups();  
         });
     });
 
-    // 검색 창에 입력된 내용을 기반으로 그룹 목록을 가져오는 함수
-    function fetchGroups() {
-        const query = searchInput.value || ''; // 검색어가 없으면 빈 문자열
-        const url = `/category/category?type=${selectedCategory}&query=${query}`; 
+    searchInput.addEventListener('input', () => {
+        fetchGroups();
+    });
 
-        // 서버로 요청을 보냄
+    const fetchGroups = () => {
+        const query = searchInput.value || '';  
+        const url = `/category/category?type=${selectedCategory}&query=${query}`;  
+
         fetch(url)
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('네트워크 응답에 문제가 있습니다.');
+                    throw new Error("네트워크 응답에 문제가 있습니다.");
                 }
-                return response.text(); 
+                return response.text();
             })
             .then(html => {
                 updateGroupList(html); 
             })
-            .catch(error => {
-                console.error("에러: ", error);
-            });
-    }
+            .catch(err => console.error("에러 발생:", err));
+    };
 
-    function updateGroupList(html) {
-        groupContainer.innerHTML = html; 
-    }
+    const updateGroupList = (html) => {
+        groupContainer.innerHTML = html;
+    };
+
+    fetchGroups();
 });
