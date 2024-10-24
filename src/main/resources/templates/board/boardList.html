@@ -11,28 +11,23 @@
     <link rel="stylesheet" href="/css/board/boardList.css">
 </head>
 <body>
+
+    
     <!-- Header -->
     <div class="header">
         <h1>모임배경사진</h1>
     </div>
-
+    
+    
     <!-- Container -->
     <div class="container">
-        <nav>
-            <!-- Sidebar (왼쪽 배너) -->
-            <ul>
-                <li>
-                    <a href="/board/{boardTypeCode} (boardTypeCode = 1)">일반 게시판</a>
-                </li>
-                <li>
-                    <a href="/board/boardSchedule">일정</a>
-                </li>
-            </ul>
-        </nav>
+        
+        <th:block th:replace="~{common/header2}"></th:block>
 
         <!-- Main content -->
-        <div class="main-content">
-            <table class="post">
+        <div class="list-wrapper" th:fragment= "list">
+            <table class="list-table">
+
                 <tbody>
 
                     <th:block th:if="${#lists.isEmpty(boardList)}">

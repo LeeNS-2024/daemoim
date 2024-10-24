@@ -38,6 +38,11 @@ public class BoardController {
 	
 	private final BoardService service;
 	
+	@GetMapping("boardPage")
+	public String boardPage() {
+		return "board/boardList";
+	}
+	
 	@GetMapping("boardSchedule")
 	public String boardSchedulePage() {
 		return "board/boardSchedule";
@@ -74,7 +79,7 @@ public class BoardController {
 		if(boardTypeCode == 3)
 		return "/board/imgAlbumList";
 		else
-		return "/board/boardList";
+		return "/board/boardList :: list";
 	}
 	
 	/** 게시글 상세 조회하기
