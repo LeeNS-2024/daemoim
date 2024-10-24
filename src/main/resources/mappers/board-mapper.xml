@@ -37,11 +37,12 @@
   
   
   
-  <!--  boardTypeCode가 일치하는 게시글 중 삭제되지 않은 게시글 수 조회 -->
+  <!--  groupNo와 boardTypeCode가 일치하는 게시물 중 삭제되지 않은 게시글 수 조회 -->
   <select id="getListCount" resultType="_int">
   	SELECT COUNT(*)
   	FROM "BOARD"
   	WHERE BOARD_TYPE_CODE = #{boardTypeCode}
+  	AND GROUP_NO = #{groupNo}
   	AND BOARD_DEL_FL = 'N'
   </select>
   
@@ -57,6 +58,12 @@
 		 FROM "COMMENT" C
 		 WHERE C.BOARD_NO = B.BOARD_NO
 		 AND   C.COMMENT_DEL_FL = 'N') AS "COMMENT_COUNT",
+		 
+		(SELECT COUNT(*)
+		 FROM "LIKE" L
+		 WHERE L.BOARD_NO = B.BOARD_NO) AS "LIKE_COUNT",
+		 
+
 		<![CDATA[ 
 		CASE 
 			WHEN CURRENT_DATE - BOARD_WRITE_DATE  < 1 / 24 / 60
@@ -77,10 +84,11 @@
 		]]>
 		
 		,
-		(SELECT BOARD_IMG_PATH || BOARD_IMG_RENAME 
+
+		(SELECT IMG_PATH || IMG_RENAME
 		 FROM BOARD_IMG I 
 		 WHERE BOARD_IMG_ORDER = 0 
-		 AND I.BOARD_NO = B.BOARD_NO) AS THUMBNAIL
+		 AND I.BOARD_NO = B.BOARD_NO) AS "THUMBNAIL"
 	FROM
 		"BOARD" B
 	JOIN
@@ -88,7 +96,9 @@
 	WHERE 
 		BOARD_DEL_FL = 'N' 
 	AND   
-		BOARD_TYPE_CODE = #{boardTypeCode}     
+		BOARD_TYPE_CODE = #{boardTypeCode} 
+	AND 
+		GROUP_NO = #{groupNo}    
 	ORDER BY 
 		RNUM DESC
   
@@ -98,18 +108,25 @@
   <select id="getSearchCount" resultType="_int">
   	SELECT COUNT(*)
   	FROM "BOARD"
+  	
   	<if test='key == "w"'>
   		JOIN "MEMBER" USING(MEMBER_NO)
   	</if>
   	
-  	WHERE BOARD_TYPE_CODE = #{boardTypeCode}
-  	AND BOARD_DEL_FL = 'N'
+  	WHERE 
+  		BOARD_TYPE_CODE = #{boardTypeCode}
+  	AND 
+  		GROUP_NO = #{groupNo}
+  	AND 
+  		BOARD_DEL_FL = 'N'
   	
   	<choose>
+  	
   		<!-- 제목 검색 -->
   		<when test='key=="t"'>
   			AND BOARD_TITLE LIKE '%' || #{query} || '%'
   		</when>
+  		
   		<!-- 내용 검색 -->
 		<when test='key == "c"'>
 			AND BOARD_CONTENT LIKE '%' || #{query} || '%'
@@ -123,10 +140,12 @@
 			 	BOARD_CONTENT LIKE '%' || #{query} || '%'
 			)
 		</when>
+		
 		<!-- 작성자 검색 -->
 		<when test='key == "w"'>
 			AND MEMBER_NICKNAME LIKE '%' || #{query} || '%'
 		</when>
+		
   	</choose>
   </select>
   
@@ -144,7 +163,7 @@
 		 AND   C.COMMENT_DEL_FL = 'N') AS "COMMENT_COUNT",
 		 
 		(SELECT COUNT(*)
-		 FROM "BOARD_LIKE" L
+		 FROM "LIKE" L
 		 WHERE L.BOARD_NO = B.BOARD_NO) AS "LIKE_COUNT",
 		 
 		<![CDATA[ 
@@ -178,7 +197,9 @@
 	WHERE 
 		BOARD_DEL_FL = 'N' 
 	AND   
-		BOARD_TYPE_CODE = #{boardTypeCode}    
+		BOARD_TYPE_CODE = #{boardTypeCode}
+	AND 
+		GROUP_NO = #{groupNo}
 		
 	<choose>
 		<!-- 제목 검색인 경우 -->
