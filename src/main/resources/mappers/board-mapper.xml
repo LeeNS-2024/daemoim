@@ -37,7 +37,7 @@
   
   
   
-  <!--  groupNo와 boardTypeCode가 일치하고 게시물 중 삭제되지 않은 게시글 수 조회(진) -->
+  <!--  groupNo와 boardTypeCode가 일치하는 게시물 중 삭제되지 않은 게시글 수 조회 -->
   <select id="getListCount" resultType="_int">
   	SELECT COUNT(*)
   	FROM "BOARD"
