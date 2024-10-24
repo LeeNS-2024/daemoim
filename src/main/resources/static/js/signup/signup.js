@@ -1,15 +1,17 @@
-// -------------------------------------------------------------------
-
 /***** 회원 가입 유효성 검사 *****/
 
 /* 필수 입력 항목의 유효성 검사여부를 체크하기 위한 객체(체크리스트)*/
 const checkObj = {
-  "memberEmail"     : false,
-  "memberPw"        : false,
-  "memberPwConfirm" : false,
-  "memberNickname"  : false,
-  "memberTel"       : false,
-  "authKey"         : false 
+
+  "memberEmail": false,
+  "memberDomain": false,
+  "memberFullEmail": false,
+  "memberId": false,
+  "memberPw": false,
+  "memberPwConfirm": false,
+  "memberNickname": false,
+  "memberTel": false,
+  "authKey": false
 };
 
 /* ----- 이메일 유효성 검사 ----- */
@@ -48,7 +50,6 @@ memberEmail.addEventListener("input", e => {
     return;
   }
 
-
   // 5) 이메일 형식이 맞는지 검사(정규 표현식을 이용한 검사)
 
   // 이메일 형식 정규 표현식 객체
@@ -60,6 +61,7 @@ memberEmail.addEventListener("input", e => {
     emailMessage.classList.add("error"); // 빨간 글씨 추가
     emailMessage.classList.remove("confirm"); // 초록 글씨 제거
     checkObj.memberEmail = false; // 유효하지 않다고 체크
+
     return;
   }
 
@@ -82,16 +84,36 @@ memberEmail.addEventListener("input", e => {
       checkObj.memberEmail = false;
       return;
     } 
+    
 
-    // 중복이 아닌 경우
-    emailMessage.innerText = emailMessageObj.check; // 중복X 메시지
-    emailMessage.classList.add("confirm");
-    emailMessage.classList.remove("error");
-    checkObj.memberEmail = true; // 유효한 이메일임을 기록
+// 인증 번호 받기 버튼 클릭 시
+sendAuthKeyBtn.addEventListener("click", () => {
 
+  checkObj.authKey = false; // 인증 안된 상태로 기록
+  authKeyMessage.innerText = ""; // 인증 관련 메시지 삭제
+
+  if(authTimer != undefined){
+    clearInterval(authTimer); // 이전 인증 타이머 없애기
+  }
+
+  // 1) 작성된 이메일이 유효하지 않은 경우
+  if(checkObj.memberEmail === false){
+    alert("유효한 이메일 작성 후 클릭하세요");
+    return;
+  }
+
+
+  // 2) 비동기로 서버에서 작성된 이메일로 인증코드 발송(AJAX)
+  fetch("/email/sendAuthKey", {
+    method : "POST",
+    headers : {"Content-Type" : "application/json"},
+    body : memberFullEmail.value
+
+    // POST 방식으로 
+    // /email/sendAuthKey 요청을 처리하는 컨트롤러에
+    // 입력된 이메일을 body에 담아서 제출
   })
   .catch( err => console.error(err) );
-
 });
 
 
@@ -147,6 +169,7 @@ sendAuthKeyBtn.addEventListener("click", () => {
     // /email/sendAuthKey 요청을 처리하는 컨트롤러에
     // 입력된 이메일을 body에 담아서 제출
   })
+
   .then(response => {
     if(response.ok) return response.text();
     throw new Error("이메일 발송 실패");
@@ -227,6 +250,7 @@ checkAuthKeyBtn.addEventListener("click", () => {
   
   // JSON.stringify(객체) : 객체 -> JSON 변환(문자열화)
 
+
   fetch("/email/checkAuthKey", {
     method : "POST",
     headers : {"Content-Type" : "application/json"},
@@ -258,7 +282,6 @@ checkAuthKeyBtn.addEventListener("click", () => {
     checkObj.authKey = true; // 인증 완료 표시
   })
   .catch(err => console.error(err));
-
 });
 
 /* ----- 아이디 유효성 검사 ----- */
@@ -524,6 +547,7 @@ memberTel.addEventListener("input", () => {
   const inputMemberTel = memberTel.value.trim();
 
   if (inputMemberTel.length === 0) {
+
     telMessage.innerText = telMessageObj.normal;
     telMessage.classList.remove("confirm", "error");
     checkObj.memberTel = false;
@@ -534,6 +558,7 @@ memberTel.addEventListener("input", () => {
   const regEx = /^010[0-9]{8}$/; // 010으로 시작, 이후 숫자 8개(총 11자)
 
   if (regEx.test(inputMemberTel) === false) {
+
     telMessage.innerText = telMessageObj.invalid;
     telMessage.classList.remove("confirm");
     telMessage.classList.add("error");
@@ -547,6 +572,7 @@ memberTel.addEventListener("input", () => {
   checkObj.memberTel = true;
 
   // 핸드폰 번호 중복 검사
+
 
 
    // 6) 닉네임 중복 검사
@@ -569,67 +595,4 @@ memberTel.addEventListener("input", () => {
      checkObj.memberTel = true;
    })
    .catch(err => console.error(err));
-   
 });
-
-/* 회원 가입 form 제출 시 전체 유효성 검사 여부 확인 */
-/* const signUpForm = document.querySelector("#signUpForm");
-
-signUpForm.addEventListener("submit", e => {
-
-  // e.preventDefault(); // 기본 이벤트(form 제출) 막기
-
-  // for(let key in 객체)
-  // -> 반복마다 객체의 키 값을 하나씩 꺼내서 key 변수에 저장
-
-  // 유효성 검사 체크리스트 객체에서 하나씩 꺼내서
-  // false인 경우가 있는지 검사
-  for(let key in checkObj){ 
-
-    if( checkObj[key] === false ){ // 유효하지 않은 경우
-      let str; // 출력할 메시지 저장
-
-      switch(key){
-        case "memberEmail"     : str = "이메일이 유효하지 않습니다"; break;
-        case "memberNickname"  : str = "닉네임이 유효하지 않습니다"; break;
-        case "memberPw"        : str = "비밀번호가 유효하지 않습니다"; break;
-        case "memberPwConfirm" : str = "비밀번호 확인이 일치하지 않습니다"; break;
-        case "memberTel"       : str = "유효하지 않은 전화번호 형식입니다"; break;
-        case "memberTel"       : str = "이미 등록된 전화번호 입니다."; break;
-        case "authKey"         : str = "이메일이 인증되지 않았습니다"; break;
-      }
-
-      alert(str); // 경고 출력
-
-      // 유효하지 않은 요소로 focus 이동
-      document.getElementById(key).focus();
-
-      e.preventDefault(); // 제출 막기
-
-      return;
-    }
-  } */
-
-  /* 주소 유효성 검사 */
-  // - 모두 작성   또는   모두 미작성
- /*  const addr = document.querySelectorAll("[name = memberAddress]");
-
-  let empty = 0; // 비어있는 input의 개수
-  let notEmpty = 0; // 비어있지 않은 input의 개수
-
-  // for ~ of 향상된 for문
-  for(let item of addr){
-    let len = item.value.trim().length; // 작성된 값의 길이
-    
-    if(len > 0) notEmpty++; // 비어있지 않은 경우
-    else        empty++;    // 비어있을 경우
-  }
-
-  // empty, notEmpty 중 3이 하나도 없을 경우
-  if( empty < 3 && notEmpty < 3 ){
-    alert("주소가 유효하지 않습니다(모두 작성 또는 미작성)");
-    e.preventDefault();
-    return;
-  }
-
-}); */

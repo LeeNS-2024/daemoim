@@ -1,3 +1,12 @@
+@font-face {
+  font-family: 'PartialSansKR-Regular';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-1@1.1/PartialSansKR-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+
 *{
   border : none;
 }
@@ -89,6 +98,11 @@
   background-color: #f1f1f1; /* 연한 회색 배경색 설정 */
 }
 
+.pwjoin{
+  display: flex;
+  justify-content: center;
+}
+
 /* 카테고리 버튼 스타일 */
 .bottom-row {
   width: 100%;
@@ -144,7 +158,6 @@
 .icon img {
   width: 100%;
   height: auto;
-  border-radius: 50%; /* 아이콘 이미지를 둥글게 */
   background-color: #eee; /* 아이콘 배경색 설정 */
 }
 
@@ -187,7 +200,6 @@
 }
 
 .login-box {
-  border: 1px solid black;
   padding: 20px;
   width: 50%;
   margin: 0 auto; /* 가운데 정렬 */
@@ -207,6 +219,103 @@
   display: flex;
   justify-content: space-around;
 }
+
+/* 로그인 버튼 css */
+html, body {
+  height: 100%;
+}
+
+.wrapLoginButton {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wrapLoginButton .mainLoginButton {
+  width: 300px; /* 고정된 너비 */
+  height: 60px; /* 고정된 높이 */
+  display: inline-flex;
+  font-family: 'Nunito', sans-serif;
+  font-size: 22px;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+  text-align: center;
+  letter-spacing: 1.3px;
+  font-weight: 700;
+  color: black;
+  background: white;
+  background: linear-gradient(90deg, white 0%, white 100%);
+  border: none;
+  border-radius: 1000px;
+  box-shadow: 12px 12px 24px black;
+  transition: all 0.3s ease-in-out 0s;
+  cursor: pointer;
+  outline: none;
+  position: relative;
+  padding: 10px;
+}
+
+.wrapLoginButton .mainLoginButton::before {
+  content: '';
+  border-radius: 1000px;
+  width: calc(300px + 12px); /* 고정된 너비 */
+  height: calc(60px + 12px); /* 고정된 높이 */
+  border: 6px solid black;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: all .3s ease-in-out 0s;
+}
+
+.wrapLoginButton .mainLoginButton:hover, 
+.wrapLoginButton .mainLoginButton:focus {
+  color: #313133;
+  transform: translateY(-6px);
+}
+
+.wrapLoginButton .mainLoginButton:hover::before, 
+.wrapLoginButton .mainLoginButton:focus::before {
+  opacity: 1;
+}
+
+.wrapLoginButton .mainLoginButton::after {
+  content: '';
+  width: 30px;
+  height: 30px;
+  border-radius: 100%;
+  border: 6px solid black;
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: ring 1.5s infinite;
+}
+
+.wrapLoginButton .mainLoginButton:hover::after, 
+.wrapLoginButton .mainLoginButton:focus::after {
+  animation: none;
+  display: none;
+}
+
+@keyframes ring {
+  0% {
+    width: 30px;
+    height: 30px;
+    opacity: 1;
+  }
+  100% {
+    width: 300px;
+    height: 300px;
+    opacity: 0;
+  }
+}
+
+
 
 /************ 추천 모임 css ************/
 
@@ -266,7 +375,7 @@
   background-color: white;
   border: 2px solid black;
   z-index: 1000; /* 가장 위에 표시되도록 설정 */
-  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5); /* 그림자 효과 */
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5); /* 그림자 효과 */
 }
 
 .popup.active {
@@ -328,15 +437,20 @@
 /************ 위로가기 버튼 css ************/
 
 .scroll-top {
-  position: sticky;
-  text-align: end;
-  margin-top: 30px;
-  margin-right: 20px;
+  position: fixed; 
+  bottom: 20px; 
+  right: 20px; 
+  z-index: 1000;
 }
 
 .scroll-top button {
-  font-size: 20px;
-  padding: 10px;
+  font-size: 30px;
+  background: none;
+  border: none; 
+  box-shadow: none;
+  cursor: pointer; 
+  outline: none; 
+  color: black; 
 }
 
 /************ 푸터 css ************/
@@ -356,3 +470,69 @@ footer nav a {
   color: black;
   margin-right: 10px;
 }
+
+
+/* 카테고리 박스 스타일 */
+.category-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 20px;
+  gap: 20px;
+}
+
+.category-box {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  width: 35%;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  padding: 15px;
+  align-items: center;
+}
+
+.icon {
+  width: 20%;
+  margin-right: 20px;
+}
+
+.icon img {
+  width: 100%;
+  height: auto;
+  border-radius: 5%;
+  background-color: #eee;
+}
+
+.details {
+  width: 75%;
+}
+
+.activity-name {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.group-name {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.location {
+  font-size: 14px;
+  color: #777;
+  margin-bottom: 10px;
+}
+
+.participants {
+  display: flex;
+  align-items: center;
+}
+
+.participants i {
+  margin-right: 5px;
+}
+
+

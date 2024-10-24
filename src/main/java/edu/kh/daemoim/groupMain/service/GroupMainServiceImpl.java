@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import edu.kh.daemoim.groupMain.dto.Notice;
+import edu.kh.daemoim.groupMain.dto.PhotoBox;
 import edu.kh.daemoim.groupMain.mapper.GroupMainMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
@@ -29,6 +30,14 @@ public class GroupMainServiceImpl implements GroupMainService {
 	public List<Notice> selectBoardList() {
 	
 		return mapper.selectBoardList();
+	}
+
+	// 사진 불러오기
+	@Override
+	public List<PhotoBox> getPhotos(int groupNo) {
+		
+		return mapper.getPhotos(groupNo);
+
 	}
 	
 

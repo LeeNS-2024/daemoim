@@ -1,65 +1,137 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>모임 메인페이지</title>
-    <th:block th:replace="~{common/common}"></th:block>
-    <link rel="stylesheet" href="/css/groupMain/main.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>모임 메인페이지</title>
+  <th:block th:replace="~{common/common}"></th:block>
+  <link rel="stylesheet" href="/css/groupMain/main.css">
 </head>
+
 <body>
-     <!-- 왼쪽 사이드바 -->
-     <div class="sidebar">
-        <a href="#">공지사항</a>
-        <a href="#">일반 게시판</a>
-        <a href="#">사진첩</a>
-        <a href="#">일정</a>
-    </div>
-   <!-- 모임 배경사진 -->
-   <div class="screen">
+  <!-- 왼쪽 사이드바 -->
+  <div class="sidebar">
+    <a href="#">공지사항</a>
+    <a href="#">일반 게시판</a>
+    <a href="#">사진첩</a>
+    <a href="#">일정</a>
+  </div>
+  <!-- 모임 배경사진 -->
+  <div class="screen">
     <img src="" alt="모임배경사진">
   </div>
 
-   <!-- 모임 소개 -->
-   <div class="introduce">모임 소개</div>
+  <!-- 모임 소개 -->
+  <div class="introduce">모임 소개</div>
 
 
-<div class="main-container">
-   
+  <main class="main-container">
+
     <!-- 컨텐츠 영역 -->
-    <div class="container">
-     
-        <!-- 박스 레이아웃 -->
-        <div class="box-container">
-                <!-- 공지사항-->
-            <div class="notice">
-                <table>
-                  <thead>
-                    <tr>
-                    
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr th:each="board : ${boardList}">
-                      <td>공지</td>
-                      <td th:text="${board.boardTitle}">공지 제목</td>
-                      <td th:text="${board.boardWriteDate}">날짜</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            <div class="schedule">모임일정</div>
-            <div class="schedule">모임일정</div>
+    <section class="container-row">
 
-            <!-- 사진첩 -->
-            <div class="photobox">사진첩</div>
-              
-            <div class="schedule">모임일정</div>
-            <div class="schedule">모임일정</div>
+      <!-- 박스 레이아웃 -->
+      <section class="box-container">
+        <!-- 공지사항-->
+        <div class="notice">
+          <table>
+            <thead>
+              <tr>
+
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="board : ${boardList}">
+                <td>공지</td>
+                <td th:text="${board.boardTitle}">공지 제목</td>
+                <td th:text="${board.boardWriteDate}">날짜</td>
+              </tr>
+            </tbody>
+          </table>
+
         </div>
-    </div>
-</div>
 
-<script src="/js/groupMain/groupNotice.js"></script>
+
+        <!-- 사진첩 -->
+
+
+        <!-- 사진첩 섹션 -->
+        <div class="photo-gallery">
+          <h3>사진첩</h3>
+          <div class="gallery-grid">
+
+            <th:block th:each="photo : ${photos}" th:object="${photo}">
+              <div class="photo-item">
+                <img th:src="${photo.fileLocation}" th:alt="*{boardImgOriginalName}" class="gallery-photo">
+                <p th:text="*{boardImgOriginalName}">사진 제목</p>
+              </div>
+
+            </th:block>
+          </div>
+        </div>
+
+        <!-- 
+            <div class="photo-box bg-white rounded-lg shadow p-4">
+              <div class="flex items-center justify-between mb-4">
+                  <button class="text-sm text-gray-500">더보기</button>
+              </div>
+          
+              <div class="grid grid-cols-2 gap-2">
+                  <div th:each="photo : ${photos}">
+                      <img th:src="@{'/' + ${photo.boardImgPath} + '/' + ${photo.boardImgRename}}"
+                           th:alt="${photo.boardImgOriginalName}"
+                           class="w-full h-32 object-cover rounded-lg" />
+                  </div>
+              </div>
+          </div> -->
+      </section>
+
+
+      <section class="group-section">
+        <!--   <div class="schedule-box">
+            <span>
+              <div class="date">날짜 : <span th:text=""></span> </div>
+              <div class="detail-date">상세 일시</div>
+              <div class="location">위치</div>
+              <div class="cost">비용</div>
+              <div class="number">참석 버튼 누른 사람 수 / 설정한 총 인원수</div>
+            </span>
+         
+            </div> -->
+
+        <div class="schedule-box">
+          <section class="groupMainImage">
+          </section>
+          <section class="group-info">
+            <a href="/groupMain">모임 일정</a>
+          </section>
+        </div>
+
+        <div class="schedule-box">
+          <section class="groupMainImage">
+          </section>
+          <section class="group-info">
+            <a href="/groupMain">모임 일정</a>
+          </section>
+        </div>
+
+        <div class="schedule-box">
+          <section class="groupMainImage">
+          </section>
+          <section class="group-info">
+            <a href="/groupMain">모임 일정</a>
+          </section>
+        </div>
+
+
+      </section>
+
+    </section>
+
+  </main>
+
+  <script src="/js/groupMain/groupNotice.js"></script>
 </body>
+
 </html>

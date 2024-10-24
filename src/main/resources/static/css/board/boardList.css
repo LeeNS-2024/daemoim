@@ -185,3 +185,47 @@ body {
   width: 100%;
   height: 100%;
 }
+
+nav{
+  height: 50px;
+  background-color: white;
+
+  position : sticky; /* 화면 밖으로 벗어났을 때 지정된 위치 붙음 */
+  top : 0;       /* 붙을 위치(고정될 위치) 지정 */
+  z-index: 1000;     
+}
+
+nav > ul{
+  display: flex;
+  flex-direction: column;
+  margin: 40px;
+  list-style: none; /* li 태그 앞에 기호 삭제 */
+  height: 100%;
+}
+
+nav li {
+  flex : 0     1     150px;
+    /* grow  shrink  basis */
+}
+
+nav a{
+  text-decoration: none; /* 밑줄 제거 */
+  color: black;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 0 11px;      /* 위아래 10px, 좌우 0px 여백 */
+  
+  display: block;
+  text-align: center;   /* 글자(inline) 가운데 정렬 */
+
+  border-radius: 5px;
+  transition-duration: 0.1s; /* css가 0.1초 동안의 시간을 가지고 변함 */
+  
+  height: 100%;
+  width: 100%;
+}
+
+nav a:hover{
+  color: white;
+  background-color: black;
+}

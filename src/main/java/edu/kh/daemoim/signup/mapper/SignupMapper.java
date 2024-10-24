@@ -20,6 +20,8 @@ public interface SignupMapper {
 	// 회원가입 마지막
 	int signUp(MyPage inputMember);
 
+	// 전화번호 체크
+	int telCheck(String tel);
 	
 
 

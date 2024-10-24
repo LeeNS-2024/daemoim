@@ -1,5 +1,33 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <mapper namespace="edu.kh.daemoim.main.mapper.MainMapper">
+
+  <!-- 추천 모임 조회 -->
+  <select id="selectRecommendedGroups" resultType="MainDTO">
+	  SELECT 
+	    g.GROUP_MAIN_IMG AS groupMainImg, 
+	    g.GROUP_NAME AS groupName, 
+	    g.GROUP_INTRODUCE AS groupIntroduce, 
+	    c.CATEGORY_NAME AS categoryName,
+	    COUNT(mg.MEMBER_NO) AS currentPopulation,
+	    g.GROUP_MAX_POPULATION AS maxPopulation
+	  FROM 
+	    "GROUP" g
+	  JOIN 
+	    MEMBER_GROUP mg ON g.GROUP_NO = mg.GROUP_NO
+	  JOIN 
+	    CATEGORY c ON g.CATEGORY_NO = c.CATEGORY_NO
+	  WHERE 
+	    mg.MEMBER_GROUP_BAN = 'N' 
+	    AND mg.MEMBER_GROUP_DEL_FL = 'N'
+	  GROUP BY 
+	    g.GROUP_NO, g.GROUP_MAIN_IMG, g.GROUP_NAME, g.GROUP_INTRODUCE, c.CATEGORY_NAME, g.GROUP_MAX_POPULATION
+	  ORDER BY 
+	    g.GROUP_MAX_POPULATION / COUNT(mg.MEMBER_NO) ASC
+</select>
+
 
 </mapper>

@@ -31,9 +31,17 @@
 			MEMBER_DEL_FL = 'N'
 		AND	MEMBER_OUT_FL = 'N'
 		AND MG.GROUP_NO = #{groupNo}
-		AND MG.GROUP_NO = #{groupNo}
 		AND MG.MEMBER_GROUP_DEL_FL = 'N'
 		AND MG.MEMBER_GROUP_BAN = 'N'
+		<choose>
+			<when test='key== "i"'>
+				AND MEMBER_ID LIKE '%' || #{query} || '%'
+			</when>
+			<when test='key== "n"'>
+				AND MEMBER_NICKNAME LIKE '%' || #{query} || '%'
+			</when>
+		</choose>
+		
 		<choose>
 			<when test="order== 1">
 				ORDER BY MEMBER_ID ASC

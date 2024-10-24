@@ -24,6 +24,9 @@ categoryBtn?.addEventListener("click", ()=>{
   categoryAfter.classList.remove("display-none");
   categoryListAfter.classList.remove("display-none");
 
+  detailConfirm.category = false;
+  detailConfirm.categoryList = false;
+
 });
 
 
@@ -36,12 +39,27 @@ categoryListBtn?.addEventListener("click", ()=>{
   categoryListBefore.classList.add("display-none");
   categoryListAfter.classList.remove("display-none");
 
+  detailConfirm.categoryList = false;
+
 });
 
 // 체크된 카테고리 라디오의 값 얻어오기
 const checkedCategory = () => {
   // name="categoryNo"인 라디오 버튼 중에서 체크된 버튼 선택
   const checkedRadio = document.querySelector('input[name="categoryNo"]:checked');
+  
+  // 체크된 버튼이 있으면 그 value 값을 반환, 없으면 null 반환
+  if (checkedRadio) {
+    return checkedRadio.value;
+  } else {
+    return null; // 아무 것도 체크되지 않은 경우
+  }
+}
+
+// 체크된 카테고리 리스트 라디오의 값 얻어오기(제출전확인용)
+const checkedCategoryList = () => {
+  // name="categoryNo"인 라디오 버튼 중에서 체크된 버튼 선택
+  const checkedRadio = document.querySelector('input[name="categoryListNo"]:checked');
   
   // 체크된 버튼이 있으면 그 value 값을 반환, 없으면 null 반환
   if (checkedRadio) {
@@ -131,9 +149,50 @@ overflow: hidden; -> 텍스트가 너비를 넘기면 ... 처리
 const detailConfirm = {
   "groupName"      : true ,
   "groupIntroduce" : true ,
-  "category"       : false, // 제출할때 검사
-  "categoryList"   : false  // 제출할때 검사
+  "category"       : true, // 제출할때 검사
+  "categoryList"   : true  // 제출할때 검사
 }
+
+const updateForm = document.querySelector("#updateForm");
+const submitDiv = document.querySelector(".submitDiv");
+submitDiv?.addEventListener("click", e => {
+
+  if(detailConfirm.groupName === false){
+    alert("모임명을 확인해 주세요.");
+    groupName.focus();
+    return;
+  }
+
+  if(detailConfirm.groupIntroduce === false){
+    alert("모임소개를 확인해 주세요.");
+    groupIntroduce.focus();
+    return;
+  }
+
+  if(detailConfirm.category === false){
+    if(checkedCategory() === null){// 체크된 카테고리가 없는경우
+      alert("카테고리 체크를 확인해주세요");
+      return;
+    }
+  }
+
+  if(detailConfirm.categoryList === false){
+    if(checkedCategoryList() === null){// 체크된 카테고리가 없는경우
+      alert("카테고리 리스트 체크를 확인해주세요");
+      return;
+    }
+  }
+
+  // deleteOrderList 적재
+  const input = document.querySelector("input");
+  input.type = 'hidden';
+  input.name = 'deleteOrderList';
+  input.value = Array.from(deleteOrderList);
+
+  updateForm.append(input);
+
+  updateForm.submit();
+});
 
 /********************************************************************** */
 /********************************************************************** */
@@ -261,12 +320,15 @@ groupName?.addEventListener("input", () => {
 
 const groupIntroduce = document.querySelector("#groupIntroduce");
 const countIntroduce = document.querySelector("#countIntroduce");
+const preViewIntroduce = document.querySelector("#preViewIntroduce");
 const groupIntroduceMessage = document.querySelector("#groupIntroduceMessage");
 
 groupIntroduce?.addEventListener("input", ()=>{
 
   const inputIntroduce = groupIntroduce.value.trim();
   const inputLength = inputIntroduce.length;
+
+  preViewIntroduce.innerText = inputIntroduce;
 
   if(inputLength < 1){
     detailConfirm.groupIntroduce = false;
@@ -313,6 +375,9 @@ const imgPreview = document.querySelectorAll(".inputImgPreview");
 // 백업용 이미지
 const lastImg = [null, null];
 
+// 삭제이미지 순서를 저장할 리스트
+const deleteOrderList = new Set();
+// 이미지 추가되면 지워주고, x 누르면 채워줘야함
 
 /* input에 이미지가 변한경우 */
 for(let i=0; i < inputImageArr?.length ; i++){
@@ -331,7 +396,7 @@ for(let i=0; i < inputImageArr?.length ; i++){
     }
 
     if(file.size > 1*1024*1024*1){
-      alert("너무큰데");
+      alert("파일크기가 10MB를 초과합니다");
       const transfer = new DataTransfer();
       transfer.items.add(lastImg[i]);
       inputImageArr[i].files = transfer.files;
@@ -339,9 +404,9 @@ for(let i=0; i < inputImageArr?.length ; i++){
     }
 
     imgPreviewFuntion(file, i); // 미리보기 함수 호출
-  })
+  }) // inputImage event end
 
-}
+} // for end
 
 const imgPreviewFuntion = (file, order) => {
 
@@ -358,7 +423,53 @@ const imgPreviewFuntion = (file, order) => {
       imgPreview[2].src=e.target.result;
     }
   })
-}
+
+  deleteOrderList.delete(order);
+} // imgPreviewFuntion() end
+
+// X 버튼 클릭시 기본이미지로 변경
+const imgDelBtns = document.querySelectorAll(".imgDelBtn");
+imgDelBtns?.forEach((btn, index) => {
+  btn.addEventListener("click", () => {
+
+    imgPreview[index].src = defaultImg[index];
+    inputImageArr[index].value = '';
+    lastImg[index] = null;
+
+    // 하단 미리보기화면도 잊지않고 챙겨줌
+    if(index === 1){
+      imgPreview[2].src = defaultImg[1];
+    }
+
+    if(originalImg[index] !== null){
+      deleteOrderList.add(index);
+    }
+  });
+});
+
+// 변경취소 이미지 입력시 원래대로 바꾸기
+const deleteImgBtns = document.querySelectorAll(".deleteImg");
+deleteImgBtns?.forEach((btn, index) => {
+  btn.addEventListener("click", () => {
+
+    if(originalImg[index] !== null){
+      imgPreview[index].src = originalImg[index];
+    } else {
+      imgPreview[index].src = defaultImg[index];
+    }
+    inputImageArr[index].value = '';
+    lastImg[index] = null;
+
+    if(index === 1){
+      imgPreview[2].src = defaultImg[1];
+    }
+
+    deleteOrderList.delete(index);
+  });
+});
+
+
+
 
 /********************************************************************** */
 /********************************************************************** */
@@ -598,6 +709,8 @@ const memberBan = (memberNo) => {
 /********************************************************************** */
 
 
+/* 모임 가입 수락/거절 */
+
 const inviteAgreeBtns = document.querySelectorAll(".inviteAgree");
 const inviteRefuseBtns = document.querySelectorAll(".inviteRefuse");
 
@@ -663,8 +776,20 @@ const inviteSubmit = (inviteObj) => {
     /*
      0 : 실패
      1 : 성공
+     2 : 모임인원초과
      3 : 모임장 불일치
+     4 : 강퇴회원
+     5 : 중복가입
     */
+     switch(result){
+      case '0' : alert("작업 실패 하였습니다."); break;
+      case '1' : alert("회원이 가입되었습니다."); break;
+      case '2' : alert("현재 모임의 정원이 초과되었습니다."); break;
+      case '3' : alert("모임장의 권한입니다."); location.href="/"; break;
+      case '4' : alert("강퇴한 회원 입니다."); break;
+      case '5' : alert("이미 가입되어있는 회원 입니다."); break;
+      default : alert("알 수 없는 오류가 발생하였습니다.");
+    }
     // 화면 초기화 함수 호출
     tableAjaxRequest(2);
   })
