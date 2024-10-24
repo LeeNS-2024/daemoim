@@ -111,6 +111,9 @@ public class GroupManageController {
 		List<ManageCategory> categoryArr = service.getCategoryArr();
 		model.addAttribute("categoryArr", categoryArr);
 		
+		// 모임소개글 잘라내기
+		model.addAttribute("introduceArr", group.getGroupIntroduce().split("\n") );
+		
 		return "groupManage/manageGroup";
 	}
 	
@@ -124,14 +127,15 @@ public class GroupManageController {
 	@PostMapping("{groupNo:[0-9]+}/manageGroup")
 	public String updateGroup(
 			@ModelAttribute GroupManageDto updateGroup,
+			@RequestParam Map<String, Object> params,
 			@RequestParam("inputImg") List<MultipartFile> images,
 			@RequestParam("deleteOrderList") List<Integer> deleteOrderList) {
-		
+
 		int result = service.updateGroup(updateGroup, images, deleteOrderList);
 		
 		String path = null;
 		if(result > 0) {
-			path = "redirect:/groupMain";
+			path = "redirect:/groupMain/" + updateGroup.getGroupNo();
 		} else {
 			path = "redirect:/groupManage/" + updateGroup.getGroupNo() + "/manageGroup";
 		}
