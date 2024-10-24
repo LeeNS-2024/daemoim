@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="edu.kh.daemoim.siteManage.mapper.SiteManageMapper">
+
+	<!-- 전체 모임수 조회 -->
+	<select id="getGroupAllcount" resultType="_int">
+		SELECT COUNT(*)
+		FROM "GROUP"
+		WHERE
+			GROUP_DEL_FL = 'N'
+	</select>
+
+	<!-- 전체 회원수 조회 -->
+	<select id="getMemberAllcount" resultType="_int">
+		SELECT COUNT(*)
+		FROM "MEMBER"
+		WHERE
+			MEMBER_OUT_FL = 'N'
+		AND MEMBER_DEL_FL = 'N'
+	</select>
+	
+	<!-- 정지된 회원수 조회 -->
+	<select id="getOutMemberCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM "MEMBER"
+		WHERE
+			MEMBER_OUT_FL = 'Y'
+		AND MEMBER_DEL_FL = 'N'
+	</select>
+	
+	<!-- 오늘 가입한 회원수 조회 -->
+	<select id="getTodayEnrollCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM "MEMBER"
+		WHERE
+			MEMBER_OUT_FL = 'N'
+		AND MEMBER_DEL_FL = 'N'
+		AND CURRENT_DATE - ENROLL_DATE = 0
+	</select>
+	
+	<!-- 활동이 가장 많은 모임 조회하기 -->
+	<select id="getActiveGroupList" resultType="GroupManageDto">
+		SELECT
+			GROUP_NO,
+			GROUP_NAME,
+			TO_CHAR(GROUP_DATE, 'YYYY"년"MM"월"DD"일"') "GROUP_DATE",
+			(SELECT MEMBER_NICKNAME
+			FROM "MEMBER" M
+			WHERE M.MEMBER_NO = G.MEMBER_NO) AS "MEMBER_NICKNAME",
+			G.MEMBER_NO,
+			(SELECT COUNT(*)
+			 FROM MEMBER_GROUP MG
+			 JOIN "MEMBER" M2 ON (MG.MEMBER_NO = M2.MEMBER_NO)
+			 WHERE
+			 	MG.GROUP_NO = G.GROUP_NO
+			 AND	MEMBER_GROUP_DEL_FL = 'N'
+			 AND MEMBER_GROUP_BAN = 'N'
+			 AND M2.MEMBER_DEL_FL = 'N'
+			 AND M2.MEMBER_OUT_FL = 'N') AS MEMBER_COUNT,
+			GROUP_MAX_POPULATION,
+			(SELECT COUNT(*)
+			 FROM SCHEDULE S
+			 WHERE S.GROUP_NO = G.GROUP_NO) AS ACTIVE_COUNT
+		FROM
+			"GROUP" G
+		WHERE
+			GROUP_DEL_FL = 'N'
+		ORDER BY
+			ACTIVE_COUNT DESC
+		FETCH FIRST 5 ROWS ONLY
+	</select>
+	
+	<!-- 최근 가입한 회원 조회 -->
+	<select id="getNewMember" resultType="GroupMemberManageDto">
+		SELECT
+			MEMBER_NO,
+			MEMBER_NICKNAME,
+			MEMBER_EMAIL,
+			TO_CHAR(ENROLL_DATE, 'YYYY"년"MM"월"DD"일"') "ENROLL_DATE",
+			MEMBER_DEL_FL
+		FROM "MEMBER"
+		WHERE
+			MEMBER_OUT_FL = 'N'
+		ORDER BY
+			ENROLL_DATE DESC
+		FETCH FIRST 5 ROWS ONLY
+	</select>
+	
+	
+	
+  
+</mapper>

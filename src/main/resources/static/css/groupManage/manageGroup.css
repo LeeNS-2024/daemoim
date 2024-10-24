@@ -45,6 +45,7 @@ main{
   justify-content: space-between;
 }
 .mainSec{
+  width: 1070px;
   display: flex;
   flex-direction: column;
   align-items: center;  
@@ -61,11 +62,8 @@ main{
 .mainSec > .searchForm{
   margin: 0 0 20px;
 }
-.mainSec > .searchForm select{
+.mainSec > div > form select{
   width: 85px;
-  height: 25px;
-}
-.mainSec > .searchForm select{
   height: 25px;
 }
 .mainSec > .searchForm button{
@@ -86,13 +84,15 @@ main{
   margin: 0 0 10px;
 }
 #btnDiv{
+  flex-grow: 1;
   margin: 50px;
   display: flex;
   flex-direction: row;
+  align-items: flex-end;
   justify-content: center;
 }
 #btnDiv > div{ /* 하단 수정, 돌아가기버튼 */
-  width: 500px;
+  width: 450px;
   height: 40px;
   margin: 10px;
   border-radius: 8px;
@@ -104,6 +104,7 @@ main{
 }
 #btnDiv > div:hover{
   cursor: pointer;
+  border: 3px solid rgb(99, 99, 99);
 }
 .title{
   margin: 50px 0 20px 0;
@@ -269,6 +270,12 @@ input[type="radio"]:checked + label { /* 라벨이 꼭 뒤에잇어야함 */
   flex-wrap: wrap;
 }
 
+#categoryBtn:hover, #categoryListBtn:hover{
+  cursor: pointer;
+  background-color: rgb(46, 46, 46);
+  color: wheat;
+}
+
 /* 제출버튼 */
 .submitDiv{
   user-select: none; /* 드래그 막음 */
@@ -372,12 +379,12 @@ input[type="radio"]:checked + label { /* 라벨이 꼭 뒤에잇어야함 */
   border-collapse: collapse;
 }
 tr th{height: 40px; background-color: #A0937D;}
-#tableTr > th:first-child{ min-width: 90px;}    /* 아이디 */
+#tableTr > th:first-child{ min-width: 130px;}    /* 아이디 */
 #tableTr > th:nth-child(2){ min-width: 90px;}   /* 프로필사진 */
-#tableTr > th:nth-child(3){ min-width: 90px;}   /* 닉네임 */
-#tableTr > th:nth-child(4){ min-width: 140px;}  /* 가입일 */
-#tableTr > th:nth-child(6){ min-width: 50px;}   /* 권한1 */
-#tableTr > th:last-child{ min-width: 50px;}     /* 권한2 */
+#tableTr > th:nth-child(3){ min-width: 120px;}   /* 닉네임 */
+#tableTr > th:nth-child(4){ min-width: 160px;}  /* 가입일 */
+#tableTr > th:nth-child(6){ min-width: 70px;}   /* 권한1 */
+#tableTr > th:last-child{ min-width: 70px;}     /* 권한2 */
 .orderBtn:hover{
   background-color: #a18e6e;
   cursor: pointer;
@@ -414,10 +421,11 @@ tbody tr:hover{
 }
 /* 공지게시판미리보기 */
 .boardTr > th:first-child{ min-width: 90px;}    /* 게시글번호 */
-.boardTr > th:nth-child(2){ min-width: 350px;}   /* 제목 */
-.boardTr > td:nth-child(2){ text-align: left;}   /* 제목 */
+.boardTr > th:nth-child(2){ width: 350px;}      /* 제목 */
+.boardTr > td:nth-child(2){ width: 350px; text-align: left;}   /* 제목 */
 .boardTr > th:nth-child(3){ min-width: 80px;}   /* 조회수 */
 .boardTr > th:nth-child(4){ min-width: 150px;}  /* 작성일 */
+.boardTr > th:nth-child(5){ min-width: 100px;}  /* 작성자 */
 .boardTr .likeCount{
   font-size: 0.8em;
   color: red;
@@ -426,11 +434,38 @@ tbody tr:hover{
   font-size: 0.8em;
   color: grey;
 }
+.boardTr>.boardTitle{
+  display: flex;  
+  flex-direction: row;
+  align-items: center;
+}
+.boardTr>.boardNickname{
+  width: 100px;
+  display: block;
+  white-space: nowrap; /* 텍스트를 한 줄로 표시 */
+  overflow: hidden; /* 넘치는 텍스트를 숨김 */
+  text-overflow: ellipsis; /* 넘치는 부분을 ...로 표시 */
+}
+.pagination > li{
+  text-align: center;
+  min-width: 20px;
+  border: 1px solid #333;
+  border-radius: 3px;
+}
+.pagination>li>a{
+  color: black;
+
+}
 .boardTr a{
   text-decoration: none;
   color: black;
+
+  display: block;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
+
 /* *********************************** */
 @font-face {
   font-family: 'MinSans-Regular';

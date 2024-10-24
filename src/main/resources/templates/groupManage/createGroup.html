@@ -20,7 +20,7 @@
     <!-- 생성할 모임 정보 입력 -->
     <section class="mainSec">
       <h1>모임 만들기</h1>
-      <th:block th:if= "${session.loginMember}">내가 보인다면 로그인 되있는겁니다</th:block>
+      <th:block th:if= "${session.loginMember}"><h5>내가 보인다면 로그인 되있는겁니다</h5></th:block>
 
       <form action="/groupManage/createGroup" method="POST" id="submitGroupCreate" enctype="multipart/form-data">
         
