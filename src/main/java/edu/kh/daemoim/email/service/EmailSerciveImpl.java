@@ -56,6 +56,8 @@ public class EmailSerciveImpl implements EmailService{
 			case "findPw" :
 				emailTitle = " 비밀번호 찾기 인증번호 입니다.";
 				break;
+			case "withdrawal" :
+				emailTitle = "회원탈퇴 인증번호 입니다.";
 			default:
                 emailTitle = " 인증번호 안내"; // 기본 제목 설정
                 break;

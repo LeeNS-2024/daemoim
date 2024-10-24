@@ -74,7 +74,7 @@ memberEmail.addEventListener("input", e => {
   .then(count => {
     // 매개 변수 count : 첫 번째 then에서 return된 값이 저장된 변수
 
-    if(count == 1){ // 중복인 경우
+    if(count > 1){ // 중복인 경우
       emailMessage.innerText = emailMessageObj.duplication; // 중복 메시지
       emailMessage.classList.add("error");
       emailMessage.classList.remove("confirm");
