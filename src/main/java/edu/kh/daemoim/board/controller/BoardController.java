@@ -30,9 +30,10 @@ public class BoardController {
 	 * 						 (필수 아님, 없으면 1)
 	 * @param model : forward 시 데이터 전달하는 용도의 객체(request)
 	 */
-	@GetMapping("{boardTypeCode:[0-9]+}")
+	@GetMapping("{groupNo:[0-9]+}/{boardTypeCode:[0-9]+}")
 	public String selectBoardList(
 		@PathVariable("boardTypeCode") int boardTypeCode,
+		@PathVariable("groupNo") int groupNo,
 		@RequestParam(value = "cp", required = false, defaultValue = "1") int cp,
 		Model model,
 		@RequestParam Map<String, Object> paramMap) {
@@ -40,9 +41,9 @@ public class BoardController {
 		Map<String, Object> map = null;
 		
 		if(paramMap.get("key") == null) { // 일반 목록 조회
-			map = service.selectBoardList(boardTypeCode, cp);
+			map = service.selectBoardList(groupNo, boardTypeCode, cp);
 		} else { // 검색 목록 조회
-			map = service.selectSearchList(boardTypeCode, cp, paramMap);
+			map = service.selectSearchList(groupNo, boardTypeCode, cp, paramMap);
 		}
 	
 		List<Board> boardList = (List<Board>)map.get("boardList");

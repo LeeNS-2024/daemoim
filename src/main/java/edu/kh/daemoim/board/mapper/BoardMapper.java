@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
 import edu.kh.daemoim.board.dto.Board;
@@ -11,22 +12,27 @@ import edu.kh.daemoim.board.dto.Board;
 @Mapper
 public interface BoardMapper {
 
-	/** boardCode가 일치하는 게시글 중 삭제되지 않은 게시글 수 조회
-	 * @param boardCode
-	 * @return listCount
+	/** groupNo와 boardTypeCode가 일치하고 게시물 중 삭제되지 않은 게시글 수 조회
+	 * @param groupNo
+	 * @param boardTypeCode
+	 * @return
 	 */
-	int getListCount(int boardTypeCode);
+	int getListCount(@Param("groupNo") 			 int groupNo, 
+									 @Param("boardTypeCode") int boardTypeCode);
 
 	/** 지정된 페이지 분량의 게시글 목록 조회
-	 * @param boardCode
+	 * @param groupNo
+	 * @param boardTypeCode
 	 * @param rowBounds
-	 * @return boardList
+	 * @return
 	 */
-	List<Board> selectBoardList(int boardTypeCode, RowBounds rowBounds);
+	List<Board> selectBoardList(@Param("groupNo")				int groupNo,
+															@Param("boardTypeCode")	int boardTypeCode, 
+															@Param("rowBounds")			RowBounds rowBounds);
 
-	/** 검색 조건이 맞는 게시글 수 조회
+	/** 검색조건이 맞는 게시글 수 조회
 	 * @param paramMap
-	 * @return cp
+	 * @return
 	 */
 	int getSearchCount(Map<String, Object> paramMap);
 
