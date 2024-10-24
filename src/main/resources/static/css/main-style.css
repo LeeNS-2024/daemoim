@@ -202,7 +202,7 @@
 .login-box {
   padding: 20px;
   width: 50%;
-  margin: 0 auto; /* 가운데 정렬 */
+  margin: 0 auto; 
 }
 
 .login-box button {
@@ -233,8 +233,8 @@ html, body {
 }
 
 .wrapLoginButton .mainLoginButton {
-  width: 300px; /* 고정된 너비 */
-  height: 60px; /* 고정된 높이 */
+  width: 300px; 
+  height: 60px;
   display: inline-flex;
   font-family: 'Nunito', sans-serif;
   font-size: 22px;
@@ -307,6 +307,7 @@ html, body {
     width: 30px;
     height: 30px;
     opacity: 1;
+    z-index: 10000;
   }
   100% {
     width: 300px;
