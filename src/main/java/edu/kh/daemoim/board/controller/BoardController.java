@@ -24,6 +24,11 @@ public class BoardController {
 	
 	private final BoardService service;
 	
+	@GetMapping("boardSchedule")
+	public String boardSchedulePage() {
+		return "board/boardSchedule";
+	}
+	
 	/** 게시글 목록 조회
 	 * @param boardTypeCode : 게시판 종류 번호
 	 * @param cp : 현재 조회하려는 목록의 페이지 번호

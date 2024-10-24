@@ -63,6 +63,7 @@
 		 FROM "LIKE" L
 		 WHERE L.BOARD_NO = B.BOARD_NO) AS "LIKE_COUNT",
 		 
+
 		<![CDATA[ 
 		CASE 
 			WHEN CURRENT_DATE - BOARD_WRITE_DATE  < 1 / 24 / 60
@@ -83,6 +84,7 @@
 		]]>
 		
 		,
+
 		(SELECT IMG_PATH || IMG_RENAME
 		 FROM BOARD_IMG I 
 		 WHERE IMG_ORDER = 0 

@@ -75,5 +75,12 @@ public interface GroupManageService {
 	 */
 	List<Board> getPopularBoard(int groupNo, int period);
 
+	/** [인터페이스] 모임상단이미지
+	 * @param groupNo
+	 * @return
+	 */
+	String getGroupHeaderImg(String groupNo);
+
+
 
 }

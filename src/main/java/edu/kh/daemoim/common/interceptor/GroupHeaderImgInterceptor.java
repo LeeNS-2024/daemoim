@@ -8,23 +8,17 @@ import org.springframework.web.servlet.ModelAndView;
 
 import edu.kh.daemoim.board.dto.Comment;
 import edu.kh.daemoim.groupManage.service.GroupManageService;
-import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-public class GroupManageInterceptor implements HandlerInterceptor{
+public class GroupHeaderImgInterceptor implements HandlerInterceptor {
 	
 	@Autowired
 	private GroupManageService service;
 	
 	@Override
-	public void postHandle(
-			HttpServletRequest request,
-			HttpServletResponse response,
-			Object handler,
-			ModelAndView modelAndView
-			) throws Exception {
-		
+	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
+			ModelAndView modelAndView) throws Exception {
 		
 		String url = request.getRequestURI();
 			// /groupMemberManage/{groupNo}/**
@@ -32,10 +26,10 @@ public class GroupManageInterceptor implements HandlerInterceptor{
 			// {boardNo}
 		
 		if(groupNo != null && groupNo.matches("\\d+")) { // 숫자인 경우에만 시행
-			// 언제 새 댓글이 생길지 모르니까 항상 덮어쓰기
-			List<Comment> commentList = service.getRecentComments(groupNo);
+			// 모임 상단이미지 덮어쓰기
+			String groupHeaderImg = service.getGroupHeaderImg(groupNo);
 			
-			request.setAttribute("commentList", commentList);
+			request.setAttribute("groupHeaderImg", groupHeaderImg);
 		}
 		
 		HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
