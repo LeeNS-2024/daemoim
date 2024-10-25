@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import edu.kh.daemoim.siteManage.dto.StopMember;
 import edu.kh.daemoim.groupManage.dto.GroupManageDto;
 import edu.kh.daemoim.groupManage.dto.GroupMemberManageDto;
 
@@ -27,5 +28,20 @@ public interface SiteManageMapper {
 
 	// 최근 가입한 회원 조회
 	List<GroupMemberManageDto> getNewMember();
+
+	// 계정 정지
+	StopMember findMemberByEmail(String email);
+
+	// 정지 여부 변경
+	int updateOut(StopMember member);
+
+	// 정지 테이블 추가
+	int insertStop(StopMember member);
+
+	// 신고목록에서 제거
+	int deleteReport(StopMember member);
+
+	// 회원 탈퇴
+	int deleteMember(StopMember member);
 
 }

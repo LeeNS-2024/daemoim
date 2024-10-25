@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 
 @Component
-@Aspect
+@Aspect 
 @Slf4j
 public class LoggingAspect {
 	
