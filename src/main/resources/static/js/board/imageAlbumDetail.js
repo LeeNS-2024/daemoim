@@ -77,6 +77,16 @@ updateBtn?.addEventListener("click", () => {
   form.submit();
 });
 
+/* 신고 버튼 클릭 시 */
+const notifyBtn = document.querySelector("#notifyBtn");
+notifyBtn?.addEventListener("click", () => {
+  if(confirm("정말 신고 하시겠습니까?") == false){
+    return;
+  }
+  
+
+});
+
 /* 목록으로 버튼 클릭 시 */
 const goToListBtn = document.querySelector("#goToListBtn");
 goToListBtn.addEventListener("click", () => {

@@ -152,7 +152,7 @@ public class BoardController {
 					result = service.updateReadCount(boardNo);
 					}
 		  }
-		  // 조회수가 증가된 경우 쿠키세팅(하루에 한 번 조회수 늘릴 수 있게 / 없어도 됨 주석으로 만들어둠)
+		  // 조회수가 증가된 경우 쿠키세팅(하루에 한 번 조회수 늘릴 수 있게 / 필요시 사용가능하게 주석으로 만들어둠)
 		  /*
 		  if(result > 0){
 		  	board.setReadCount(board.getReadCount() + 1);
