@@ -55,6 +55,14 @@ public class FileConfig implements WebMvcConfigurer {
 	
 	@Value("${daemoim.groupPhoto.resource-location}")
 	private String groupPhotoImgLocation;
+	
+	//--------------------------------------
+	// 팝업용 이미지 요청 경로 + 서버 연결 폴더
+	@Value("${daemoim.mainPopup.resource-handler}")
+	private String mainPopupImgHandler;
+	
+	@Value("${daemoim.mainPopup.resource-location}")
+	private String mainPopupImgLocation;
 
 	/* MultipartResolver 설정 */
 	@Bean
@@ -104,6 +112,11 @@ public class FileConfig implements WebMvcConfigurer {
 		registry
 		.addResourceHandler(groupPhotoImgHandler)
 		.addResourceLocations(groupPhotoImgLocation);
+		
+		// 팝업이미지
+		registry
+		.addResourceHandler(mainPopupImgHandler)
+		.addResourceLocations(mainPopupImgLocation);
 		
 		
 	}

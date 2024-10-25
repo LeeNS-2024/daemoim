@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="edu.kh.daemoim.popup.mapper.PopupMapper">
+
+	<!-- 팝업 불러오기 -->
+	<select id="getPopup">
+		SELECT
+			POPUP_NO,
+			POPUP_NAME,
+			POPUP_LOCATION,
+			POPUP_RENAME,
+			POPUP_LEFT,
+			POPUP_UP,
+			POPUP_DEL_FL
+		FROM POPUP
+		WHERE POPUP_DEL_FL = 'N'
+	</select>
+	
+</mapper>
