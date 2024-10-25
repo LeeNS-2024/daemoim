@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import edu.kh.daemoim.groupMain.dto.Introduce;
 import edu.kh.daemoim.groupMain.dto.Notice;
 import edu.kh.daemoim.groupMain.dto.PhotoBox;
 import edu.kh.daemoim.groupMain.dto.Schedule;

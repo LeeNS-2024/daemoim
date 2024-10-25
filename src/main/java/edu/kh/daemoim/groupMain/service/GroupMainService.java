@@ -2,7 +2,6 @@ package edu.kh.daemoim.groupMain.service;
 
 import java.util.List;
 
-import edu.kh.daemoim.groupMain.dto.Introduce;
 import edu.kh.daemoim.groupMain.dto.Notice;
 import edu.kh.daemoim.groupMain.dto.PhotoBox;
 import edu.kh.daemoim.groupMain.dto.Schedule;

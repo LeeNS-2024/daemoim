@@ -15,7 +15,7 @@
     
     <!-- Header -->
     <div class="header">
-        <h1>모임배경사진</h1>
+        <img th:src="${groupHeaderImg}" alt="보드해더이미지" style="width: 99vw;">
     </div>
     
     
@@ -76,46 +76,46 @@
         </div>
 
         <!-- 게시글이 있을 때만 페이지네이션이 보이게 할 예정 -->
-      <div class="pagination-area" th:unless="${#lists.isEmpty(boardList)}">
+        <div class="pagination-area" th:unless="${#lists.isEmpty(boardList)}">
 
-        <ul class="pagination" th:object="${pagination}">
+            <ul class="pagination" th:object="${pagination}">
 
-          <!-- 첫 페이지로 이동 -->
-          <li><a href="#">&lt;&lt;</a></li>
+                <!-- 첫 페이지로 이동 -->
+                <li><a href="#">&lt;&lt;</a></li>
 
-          <!-- 이전 목록 마지막 번호로 이동 -->
-          <li><a href="#">&lt;</a></li>
+                <!-- 이전 목록 마지막 번호로 이동 -->
+                <li><a href="#">&lt;</a></li>
 
-          <!-- 특정 페이지로 이동 -->
-          
+                <!-- 특정 페이지로 이동 -->
+                
 
-          <!-- 
-            #numbers.sequence(startPage, endPage)
-            -> startPage 부터 endPage까지 1씩 증가하는 숫자를 가진
-               List를 만들어서 반환
-          -->
-          <th:block th:each="i : *{#numbers.sequence(startPage, endPage)}">
-           
-            <!-- 현재 보고있는 페이지 -->
-            <li th:if="${i} == *{currentPage}"> 
-              <a class="current" th:text="${i}">현재 페이지</a> 
-            </li>
+                <!-- 
+                    #numbers.sequence(startPage, endPage)
+                    -> startPage 부터 endPage까지 1씩 증가하는 숫자를 가진
+                    List를 만들어서 반환
+                -->
+                <th:block th:each="i : *{#numbers.sequence(startPage, endPage)}">
+                
+                    <!-- 현재 보고있는 페이지 -->
+                    <li th:if="${i} == *{currentPage}"> 
+                    <a class="current" th:text="${i}">현재 페이지</a> 
+                    </li>
 
-            <!-- 보고있지 않은 페이지 -->
-            <li th:unless="${i} == *{currentPage}"> 
-              <a href="#" th:text="${i}">이동할 수 있는 페이지</a> 
-            </li>
+                    <!-- 보고있지 않은 페이지 -->
+                    <li th:unless="${i} == *{currentPage}"> 
+                    <a href="#" th:text="${i}">이동할 수 있는 페이지</a> 
+                    </li>
 
-          </th:block>
+                </th:block>
 
 
-          <!-- 다음 목록 시작 번호로 이동 -->
-          <li><a href="#">&gt;</a></li>
+                <!-- 다음 목록 시작 번호로 이동 -->
+                <li><a href="#">&gt;</a></li>
 
-          <!-- 끝 페이지로 이동 -->
-          <li><a href="#">&gt;&gt;</a></li>
-        </ul>
-      </div>
+                <!-- 끝 페이지로 이동 -->
+                <li><a href="#">&gt;&gt;</a></li>
+            </ul>
+        </div>
 
     </div>
 
@@ -126,6 +126,6 @@
         const pagination = /*[[${pagination}]]*/ "페이지네이션객체";
     </script>
 
-    <script src="/js/board/boardList.js"></script>
+    <script src="/js/board/boardList2.js"></script>
 </body>
 </html>
