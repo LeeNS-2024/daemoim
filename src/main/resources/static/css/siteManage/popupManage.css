@@ -1,0 +1,8 @@
+*{
+  box-sizing: border-box;
+}
+
+.preview-sec{
+  width: 1200px;
+  height: 800px;
+}

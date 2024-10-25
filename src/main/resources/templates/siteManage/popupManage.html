@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="/css/siteManage/siteManage.css">
+  <link rel="stylesheet" href="/css/siteManage/popupManage.css">
+
+</head>
+
+<body>
+
+  <div class="container">
+    <nav class="sidebar">
+      <ul>
+        <li><a href="#dashboard">대시보드</a></li>
+        <li><a href="#meetings">모임 조회</a></li>
+        <li><a href="#members">회원 조회</a></li>
+        <li><a href="#suspend">계정 정지</a></li>
+      </ul>
+    </nav>
+
+    <main class="content">
+      <!-- 여기에는 현재꺼 목록띄우고 -->
+      <section id="dashboard" class="section">
+        <section class="card">
+
+          <h1>팝업창 관리</h1>
+          <table>
+            <thead>
+              <tr>
+                <th>이름</th>
+                <th>w</th>
+                <th>h</th>
+                <th>선택</th>
+                <th>삭제</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>파일이름.jpg</td>
+                <td>50</td>
+                <td>50</td>
+                <td><button>선택</button></td>
+                <td><button>삭제</button></td>
+              </tr>
+            </tbody>
+
+          </table>
+        </section>
+      </section>
+
+      <!-- 모임 조회 -->
+      <section id="meetings" class="section">
+        <section class="card">
+          <form action="#">
+            <h1>파일선택</h1>
+            <label for="popupImage">이미지등록</label>
+            <input type="file" id="popupImage" name="popupImage">
+            <label for="popupLeft">좌측간격</label>
+            <input type="range" id="popupLeft" name="popupLeft" min="0" max="100" value="50" step="1">
+            <label for="popupUp">우측간격</label>
+            <input type="range" id="popupUp" name="popupUp" min="0" max="100" value="50" step="1">
+          </form>
+        </section>
+      </section>
+
+      <!-- 회원 조회 -->
+      <section id="members" class="section">
+        <section class="card">
+
+          <h1>미리보기</h1>
+          <section class="preview-sec"></section>
+        </section>
+      </section>
+
+
+    </main>
+  </div>
+  <script src="#"></script>
+
+</body>
+
+</html>
