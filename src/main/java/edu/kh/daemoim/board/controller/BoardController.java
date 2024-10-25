@@ -187,6 +187,22 @@ public class BoardController {
 	}
 	
 	
+	/** 신고 기능
+	 * @param groupNo
+	 * @param boardTypeCode
+	 * @param boardNo
+	 * @return
+	 */
+	@PostMapping("/{groupNo:[0-9]+}/{boardTypeCode:[0-9]+}/{boardNo:[0-9]+}/report")
+	public String report(
+		@PathVariable("groupNo") int groupNo,
+		@PathVariable("boardTypeCode") int boardTypeCode,
+		@PathVariable("boardNo") int boardNo
+		
+		) {
+		
+		return "board/report";
+	} 
 	
 	
 	

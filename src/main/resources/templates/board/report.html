@@ -1,17 +1,17 @@
-<link rel="stylesheet" href="/css/board/notify.css">
-<section>
+<link rel="stylesheet" href="/css/board/report.css">
+<section id="popup" class="popup" >
   <div id="overlay" class="overlay"></div>
-
-  <!--  -->
-  <div action="notifyInsert"  id="popup" class="popup">
-    <span id="closeNotifyBtn" class="close">✖</span>
+  <form th:object="${board}"
+        method="POST"
+        id= formTag>
+    <span id="closeReportBtn" class="close">✖</span>
 
     <h2>신고하기</h2>
-    <p th:text="*{boardTitle}" style="font-size: small;">신고당한 글입니다.</p>
+    <p th:text="*{boardTitle}" style="font-size: small;">신고당한 글</p>
 
-    <label for="notifyReason">신고 사유:</label>
+    <label for="reportReason">신고 사유:</label>
 
-    <select id="notifyReason">
+    <select id="reportReason">
       <option value="null">사유를 선택해주세요</option>
       <option value="욕설 또는 부적절한 언행">욕설 또는 부적절한 언행</option>
       <option value="사이버범죄 및 범행예고">사이버범죄 및 범행예고</option>
@@ -24,14 +24,24 @@
 
     <br><br>
 
-    <label for="notifyDetails">신고 내용:</label>
-    <textarea id="notifyDetails" maxlength="280"></textarea>
+    <label for="reportDetails">신고 내용:</label>
+    <textarea id="reportDetails" maxlength="280"></textarea>
     <small id="detailsError" class="error-message"></small>
 
     <br><br>
 
     <button id="submitReport">신고하기</button>
-  </div>
+  </form>
+    <!--/board/{groupCode}/{boardTypeCode}/report -->
+  <script>
+    const formTag = document.querySelector("#formTag");
+    formTag.addEventListener("submit", e => {
+      e.preventDefault();
+      const url = location.pathname + "/report";
+      formTag.action = url;
+      formTag.submit();
+    })
+  </script>
 
-  <script src="/js/board/notify.js"></script>
+  <script src="/js/board/report.js"></script>
 </section>

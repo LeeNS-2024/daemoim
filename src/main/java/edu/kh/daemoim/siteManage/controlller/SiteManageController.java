@@ -110,4 +110,8 @@ public class SiteManageController {
 
 		return "redirect:/siteManage";
 	}
+	
+	
+
+	
 }
