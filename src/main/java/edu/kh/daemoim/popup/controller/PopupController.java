@@ -1,4 +1,4 @@
-package edu.kh.daemoim.popup.controller;
+	package edu.kh.daemoim.popup.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -205,6 +205,28 @@ public class PopupController {
 		int result = service.insertPopup(popup, popupImage);
 		
 		return "redirect:/popup/manage";
+	}
+	
+	/** 팝업 불러오기
+	 * @param popupNo
+	 * @return
+	 */
+	@GetMapping("selectPopup")
+	@ResponseBody
+	public Popup selectPopup(
+			@RequestParam("popupNo") int popupNo) {
+		return service.selectPopup(popupNo);
+	}
+	
+	/** 팝업 삭제하기
+	 * @param popupNo
+	 * @return
+	 */
+	@GetMapping("deletePopup")
+	@ResponseBody
+	public List<Popup> deletePopup(
+			@RequestParam("popupNo") int popupNo) {
+		return service.deletePopup(popupNo);
 	}
 	
 }

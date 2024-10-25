@@ -15,4 +15,7 @@ public interface PopupMapper {
 	// 팝업 저장하기
 	int insertPopup(Popup popup);
 
+	// 팝업 삭제하기
+	int deletePopup(int popupNo);
+
 }
