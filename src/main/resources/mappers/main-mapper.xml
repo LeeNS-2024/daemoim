@@ -6,12 +6,12 @@
   <!-- 추천 모임 조회 -->
   <select id="selectRecommendedGroups" resultType="MainDTO">
 	  SELECT 
-	    g.GROUP_MAIN_IMG AS groupMainImg, 
-	    g.GROUP_NAME AS groupName, 
-	    g.GROUP_INTRODUCE AS groupIntroduce, 
-	    c.CATEGORY_NAME AS categoryName,
-	    COUNT(DISTINCT mg.MEMBER_NO) AS currentPopulation,
-	    g.GROUP_MAX_POPULATION AS maxPopulation
+	    g.GROUP_MAIN_IMG AS "groupMainImg", 
+	    g.GROUP_NAME AS "groupName", 
+	    g.GROUP_INTRODUCE AS "groupIntroduce", 
+	    c.CATEGORY_NAME AS "categoryName",
+	    COUNT(DISTINCT mg.MEMBER_NO) AS "currentPopulation",
+	    g.GROUP_MAX_POPULATION AS "maxPopulation"
 	  FROM 
 	    "GROUP" g
 	  JOIN 
