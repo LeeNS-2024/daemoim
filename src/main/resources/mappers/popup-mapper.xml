@@ -14,6 +14,20 @@
 			POPUP_DEL_FL
 		FROM POPUP
 		WHERE POPUP_DEL_FL = 'N'
+		AND POPUP_NO > 0
 	</select>
+	
+	<!-- 팝업 저장하기 -->
+	<insert id="insertPopup">
+		INSERT INTO POPUP
+		VALUES (
+			SEQ_POPUP_NO.NEXTVAL,
+			#{popupName},
+			#{popupLocation},
+			#{popupRename},
+			#{popupLeft},
+			#{popupUp},
+			DEFAULT)
+	</insert>
 	
 </mapper>

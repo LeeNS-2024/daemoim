@@ -12,4 +12,7 @@ public interface PopupMapper {
 	// 팝업 불러오기
 	List<Popup> getPopup();
 
+	// 팝업 저장하기
+	int insertPopup(Popup popup);
+
 }
