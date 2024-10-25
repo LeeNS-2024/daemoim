@@ -103,7 +103,8 @@
 	<select id="findMemberByEmail" resultType="StopMember">
 		SELECT
 		R.MEMBER_NO
-		FROM  REPORT R
+		FROM
+		REPORT R
 		JOIN "MEMBER" M ON(M.MEMBER_NO = R.MEMBER_NO)
 		WHERE
 		MEMBER_EMAIL
@@ -113,11 +114,25 @@
 
 	</select>
 
+	<!--회원 정지(이메일 맞는지 확인) -->
+	<select id="findMemberByEmail2" resultType="StopMember">
+		SELECT
+		MEMBER_NO
+		FROM
+		"MEMBER"
+		WHERE
+		MEMBER_EMAIL
+		=#{memberEmail}
+
+
+
+	</select>
+
 	<update id="updateOut">
-	UPDATE "MEMBER"
-	SET MEMBER_OUT_FL = 'Y'
-	WHERE
-	MEMBER_NO= #{memberNo}
+		UPDATE "MEMBER"
+		SET MEMBER_OUT_FL = 'Y'
+		WHERE
+		MEMBER_NO= #{memberNo}
 	</update>
 
 	<insert id="insertStop">
@@ -134,9 +149,10 @@
 	</delete>
 
 	<delete id="deleteMember">
-		DELETE
-		FROM MEMBER
+		UPDATE MEMBER
+		SET MEMBER_DEL_FL = CASE WHEN MEMBER_DEL_FL = 'N' THEN 'Y' ELSE 'N' END
 		WHERE MEMBER_NO = #{memberNo}
+
 	</delete>
 
 

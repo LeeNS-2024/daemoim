@@ -31,6 +31,7 @@ public interface SiteManageMapper {
 
 	// 계정 정지
 	StopMember findMemberByEmail(String email);
+	StopMember findMemberByEmail2(String email);
 
 	// 정지 여부 변경
 	int updateOut(StopMember member);
