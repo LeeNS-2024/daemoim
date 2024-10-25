@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="edu.kh.daemoim.sse.mapper.SseMapper">
+
+	
+  <insert id="insertNotification" 
+	 				parameterType="Notification"
+					useGeneratedKeys="true">
+
+		<selectKey order="BEFORE" resultType="_int"
+							 keyProperty="notificationNo">
+			SELECT SEQ_NOTI_NO.NEXTVAL FROM DUAL
+		</selectKey>
+	
+		INSERT INTO "NOTIFICATION"(
+			NOTIFICATION_NO,
+			NOTIFICATION_CONTENT,
+			SEND_MEMBER_NO,
+			RECEIVE_MEMBER_NO,
+			NOTIFICATION_URL,
+			GROUP_NO)
+
+		VALUES(
+			#{notificationNo},
+			#{notificationContent},
+			#{sendMemberNo},
+			#{notificationUrl},
+			#{groupNo}
+
+			<choose>
+				<!-- 알림 종류가 댓글 작성 또는 좋아요 -->
+				<when test="notificationType == 'insertComment'
+										or notificationType == 'boardLike'">
+					(SELECT MEMBER_NO
+					FROM "BOARD"
+					WHERE BOARD_NO = #{pkNo})
+				</when>
+
+				<!-- 알림 종류가 답글인 경우 -->
+				<when test="notificationType == 'insertChildComment'">
+					(SELECT MEMBER_NO 
+					 FROM "COMMENT"
+					 WHERE COMMENT_NO = #{pkNo})
+				</when>
+				
+				<!-- 알림 종류가 채팅인 경우 채팅 미구현. 구현시 추가 -->
+				<!-- <when test="notificationType == 'chatting'">
+					#{pkNo}
+				</when> -->
+				
+			</choose>
+		)
+	</insert>
+  
+  
+  
+  
+  
+
+  
+</mapper>

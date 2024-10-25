@@ -75,3 +75,13 @@
         addPopupcloseBtn();
       }
     });
+
+
+
+// ----------------------------------------------------------------
+const connectSSE = () => {
+
+  if(notificationLoginCheck === false) return;
+
+  const eventSource = new EventSource("/sse/connect")
+}
