@@ -48,6 +48,11 @@ public class BoardController {
 		return "board/boardSchedule";
 	}
 	
+	@GetMapping("boardCalendar")
+	public String boardCalendarPage() {
+		return "board/boardCalendar";
+	}
+	
 	/** 게시글 목록 조회
 	 * @param boardTypeCode : 게시판 종류 번호
 	 * @param cp : 현재 조회하려는 목록의 페이지 번호
@@ -78,8 +83,6 @@ public class BoardController {
 		
 		if(boardTypeCode == 3)
 		return "/board/imgAlbumList";
-		else if(boardTypeCode == 1)
-		return "/board/boardDetail";
 		else return "/board/boardList :: list";
 	}
 	

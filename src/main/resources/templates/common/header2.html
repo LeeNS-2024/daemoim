@@ -3,14 +3,16 @@
 <nav>
   <!-- Sidebar (왼쪽 배너) -->
   <ul>
-      <li id="banner" th:each="boardType : ${application.boardTypeList}">
-          <a th:href="@{/board/{groupNo}/{boardTypeCode}(groupNo = 1, boardTypeCode = ${boardType.boardTypeCode})}"
+      <li class="banner2" th:each="boardType : ${application.boardTypeList}">
+          <a class="banner" th:href="@{/board/{groupNo}/{boardTypeCode}(groupNo = 1, boardTypeCode = ${boardType.boardTypeCode})}"
              th:text="${boardType.boardName}"
              th:classappend="${boardType.boardName} == ${boardName} ? current-board : ''"
              >게시판 이름</a>
       </li>
-      <li>
+      <li class="banner2">
           <a href="/board/boardSchedule">일정</a>
       </li>
   </ul>
 </nav>
+
+<script src="/js/board/boardList.js"></script>

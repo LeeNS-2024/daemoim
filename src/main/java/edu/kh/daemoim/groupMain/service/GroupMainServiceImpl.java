@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
 import edu.kh.daemoim.groupMain.dto.Notice;
 import edu.kh.daemoim.groupMain.dto.PhotoBox;
 import edu.kh.daemoim.groupMain.dto.Schedule;
