@@ -5,15 +5,19 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import edu.kh.daemoim.popup.dto.Popup;
 import edu.kh.daemoim.popup.service.PopupService;
@@ -94,10 +98,15 @@ public class PopupController {
 		
 		
 		
+		Popup popup = service.getPopup();
+		
+		if(popup == null ) {
+			map.put("result", result);
+			return map;
+		}
+		
 		// 여기까지오면 팝업창 열기
 		result = 1;
-		
-		Popup popup = service.getPopup();
 		
 		map.put("popup", popup);
 		map.put("result", result);
@@ -169,10 +178,33 @@ public class PopupController {
 			
 	}
 	
+	/** 팝업 관리 페이지로 이동
+	 * @return
+	 */
 	@GetMapping("manage")
-	public String goManagePage() {
+	public String goManagePage(
+			Model model) {
+		List<Popup> popupList = service.getPopupList();
+		
+		model.addAttribute("popupList", popupList);
+		
 		return "/siteManage/popupManage";
 	}
 	
+	
+	/** 팝업 이미지 등록하기
+	 * @param popup
+	 * @param popupImage
+	 * @return
+	 */
+	@PostMapping("insert")
+	public String insertPopup(
+			@ModelAttribute Popup popup,
+			@RequestParam("popupImage") MultipartFile popupImage ) {
+		
+		int result = service.insertPopup(popup, popupImage);
+		
+		return "redirect:/popup/manage";
+	}
 	
 }
