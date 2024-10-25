@@ -7,12 +7,12 @@
   height: 800px;
 }
 #popupListTr *{text-align: center;}
-#popupListTr > td:first-child{ width: 200px;}
-#popupListTr > td:nth-child(2){ width: 100px;}
-#popupListTr > td:nth-child(3){ width: 100px;}
-#popupListTr > td:nth-child(4){ width: 200px;}
-#popupListTr > td:nth-child(5){ width: 200px;}
-#popupListTr > td > button{
+#popupListTr > tr > td:first-child{ width: 200px;}
+#popupListTr > tr > td:nth-child(2){ width: 100px;}
+#popupListTr > tr > td:nth-child(3){ width: 100px;}
+#popupListTr > tr > td:nth-child(4){ width: 200px;}
+#popupListTr > tr > td:nth-child(5){ width: 200px;}
+#popupListTr > tr > td > button{
   width: 230px;
 }
 .card{

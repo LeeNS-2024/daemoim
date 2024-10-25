@@ -84,5 +84,28 @@ public class PopupServiceImpl implements PopupService {
 	public List<Popup> getPopupList() {
 		return mapper.getPopup();
 	}
+	
+	// 팝업 불러오기
+	@Override
+	public Popup selectPopup(int popupNo) {
+		List<Popup> popupList = mapper.getPopup();
+		Popup popup = null;
+		for(Popup p : popupList) {
+			if(p.getPopupNo() == popupNo) {
+				popup = p;
+				break;
+			}
+		}
+		return popup;
+	}
+	
+	// 팝업 삭제하기
+	@Override
+	public List<Popup> deletePopup(int popupNo) {
+		
+		int result = mapper.deletePopup(popupNo);
+		
+		return mapper.getPopup();
+	}
 
 }

@@ -3,7 +3,7 @@
 <mapper namespace="edu.kh.daemoim.popup.mapper.PopupMapper">
 
 	<!-- 팝업 불러오기 -->
-	<select id="getPopup">
+	<select id="getPopup" resultType="Popup">
 		SELECT
 			POPUP_NO,
 			POPUP_NAME,
@@ -29,5 +29,12 @@
 			#{popupUp},
 			DEFAULT)
 	</insert>
+	
+	<!-- 팝업 삭제하기 -->
+	<update id="deletePopup">
+		UPDATE "POPUP"
+		SET POPUP_DEL_FL = 'Y'
+		WHERE POPUP_NO = #{popupNo}
+	</update>
 	
 </mapper>

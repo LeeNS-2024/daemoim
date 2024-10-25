@@ -38,9 +38,9 @@
                 <th>삭제</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody id="popupListTr">
               <th:block th:if= "${popupList}" th:each= "popup:${popupList}" th:object="${popup}">
-                  <tr id="popupListTr">
+                  <tr>
                     <td th:text="*{popupName}"></td>
                     <td th:text="*{popupLeft}"></td>
                     <td th:text="*{popupUp}"></td>
@@ -50,7 +50,7 @@
                 </th:block>
                 <th:block th:unless= "${popupList}">
                   <tr>
-                    <td id="popupListTr" colspan="5">
+                    <td colspan="5">
                       현재 팝업 목록이 없습니다.
                     </td>
                   </tr>
@@ -84,7 +84,7 @@
           <h1>미리보기</h1>
           <section class="preview-sec">
             <img src="/images/mainPopup/daemoimMain.png" alt="메인이미지">
-            <img src="#" alt="팝업이미지 미리보기"
+            <img src="#" alt="팝업이미지 미리보기" id="inputImgPreview"
                  class="inputImgPreview display-none">
           </section>
         </section>
