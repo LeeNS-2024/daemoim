@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>관리자 대시보드</title>
     <th:block th:replace="~{common/common}"></th:block>
-  <link rel="stylesheet" href="/css/siteManage/siteManage.css">
+    <link rel="stylesheet" href="/css/siteManage/siteManage.css">
 </head>
 
 <body>
@@ -17,6 +17,7 @@
                 <li><a href="#meetings">모임 조회</a></li>
                 <li><a href="#members">회원 조회</a></li>
                 <li><a href="#suspend">계정 정지</a></li>
+                <li><a href="/popup/manage">팝업창 관리</a></li>
             </ul>
         </nav>
 
@@ -118,39 +119,80 @@
                 </table>
             </section>
 
+            <!-- 신고 목록 -->
+            <section id="report" class="section">
+                <h2>신고 목록</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>신고분류</th>
+                            <th>신고내용</th>
+                            <th>신고날짜</th>
+                            <th>신고조회 여부</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <th:block th:if="${memberList}" th:each="member:${memberList}" th:object="${member}">
+                            <tr>
+                                <th th:text="*{memberNo}">#</th>
+                                <th th:text="*{memberNickname}">신고분류</th>
+                                <th th:text="*{memberEmail}">신고내용</th>
+                                <th th:text="*{enrollDate}">신고날짜</th>
+                                <th th:text="*{memberDelFl} == 'N' ? '가입' : '탈퇴'">신고조회 여부</th>
+
+                            </tr>
+                        </th:block>
+                        <th:block th:unless="${memberList}">
+                            <tr>
+                                <th>#</th>
+                                <th>이름</th>
+                                <th>이메일</th>
+                                <th>가입일</th>
+                                <th>상태</th>
+                            </tr>
+                        </th:block>
+
+                    </tbody>
+                </table>
+            </section>
+
             <!-- 계정 정지 -->
             <section id="suspend" class="section">
                 <h2>계정 정지</h2>
-                <form>
+                <form action="/siteManage/suspend" id="suspendForm" method="post">
                     <label for="email">이메일</label>
-                    <input type="email" id="email" placeholder="이메일을 입력하세요">
+                    <input type="email" name="email" id="email" placeholder="이메일을 입력하세요">
 
                     <label for="days">정지 기간 (일)</label>
-                    <input type="number" id="days" placeholder="정지 기간 입력">
+                    <input type="number" name="days" id="days" placeholder="정지 기간 입력">
 
                     <label for="reason">정지 사유</label>
-                    <textarea id="reason" placeholder="정지 사유 입력"></textarea>
+                    <textarea name="reason" id="reason" placeholder="정지 사유 입력"></textarea>
 
                     <button type="submit">계정 정지</button>
                 </form>
             </section>
 
             <!-- 계정 탈퇴 -->
-            <section id="withdrawal" class="section">
+            <section id="withdrawal" class="section" >
                 <h2>계정 탈퇴</h2>
-                <form>
+                <form action="/siteManage/resign" id="resignForm" method="post">
                     <label for="email">이메일</label>
-                    <input type="email" id="email" placeholder="이메일을 입력하세요">
+                    <input type="email" name="email" id="email" placeholder="이메일을 입력하세요">
 
                     <label for="reason">탈퇴 사유</label>
-                    <textarea id="reason" placeholder="탈퇴 사유 입력"></textarea>
+                    <textarea name="reason" id="reason" placeholder="탈퇴 사유 입력"></textarea>
 
                     <button type="submit">계정 탈퇴</button>
                 </form>
             </section>
+
+
         </main>
     </div>
-    <script src="script.js"></script>
+    <script src="/js/siteManage/siteManage.js"></script>
 </body>
 
 </html>
