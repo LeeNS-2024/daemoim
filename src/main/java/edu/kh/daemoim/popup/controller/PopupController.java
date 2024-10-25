@@ -12,11 +12,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import edu.kh.daemoim.groupManage.dto.GroupMemberManageDto;
 import edu.kh.daemoim.popup.dto.Popup;
 import edu.kh.daemoim.popup.service.PopupService;
 import jakarta.servlet.http.Cookie;
@@ -31,19 +29,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Slf4j
 @RequestMapping("popup")
 @SessionAttributes({"popupCheck"})
-@RestController
+@Controller
 @RequiredArgsConstructor
 public class PopupController {
 	
 	private final PopupService service;
 	
 	// 개발용 미리보기창 호출
-	@GetMapping("popup")
-	public String goPopup(){
-		return "common/popupViews";
-	}
+//	@GetMapping("popup")
+//	public String goPopup(){
+//		return "common/popupViews";
+//	}
 	
 	// 팝업 불러오기
+	@ResponseBody
 	@GetMapping("popupCheck")
 	public Map<String, Object> popupCheck(
 			@SessionAttribute(required = false, value = "popupCheck") String popupCheck,
@@ -110,6 +109,7 @@ public class PopupController {
 	 * @param param
 	 * @throws ParseException 
 	 */
+	@ResponseBody
 	@GetMapping("popupClose")
 	public void popupClose(
 			@RequestParam("check") int check,
@@ -167,7 +167,11 @@ public class PopupController {
         // HttpServletResponse 객체에 쿠키 저장
         resp.addCookie(cookie);
 			
-		
+	}
+	
+	@GetMapping("manage")
+	public String goManagePage() {
+		return "/siteManage/popupManage";
 	}
 	
 	
