@@ -19,4 +19,13 @@ public interface EmailService {
 	 */
 	boolean checkAuthKey(Map<String, String> map);
 
+
+
+
+
+
+
+
+
+
 }

@@ -146,3 +146,8 @@
 .btn-area button:hover {
   opacity: 0.8;
 }
+
+#notifyBtn {
+  background-color: #f44336;
+  color: white;
+}

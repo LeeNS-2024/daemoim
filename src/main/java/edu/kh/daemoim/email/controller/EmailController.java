@@ -50,6 +50,7 @@ public class EmailController {
 		return service.sendEmail("signUpCheck",email);
 	}
 	
+	
 	/** 인증번호 확인
 	 * @param map : 입력받은 email, authKey가 저장된 map 
 	 * 	 		HttpMessageConverter에 의해 JSON -> Map 자동 변환
@@ -58,6 +59,34 @@ public class EmailController {
 	@ResponseBody
 	@PostMapping("checkAuthKey")
 	public boolean checkAuthKey(
+			@RequestBody Map<String, String> map){
+		
+		return service.checkAuthKey(map);
+	
+	}
+	
+	@ResponseBody
+	@PostMapping("sendFindIdAuthKey")
+	public int checkFindIdAuthKey(
+			@RequestBody String email) {
+		
+		return service.sendEmail("findId",email);
+		
+	}
+	
+	@ResponseBody
+	@PostMapping("checkfindIdAuthKey")
+	public boolean checkfindIdAuthKey(
+			@RequestBody Map<String, String> map){
+		
+		return service.checkAuthKey(map);
+	
+	}
+	
+	
+	@ResponseBody
+	@PostMapping("checkfindPwAuthKey")
+	public boolean checkfindPwAuthKey(
 			@RequestBody Map<String, String> map){
 		
 		return service.checkAuthKey(map);

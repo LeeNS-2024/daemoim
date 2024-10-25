@@ -1,51 +1,74 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const categoryButtons = document.querySelectorAll('.category-btn');  
     const groupContainer = document.getElementById('groupContainer');   
     const searchInput = document.getElementById('searchQuery');        
-    let selectedCategory = 'allCategory'; 
+    let selectedCategory = new URLSearchParams(window.location.search).get('type') || 'allCategory';
 
-    categoryButtons.forEach(button => {
-        button.addEventListener('click', (e) => {
-            e.preventDefault();
-            selectedCategory = button.getAttribute('data-category'); 
-            fetchGroups();  
+    console.log("초기 selectedCategory:", selectedCategory); // 초기 설정된 카테고리 확인
+
+    searchInput.addEventListener('input', () => {
+        getGroups();  
+    });
+
+    // 각 카테고리 버튼에 대한 클릭 이벤트 리스너 추가
+    document.querySelectorAll('.category-button').forEach(button => {
+        button.addEventListener('click', (event) => {
+            selectedCategory = event.target.getAttribute('data-type');
+            console.log("변경된 selectedCategory:", selectedCategory); // 카테고리 변경 시 확인
+            getGroups(); // 카테고리 변경 시 getGroups 호출
         });
     });
 
-    searchInput.addEventListener('input', () => {
-        fetchGroups();
-    });
+    const getGroups = () => {
+        const query = searchInput.value || '';  
+        const url = `/category/groups?type=${selectedCategory}&query=${query}`;
 
-    const fetchGroups = () => {
-        const query = searchInput.value || '';  // 검색어가 없으면 빈 문자열로 설정
-        const url = `/category?type=${selectedCategory}&query=${query}`;
+        console.log("fetch 요청 URL:", url); // 요청 URL 확인
+
         fetch(url, {
+            method: 'GET',
             headers: {
-                'X-Requested-With': 'XMLHttpRequest'  // AJAX 요청임을 나타냄
+                'Content-Type': 'application/json',  
             }
         })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('네트워크 오류 발생');
-                }
-                return response.text();
-            })
-            .then(html => {
-                console.log(html);  // 응답 내용을 콘솔에 출력하여 확인
-                console.log("Fetching URL:", url);
-                updateGroupList(html);  // 모임 목록만 업데이트
-            })
-            .catch(error => {
-                console.error('에러 발생:', error);
-            });
-    };
-    
-    const updateGroupList = (html) => {
-        groupContainer.innerHTML = html;  // 받은 HTML로 모임 목록을 업데이트
+        .then(response => {
+            if (!response.ok) throw new Error('네트워크 오류 발생');
+            return response.json();  
+        })
+        .then(data => {
+            console.log("서버 응답 데이터:", data); // 서버 응답 데이터 확인
+            renderGroups(data);
+        })
+        .catch(error => {
+            console.error('에러 발생:', error);
+        });
     };
 
-    // 페이지 로드 시 기본적으로 모든 모임 목록을 불러옴
-    fetchGroups();
+    const renderGroups = (groups) => {
+        groupContainer.innerHTML = '';  
+
+        groups.forEach(group => {
+            console.log("그룹:", group); // 각 그룹 데이터 확인
+            const groupHTML = `
+                <div class="category-box">
+                    <div class="icon">
+                        <img src="${group.groupMainImg ? group.groupMainImg : '/images/default.png'}" alt="${group.groupName} 아이콘" />
+                    </div>
+                    <div class="details">
+                        <a href="/groupMain/${group.groupName}" class="categoryGroup-name" style="color: black; text-decoration: none;">
+                            ${group.groupName}
+                        </a>
+                        <div class="group-name">${group.groupIntroduce}</div>
+                        <div class="location">${group.categoryName}</div>
+                        <div class="participants">
+                            <i class="fa-solid fa-users"></i>
+                            <div>${group.currentPopulation} / ${group.maxPopulation}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            groupContainer.insertAdjacentHTML('beforeend', groupHTML);
+        });
+    };
+
+    getGroups(); // 페이지 로드 시 초기 데이터 로드
 });
-
-
