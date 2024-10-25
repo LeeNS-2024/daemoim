@@ -64,6 +64,13 @@ public class SiteManageServiceImpl implements SiteManageService {
 
 		return mapper.findMemberByEmail(email);
 	}
+	// 계정 정지(이메일 확인)
+	
+	@Override
+	public StopMember findMemberByEmail2(String email) {
+		
+		return mapper.findMemberByEmail2(email);
+	}
 
 	// 계정 정지
 	@Override
@@ -89,8 +96,9 @@ public class SiteManageServiceImpl implements SiteManageService {
 		int result = 0;
 
 		result = mapper.deleteMember(member);
-
-		if(result == 0) return 0;
+		
+		
+		
 		return result;
 	}
 

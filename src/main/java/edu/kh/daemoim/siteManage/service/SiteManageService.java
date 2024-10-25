@@ -14,6 +14,7 @@ public interface SiteManageService {
 	 * @return
 	 */
 	StopMember findMemberByEmail(String email);
+	StopMember findMemberByEmail2(String email);
 
 	/** 계정 정지 처리
 	 * @param member

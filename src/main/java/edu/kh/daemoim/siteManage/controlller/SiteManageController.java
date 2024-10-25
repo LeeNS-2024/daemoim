@@ -89,14 +89,21 @@ public class SiteManageController {
 	 * @param reason
 	 */
 	@PostMapping("resign")
-	public String resignMember(@RequestParam("email") String email, @RequestParam("reason") String reason,
+	public String resignMember(@RequestParam("email") String email,
+			@RequestParam("reason") String reason,
 			RedirectAttributes ra) {
 
 		// 이메일로 회원 찾기
-		StopMember member = service.findMemberByEmail(email);
-
+		StopMember member = service.findMemberByEmail2(email);
+		
+	
+		
 		if (member != null) {
+						
 			member.setStopReason(reason);
+			
+			int result = service.resignMember(member);
+			
 			ra.addFlashAttribute("message", "탈퇴 완료 되었습니다.");
 		}
 		ra.addFlashAttribute("message", "올바른 이메일을 입력해주세요");
