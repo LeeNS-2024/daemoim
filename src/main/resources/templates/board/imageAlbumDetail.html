@@ -15,7 +15,7 @@
 
 <body>
   <main>
-    <!-- <th:block th:replace="~{common/header}"></th:block> -->
+    <th:block th:replace="~{board/notify}"></th:block>
 
     <div>
       <img th:src="${groupHeaderImg}" alt="보드해더이미지" style="width: 99vw;">
@@ -41,6 +41,11 @@
                th:classappend="*{likeCheck == 1} ? fa-solid : fa-regular"></i>
             <span th:text="*{likeCount}">0</span>
           </span>
+          <span id="notifyBtn">신고</span>
+            <th:block th:if="${session.loginMember?.memberNo} == ${board.memberNo}">
+                <button id="updateBtn">수정</button>
+                <button id="deleteBtn">삭제</button>
+            </th:block>
         </div>
 
         <div class="image-info">
@@ -58,6 +63,7 @@
             <span>조회수</span>
             <th:block th:text="*{readCount}"></th:block>
           </p>
+            <button id="notifyBtn">신고</button>
         </div>
       </div>
 
