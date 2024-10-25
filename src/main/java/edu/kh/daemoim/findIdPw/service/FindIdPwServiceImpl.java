@@ -11,4 +11,10 @@ public class FindIdPwServiceImpl implements FindIdPwService{
 
 	private final FindIdPwMapper mapper;
 	
+	@Override
+	public int findIdEmailcheck(String email) {
+		
+		return mapper.findIdEmailcheck(email);
+	}
+	
 }

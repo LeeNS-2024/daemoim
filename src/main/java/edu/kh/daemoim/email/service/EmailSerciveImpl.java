@@ -52,6 +52,8 @@ public class EmailSerciveImpl implements EmailService{
 			case "signUpcheck" :
 				emailTitle = "회원 가입 인증번호 입니다.";
 				break;
+			case "findId" :
+				emailTitle = "아이디 찾기 인증번호 입니다";
 				
 			case "findPw" :
 				emailTitle = " 비밀번호 찾기 인증번호 입니다.";
@@ -164,6 +166,8 @@ public class EmailSerciveImpl implements EmailService{
 	
 		return redisUtil.getValue(email).equals(authKey);
 	}
+	
+	
 }
 	
 	
