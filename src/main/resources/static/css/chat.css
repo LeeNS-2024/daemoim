@@ -1,0 +1,149 @@
+.chat-boxSec *{
+  box-sizing: border-box;
+}
+.chat-boxSec{
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #ffffff00;
+  width: 99vw;
+  height: 99vh;
+  z-index: 3;
+}
+.display-none{display: none !important;}
+.chat-body{
+  min-width: 406px;
+  min-height: 406px;
+  max-width: 806px;
+  max-height: 55vh;
+  border: 3px solid black;
+  border-radius: 8px;
+  background-color: rgba(163, 237, 255, 0.8);
+  padding: 10px;
+
+  position: fixed; 
+  bottom: 70px; 
+  right: 20px; 
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+}
+.chat-body>.chat-topBody{
+  display: flex;
+  flex-grow: 0;
+  flex-direction: row;
+}
+.chat-body>.chat-topBody>.chat-groupName{
+  background-color: rgb(163, 237, 255);
+  border: 1px solid rgb(0, 0, 0, 0.8);
+  border-radius: 3px;
+  margin: 2px;
+  padding: 2px;
+}
+.chat-body>.chat-topBody>div:hover{
+  cursor: pointer;
+}
+.chat-body>.chat-mainBody{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  flex-grow: 1;
+}
+.chat-body>.chat-mainBody>.chat-nickDiv{
+  min-width: 100px;
+  background-color: rgb(163, 237, 255);
+  overflow-y: auto;
+  flex-grow: 0;
+}
+.chat-body>.chat-mainBody>.chat-contentDiv{
+  min-width: 260px;
+  background-color: rgb(163, 237, 255);
+  flex-grow: 1;
+}
+.chat-body ul{
+  overflow-y: auto;
+  list-style-type: none;
+}
+.chat-body li{
+  list-style: none;
+  margin: 5px;
+}
+.chat-body>.chat-mainBody>.chat-contentDiv .chat-contentOthers{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.chat-body>.chat-mainBody>.chat-contentDiv .chat-contentSelf{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+.chat-contentDiv>li>div:last-child{
+  display: flex;
+  flex-direction: row;
+}
+.chat-contentDiv .chat-contents{
+  background-color: rgb(242, 255, 125);
+  border-radius: 3px;
+  padding: 2px 5px 2px;
+  margin: 2px;
+}
+.chat-contentOthers .chat-comments{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.chat-contentSelf .chat-comments{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.chat-comments>.chat-date{
+  font-size: 0.6em;
+}
+.chat-body>.chat-footBody{
+  flex-grow: 0;
+}
+.chat-body>.chat-footBody>form{
+  display: flex;
+  flex-direction: row;
+}
+.chat-body>.chat-footBody textarea{
+  min-height: 31px;
+  margin: 2px;
+  flex-grow: 1;
+  resize: none;
+}
+.chat-body>.chat-footBody button{
+  height: 31px;
+  margin: 2px;
+  flex-grow: 1;
+}
+.chat-body>.chat-footBody button:hover{cursor: pointer;}
+.chat-onBtn, .chat-offBtn{
+  position: fixed; 
+  bottom: 20px; 
+  right: 80px; 
+  z-index: 2;
+}
+.chat-onBtn, .chat-offBtn:hover{
+  cursor : pointer;
+}
+.chat-onBtn>i, .chat-offBtn>i{
+  font-size: 2em;
+}
+
+.chat-unReaded{
+  font-size: 0.6em;
+  color: red;
+}
+
+.resizer {
+  width: 10px;
+  height: 10px;
+  background: #333;
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  cursor: nwse-resize; /* 왼쪽 위 모서리 커서 */
+}
