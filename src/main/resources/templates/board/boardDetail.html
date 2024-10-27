@@ -3,66 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>공지사항</title>
+    <title>게시글 상세 페이지</title>
     <link rel="stylesheet" href="/css/board/boardDetail.css">
 </head>
 <body>
-  <div class="header">
-    <h1>모임배경사진</h1>
-  </div>
     <div class="container">
-        
-        <!-- Main content -->
-        <div class="list-wrapper" th:fragment= "list">
-          <table class="list-table">
-
-              <tbody>
-                <thead>
-                  <tr>
-                    <th>번호</th>
-                    <th>게시글 제목</th>
-                    <th>(댓글수)</th>
-                    <th>작성일</th>
-                    <th>추천</th>
-                  </tr>
-                </thead>
-
-                  <th:block th:if="${#lists.isEmpty(boardList)}">
-                      <tr>
-                          <th colspan="6">게시글이 존재하지 않습니다.</th>
-                      </tr>
-                  </th:block>
-
-                  <th:block th:unless= "${#lists.isEmpty(boardList)}">
-
-                      <tr th:each= "board : ${boardList}" th:object="${board}">
-
-                          <td th:text="${rnum}">게시글 번호</td>
-
-                          <td>
-                              <img th:if="*{thumbnail}" th:src="*{thumbnail}" class="img">
-
-                              <a th:href="@{board/{boardTypeCode}/{boardNo} (boardTypeCode=*{boardTypeCode}, boardNo=*{boardNo})}"
-                                 th:text="*{boardTitle}">게시글 제목</a>
-
-                              <th:block th:text="|[*{commentCount}]|">댓글 수</th:block>
-                          </td>
-
-                          <td th:text="*{memberNo}">닉네임</td>
-          
-                          <td th:text="*{boardWriteDate}">2023-10-26</td>
-          
-                          <td th:text="*{readCount}">0</td>
-
-                      </tr>
-
-                  </th:block>
-              </tbody>
-          </table>
-      </div>
+        <div class="header-image">
+            <p>모임배경사진</p>
+        </div>
+        <div class="post">
+            <div class="post-title">
+                <h2>제목</h2>
+                <button class="edit-delete">수정 / 삭제</button>
+            </div>
+            <div class="post-content">
+                <p>세부내용</p>
+            </div>
+            <div class="like-section">
+                <span>♡ 좋아요</span>
+            </div>
+        </div>
     </div>
-    <script th:inline="javascript">
-      const pagination = /*[[${pagination}]]*/ "페이지네이션객체";
-    </script>
 </body>
 </html>
+
