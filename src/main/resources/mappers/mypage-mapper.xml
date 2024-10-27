@@ -3,4 +3,49 @@
 <mapper namespace="edu.kh.daemoim.myPage.mapper.MyPageMapper">
 
 
+	<update id="updateMember" >
+		UPDATE
+			MEMBER
+		SET
+			MEMBER_NICKNAME = #{memberNickname},
+			MEMBER_IM = #{memberIm}
+		WHERE
+			MEMBER_NO =#{memberNo}
+		</update>
+
+	<update id="withdrawal">
+		UPDATE
+			"MEMBER"
+		SET
+			MEMBER_DEL_FL = 'Y'
+		WHERE
+			MEMBER_NO = #{memberNo}
+	
+	</update>
+
+	<select id="checkNickname" resultType="_int">
+		SELECT COUNT(*)
+		FROM "MEMBER"
+		WHERE  MEMBER_NICKNAME = #{input}
+	</select>
+	
+	
+		<!-- 비밀번호 변경 -->
+	<update id="changePw">
+		UPDATE "MEMBER"
+		SET
+			MEMBER_PW = #{encPw}
+		WHERE
+			MEMBER_NO = #{memberNo}
+	</update>
+	
+	<update id="profile">
+		UPDATE "MEMBER"
+		SET
+			MEMBER_IMG = #{url}
+		WHERE
+			MEMBER_NO = #{memberNo}
+	</update>
+	
+	
 </mapper>

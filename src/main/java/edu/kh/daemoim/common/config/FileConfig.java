@@ -64,6 +64,14 @@ public class FileConfig implements WebMvcConfigurer {
 	@Value("${daemoim.mainPopup.resource-location}")
 	private String mainPopupImgLocation;
 
+	//--------------------------------------
+	// 프로필 이미지 
+	@Value("${daemoim.profile.resource-handler}")
+	private String profileResourceHandler;
+	
+	@Value("${daemoim.profile.resource-location}")
+	private String profileResourceLocation;
+	
 	/* MultipartResolver 설정 */
 	@Bean
 	public MultipartConfigElement configElement() {
@@ -118,7 +126,10 @@ public class FileConfig implements WebMvcConfigurer {
 		.addResourceHandler(mainPopupImgHandler)
 		.addResourceLocations(mainPopupImgLocation);
 		
-		
+		// 프로필 이미지 
+		registry
+		.addResourceHandler(profileResourceHandler)
+		.addResourceLocations(profileResourceLocation);
 	}
 	
 	

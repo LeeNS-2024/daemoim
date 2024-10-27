@@ -23,7 +23,7 @@ public class MyPage {
 	private String memberPw;
 	private String memberNickname;
 	private String memberTel;
-	private String profileImg;
+	private String memberImg;
 	private String enrollDate;
 	private String memberDelFl;
 	private int authority;

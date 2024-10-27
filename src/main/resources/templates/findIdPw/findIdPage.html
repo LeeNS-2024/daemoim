@@ -30,19 +30,16 @@
                    <div class="checkIdAuthKeyBtn">
                        <input type="text" name="AuthKey" id="authKey" placeholder="인증번호 입력" maxlength="6" autocomplete="off">
                        <button id="checkIdAuthKeyBtn" type="button">인증하기</button>
-                          <span class="signUp-message" id="authKeyMessage"></span>
+                          <span class="FindId-message" id="authKeyMessage"></span>
                    </div>
               </div>
             </form>
         </section>
 
-        <div id="hiddenModal" style="display: none;">
-          <div class="modal-content">
-            <p>인증에 성공하셨습니다! 다음 단계로 진행하세요.</p>
-            <button onclick="closeModal()">닫기</button>
+      </form>
+        <div class="popup-hidden">
+            <th:block>당신의 아이디는: ${result.memberId}입니다.</th:block>
           </div>
-        </div>
-</form>
 </div>
 <script src="/js/findIdPw/findId.js"></script>
 </body>

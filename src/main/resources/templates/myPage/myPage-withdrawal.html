@@ -15,32 +15,20 @@
     <section class="withdrawal-content">
     <h3>회원 탈퇴</h3>
   
-    <form id="withdrawal"> <!-- post 방식과 action 추가해야함  -->
-    <div>
+    <div class="withdrawal-frame">
       <iframe src="/myPage/withdrawalPage" width="65%" height="200px"></iframe>
       <input type="checkbox" name="agree" id="agree">
       <label for="agree">위 약관에 동의합니다.</label>
     </div>
     
-        <div class="withdrawal-box">
-         
-          <div class="withdrawal-input-area">
-            <label for="memberEmail">
-              <span class="required">*</span>이메일
-            </label>
-            <div class="withdrawal-input-area">
-              <input type="text" name="memberEmail" id="memberEmail" 
-              placeholder="이메일" maxlength="30" autocomplete="off">
-              <button id="sendAuthKeyBtn" type="button">인증번호 받기</button>
-            </div>
-            <label for="emailCheck">
-              <span class="signUp-message" id="emailMessage">이메일을 입력해주세요.</span>
-              <span class="required"><br>*</span> 인증번호
-            </label>
-            <div class="withdrawal-input-area">
-              <input type="text" name="authKey" id="authKey" placeholder="인증번호 입력" maxlength="6" autocomplete="off">
-              <button id="checkAuthKeyBtn" type="button">인증하기</button>
-            </div>
+    <div class="withdrawal-box">
+      
+      <div class="myPage-row">
+            <form method="post" name="withdrawal" id="withdrawal"> <!-- post 방식과 action 추가해야함  -->
+						<label>비밀번호</label>
+						<input type="password" name="memberPw" id="memberPw" maxlength="30">
+					</div>
+
           <button id="withdrawalBtn">탈퇴하기</button>
         </div>
   </form>

@@ -14,5 +14,30 @@
   	AND
   		MEMBER_DEL_FL = 'N'
   </select>
+  
+<select id="findPwEmailcheck" resultType="int">
+  	SELECT
+  		COUNT(*)
+  	FROM 
+  		"MEMBER"
+  	WHERE 
+  		MEMBER_EMAIL = #{email}
+  	AND
+  		MEMBER_ID = #{id}
+  	AND
+  		MEMBER_DEL_FL = 'N'
+</select>
+
+<select id="memberId">
+	select
+		MEBMER_ID
+	FROM
+		"MEMBER"
+	WHERE
+		MEMBER_EMAIL = #{email}
+
+
+</select>
+
 
   </mapper>
