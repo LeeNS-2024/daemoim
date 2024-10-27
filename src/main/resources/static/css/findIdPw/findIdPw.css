@@ -93,3 +93,5 @@ span.required {
   text-align: center;
   width: 300px;
 }
+
+.popup-hidden{ display: none; }

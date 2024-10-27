@@ -3,7 +3,7 @@ const checkObj = {
   "findPwMemberEmail": false,
   "memberDomain": false,
   "memberFullEmail": false,
-  "findPwMemberId": false,
+  "memberId": false,
   "memberPw": false,
   "memberPwConfirm": false,
   "memberNickname": false,
@@ -11,77 +11,12 @@ const checkObj = {
   "authKey": false
 };
 
-/* ----- 아이디 유효성 검사 ----- */
-// 1) 아이디 유효성 검사에 사용되는 요소 얻어오기
-const findPwMemberId = document.getElementById("findPwMemberId");
-const idMessage = document.querySelector("#idMessage");
-
-// 2) 아이디 관련 메시지 작성
-const idMessageObj = {};
-idMessageObj.normal = "한글,영어,숫자로만 3~10글자";
-idMessageObj.invalid = "유효하지 않은 아이디 형식 입니다";
-idMessageObj.duplication = "이미 사용중인 아이디 입니다.";
-idMessageObj.check = "사용 가능한 아이디 입니다.";
-
-// 3) 아이디 입력 시 마다 유효성 검사
-findPwMemberId.addEventListener("input", () => {
-
-  
-  const inputId = findPwMemberId.value.trim();
-
-  // 4) 입력된 아이디이 없을 경우
-  if (inputId.length === 0) {
-    idMessage.innerText = idMessageObj.normal;
-    idMessage.classList.remove("confirm", "error");
-    checkObj.findPwMemberId = false;
-    findPwMemberId.value = "";
-    return;
-  }
-
-  // 5) 아이디 유효성 검사(정규 표현식)
-  const regEx = /^[a-zA-Z0-9]{3,10}$/; // 한글,영어,숫자로만 3~10글자
-  if (regEx.test(inputId) === false) {
-    idMessage.innerText = idMessageObj.invalid;
-    idMessage.classList.remove("confirm");
-    idMessage.classList.add("error");
-    checkObj.findPwMemberId = false;
-    return;
-
-  } else {
-    idMessage.innerText = '유효한 아이디 입니다'
-  }
-  // 6) 아이디 중복 검사
-  fetch("idCheck?findPwMemberId=" + inputId)
-    .then(response => {
-      if (response.ok) return response.text();
-      throw new Error("아이디 중복 검사 에러");
-    })
-    .then(count => {
-      if (count == 1) {
-        idMessage.innerText = idMessageObj.duplication;
-        idMessage.classList.remove("confirm");
-        idMessage.classList.add("error");
-        checkObj.findPwMemberId = false;
-        return;
-      }
-
-      idMessage.innerText = idMessageObj.check;
-      idMessage.classList.remove("error");
-      idMessage.classList.add("confirm");
-      checkObj.findPwMemberId = true;
-
-    })
-    .catch(err => console.error(err));
-});
-
-
-
 /* ----- 이메일 유효성 검사 ----- */
 
 // 1) 이메일 유효성 검사에 필요한 요소 얻어오기
 const findPwMemberEmail = document.querySelector("#findPwMemberEmail");
 const emailMessage = document.getElementById("findIdemailMessage");
-
+const findPwMemberId = document.querySelector("#findPwMemberId")
 // 2) 이메일 메시지를 미리 작성
 const emailMessageObj = {}; // 빈 객체
 emailMessageObj.normal = "메일을 받을 수 있는 이메일을 입력해주세요.";
@@ -94,7 +29,8 @@ findPwMemberEmail.addEventListener("input", e => {
 
   // 입력된 값 얻어오기
   const inputEmail = findPwMemberEmail.value.trim();
-
+  const inputId = findPwMemberId.value.trim();
+  
   // 4) 입력된 이메일이 없을 경우
   if(inputEmail.length === 0){
     
@@ -128,34 +64,36 @@ findPwMemberEmail.addEventListener("input", e => {
   }
 
   // 6) 이메일 중복 검사(AJAX)
-  fetch("findIdEmail?email=" + inputEmail)
-  .then(response => {
-    if(response.ok){ // HTTP 응답 상태 코드 200번(응답 성공)
-      return response.text(); // 응답 결과를 text로 파싱
-    }
+fetch("findPwEmail?id=" + encodeURIComponent(inputId) + "&email=" + encodeURIComponent(inputEmail))
+.then(response => {
+  if(response.ok){ // HTTP 응답 상태 코드 200번(응답 성공)
+    return response.text(); // 응답 결과를 text로 파싱
+  }
+  
+  // 상태 코드와 오류 메시지 출력 (디버깅용)
+  throw new Error("이메일 중복 검사 에러");
+})
+.then(count => {
+  // 매개 변수 count : 첫 번째 then에서 return된 값이 저장된 변수
 
-    throw new Error("이메일 중복 검사 에러");
-  })
-  .then(count => {
-    // 매개 변수 count : 첫 번째 then에서 return된 값이 저장된 변수
+  if(count == 0 ){  // 아이디랑 이메일이 일치 하지 않음
+    emailMessage.innerText = emailMessageObj.duplication; 
+    emailMessage.classList.add("error");
+    emailMessage.classList.remove("confirm");
+    checkObj.findPwMemberEmail = false;
+    return;
+  } 
 
-    if(count == 0 ){  // 이메일 없음
-      emailMessage.innerText = emailMessageObj.duplication; // 
-      emailMessage.classList.add("error");
-      emailMessage.classList.remove("confirm");
-      checkObj.findPwMemberEmail = false;
-      return;
-    } 
-
-    // 있음
-    emailMessage.innerText = emailMessageObj.check; // 중복X 메시지
-    emailMessage.classList.add("confirm");
-    emailMessage.classList.remove("error");
-    checkObj.findPwMemberEmail = true; // 유효한 이메일임을 기록
-
-  })
-  .catch( err => console.error(err) );
-
+  // 일치함
+  emailMessage.innerText = emailMessageObj.check; 
+  emailMessage.classList.add("confirm");
+  emailMessage.classList.remove("error");
+  checkObj.findPwMemberEmail = true; // 유효한 이메일임을 기록
+})
+.catch(err => {
+  // catch에서 에러 메시지와 에러 내용을 출력하여 원인을 확인합니다.
+  console.error("Error: 이메일 중복 검사 에러", err);
+});
 });
 
 /*----- 이메일 인증 -----*/
@@ -163,7 +101,7 @@ findPwMemberEmail.addEventListener("input", e => {
 //[1] 인증 번호를 작성된 이메일로 발송하기
 
 // 인증 번호 받기 버튼
-const sendFindIdAuthKeyBtn = document.querySelector("#sendFindIdAuthKeyBtn");
+const sendFindPwAuthKeyBtn = document.querySelector("#sendFindPwAuthKeyBtn");
 
 // 인증 관련 메시지 출력 span
 const authKeyMessage = document.querySelector("#authKeyMessage");
@@ -181,7 +119,7 @@ let authTimer; // 타이머 역할의 setInterval을 저장할 변수
 
 
 // 인증 번호 받기 버튼 클릭 시
-sendFindIdAuthKeyBtn.addEventListener("click", () => {
+sendFindPwAuthKeyBtn.addEventListener("click", () => {
 
   checkObj.authKey = false; // 인증 안된 상태로 기록
   authKeyMessage.innerText = ""; // 인증 관련 메시지 삭제
@@ -253,10 +191,10 @@ function addZero(num){
 //----------------------------------------------------------------
 
 /* 인증 번호를 입력하고 인증하기 버튼을 클릭한 경우 */
-const idAuthKey = document.querySelector("#idAuthKey");
-const checkIdAuthKeyBtn = document.querySelector("#checkIdAuthKeyBtn");
+const authKey = document.getElementById("authKey");
+const checkPwAuthKeyBtn = document.querySelector("#checkPwAuthKeyBtn");
 
-checkIdAuthKeyBtn.addEventListener("click", () => {
+checkPwAuthKeyBtn.addEventListener("click", () => {
 
   // + (추가 조건) 타이머 00:00인 경우 버튼 클릭 막기
   if(min === 0 && sec === 0){
@@ -265,7 +203,7 @@ checkIdAuthKeyBtn.addEventListener("click", () => {
   }
   
   // 1) 인증 번호 6자리가 입력이 되었는지 확인
-  if(idAuthKey.value.trim().length < 6){
+  if(authKey.value.trim().length < 6){
     alert("인증 번호가 잘못 입력 되었습니다");
     return;
   }
@@ -283,7 +221,7 @@ checkIdAuthKeyBtn.addEventListener("click", () => {
   };
   
   // JSON.stringify(객체) : 객체 -> JSON 변환(문자열화)
-
+  
   fetch("/email/checkfindIdAuthKey", {
     method : "POST",
     headers : {"Content-Type" : "application/json"},
@@ -314,8 +252,7 @@ checkIdAuthKeyBtn.addEventListener("click", () => {
 
       checkObj.authKey = true; // 인증 완료 표시
 
-      hiddenModal.style.display = "flex";
-      
+     
     }
  
   })
@@ -323,7 +260,5 @@ checkIdAuthKeyBtn.addEventListener("click", () => {
 
 });
 
-function closeModal() {
-  hiddenModal.style.display = "none";
-}
+
 

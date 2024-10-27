@@ -16,5 +16,15 @@ public class FindIdPwServiceImpl implements FindIdPwService{
 		
 		return mapper.findIdEmailcheck(email);
 	}
+	@Override
+	public int findPwEmailcheck(String id, String email) {
+		
+		return mapper.findPwEmailcheck(id,email);
+	}
 	
+	@Override
+	public String memberId(String email) {
+		
+		return mapper.memberId(email);
+	}
 }

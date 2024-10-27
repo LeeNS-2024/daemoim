@@ -190,6 +190,7 @@ function addZero(num){
 /* 인증 번호를 입력하고 인증하기 버튼을 클릭한 경우 */
 const authKey = document.getElementById("authKey");
 const checkIdAuthKeyBtn = document.querySelector("#checkIdAuthKeyBtn");
+const hidden = document.querySelector(".popup-hidden");
 
 checkIdAuthKeyBtn.addEventListener("click", () => {
 
@@ -218,7 +219,7 @@ checkIdAuthKeyBtn.addEventListener("click", () => {
   };
   
   // JSON.stringify(객체) : 객체 -> JSON 변환(문자열화)
-
+  
   fetch("/email/checkfindIdAuthKey", {
     method : "POST",
     headers : {"Content-Type" : "application/json"},
@@ -249,8 +250,25 @@ checkIdAuthKeyBtn.addEventListener("click", () => {
 
       checkObj.authKey = true; // 인증 완료 표시
 
-
-      hiddenModal.style.displat = "flex";
+     /*  fetch("/email/memberId", {
+        method : "POST",
+        headers : {"Content-Type" : "application/json"},
+        body : findIdmemberEmail.value
+    
+        // POST 방식으로 
+        // /email/sendAuthKey 요청을 처리하는 컨트롤러에
+        // 입력된 이메일을 body에 담아서 제출
+      })
+      .then(response => {
+        if(response.ok) return response.text();
+        throw new Error("이메일 발송 실패");
+      })
+      .then(memberId => {
+        console.log(memberId);
+        alert(memberId)
+      })
+      .catch(err => console.error(err));
+ */
       
     }
  
@@ -259,7 +277,5 @@ checkIdAuthKeyBtn.addEventListener("click", () => {
 
 });
 
-function closeModal() {
-  hiddenModal.style.display = "none";
-}
+
 
