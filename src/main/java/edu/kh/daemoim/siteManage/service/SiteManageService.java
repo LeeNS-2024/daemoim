@@ -1,5 +1,6 @@
 package edu.kh.daemoim.siteManage.service;
 
+import java.util.List;
 import java.util.Map;
 
 import edu.kh.daemoim.siteManage.dto.StopMember;
@@ -28,6 +29,12 @@ public interface SiteManageService {
 	 * @return
 	 */
 	int resignMember(StopMember member);
-	
 
+	/** 신고 목록 조회
+	 * @return
+	 */
+	
+	List<StopMember> getReportList();
+	
+	
 }
