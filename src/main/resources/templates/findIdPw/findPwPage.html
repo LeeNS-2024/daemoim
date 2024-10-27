@@ -9,7 +9,7 @@
 <body>
 <div>
 <h1 class="searchTitle"> 비밀번호 찾기</h1>
-<form action="searchIdFrom" method="POST" name="seachIdInput" id="searchIdInput">
+<form action="searchPWFrom" method="POST" name="seachIdInput" id="searchIdInput">
         <section id="searchIdSection" name="searchIdSection">
  
                   <!-- 비밀번호 찾기  -->
@@ -21,20 +21,22 @@
                                 <span class="required">*</span>아이디
                               </label>
                               <div class="searchPw-input-area">
-                                <input type="text" name="findPwmemberId" id="findPwmemberId"
+                                <input type="text" name="findPwMemberId" id="findPwMemberId"
                                 placeholder="아이디" maxlength="30" autocomplete="off">
                               </div>
-                            <label for="findIdmemberEmail">
+                            <label for="findPwMemberEmail">
                                 <span class="required">*</span>이메일
                               </label>
                               <div class="searchPw-input-area">
-                                <input type="text" name="findIdmemberEmail" id="findIdmemberEmail" 
+                                <input type="text" name="findPwMemberEmail" id="findPwMemberEmail" 
                                 placeholder="이메일" maxlength="30" autocomplete="off">
-                                <button id="sendAuthKeyBtn" type="button">인증번호 받기</button>
+                                <span class="findId-message" id="findIdemailMessage">이메일을 입력해주세요.</span>
+                                <button id="sendFindPwAuthKeyBtn" type="button">인증번호 받기</button>
                               </div>
                           <div class="checkPwAuthKeyBtn">
-                                  <input type="text" name="pwAuthKey" id="PwAuthKey" placeholder="인증번호 입력" maxlength="6" autocomplete="off">
+                                  <input type="text" name="authKey" id="authKey" placeholder="인증번호 입력" maxlength="6" autocomplete="off">
                                   <button id="checkPwAuthKeyBtn" type="button">인증하기</button>
+                                  <span class="FindPw-message" id="authKeyMessage"></span>
                           </div>
     
                 </div>

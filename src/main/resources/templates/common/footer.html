@@ -10,3 +10,123 @@
     </nav>
   </section>
 </footer>
+
+<!-- head로 옮길것 꼭!!!! -->
+<link rel="stylesheet" href="/css/chat.css">
+
+<!-- 채팅 팝업 전체화면 display-none-->
+<section class="chat-boxSec display-none">
+</section>
+
+<!-- 채팅 바디 박스 -->
+<section class="chat-body display-none">
+  <div class="chat-topBody">
+    <div class="chat-groupName">모임명 <span class="chat-unReaded">23</span></div>
+    <div class="chat-groupName">모임명2</div>
+    <div class="chat-groupName">모임명3</div>
+  </div>
+  <div class="chat-mainBody">
+    <div class="chat-nickDiv">
+      <ul>
+        <li>닉네임</li>
+        <li>닉네임</li>
+        <li>닉네임</li>
+        <li>닉네임</li>
+        <li>닉네임</li>
+        <li>닉네임</li>
+      </ul>
+    </div>
+
+    <div class="chat-contentDiv">
+      <ul>
+
+        <li class="chat-contentOthers">
+          <div class="chat-memberNinkname">
+            <img src="#" alt="profile" width="14px" height="14px">닉네임
+          </div>
+          <div>
+            <div class="chat-contents">채팅내용</div>
+            <div class="chat-comments">
+              <div class="chat-date">10.26</div>
+              <div class="chat-unReaded">5</div>
+            </div>
+          </div>
+        </li>
+
+        <li class="chat-contentOthers">
+          <div class="chat-memberNinkname">
+            <img src="#" alt="frofile" width="14px" height="14px">닉네임
+          </div>
+          <div>
+            <div class="chat-contents">채팅내용</div>
+            <div class="chat-comments">
+              <div class="chat-date">10.26</div>
+              <div class="chat-unReaded">5</div>
+            </div>
+          </div>
+        </li>
+        <li class="chat-contentOthers">
+          <div class="chat-memberNinkname">
+            <img src="#" alt="frofile" width="14px" height="14px">닉네임
+          </div>
+          <div>
+            <div class="chat-contents">채팅내용</div>
+            <div class="chat-comments">
+              <div class="chat-date">10.26</div>
+              <div class="chat-unReaded">5</div>
+            </div>
+          </div>
+        </li>
+
+        <li class="chat-contentOthers">
+          <div class="chat-memberNinkname">
+            <img src="#" alt="frofile" width="14px" height="14px">닉네임
+          </div>
+          <div>
+            <div class="chat-contents">채팅내용</div>
+            <div class="chat-comments">
+              <div class="chat-date">10.26</div>
+              <div class="chat-unReaded">5</div>
+            </div>
+          </div>
+        </li>
+
+        <li class="chat-contentSelf">
+          <div class="chat-comments">
+            <div class="chat-date">10.26</div>
+            <div class="chat-unReaded">5</div>
+          </div>
+          <div class="chat-contents">채팅내용</div>
+        </li>
+
+        
+      </ul>
+    </div>
+  </div>
+
+  <div class="chat-footBody">
+    <form action="#" id="chat-form"><textarea name="chatContent" id="chat-textarea"></textarea><button>입력</button></form>
+  </div>
+</section>
+
+
+<!-- 채팅 아이콘 off-->
+<section  class="chat-offBtn display-none">
+  <i class="fa-solid fa-envelope" style="color: #74C0FC;"></i>
+</section>
+
+<!-- 채팅 아이콘 on-->
+<section class="chat-onBtn display-none">
+  <i class="fa-solid fa-square-envelope" style="color: #74C0FC;">.</i>
+  <span class="chat-unReaded">12</span>
+</section>
+
+<script th:inline="javascript">
+  const chatLoginCheck = /*[[${session.loginMember} ? true : false]]*/ false;
+  const chatLoginMemberNo = /*[[${session.loginMember?.memberNo}]]*/ "로그인한 회원 번호";
+  console.log("챗. 로그인 여부 : " + chatLoginCheck);
+  console.log("챗. 로그인 한 회원 번호 : " + chatLoginMemberNo);
+</script>
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1.5.1/dist/sockjs.min.js"></script>
+<script src="/js/footer.js"></script>
+<script src="https://kit.fontawesome.com/8695e357e4.js" crossorigin="anonymous"></script>

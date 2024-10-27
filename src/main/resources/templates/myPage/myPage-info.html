@@ -9,40 +9,46 @@
 </head>
 
 <body>
- <section name="sideMenu"> 
-  <th:block th:replace="~{myPage/sideMenu}"> </th:block>
- <!--  <h1 class="pageName" th:text="${session.userId == profile.userId ? '개인정보 수정' : profile.userName + '님의 프로필'}"></h1> -->
-</section>
+  <section id="sideMenu"> 
+    <th:block th:replace="~{myPage/sideMenu}"></th:block>
+  </section>
+
   <main class="profile-container">
-    <form class="profile-form">
-   
-        <div class="daemoimMyImage">
-          <div>
-            <h2>이미지 (로고 넣을 공간)</h2>
-            <div class="profile-image-section">
-              <label for="profile-image">프로필 이미지</label>
-              <input type="file" id="profile-image" accept="image/*">
-            </div>
-            <img src="" alt="이미지 없음">
-          </div>
-        </div>
- 
-    </div>
-    <div class="profile-nickname-section">
-      <label for="nickname">닉네임</label><br>
-      <input type="text" id="nickname" placeholder="닉네임 입력">
-    </div>
+    <h1 class="myPage-title">프로필</h1>
+    <span class="myPage-subject">프로필 이미지를 변경할 수 있습니다.</span>
+
+    <form action="profile" method="POST" name="myPageImgFrm" id="profile" enctype="multipart/form-data">
+      <div class="profile-image-area">
+        <img th:with="user=#{user.default.image}" 
+             th:src="${session.loginMember.memberImg ?: user}" 
+             id="profileImg">
+      </div>
+      <span id="deleteImage">x</span>
+
+      <div class="profile-btn-area">
+        <label for="imageInput">이미지 선택</label>
+        <input type="file" name="profileImg" id="imageInput" accept="image/*">
+        <button type="submit">변경하기</button>
+      </div>
+    </form>
+
+    <form action="info" method="POST" name="myPageFrm">
+      <div class="myPage-row">
+        <label for="memberNickname">닉네임</label>
+        <input type="text" name="memberNickname" maxlength="10" id="memberNickname" th:value="${session.loginMember.memberNickname}">
+      </div>
+
       <div class="profile-details">
-        <div class="profile-intorduce-section">
-          <label for="im">자기소개</label><br>
-          <textarea name="im" id="im" rows="5" cols="33" placeholder="자기소개 하는칸"></textarea>
-        <div>
-        </div>  
-          <button id="changeBtn" > 변경 </button>
-        </div></p>
+        <div class="profile-introduce-section">
+          <label for="memberIm">자기소개</label><br>
+          <input type="text" th:value="${session.loginMember.memberIm}" id="memberIm" placeholder="자기소개 입력" name="memberIm">
+        </div>
+        <button id="changeBtn" type="submit">변경</button>
       </div>
     </form>
   </main>
+
+  <script src="/js/myPage/myPage-info.js"></script>
 </body>
 
 </html>
