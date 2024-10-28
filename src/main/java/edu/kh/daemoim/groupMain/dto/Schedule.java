@@ -1,5 +1,7 @@
 package edu.kh.daemoim.groupMain.dto;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,5 +29,11 @@ public class Schedule {
 	private int memberCount;
 	
 	private int dDay;
+	
+	private int count;
+	
+	private List<String> memberImages;
+	
+//	private List<Schedule> scheduleList;
 	
 }
