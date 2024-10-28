@@ -18,11 +18,11 @@ import lombok.ToString;
 public class BoardImg {
 
 //BOARD_IMG 컬럼과 매핑되는 필드
-	private int imgNo;
-	private String imgPath;
-	private String imgOriginalName;
-	private String imgRename;
-	private int imgOrder;
+	private int boardImgNo;
+	private String boardImgPath;
+	private String boardImgOriginalName;
+	private String boardImgRename;
+	private int boardImgOrder;
 	private int boardNo;
 	
 	// 게시글 이미지 삽입/수정 시 사용할 필드
