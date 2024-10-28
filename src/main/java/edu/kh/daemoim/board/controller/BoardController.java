@@ -1,9 +1,6 @@
 package edu.kh.daemoim.board.controller;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +18,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.kh.daemoim.board.service.BoardService;
+import edu.kh.daemoim.groupMain.dto.Schedule;
 import edu.kh.daemoim.myPage.dto.MyPage;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -202,7 +200,46 @@ public class BoardController {
 		) {
 		
 		return "board/report";
-	} 
+	}
+	
+	@GetMapping("/boardSchedule/{groupNo:[0-9]+}")
+	public String boardScheduleList(
+		@PathVariable("groupNo") int groupNo,
+		@RequestParam(value = "cp", required = false, defaultValue = "1") int cp,
+		Model model) {
+		
+		Map<String, Object> map = null;
+		
+		map = service.selectScheduleList(groupNo);
+	
+		List<Schedule> scheduleList = (List<Schedule>)map.get("scheduleList");
+		
+		model.addAttribute("scheduleList", scheduleList);
+		
+		return "/board/boardSchedule";
+	}
+	
+	@PostMapping("/attendSchedule")
+	@ResponseBody
+	public int attendSchedule(
+		@RequestBody int scheduleNo,
+		@SessionAttribute("groupNo") int groupNo,
+		@SessionAttribute(value="loginMember", required=false) MyPage loginMember,
+		RedirectAttributes ra) {
+		
+		int memberNo = loginMember.getMemberNo();
+		
+		int result = service.attendSchedule(scheduleNo, groupNo, memberNo);
+		
+		String message = null;
+		
+		if(result > 0) message = "일정 참석 완료";
+		else message = "일정 참석 실패";
+		
+		ra.addFlashAttribute("message" , message);
+		
+		return result;
+	}
 	
 	
 	

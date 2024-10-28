@@ -41,4 +41,16 @@ public interface BoardService {
 	 */
 	List<Map<String, String>> selectBoardTypeList();
 
+	/** 일정 조회
+	 * @param groupNo
+	 * @return
+	 */
+	Map<String, Object> selectScheduleList(int groupNo);
+
+	/** 일정 참석
+	 * @param scheduleNo
+	 * @return
+	 */
+	int attendSchedule(int scheduleNo, int groupNo, int memberNo);
+
 }

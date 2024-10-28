@@ -135,11 +135,6 @@ body {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.schedule-box:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-}
-
 .schedule-box h3 {
   color: #e74c3c;
   margin: 0 0 10px 0;
@@ -154,16 +149,17 @@ body {
 /* 참석자 이미지 스타일 */
 .attendees {
   display: flex;
-  align-items: center;
+  flex-direction: row;
   margin-top: 10px;
+  gap: 8px;
 }
 
 .attendees img {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  margin-right: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  object-fit: cover;
+  box-shadow: 2px rgba(0, 0, 0, 0.1);
 }
 
 /* 버튼 스타일 */
@@ -221,12 +217,12 @@ body {
 }
 
 /* 포인터 커서 적용 */
-.schedule-box, .create-button button, .action-btn button {
+.create-button button, .action-btn button {
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.schedule-box:hover, .create-button button:hover, .action-btn button:hover {
+.create-button button:hover, .action-btn button:hover {
   transform: scale(1.05);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
