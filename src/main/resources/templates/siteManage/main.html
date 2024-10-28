@@ -132,28 +132,27 @@
                             <th>신고날짜</th>
                             <th>신고 받은 계정 이메일</th>
                             <th>신고조회 여부</th>
-
+                            <th>삭제</th>
                         </tr>
                     </thead>
                     <tbody>
-                    <tbody>
-                        <th:block th:if="${reportList}" th:each="report, iterStat : ${reportList}"
-                            th:object="${report}">
-                            <tr>
-                                <!-- iterStat.index + 1을 통해 1부터 시작하는 순번을 표시 -->
-                                <th th:text="${iterStat.index + 1}">#</th>
-                                <th
-                                    th:text="*{reportNo} == 1 ? '댓글' : (*{reportNo} == 2 ? '게시글' : (*{reportNo} == 3 ? '기타' : ''))">
-                                    신고분류</th>
-                                <th th:text="*{reportDetail}" onclick="showReportDetailModal([[${report.reportNo}]])">
-                                    신고내용</th>
-                                <th th:text="*{reportDate}">신고날짜</th>
-                                <th th:text="*{memberEmail}">신고 받은 계정 이메일</th>
-                                <th th:text="*{reportView} == 'N' ? '조회X' : '조회O'" class="report-view-status">신고조회 여부
-                                </th>
-                            </tr>
+                        <!-- 신고 목록 테이블 -->
+                            <th:block th:if="${reportList}" th:each="report, iterStat : ${reportList}"
+                                th:object="${report}">
+                                <tr th:data-report-no="*{reportNo}" class="report-tr">
+                                    <th th:text="${iterStat.index + 1}">#</th>
+                                    <th
+                                        th:text="*{reportNo} == 1 ? '댓글' : (*{reportNo} == 2 ? '게시글' : (*{reportNo} == 3 ? '기타' : ''))">
+                                        신고분류</th>
+                                    <th th:text="*{reportDetail}"
+                                        th:data-report-no="*{reportNo}" class="reportDetail">신고내용</th>
+                                    <th th:text="*{reportDate}">신고날짜</th>
+                                    <th th:text="*{memberEmail}">신고 받은 계정 이메일</th>
+                                    <th th:text="*{reportView} == 'N' ? '조회X' : '확인 완료'"  class="report-view-status" th:data-report-no="*{reportNo}">신고조회 여부</th>
+                                    <th><button class="deleteReport" th:data-report-no="*{reportNo}">삭제</button></th>
+                                </tr>
                         </th:block>
-
+                        
                         <th:block th:unless="${reportList}">
                             <tr>
                                 <th>#</th>
@@ -166,6 +165,14 @@
 
                     </tbody>
                 </table>
+                <!-- 모달창 -->
+                <div id="reportDetailModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close" onclick="closeModal()">&times;</span>
+                        <h2>신고 상세 내용</h2>
+                        <p id="modalReportDetail"></p>
+                    </div>
+                </div>
             </section>
 
             <!-- 계정 정지 -->
@@ -174,18 +181,18 @@
                 <form action="/siteManage/suspend" id="suspendForm" method="post">
                     <label for="email">이메일</label>
                     <input type="email" name="email" id="email" placeholder="이메일을 입력하세요">
-
+                    
                     <label for="days">정지 기간 (일)</label>
                     <input type="number" name="days" id="days" placeholder="정지 기간 입력">
-
+                    
                     <label for="reason">정지 사유</label>
                     <textarea name="reason" id="reason" placeholder="정지 사유 입력"></textarea>
-
+                    
                     <button type="submit">계정 정지</button>
                 </form>
 
-            
-               
+
+
             </section>
 
             <!-- 계정 탈퇴 -->
@@ -201,7 +208,7 @@
                     <button type="submit">계정 탈퇴</button>
                 </form>
 
-               
+
             </section>
 
 

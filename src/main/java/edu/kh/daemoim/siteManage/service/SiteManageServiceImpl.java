@@ -111,5 +111,32 @@ public class SiteManageServiceImpl implements SiteManageService {
 	
 		return mapper.getReportList();
 	}
+
+	// 모달창
+	@Override
+	public StopMember getReportDetail(int reportNo) {
+
+		int result = mapper.updateReportViewStatus(reportNo);
+		System.out.println("result : " + result);
+		if(result> 0){
+			return mapper.getReportDetail(reportNo);
+		} else {
+			return null;
+		}
+	}
+
+	// 조회여부 변경
+	@Override
+	public int updateReportViewStatus(int reportNo) {
+	
+		return mapper.updateReportViewStatus(reportNo);
+	}
+
+	// 신고목록 삭제
+	@Override
+	public void deleteReportOut(int reportNo) {
+		mapper.deleteReportOut(reportNo);
+		
+	}
 	
 }

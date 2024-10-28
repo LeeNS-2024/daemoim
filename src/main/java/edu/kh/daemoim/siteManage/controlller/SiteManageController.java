@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.kh.daemoim.siteManage.dto.StopMember;
@@ -119,20 +120,37 @@ public class SiteManageController {
 		return "redirect:/siteManage";
 	}
 	
-	/*
-	 * // 신고 상세 조회 API
-	 * 
-	 * @GetMapping("/siteManage/report/detail/{reportNo}") public
-	 * ResponseEntity<StopMember> getReportDetail(@PathVariable int reportNo) {
-	 * StopMember report = Service.findReportByNo(reportNo); return
-	 * ResponseEntity.ok(report); }
-	 * 
-	 * // 조회 여부 업데이트 API
-	 * 
-	 * @PostMapping("/siteManage/report/view/{reportNo}") public
-	 * ResponseEntity<Void> updateReportViewStatus(@PathVariable int reportNo) {
-	 * Service.updateReportViewStatus(reportNo); return ResponseEntity.ok().build();
-	 * }
+
+	
+	@GetMapping("/detail/{reportNo}")
+
+	public ResponseEntity<StopMember> getreportDetail(@PathVariable("reportNo") int reportNo){
+	
+
+		
+	StopMember reportDetail = service.getReportDetail(reportNo);
+	
+	if(reportDetail != null) {
+		return ResponseEntity.ok(reportDetail);  // 보고서가 존재하는 경우 200 OK 응답
+	}else {
+		return ResponseEntity.notFound().build(); // 보고서가 존재하지 않을 경우 404 Not Found 응답
+	}
+	
+	}
+	
+	/** 신고목록 삭제
+	 * @param reportNo
 	 */
+	@GetMapping("/delete/{reportNo}")
+	@ResponseBody
+	public void deleteReport(@PathVariable("reportNo") int reportNo) {
+		
+		service.deleteReportOut(reportNo);
+	}
+	
+	
+
+	
+	
 	
 }
