@@ -308,11 +308,12 @@
   <!-- DB에서 모든 게시판 종류를 조회 -->
   <select id="selectBoardTypeList" resultType="map">
   	SELECT 
-  		BOARD_TYPE_CODE "boardTypeCode",
-  		BOARD_NAME "boardName"
-  	FROM
-  		"BOARD_TYPE"
-  	ORDER BY BOARD_TYPE_CODE ASC
+  		T.BOARD_TYPE_CODE "boardTypeCode",
+  		T.BOARD_NAME "boardName",
+  		B.GROUP_NO "groupNo"
+  	FROM "BOARD_TYPE" T
+  	JOIN BOARD B ON (B.BOARD_TYPE_CODE = T.BOARD_TYPE_CODE)
+  	ORDER BY T.BOARD_TYPE_CODE ASC
   </select>
 
   <!-- 특정 게시글의 이미지를 order 순서로 조회 -->

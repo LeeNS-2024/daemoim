@@ -1,8 +1,8 @@
-function attendSchedule(scheduleNo) {
+function attendSchedule(scheduleNo, groupNo) {
   fetch('/board/attendSchedule', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: scheduleNo
+      body: scheduleNo, groupNo
   })
   .then(response => {
           console.log(response);
@@ -14,16 +14,18 @@ function attendSchedule(scheduleNo) {
 
 document.querySelectorAll('.attend').forEach(button => {
   button.addEventListener('click', () => {
+
+      const groupNo = 1;
       // 현재 클릭된 버튼의 schedule-box 부모 요소 찾기
       const scheduleBox = button.closest('.schedule-box');
       
       // 해당 schedule-box 내부의 .input 요소에서 scheduleNo 가져오기
       const scheduleNo = scheduleBox.querySelector('.input').innerText;
 
-      console.log(scheduleNo);
+      console.log(scheduleNo, groupNo);
       
       // attendSchedule 함수 호출
-      attendSchedule(scheduleNo);
+      attendSchedule(scheduleNo, groupNo);
   });
 });
 

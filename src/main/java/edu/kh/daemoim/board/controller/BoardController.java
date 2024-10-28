@@ -270,7 +270,7 @@ public class BoardController {
 	@ResponseBody
 	public int attendSchedule(
 		@RequestBody int scheduleNo,
-		@SessionAttribute("groupNo") int groupNo,
+		@RequestBody int groupNo,
 		@SessionAttribute(value="loginMember", required=false) MyPage loginMember,
 		RedirectAttributes ra) {
 		
