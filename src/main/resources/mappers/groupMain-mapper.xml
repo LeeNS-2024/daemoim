@@ -47,6 +47,7 @@
 
 		WHERE
 		B.GROUP_NO = #{groupNo}
+		FETCH FIRST 6 ROWS ONLY
 	</select>
 
 	<select id="getSchedule" resultType="Schedule">
@@ -69,6 +70,7 @@
 		B.GROUP_NO = #{groupNo}
 		ORDER BY
 		SCHEDULE_DATE DESC
+		FETCH FIRST 6 ROWS ONLY
 	</select>
 
 	<select id="getIntroduce" resultType="string">
