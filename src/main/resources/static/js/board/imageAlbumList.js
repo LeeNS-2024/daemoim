@@ -53,8 +53,9 @@ pageNoList?.forEach((item, index) => {
 const insertBtn = document.querySelector("#insertBtn");
 
 insertBtn?.addEventListener("click", () => {
-  const boardTypeCode = location.pathname.split("/")[2];
-  location.href = `/editBoard/${boardTypeCode}/insert`;
+  const groupNo = location.pathname.split("/")[2];
+  const boardTypeCode = location.pathname.split("/")[3];
+  location.href = `/editBoard/${groupNo}/${boardTypeCode}/insert`;
 });
 
 // 스크롤 시 헤더 고정
