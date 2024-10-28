@@ -110,6 +110,7 @@ public class BoardController {
 		HttpServletResponse resp
 		) throws ParseException {
 		
+		// SQL 수행에 필요한 파라미터들 Map으로 묶음
 		Map<String, Integer> map = new HashMap<>();
 		map.put("groupNo", groupNo);
 		map.put("boardTypeCode", boardTypeCode);
@@ -124,6 +125,7 @@ public class BoardController {
 			return "redirect/board/" + groupNo + "/" + boardTypeCode;
 		}
 		
+	  
 		// 조회수 증가
 		
 	  if(loginMember == null || loginMember.getMemberNo() != board.getMemberNo()) {
@@ -180,6 +182,17 @@ public class BoardController {
 		  */
 	  }
 	  
+		/*
+		  // 신고 기능 // 로그인한 회원이 작성한 글 Yes + 비회원 if(loginMember == null) {
+		  ra.addFlashAttribute("message", "로그인 후 이용해주세요"); return "redirect:/board/" +
+		  groupNo + "/" + boardTypeCode + "/" + boardNo; } else
+		  if(loginMember.getMemberNo() == board.getMemberNo()) {
+		  ra.addFlashAttribute("message", "본인 글은 신고할 수 없습니다"); return
+		  "redirect:/board/" + groupNo + "/" + boardTypeCode + "/" + boardNo; } else {
+		  
+		  return "board/report"; }
+		 */
+	  
 		if(boardTypeCode == 3)
 		return "board/imageAlbumDetail";
 		else
@@ -188,18 +201,52 @@ public class BoardController {
 	
 	
 	/** 신고 기능
-	 * @param groupNo
-	 * @param boardTypeCode
-	 * @param boardNo
+	 * @param groupNo 			모임 번호
+	 * @param boardTypeCode 게시판 종류
+	 * @param boardNo				게시판 번호
+	 * @param model					forward 시 request scope 값 전달 객체
+	 * @param ra						redirect 시 request scope 값 전달 객체
+	 * @param loginMember		로그인한 회원 정보
+	 * @param req						요청관련 데이터를 담고있는 객체(쿠키 포함)
+	 * @param resp					응답방법을 담고있는 객체(쿠키 생성, 쿠키를 클라리언트에게 전달)	
 	 * @return
 	 */
 	@PostMapping("/{groupNo:[0-9]+}/{boardTypeCode:[0-9]+}/{boardNo:[0-9]+}/report")
 	public String report(
 		@PathVariable("groupNo") int groupNo,
 		@PathVariable("boardTypeCode") int boardTypeCode,
-		@PathVariable("boardNo") int boardNo
-		
+		@PathVariable("boardNo") int boardNo,
+		@SessionAttribute(value="loginMember", required=false) MyPage loginMember,
+		Model model,
+		RedirectAttributes ra,
+		HttpServletRequest req,
+		HttpServletResponse resp
 		) {
+		
+		// SQL 수행에 필요한 파라미터들 Map으로 묶기
+		Map<String, Integer> map = new HashMap<>();
+		map.put("groupNo", groupNo);
+		map.put("boardTypeCode", boardTypeCode);
+		map.put("boardNo", boardNo);
+		
+		// 로그인이 되어있을 경우 map에 memberNo를 추가
+		if(loginMember != null)  map.put("memberNo", loginMember.getMemberNo());
+		
+		Board board = service.selectDetail(map);
+		
+	  if(loginMember == null) {  // 비회원이 신고버튼 눌렀을 경우
+	  ra.addFlashAttribute("message", "로그인 후 이용해주세요");
+	  return "redirect:/board/" + groupNo + "/" + boardTypeCode + "/" + boardNo; 
+	  }
+	  
+	  if(loginMember.getMemberNo() == board.getMemberNo()) { // 본인 글을 신고할 경우
+	  ra.addFlashAttribute("message", "본인 글은 신고할 수 없습니다");
+	  return "redirect:/board/" + groupNo + "/" + boardTypeCode + "/" + boardNo; 
+	  }
+	  
+	  
+	  // 관리자페이지에서 신고한 내용을 조회하거나 + 작업을 할 경우 추가구문 있을 예정
+		
 		
 		return "board/report";
 	} 

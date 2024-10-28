@@ -8,19 +8,14 @@
   <title>이미지 게시판</title>
 
   <th:block th:replace="~{common/common}"></th:block>
-
   <link rel="stylesheet" href="/css/board/imageAlbumDetail.css">
   <link rel="stylesheet" href="/css/board/comment.css">
+  <link rel="stylesheet" href="/css/board/report.css">
 </head>
 
 <body>
   <main>
-    <th:block th:replace="~{board/report.html}"></th:block>
-
-    <div>
-      <img th:src="${groupHeaderImg}" alt="보드해더이미지" style="width: 99vw;">
-    </div>
-
+    <th:block th:replace="${board/report.html}"></th:block>
     <section class="image-detail" th:object="${board}">
       <!-- 제목 -->
       <h1 class="image-title" th:text="*{boardTitle}">게시글 제목</h1>
@@ -36,16 +31,9 @@
 
           <!-- 좋아요 하트 -->
           <span class="like-area">
-            <i class="fa-heart" 
-               id="boardLike"
-               th:classappend="*{likeCheck == 1} ? fa-solid : fa-regular"></i>
+            <i class="fa-heart" id="boardLike" th:classappend="*{likeCheck == 1} ? fa-solid : fa-regular"></i>
             <span th:text="*{likeCount}">0</span>
           </span>
-          <span id="reportBtn">신고</span>
-            <th:block th:if="${session.loginMember?.memberNo} == ${board.memberNo}">
-                <button id="updateBtn">수정</button>
-                <button id="deleteBtn">삭제</button>
-            </th:block>
         </div>
 
         <div class="image-info">
@@ -63,7 +51,6 @@
             <span>조회수</span>
             <th:block th:text="*{readCount}"></th:block>
           </p>
-            <button id="reportBtn">신고</button>
         </div>
       </div>
 
@@ -74,21 +61,21 @@
           <div class="image-grid">
             <th:block th:each="img : ${board.imageList}">
               <div class="image-item">
-                <img th:src="|${img.imgPath}${img.imgRename}|">
-                <a th:href="|${img.imgPath}${img.imgRename}|"
-                   th:download="${img.imgOriginalName}"
-                   class="download-btn">
-                   <i class="fas fa-download"></i>
-                </a>
+                <img th:src="|${img.imgPath}${img.imgRename}|" th:alt="${img.imgOriginalName}"
+                  th:title="${img.imgOriginalName}">
+                <div class="image-hover">
+                  <span class="original-name" th:text="${img.imgOriginalName}"></span>
+                  <a th:href="|${img.imgPath}${img.imgRename}|" th:download="${img.imgOriginalName}"
+                    class="download-btn">
+                    <i class="fas fa-download"></i>
+                  </a>
+                </div>
               </div>
             </th:block>
           </div>
         </th:block>
-
-<!--         게시글 내용 ( 사진게시판엔 내용이 없음. 추후 추가할 경우를 대비해 남겨둠)
-        <div class="content-text" th:text="*{boardContent}">내용</div>
       </div>
- -->
+
       <!-- 버튼 영역-->
       <div class="btn-area">
         <!-- 로그인한 회원과 게시글 작성자 번호가 같은 경우-->
@@ -96,8 +83,8 @@
           <button id="updateBtn">수정</button>
           <button id="deleteBtn">삭제</button>
         </th:block>
-
         <button id="goToListBtn">목록으로</button>
+        <button id="reportBtn">신고</button>
       </div>
     </section>
 
@@ -107,13 +94,24 @@
 
   <th:block th:replace="~{common/footer}"></th:block>
 
+  <!-- 이미지 확대 모달 -->
+  <div id="imageModal" class="modal">
+    <span class="modal-close">&times;</span>
+    <img id="modalImage" class="modal-content">
+    <div id="modalCaption"></div>
+  </div>
+
   <script th:inline="javascript">
     const loginCheck = /*[[${session.loginMember != null}]]*/ false;
     const memberNickname = /*[[${session.loginMember?.memberNickname}]]*/ null;
     const boardDetail = /*[[${board}]]*/ null;
   </script>
 
+  <th:block th:></th:block>
+
   <script src="/js/board/imageAlbumDetail.js"></script>
   <script src="/js/board/comment.js"></script>
+  <script src="/js/board/report.js"></script>
 </body>
+
 </html>
