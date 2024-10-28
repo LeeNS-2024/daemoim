@@ -14,8 +14,13 @@ import lombok.ToString;
 public class StopMember {
 
 
+	
+	
+	
+	
 		private int memberNo;
-		private int reportDate;
+		private String memberEmail;
+		private String reportDate;
 		private String reportDetail;
 		private int reportNo;
 		private String reportView;

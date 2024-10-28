@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper
 	namespace="edu.kh.daemoim.siteManage.mapper.SiteManageMapper">
 
@@ -10,6 +10,7 @@
 		"GROUP"
 		WHERE
 		GROUP_DEL_FL = 'N'
+		
 	</select>
 
 	<!-- 전체 회원수 조회 -->
@@ -78,7 +79,7 @@
 		ORDER
 		BY
 		ACTIVE_COUNT DESC
-		FETCH FIRST 5 ROWS ONLY
+
 	</select>
 
 	<!-- 최근 가입한 회원 조회 -->
@@ -96,7 +97,7 @@
 		ORDER
 		BY
 		ENROLL_DATE DESC
-		FETCH FIRST 5 ROWS ONLY
+
 	</select>
 
 	<!--회원 정지(이메일 맞는지 확인) -->
@@ -111,7 +112,6 @@
 		=#{memberEmail}
 
 
-
 	</select>
 
 	<!--회원 정지(이메일 맞는지 확인) -->
@@ -123,7 +123,6 @@
 		WHERE
 		MEMBER_EMAIL
 		=#{memberEmail}
-
 
 
 	</select>
@@ -155,6 +154,22 @@
 
 	</delete>
 
+	<!--신고 목록 조회-->
+	<select id="getReportList" resultType="StopMember">
+		SELECT
+		R.MEMBER_NO, REPORT_NO, REPORT_DETAIL,REPORT_DATE, M.MEMBER_EMAIL, REPORT_VIEW
+		FROM REPORT R
+		JOIN "MEMBER" M ON(M.MEMBER_NO = R.MEMBER_NO)
 
+	</select>
+
+	<!--신고목록 상세조회-->
+	<select id="getReportDetail">
+	SELECT REPORT_DETAIL
+	FROM REPORT 
+	WHERE MEMBER_NO = #{memberNo}
+	
+	
+	</select>
 
 </mapper>
