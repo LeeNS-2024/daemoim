@@ -48,7 +48,7 @@
           <th:block th:each= "member:${memberList}" th:object="${member}">
             <tr>
               <td th:text="*{memberId}"></td>
-              <td th:text="*{memberImg}"></td>
+              <td><img th:src="*{memberImg}" alt="profileImage" width="40px" height="40px"></td>
               <td th:text="*{memberNickname}"></td>
               <td th:text="*{memberGroupEnrollDate}"></td>
               <td>

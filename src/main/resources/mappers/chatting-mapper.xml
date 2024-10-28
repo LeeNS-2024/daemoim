@@ -20,6 +20,13 @@
 	</update>
 	
 	<!-- [ws] 마지막 접속일 업데이트 -->
+	<select id="searchChatRoomUser">
+		SELECT COUNT(*) FROM CHAT_ROOM
+		WHERE
+			GROUP_NO = #{groupNo}
+		AND MEMBER_NO = #{memberNo}
+	</select>
+	
 	<update id="updateChatContectDate">
 		UPDATE CHAT_ROOM
 		SET CHAT_CONTECT_DATE = CURRENT_DATE
@@ -27,8 +34,7 @@
 			MEMBER_NO = #{memberNo}
 		AND	GROUP_NO  = #{groupNo}
 	</update>
-
-	<!-- [ws] 마지막접속일 없으면 만들기 -->
+	
 	<insert id="insertChatContectDate">
 		INSERT INTO CHAT_ROOM
 		VALUES(
@@ -50,9 +56,15 @@
 	
 	<!-- [ws] 채팅받을 모임의 회원들 얻어오기 -->
 	<select id="getMemberNos" resultType="Chat">
-		SELECT MEMBER_NO
-		FROM "MEMBER_GROUP"
-		WHERE GROUP_NO = #{groupNo}
+		SELECT MG.MEMBER_NO
+		FROM "MEMBER_GROUP" MG
+		JOIN "MEMBER" M ON (M.MEMBER_NO = MG.MEMBER_NO)
+		WHERE
+			GROUP_NO = #{groupNo}
+		AND MEMBER_GROUP_BAN = 'N'
+		AND MEMBER_GROUP_DEL_FL = 'N'
+		AND MEMBER_DEL_FL = 'N'
+		AND MEMBER_OUT_FL = 'N'
 	</select>
 	
 	<!-- 채팅방 정보 얻어오기 -->
@@ -61,15 +73,13 @@
 			MG.GROUP_NO,
 		    G.GROUP_NAME,
 		    (
-			    ( SELECT COUNT(*)
-				FROM MEMBER_GROUP MG2
-				WHERE MG2.GROUP_NO = MG.GROUP_NO )
-				- 
-				(SELECT 
+				SELECT 
 					COUNT(*)
 				FROM CHAT C
 				WHERE C.GROUP_NO = MG.GROUP_NO
-				AND CHAT_WRITE_DATE > 
+				<![CDATA[	
+				AND CHAT_WRITE_DATE >
+				]]>
 					NVL((SELECT CHAT_CONTECT_DATE 
 						FROM CHAT_ROOM CR
 						WHERE
@@ -77,11 +87,12 @@
 						AND CR.GROUP_NO = MG.GROUP_NO),
 						TO_DATE('1970-01-01', 'YYYY-MM-DD')
 					)
-				)
+				
 			) AS "UNREAD_COUNT"
 		FROM MEMBER_GROUP MG
 		LEFT JOIN "GROUP" G ON (MG.GROUP_NO = G.GROUP_NO)
 		WHERE MG.MEMBER_NO = #{memberNo}
+		AND	G.GROUP_DEL_FL = 'N'
 	</select>
 	
 	

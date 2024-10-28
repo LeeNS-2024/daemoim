@@ -27,14 +27,24 @@ public class WebsocketConfig implements WebSocketConfigurer{
 				.addInterceptors( interceptor )
 				.setAllowedOriginPatterns(
 						"http://localhost/",
-						"http://192.168.219.105/")
+						"http://192.168.10.124",
+						"http://192.168.10.25",
+						"http://192.168.10.121",
+						"http://192.168.10.19",
+						"http://192.168.10.91",
+						"http://192.168.10.24")
 				.withSockJS();
 		
 		registry.addHandler(memberHandler, "/memsocket")
 		.addInterceptors( interceptor )
 		.setAllowedOriginPatterns(
 				"http://localhost/",
-				"http://192.168.219.105/")
+				"http://192.168.10.124",
+				"http://192.168.10.25",
+				"http://192.168.10.121",
+				"http://192.168.10.19",
+				"http://192.168.10.91",
+				"http://192.168.10.24")
 		.withSockJS();
 		
 	}

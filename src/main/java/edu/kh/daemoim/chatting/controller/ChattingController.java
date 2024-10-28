@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RestController;
 import edu.kh.daemoim.chatting.dto.Chat;
 import edu.kh.daemoim.chatting.service.ChattingService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequestMapping("chat")
 @RestController
 @RequiredArgsConstructor
@@ -43,18 +45,21 @@ public class ChattingController {
 	 */
 	@GetMapping("getContent")
 	public List<Chat> getContent(
-			@RequestParam("groupNo") int groupNo) {
-		return service.getContent(groupNo);
+			@RequestParam("groupNo") int groupNo,
+			@RequestParam("loginMemberNo") int memberNo) {
+		List<Chat> chatList = service.getContent(groupNo, memberNo); 
+		log.info("ChattingController.chatList() : ", chatList.toString());
+		return chatList;
 	}
 	
-	/** 마지막 읽은날자 수정
-	 * @return chatList
-	 */
-	@GetMapping("updateReadDate")
-	public void updateReadDate(
-			@RequestParam("groupNo") int groupNo,
-			@RequestParam("memberNo") int memberNo) {
-		service.updateReadDate(groupNo, memberNo);
-	}
+//	/** 마지막 읽은날자 수정
+//	 * @return chatList
+//	 */
+//	@GetMapping("updateReadDate")
+//	public void updateReadDate(
+//			@RequestParam("groupNo") int groupNo,
+//			@RequestParam("memberNo") int memberNo) {
+//		service.updateReadDate(groupNo, memberNo);
+//	}
 
 }
