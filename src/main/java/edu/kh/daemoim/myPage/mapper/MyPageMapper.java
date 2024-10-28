@@ -27,6 +27,8 @@ public interface MyPageMapper {
 		int profile(
 				@Param("url") String url,
 				@Param("memberNo") int memberNo);
+
+		MyPage selectMemberByNo(int memberNo);
 		
 		
 		

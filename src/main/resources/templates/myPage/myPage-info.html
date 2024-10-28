@@ -19,7 +19,7 @@
     <form action="profile" method="POST" name="myPageImgFrm" id="profile" enctype="multipart/form-data">
       <div class="profile-image-area">
         <img th:with="user=#{user.default.image}" 
-             th:src="${session.loginMember.memberImg ?: user}" 
+             th:src="${userInfo.memberImg ?: user}" 
              id="profileImg">
       </div>
       <span id="deleteImage">x</span>
@@ -27,24 +27,26 @@
       <div class="profile-btn-area">
         <label for="imageInput">이미지 선택</label>
         <input type="file" name="profileImg" id="imageInput" accept="image/*">
-        <button type="submit">변경하기</button>
+        <!-- 현재 로그인한 사용자와 URL의 memberNo가 일치할 때만 변경하기 버튼 표시 -->
+        <button type="submit" th:if="${session.loginMember.memberNo == userInfo.memberNo}">변경하기</button>
       </div>
     </form>
 
+    <!-- 닉네임과 자기소개 변경 양식 -->
     <form action="info" method="POST" name="myPageFrm">
       <div class="myPage-row">
         <label for="memberNickname">닉네임</label>
-        <input type="text" name="memberNickname" maxlength="10" id="memberNickname" th:value="${session.loginMember.memberNickname}">
+        <input type="text" name="memberNickname" maxlength="10" id="memberNickname" th:value="${userInfo.memberNickname}">
       </div>
 
       <div class="profile-details">
         <div class="profile-introduce-section">
           <label for="memberIm">자기소개</label><br>
-          <input type="text" 
-          th:value="${session.loginMember.memberIm}" id="memberIm"  name="memberIm">
+          <input type="text" th:value="${userInfo.memberIm}" id="memberIm" placeholder="자기소개 입력" name="memberIm">
         </div>
-        <button id="changeBtn" type="submit">변경</button>
-       
+        <!-- 변경 버튼도 동일하게 조건 추가 -->
+        <button id="changeBtn" type="submit" th:if="${session.loginMember.memberNo == userInfo.memberNo}">변경</button>
+
       </div>
     </form>
   </main>

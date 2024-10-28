@@ -33,7 +33,8 @@
             
           </div>
           
-          <a href="/myPage/info" class="headerLoginBtn">내정보</a>
+          <a th:href="@{/myPage/info/{memberNo}(memberNo=${session.loginMember.memberNo})}" class="headerLoginBtn">내정보</a>
+
           <a href="/logout" class="headerLoginBtn">로그아웃</a>
         </div>
       </th:block>

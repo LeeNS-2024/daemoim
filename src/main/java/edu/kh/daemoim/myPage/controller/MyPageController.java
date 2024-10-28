@@ -2,8 +2,10 @@ package edu.kh.daemoim.myPage.controller;
 
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,9 +30,16 @@ public class MyPageController {
 	private final MyPageService service;
 
 	@GetMapping("info/{memberNo}")
-	public String info() {
+	public String info(@PathVariable("memberNo") int memberNo, 
+            @SessionAttribute("loginMember") MyPage loginMember, 
+            Model model) {
 
-		return "myPage/myPage-info";
+
+		MyPage userInfo = service.findMemberByNo(memberNo);
+
+	    model.addAttribute("userInfo", userInfo);
+
+	    return "myPage/myPage-info";
 	}
 
 	@GetMapping("changePw")
