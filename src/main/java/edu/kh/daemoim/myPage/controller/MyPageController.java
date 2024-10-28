@@ -22,13 +22,12 @@ import lombok.RequiredArgsConstructor;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("myPage")
-@SessionAttributes({ "loginMember" })
-
+@SessionAttributes({ "loginMember"})
 public class MyPageController {
 
 	private final MyPageService service;
 
-	@GetMapping("info")
+	@GetMapping("info/{memberNo}")
 	public String info() {
 
 		return "myPage/myPage-info";
