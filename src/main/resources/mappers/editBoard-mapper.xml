@@ -3,5 +3,39 @@
 <mapper namespace="edu.kh.daemoim.board.mapper.EditBoardMapper">
 
 
+	<!-- 게시글 부분(제목, 내용, 작성자, 게시판 종류) DB에 추가 -->
+	<insert id="boardInsert" parameterType="Board" useGeneratedKeys="true">
+
+		<selectKey order="BEFORE" resultType="_int" keyProperty="boardNo">
+			SELECT SEQ_BOARD_NO.NEXTVAL FROM DUAL
+		</selectKey>
+
+		INSERT INTO "BOARD"
+		VALUES(
+		#{boardNo},
+		#{boardTitle},
+		#{boardContent},
+		DEFAULT, DEFAULT, DEFAULT, DEFAULT,
+		#{memberNo},
+		#{boardTypeCode}
+		#{groupNo}
+		)
+	</insert>
+	
+	<!-- 여러이미지 한 번에 DB에 추가 -->
+	<insert id="insertUploadList">
+		INSERT INTO "BOARD_IMG"
+		<foreach collection="list" item="img" open="(" close=")" separator=" UNION ALL ">
+			SELECT
+			NEXT_IMG_NO(),
+			#{img.imgPath},
+			#{img.imgOriginalName},
+			#{img.imgRename},
+			#{img.imgOrder},
+			#{img.boardNo}
+			FROM DUAL
+		</foreach>
+	</insert>
+
 
 </mapper>
