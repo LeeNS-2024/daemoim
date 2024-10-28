@@ -2,12 +2,16 @@ package edu.kh.daemoim.groupMain.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 
+import edu.kh.daemoim.common.interceptor.GroupHeaderImgInterceptor;
 import edu.kh.daemoim.groupMain.dto.Notice;
 import edu.kh.daemoim.groupMain.dto.PhotoBox;
 import edu.kh.daemoim.groupMain.dto.Schedule;
@@ -16,9 +20,14 @@ import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
+@Configuration
 public class GroupMainController {
 
     private final GroupMainService service;
+    
+    @Autowired
+    private GroupHeaderImgInterceptor groupHeaderImgInterceptor;
+
 
     /** 페이지 전환
      * @param model
@@ -33,6 +42,8 @@ public class GroupMainController {
         List<PhotoBox> photos = service.getPhotos(groupNo);
         List<Schedule> schedules = service.getSchedule(groupNo);
         String introduces = service.getIntroduce(groupNo);
+        
+      
       
       
         
@@ -40,7 +51,7 @@ public class GroupMainController {
         model.addAttribute("photos", photos);
         model.addAttribute("schedules", schedules);
         model.addAttribute("introduces", introduces.split("\n"));
-     
+   
         
         return "groupMain/main";  // 뷰 이름 반환
     }

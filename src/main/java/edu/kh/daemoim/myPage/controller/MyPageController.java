@@ -24,8 +24,7 @@ import lombok.RequiredArgsConstructor;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("myPage")
-@SessionAttributes({ "loginMember" })
-
+@SessionAttributes({ "loginMember"})
 public class MyPageController {
 
 	private final MyPageService service;
@@ -34,6 +33,7 @@ public class MyPageController {
 	public String info(@PathVariable("memberNo") int memberNo, 
             @SessionAttribute("loginMember") MyPage loginMember, 
             Model model) {
+
 
 		MyPage userInfo = service.findMemberByNo(memberNo);
 

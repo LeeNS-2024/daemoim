@@ -54,7 +54,8 @@ public class GroupMainServiceImpl implements GroupMainService {
 		
 		return mapper.getIntroduce(groupNo);
 	}
-	
+
+
 
 
 

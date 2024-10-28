@@ -11,28 +11,29 @@ import edu.kh.daemoim.chatting.dto.Chat;
 import edu.kh.daemoim.chatting.dto.ChatRoom;
 import edu.kh.daemoim.chatting.mapper.ChattingMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class ChattingServiceImpl implements ChattingService {
 	
 	private final ChattingMapper mapper;
-
+	
 	// 받은 채팅메세지 처리
 	@Override
 	public int insertChatting(Chat chat) {
 		
-		// 이전까지 있던 메시지들 읽음처리
-		mapper.updateChatCount(chat.getMemberNo(), chat.getGroupNo());
+		int result = mapper.insertChatting(chat);
 		
+		// 이전까지 있던 메시지들 읽음처리
+		if(result>0) result = mapper.updateChatCount(chat.getMemberNo(), chat.getGroupNo());
 		// 마지막 접속시간 업데이트
-		int result = mapper.updateChatContectDate(chat.getMemberNo(), chat.getGroupNo());
-		// 없으면 만들어야함
-		if( result < 1) mapper.insertChatContectDate(chat.getMemberNo(), chat.getGroupNo());
+		if(result>0) result = updateChatRoom(chat.getMemberNo(), chat.getGroupNo());
 		
 		// 삽입 후 결과반환
-		return mapper.insertChatting(chat);
+		return result;
 	}
 
 	// [ws] 채팅받을 모임의 회원들 얻어오기
@@ -43,8 +44,16 @@ public class ChattingServiceImpl implements ChattingService {
 
 	// 채팅내용 불러오기
 	@Override
-	public List<Chat> getContent(int groupNo) {
-		return mapper.getContent(groupNo);
+	public List<Chat> getContent(int groupNo, int  memberNo) {
+		List<Chat> list = mapper.getContent(groupNo);
+		
+		// 마지막 접속시간 업데이트
+		int result = updateChatRoom(memberNo, groupNo);
+		if(result>0) {
+			return list;
+		} else {
+			return null;
+		}
 	}
 
 	// 채팅룸 정보 가져가기
@@ -72,12 +81,13 @@ public class ChattingServiceImpl implements ChattingService {
 		return map;
 	}
 
-	@Override
-	public void updateReadDate(int groupNo, int memberNo) {
-		// 마지막 접속시간 업데이트
-		int result = mapper.updateChatContectDate(memberNo, groupNo);
-		// 없으면 만들어야함
-		if( result < 1) mapper.insertChatContectDate(memberNo, groupNo);
+	// 마지막 접속시간 업데이트
+	public int updateChatRoom(int memberNo, int groupNo) {
+		int result = 0;
+		result = mapper.searchChatRoomUser(memberNo, groupNo);
+		if( result > 0) result = mapper.updateChatContectDate(memberNo, groupNo);
+		else            result = mapper.insertChatContectDate(memberNo, groupNo);
+		return result;
 	}
 
 }

@@ -21,6 +21,7 @@ public class PhotoBox {
 	private int boardNo;
 	
 	private int groupNo;
+	private String groupHeaderImg;
 	
 	
 	private String fileLocation;

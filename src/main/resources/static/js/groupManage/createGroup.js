@@ -54,7 +54,7 @@ groupName.addEventListener("input", () => {
   }
 
   // 500글자 넘을 때
-  if(inputLength > 500){
+  if(inputName.length > 500){
     nameMessage.innerText = "";
     nameMessage.innerText = nameMessageConfirm.tooLong;
     countName.classList.add("red");

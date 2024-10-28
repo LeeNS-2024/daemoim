@@ -1,35 +1,93 @@
-.categorySearch{
-
-  margin-top: 200px;
+/* 검색창을 화면 중앙에 정렬 */
+.search-section {
+  margin-top: 220px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.category-content {
-  position: absolute;
+.input-wrapper {
   width: 100%;
-  top: 0;
-  left: 100%; 
-  z-index: 10;
-  visibility: hidden;
-  opacity: 0;
-  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out; 
+  max-width: 400px;
 }
 
-.category-content.active {
-  visibility: visible;
-  margin-top: 200px; 
-  opacity: 1;
-  left: 0;
-  transform: translateX(0);
+.input-wrapper input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.category-content.slide-in {
-  transform: translateX(0); 
-  left: 0;
-  visibility: visible;
-  opacity: 1;
+/* 모임 목록 섹션 스타일 */
+.categorySearch {
+  padding: 20px;
 }
 
-.category-content.slide-out {
-  transform: translateX(-100%); 
-  opacity: 0; 
+#groupContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 두 개씩 나란히 배치 */
+  gap: 20px; /* 요소 간 간격 */
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.category-box {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  max-width: 400px; /* 카드 최대 너비 */
+  width: 100%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  padding: 15px;
+  align-items: center;
+}
+
+.icon {
+  width: 20%;
+  margin-right: 20px;
+}
+
+.icon img {
+  width: 100%;
+  height: auto;
+  border-radius: 5%;
+  background-color: #eee;
+}
+
+.details {
+  width: 75%;
+}
+
+.categoryGroup-name {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.group-name {
+  font-size: 16px;
+  margin-bottom: 5px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* 표시할 줄 수 */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+}
+
+.location {
+  font-size: 14px;
+  color: #777;
+  margin-bottom: 10px;
+}
+
+.participants {
+  display: flex;
+  align-items: center;
+}
+
+.participants i {
+  margin-right: 5px;
 }

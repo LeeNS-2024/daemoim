@@ -14,13 +14,15 @@
 <body>
     <th:block th:replace="~{common/header}"></th:block>
 
-    <section class="categorySearch">
+    <section class="search-section">
         <form action="#" method="get" id="search">
             <div class="input-wrapper">
-                <input type="text" name="query" id="searchQuery" placeholder="검색어 입력"> 
+                <input type="text" name="query" id="searchQuery" placeholder="검색어 입력">
             </div>
         </form>
-        
+    </section>
+
+    <section class="categorySearch">
         <div id="groupContainer"></div>
     </section>
 
