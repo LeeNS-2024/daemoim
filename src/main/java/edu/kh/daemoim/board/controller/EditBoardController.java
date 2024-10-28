@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -54,35 +55,35 @@ public class EditBoardController {
 	 * @param ra
 	 * @return
 	 */
-	@PostMapping("{groupNo:[0-9]+}/{boardTypeCode:[0-9]+}/insert")
-	public String boardInsert(
-		@PathVariable("groupNo") int groupNo,
-		@PathVariable("boardTypeCode") int boardTypeCode,
-		@ModelAttribute edu.kh.daemoim.board.dto.Board inputBoard,
-		@SessionAttribute("loginMember") MyPage loginMember,
-		@RequestParam("images") List<MultipartFile> images,
-		RedirectAttributes ra
-		) {
-		
-		inputBoard.setMemberNo(loginMember.getMemberNo());
-		
-		int boardNo = service.boardInsert(inputBoard, images);
-		
-		String path = null;
-		String message = null;
-		
-		if(boardNo == 0) {
-			path = "insert";
-			message = "게시글작성을 실패하였습니다";
-		} else {
-			path = "/board/" + groupNo + "/" + boardTypeCode + "/" + boardNo;
-			message = "게시글이 작성되었습니다";
-		}
-		ra.addFlashAttribute("message", message);
-		
-		return "redirect:" + path;
-		
-	}
+	/*
+	 * @PostMapping("{groupNo:[0-9]+}/{boardTypeCode:[0-9]+}/insert")
+	 * 
+	 * @ResponseBody public String boardInsert(
+	 * 
+	 * @PathVariable("groupNo") int groupNo,
+	 * 
+	 * @PathVariable("boardTypeCode") int boardTypeCode,
+	 * 
+	 * @ModelAttribute edu.kh.daemoim.board.dto.Board inputBoard,
+	 * 
+	 * @SessionAttribute("loginMember") MyPage loginMember,
+	 * 
+	 * @RequestParam("images") List<MultipartFile> images, RedirectAttributes ra ) {
+	 * 
+	 * inputBoard.setMemberNo(loginMember.getMemberNo());
+	 * 
+	 * int boardNo = service.boardInsert(inputBoard, images);
+	 * 
+	 * String path = null; String message = null;
+	 * 
+	 * if(boardNo == 0) { path = "insert"; message = "게시글작성을 실패하였습니다"; } else { path
+	 * = "/board/" + groupNo + "/" + boardTypeCode + "/" + boardNo; message =
+	 * "게시글이 작성되었습니다"; } ra.addFlashAttribute("message", message);
+	 * 
+	 * return "redirect:" + path;
+	 * 
+	 * }
+	 */
 	
 	
 	

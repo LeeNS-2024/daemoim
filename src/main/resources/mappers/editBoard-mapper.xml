@@ -17,25 +17,25 @@
 		#{boardContent},
 		DEFAULT, DEFAULT, DEFAULT, DEFAULT,
 		#{memberNo},
-		#{boardTypeCode}
+		#{boardTypeCode},
 		#{groupNo}
 		)
 	</insert>
 	
 	<!-- 여러이미지 한 번에 DB에 추가 -->
-	<insert id="insertUploadList">
+<!-- 	<insert id="insertUploadList">
 		INSERT INTO "BOARD_IMG"
 		<foreach collection="list" item="img" open="(" close=")" separator=" UNION ALL ">
 			SELECT
-			NEXT_IMG_NO(),
-			#{img.imgPath},
-			#{img.imgOriginalName},
-			#{img.imgRename},
-			#{img.imgOrder},
+			SEQ_BOARD_IMG.NEXTVAL,
+			#{img.boardImgPath},
+			#{img.boardImgOriginalName},
+			#{img.boardImgRename},
+			#{img.boardImgOrder},
 			#{img.boardNo}
 			FROM DUAL
 		</foreach>
 	</insert>
 
-
+ -->
 </mapper>
