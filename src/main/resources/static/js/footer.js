@@ -16,21 +16,30 @@ const chatUls = document.querySelectorAll(".chat-body ul");
 const resizer = document.createElement("div");
 resizer.classList.add("resizer");
 chatBody.appendChild(resizer);
-console.log("리사이저추가완료")
 
+let startX, startY, startWidth, startHeight;
 resizer.addEventListener("mousedown", (e) => {
   e.preventDefault();
   
+  startX = e.clientX;
+  startY = e.clientY;
+  startWidth = chatBody.offsetWidth;
+  startHeight = chatBody.offsetHeight;
+
   window.addEventListener("mousemove", resize);
   window.addEventListener("mouseup", stopResize);
 
 });
 
 function resize(e) {
-  chatBody.style.width = chatBody.offsetWidth - (e.movementX) + "px";
-  chatBody.style.height = chatBody.offsetHeight - (e.movementY) + "px";
-  chatUls[0].style.height = (chatBody.offsetHeight - 122) + 'px';
-  chatUls[1].style.height = (chatBody.offsetHeight - 122) + 'px';
+  const newWidth = Math.max(406, Math.min(806, startWidth - (e.clientX - startX)));
+  const newHeight = Math.max(406, Math.min(window.innerHeight * 0.55, startHeight - (e.clientY - startY)));
+
+  chatBody.style.width = newWidth + "px";
+  chatBody.style.height = newHeight + "px";
+
+  chatUls[0].style.height = (newHeight - 175) + 'px';
+  chatUls[1].style.height = (newHeight - 175) + 'px';
 }
 
 function stopResize() {
@@ -38,63 +47,19 @@ function stopResize() {
   window.removeEventListener("mouseup", stopResize);
 }
 
-
+chatBoxGroupName.addEventListener("wheel", (e) => {
+  e.preventDefault();
+  container.scrollLeft += e.deltaY; // 휠로 가로 스크롤
+});
 
 
 
 /* ******************************************************** */
 /* 채팅창 열기 기능 */
 
-// [] : 함수
-
-// 클릭시 비동기로 [채팅창정보(loginMemberNo)] .가입목록 얻어와 표시, map에 [그룹번호, [접속회원들] 만들어야함]
-// .마지막 읽은 날자를 조회하여 모임별 새 메세지 갯수 표시
-// 마지막 읽은 날자가 없으면 전체 채팅갯수 표시
-// .마지막으로 접속했던 [채팅방 열기(groupNo)]
-// 채팅방 별 접속한 [websocket회원 닉네임 표시(groupNo)]
-// 채팅창 open
-
-// 필요한것
-// [채팅창열기(loginMemberNo)]
-// [채팅방 열기(groupNo)]
-// [websocket회원 닉네임 표시(groupNo)]
-
-
-// ajax
-
-// DTO 1 - 필요없음, map에 담아오세요 ㅡㅡ
-// 로그인회원번호
-// 모임 List - 회원 수 내림차순, resultMap이용
-//   모임번호
-//   모임이름
-//   메시지 카운트
-// 마지막 읽은 날자
-// 마지막 읽은 모임번호 lastReaded
-
-// DTO2
-// 모임번호
-// 모임이름
-// 메시지 카운트 unreadCount
-
-// DTO3
-// 채팅 테이블 DTO
-// chatNo
-// chatContent
-// chatWriteDate
-// chatCount
-// memberNo
-// groupNo
-// memberNickname
-// memberProfileUrl
-
-// websoket
-// 접속한 회원 닉네임 List - 닉네임오름차순
-// 채팅
-
 // 가입목록과, 마지막읽은 모임번호를 가져오는 함수
 const chatInfo = (memberNo) => {
 
-  console.log("챗.chatInfo 실행됨, params.memberNo : " + memberNo);
 
   fetch("/chat/getChatInfo?memberNo=" + memberNo)
   .then(response => {
@@ -104,16 +69,17 @@ const chatInfo = (memberNo) => {
   .then(map => {
 
     const groupList = map.groupList;
-    console.log("챗.chatInfo.groupList : " + groupList);
 
     chatBoxGroupName.innerHTML = '';
+    let allUnReaded = 0;
     groupList.forEach(group => {
       const div = document.createElement("div");
-      if(group.unreadCount == 0){
+      if(group.unreadCount < 1){
         div.innerText = group.groupName;
       } else {
         const span = document.createElement("span");
         span.innerText = group.unreadCount;
+        allUnReaded += group.unreadCount;
         span.classList.add("chat-unReaded");
         span.classList.add(group.groupNo);
         div.innerText = group.groupName;
@@ -125,19 +91,19 @@ const chatInfo = (memberNo) => {
       chatBoxGroupName.append(div);
     });
 
-    console.log("챗.chatInfo : openChat() 실행, params.groupNo : " + map.lastReaded);
+    if(allUnReaded>0) document.querySelector(".chat-onBtn > .chat-unReaded").innerText = allUnReaded;
+
+    // 채팅창이 켜진게 아니라면 모임별 읽지않은 메세지만 가져오고 stop;
+    if(!chatBtnOn.classList.contains("display-none")) return;
+
     openChat(map.lastReaded);
 
     // 채팅목록 가져오는동안 창 열기
     chatSection.classList.remove("display-none");
     chatBody.classList.remove("display-none");
-    chatBtnOn.classList.add("display-none");
-    chatBtnOff.classList.remove("display-none");
-
 
   })
   .catch(err => {
-    console.log("챗.chatInfo 애러, params.memberNo : " + memberNo);
     console.error(err);
   });
 
@@ -147,22 +113,15 @@ const chatInfo = (memberNo) => {
 // 로그인 목록, 채팅컨탠츠 가져오는 함수
 const openChat = (groupNo) => {
 
-  console.log("챗.openChat 실행됨, params.groupNo : " + groupNo);
-
+  openChatRoom = groupNo; // 현재 열려있는 채팅창번호 저장
   if(groupNo < 1){
-    chatBoxContents.innerText = '채팅방을 선택해 주세요';
+    chatUls[1].innerHTML = '';
+    chatUls[1].innerText = '채팅방을 선택해 주세요';
     return;
   }
-
-  /* websocket으로 회원닉네임리스트 호출 */
-  const obj = {
-    "loginMemberNo" : chatLoginMemberNo,
-    "groupNo" : groupNo
-  };
-  memsocket.send( JSON.stringify(obj) );
-
+  
   // 채팅 컨탠츠 가져오기
-  fetch("/chat/getContent?groupNo=" + groupNo)
+  fetch("/chat/getContent?groupNo=" + groupNo + "&loginMemberNo=" + chatLoginMemberNo)
   .then(response => {
     if(response.ok) return response.json();
     throw new Error("")
@@ -174,27 +133,42 @@ const openChat = (groupNo) => {
       return;
     }
 
-    console.log("챗.openChat.chatList : " + chatList);
+    // 클릭한 모임버튼 강조
+    const chatGroupArr = document.querySelectorAll(".chat-groupName");
+    chatGroupArr.forEach((chatGroup) => {
+      const btnGroupNo = chatGroup.dataset.groupNo;
+      if(btnGroupNo == groupNo){
+        chatGroup.classList.add("slectedGroup");
+      } else {
+        chatGroup.classList.remove("slectedGroup");
+      }
+    })
     
+    document.querySelector(".chat-onBtn > .chat-unReaded").innerText = '';
+
     chatUls[1].innerHTML = '';
     chatList.forEach(chat => {
-      console.log("챗.openChat.chat : " + chat);
       if(chatLoginMemberNo !== chat.memberNo) contentOthers(chat);
       else contentSelf(chat);
     });
 
-    updateReadDate(groupNo); // 마지막 접속일 업데이트
-    openChatRoom = groupNo; // 현재 열려있는 채팅창번호 저장
-    chatUls[1].style.height = (chatBody.offsetHeight - 122) + 'px';
+    
+    chatUls[1].style.height = (chatBody.offsetHeight - 175) + 'px';
     chatUls[1].scrollTop = chatUls[1].scrollHeight; // 스크롤 제일 밑으로
+
+    /* websocket으로 회원닉네임리스트 호출 */
+    const obj = {
+      "loginMemberNo" : chatLoginMemberNo,
+      "groupNo" : groupNo
+    };
+    memsocket.send( JSON.stringify(obj) );
 
   })
   .catch(err => {
-    console.log("챗.openChat 애러, params.groupNo : " + groupNo);
     console.error(err);
   });
 
-};
+}; // openChat() end
 
 // 상대방 채팅 만들기
 const contentOthers = (chat) => {
@@ -202,16 +176,20 @@ const contentOthers = (chat) => {
     li.classList.add("chat-contentOthers");
     const div1 = document.createElement("div");
       div1.classList.add("chat-memberNinkname");
-      const img = document.createElement("img");
-      if(chat.memberProfileUrl !== null){
-        img.src = chat.memberProfileUrl;
+      div1.innerText = chat.memberNickname;
+      let url;
+      if(chat.memberProfileUrl) url = chat.memberProfileUrl;
+      else url = "/images/default"
+      if (url) {
+        const img = new Image();
+        img.src = url;
         img.alt = "profile";
-        img.width = "14px";
-        img.height = "14px";
-        div1.innerHTML = img + chat.memberNickname;
-      } else {
-        div1.innerHTML = chat.memberNickname;
+        img.style.width = "45px";
+        img.style.height = "45px";
+        img.style.borderRadius = "5px";
+        div1.prepend(img);
       }
+
     const div2 = document.createElement("div");
       const div21 = document.createElement("div");
         div21.classList.add("chat-contents")
@@ -220,10 +198,16 @@ const contentOthers = (chat) => {
         div22.classList.add("chat-comments");
         const div221 = document.createElement("div");
           div221.classList.add("chat-date");
-          div221.innerText = chat.chatWriteDate;
+          if(chat.chatWriteDate === null){
+            div221.innerText = '방금전';
+          } else {
+            div221.innerText = chat.chatWriteDate;
+          }
         const div222 = document.createElement("div");
           div222.classList.add("chat-unReaded");
-          div222.innerText = chat.chatCount;
+          if(chat.chatCount > 0){
+            div222.innerText = chat.chatCount;
+          }
       div22.append(div221, div222);
     div2.append(div21, div22);
   li.append(div1, div2);
@@ -237,10 +221,16 @@ const contentSelf = (chat) => {
       div1.classList.add("chat-comments");
       const div11 = document.createElement("div");
       div11.classList.add("chat-date");
-      div11.innerText = chat.chatWriteDate;
+      if(chat.chatWriteDate === null){
+        div11.innerText = '방금전';
+      } else {
+        div11.innerText = chat.chatWriteDate;
+      }
       const div12 = document.createElement("div");
       div12.classList.add("chat-unReaded");
-      div12.innerText = chat.chatCount;
+      if(chat.chatCount > 0){
+        div12.innerText = chat.chatCount;
+      }
     div1.append(div11, div12);
     const div2 = document.createElement("div");
       div2.classList.add("chat-contents");
@@ -252,23 +242,11 @@ const contentSelf = (chat) => {
 
 // 채팅 아이콘클릭시 위 함수 시행
 chatBtnOn?.addEventListener("click", ()=>{
+  chatBtnOn.classList.add("display-none");
+  chatBtnOff.classList.remove("display-none");
   chatInfo(chatLoginMemberNo);
   addCloseChat();
 });
-
-// 마지막 접속일 업데이트
-const updateReadDate = (groupNo) => {
-  fetch("/chat/updateReadDate?groupNo=" + groupNo + "&memberNo=" + chatLoginMemberNo)
-  .then(response => {
-    if(!response.ok) throw new Error(response.status)
-    return;
-  })
-  .catch(err => {
-    console.log("챗.updateReadDate 애러, params.groupNo : " + groupNo);
-    console.error(err);
-  });
-};
-
 
 
 /* ******************************************************** */
@@ -295,12 +273,10 @@ const chatTextarea = document.getElementById("chat-textarea");
 
 // 메시지 보내는 함수
 const sendChat = ()=>{
-  console.log("챗. sendChat() 실행");
   
   if(chatLoginCheck === false) return;// 비로그인 반환
   if(openChatRoom === null) return; // 채팅창 안열었을때 반환
   const msg = chatTextarea.value;
-  console.log("챗. sendChat() msg : 0" + msg);
   if(msg.trim().length === 0) return; // 입력한 메세지 없으면 반환
 
   const obj = {
@@ -312,7 +288,6 @@ const sendChat = ()=>{
   chatsocket.send( JSON.stringify(obj) );
 
   chatTextarea.value = '';
-  updateReadDate(openChatRoom); // 마지막 접속일 업데이트
 
 };
 
@@ -343,55 +318,59 @@ let chatsocket;
 let memsocket;
 
 if(chatLoginCheck){
-  console.log("챗. chatsocket 생성요청");
   chatsocket = new SockJS("/chatsocket");
-  console.log("챗. memsocket 생성요청");
   memsocket = new SockJS("/memsocket");
 }
 
 if(chatsocket != null){
   
   chatsocket.addEventListener("message", e => {
-    console.log("챗. 메시지받음 : " + e.data);
     
     const chat = JSON.parse(e.data);
-    console.log("챗. 메시지변환 : " + chat);
 
     // 채팅메시지일때
     
     // 채팅창 닫혀있을때
-    if(chatBoxGroupName.classList.contains("display-none")){
+    if(chatBody.classList.contains("display-none")){
+      let num =  document.querySelector(".chat-onBtn>.chat-unReaded").innerText;
+      if(num.length === 0) num = 0;
       document.querySelector(".chat-onBtn>.chat-unReaded").innerText
-      = Number(document.querySelector(".chat-onBtn>.chat-unReaded").innerText) + 1;
+      = Number(num) + 1;
       return;
     }
     // 채팅 창은 열려있는데 방이 다른방일때
-    if(chat.groupNo !== openChatRoom){
+    if(chatBody.classList.contains("display-none") && chat.groupNo !== openChatRoom){
       // 그룹 버튼 중 해당그룹 선택
-      document.querySelector(".chat-topBody>.chat-groupName>." +chat.groupNo ).innerText
-      = Number(document.querySelector(".chat-topBody>.chat-groupName>." +chat.groupNo ).innerText) + 1;
+      const btnArr = document.querySelectorAll(".chat-groupName");
+      btnArr.forEach( btn => {
+        if(btn.dataset.groupNo === chat.groupNo){
+          btn.children.innerText = Number(btn.children.innerText) + 1;
+        }
+      })
       return;
     }
-
+    
     // 채팅창 열려있을때
     if(chatLoginMemberNo !== chat.memberNo) contentOthers(chat);
     else contentSelf(chat);
 
-    chatUls[1].style.height = (chatBody.offsetHeight - 122) + 'px';
+    chatUls[1].style.height = (chatBody.offsetHeight - 175) + 'px';
     chatUls[1].scrollTop = chatUls[1].scrollHeight; // 스크롤 제일 밑으로
-    updateReadDate(openChatRoom); // 마지막 접속일 업데이트
 
+    // 15초 후 채팅창 새로고침
+    setTimeout(() => {
+      if(!chatBody.classList.contains("display-none"))
+      chatInfo(chatLoginMemberNo);
+    }, 15000);
   });
 
-}
+} // socket end
 
 if(memsocket != null){
   
   memsocket.addEventListener("message", e => {
-    console.log("챗. 데이터목록받음 : " + e.data);
     
     const memberNickList = JSON.parse(e.data);
-    console.log("챗. 데이터목록변환 : " + memberNickList);
 
     // 로그인중인 멤버목록을 받아오면
     chatUls[0].innerHTML = '';
@@ -401,19 +380,26 @@ if(memsocket != null){
       chatUls[0].append(li);
     });
 
+    // 15초 후 채팅창 새로고침
+    setTimeout(() => {
+      if(!chatBody.classList.contains("display-none"))
+      chatInfo(chatLoginMemberNo);
+    }, 15000);
   });
 
-}
+} // socket end
 
 /* ******************************************************** */
 /* 페이지 로딩시 */
 
 
 document.addEventListener("DOMContentLoaded", ()=>{
-  console.log("로딩 완료 후 메서드 시작함")
 
   if(chatLoginCheck){
-    console.log("로그인이 확인되어 채팅아이콘 띄움")
+    setTimeout(() => {
+      chatInfo(chatLoginMemberNo);
+    }, 1000);
+    // 안읽은 메시지 갯수 불러오기
     chatBtnOn.classList.remove("display-none");
   }
 });

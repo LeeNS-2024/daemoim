@@ -11,7 +11,6 @@
   </section>
 </footer>
 
-<!-- head로 옮길것 꼭!!!! -->
 <link rel="stylesheet" href="/css/chat.css">
 
 <!-- 채팅 팝업 전체화면 display-none-->
@@ -21,19 +20,17 @@
 <!-- 채팅 바디 박스 -->
 <section class="chat-body display-none">
   <div class="chat-topBody">
-    <div class="chat-groupName">모임명 <span class="chat-unReaded">23</span></div>
-    <div class="chat-groupName">모임명2</div>
-    <div class="chat-groupName">모임명3</div>
+    <div class="chat-groupName">
+      <!-- 모임명 -->
+      <span class="chat-unReaded"><!-- 안읽은숫자 --></span>
+    </div>
   </div>
   <div class="chat-mainBody">
     <div class="chat-nickDiv">
       <ul>
-        <li>닉네임</li>
-        <li>닉네임</li>
-        <li>닉네임</li>
-        <li>닉네임</li>
-        <li>닉네임</li>
-        <li>닉네임</li>
+        <li>
+          <!-- 닉네임 태그 입니다 -->
+        </li>
       </ul>
     </div>
 
@@ -41,65 +38,12 @@
       <ul>
 
         <li class="chat-contentOthers">
-          <div class="chat-memberNinkname">
-            <img src="#" alt="profile" width="14px" height="14px">닉네임
-          </div>
-          <div>
-            <div class="chat-contents">채팅내용</div>
-            <div class="chat-comments">
-              <div class="chat-date">10.26</div>
-              <div class="chat-unReaded">5</div>
-            </div>
-          </div>
+          <!-- 컨탠츠 태그 입니다 -->
         </li>
-
-        <li class="chat-contentOthers">
-          <div class="chat-memberNinkname">
-            <img src="#" alt="frofile" width="14px" height="14px">닉네임
-          </div>
-          <div>
-            <div class="chat-contents">채팅내용</div>
-            <div class="chat-comments">
-              <div class="chat-date">10.26</div>
-              <div class="chat-unReaded">5</div>
-            </div>
-          </div>
-        </li>
-        <li class="chat-contentOthers">
-          <div class="chat-memberNinkname">
-            <img src="#" alt="frofile" width="14px" height="14px">닉네임
-          </div>
-          <div>
-            <div class="chat-contents">채팅내용</div>
-            <div class="chat-comments">
-              <div class="chat-date">10.26</div>
-              <div class="chat-unReaded">5</div>
-            </div>
-          </div>
-        </li>
-
-        <li class="chat-contentOthers">
-          <div class="chat-memberNinkname">
-            <img src="#" alt="frofile" width="14px" height="14px">닉네임
-          </div>
-          <div>
-            <div class="chat-contents">채팅내용</div>
-            <div class="chat-comments">
-              <div class="chat-date">10.26</div>
-              <div class="chat-unReaded">5</div>
-            </div>
-          </div>
-        </li>
-
         <li class="chat-contentSelf">
-          <div class="chat-comments">
-            <div class="chat-date">10.26</div>
-            <div class="chat-unReaded">5</div>
-          </div>
-          <div class="chat-contents">채팅내용</div>
+          <!-- 컨탠츠 태그 입니다 -->
         </li>
 
-        
       </ul>
     </div>
   </div>
@@ -112,13 +56,13 @@
 
 <!-- 채팅 아이콘 off-->
 <section  class="chat-offBtn display-none">
-  <i class="fa-solid fa-envelope" style="color: #74C0FC;"></i>
+  <i class="fa-solid fa-envelope-open-text" style="color: #74C0FC;"></i>
 </section>
 
 <!-- 채팅 아이콘 on-->
 <section class="chat-onBtn display-none">
   <i class="fa-solid fa-square-envelope" style="color: #74C0FC;">.</i>
-  <span class="chat-unReaded">12</span>
+  <span class="chat-unReaded"><!-- 안읽은 메시지갯수 --></span>
 </section>
 
 <script th:inline="javascript">

@@ -60,7 +60,12 @@ main{
   font-weight: 700;
 }
 .mainSec > .searchForm{
+  min-width: 380px;
   margin: 0 0 20px;
+  padding: 15px;
+  border-radius: 10px;
+  background-color: rgb(59, 19, 0, 0.2);
+  text-align: center;
 }
 .mainSec > div > form select{
   width: 85px;
@@ -425,7 +430,13 @@ tbody tr:hover{
 }
 .tableBody button{
   width: 80px;
-  border: #333;
+  border: 1px solid #333;
+  border-radius: 3px;
+  margin: 4px 10px 4px;
+  height: 30px;
+}
+.tableBody button:hover{
+  cursor: pointer;
 }
 /* 공지게시판미리보기 */
 .boardTr > th:first-child{ min-width: 90px;}    /* 게시글번호 */
