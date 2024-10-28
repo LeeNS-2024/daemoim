@@ -6,7 +6,7 @@
       </a>
 
       <th:block th:unless="${session.loginMember}" class="login-search-wrapper">
-        <a href="/search/search" class="headerSearchBtn">
+        <a href="/category/category" class="headerSearchBtn">
           <i class="fa-solid fa-magnifying-glass"></i>
         </a>
         <div class="loginBtnBox">
@@ -15,7 +15,7 @@
       </th:block>
 
       <th:block th:if="${session.loginMember}" class="login-search-wrapper">
-        <a href="/search/search" class="headerSearchBtn">
+        <a href="/category/category" class="headerSearchBtn">
           <i class="fa-solid fa-magnifying-glass"></i>
         </a>
         [[${session.loginMember.memberNickname}]]
