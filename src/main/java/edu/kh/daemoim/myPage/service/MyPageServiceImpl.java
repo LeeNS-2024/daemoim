@@ -3,6 +3,7 @@ package edu.kh.daemoim.myPage.service;
 import java.io.File;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,16 +16,17 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
+@PropertySource("classpath:/config.properties")
 public class MyPageServiceImpl implements MyPageService{
 
 	private final MyPageMapper mapper;
 	
 	 private final BCryptPasswordEncoder encoder;
 		
-	 @Value("{my.profile.web-path}")
+	 @Value("${daemoim.profile.web-path}")
 	 private String profileWebPath;
 	 
-	 @Value("{my.profile.folder-path}")
+	 @Value("${daemoim.profile.folder-path}")
 	 private String profileFolderPath;
 	  
 	@Override

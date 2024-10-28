@@ -10,7 +10,7 @@
         MEMBER_NICKNAME, 
         MEMBER_TEL,
    <!--    MEMBER_ADDRESS,  -->
-   <!--    PROFILE_IMG,  -->
+      MEMBER_IMG, 
       AUTHORITY,
       TO_CHAR(ENROLL_DATE, 
          'YYYY"년" MM"월" DD"일" HH24"시" MI"분" SS"초"') ENROLL_DATE

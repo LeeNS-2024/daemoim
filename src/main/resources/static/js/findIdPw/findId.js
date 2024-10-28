@@ -218,7 +218,6 @@ checkIdAuthKeyBtn.addEventListener("click", () => {
     "authKey" : authKey.value    // 입력한 인증 번호
   };
   
-  // JSON.stringify(객체) : 객체 -> JSON 변환(문자열화)
   
   fetch("/email/checkfindIdAuthKey", {
     method : "POST",
@@ -250,25 +249,24 @@ checkIdAuthKeyBtn.addEventListener("click", () => {
 
       checkObj.authKey = true; // 인증 완료 표시
 
-     /*  fetch("/email/memberId", {
+      
+      
+      fetch("/findIdPw/memberIdPage", {
         method : "POST",
         headers : {"Content-Type" : "application/json"},
-        body : findIdmemberEmail.value
-    
-        // POST 방식으로 
-        // /email/sendAuthKey 요청을 처리하는 컨트롤러에
-        // 입력된 이메일을 body에 담아서 제출
+        body :  findIdmemberEmail.value
       })
       .then(response => {
         if(response.ok) return response.text();
-        throw new Error("이메일 발송 실패");
+        throw new Error("조회 실패");
       })
       .then(memberId => {
         console.log(memberId);
-        alert(memberId)
+        /* s */
+        location.href = "findIdPw/memberIdPage?memberId=" + memberId; 
       })
       .catch(err => console.error(err));
- */
+
       
     }
  
