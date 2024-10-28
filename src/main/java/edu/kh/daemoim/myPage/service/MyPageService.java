@@ -22,6 +22,8 @@ public interface MyPageService {
 
 	// 프로필 수정
 	String profile(MultipartFile profileImg, int memberNo) ;
+
+	MyPage findMemberByNo(int memberNo);
 	
 	
 
