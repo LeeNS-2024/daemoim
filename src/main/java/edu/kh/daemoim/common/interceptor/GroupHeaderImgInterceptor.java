@@ -30,6 +30,7 @@ public class GroupHeaderImgInterceptor implements HandlerInterceptor {
 			String groupHeaderImg = service.getGroupHeaderImg(groupNo);
 			
 			request.setAttribute("groupHeaderImg", groupHeaderImg);
+		    
 		}
 		
 		HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);

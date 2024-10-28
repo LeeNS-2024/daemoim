@@ -35,6 +35,24 @@ public interface SiteManageService {
 	 */
 	
 	List<StopMember> getReportList();
+
+	/** 모달창
+	 * @param reportNo
+	 * @return
+	 */
+	StopMember getReportDetail(int reportNo);
+
+	/** 조회 여부 변경
+	 * @param reportNo
+	 * @return
+	 */
+	int updateReportViewStatus(int reportNo);
+
+	/**
+	 *  신고목록 삭제
+	 * @param reportNo
+	 */
+	void deleteReportOut(int reportNo);
 	
 	
 }
