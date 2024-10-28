@@ -44,6 +44,8 @@ public class SiteManageServiceImpl implements SiteManageService {
 		// 회원조회 - 최근 가입한 회원 5개
 		List<GroupMemberManageDto> memberList = mapper.getNewMember();
 
+		
+
 		Map<String, Integer> countList = new HashMap<>();
 		Map<String, Object> map = new HashMap<>();
 		countList.put("groupAllcount", groupAllcount);
@@ -54,6 +56,7 @@ public class SiteManageServiceImpl implements SiteManageService {
 		map.put("groupList", groupList);
 		map.put("memberList", memberList);
 
+		
 		return map;
 	}
 
@@ -102,4 +105,38 @@ public class SiteManageServiceImpl implements SiteManageService {
 		return result;
 	}
 
+	// 신고 목록 조회
+	@Override
+	public List<StopMember> getReportList() {
+	
+		return mapper.getReportList();
+	}
+
+	// 모달창
+	@Override
+	public StopMember getReportDetail(int reportNo) {
+
+		int result = mapper.updateReportViewStatus(reportNo);
+		System.out.println("result : " + result);
+		if(result> 0){
+			return mapper.getReportDetail(reportNo);
+		} else {
+			return null;
+		}
+	}
+
+	// 조회여부 변경
+	@Override
+	public int updateReportViewStatus(int reportNo) {
+	
+		return mapper.updateReportViewStatus(reportNo);
+	}
+
+	// 신고목록 삭제
+	@Override
+	public void deleteReportOut(int reportNo) {
+		mapper.deleteReportOut(reportNo);
+		
+	}
+	
 }

@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
 import edu.kh.daemoim.board.dto.Board;
+import edu.kh.daemoim.groupMain.dto.Schedule;
 
 @Mapper
 public interface BoardMapper {
@@ -59,5 +60,20 @@ public interface BoardMapper {
 	 * @return
 	 */
 	int updateReadCount(int boardNo);
+
+	/** 일정 조회
+	 * @param groupNo
+	 * @return
+	 */
+	List<Schedule> selectScheduleList(int groupNo);
+
+	/** 일정 참석
+	 * @param scheduleNo
+	 * @return
+	 */
+	int attendSchedule(
+			@Param("scheduleNo") int scheduleNo, 
+			@Param("groupNo") int groupNo,
+			@Param("memberNo") int memberNo);
 
 }

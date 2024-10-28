@@ -23,9 +23,12 @@ public interface MyPageMapper {
 				@Param("memberNo") int memberNo, 
 				@Param("encPw") String encPw);
 
+		// 프로필 변경
 		int profile(
 				@Param("url") String url,
 				@Param("memberNo") int memberNo);
+
+		MyPage selectMemberByNo(int memberNo);
 		
 		
 		

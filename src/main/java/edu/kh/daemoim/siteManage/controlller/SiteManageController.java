@@ -1,14 +1,19 @@
 package edu.kh.daemoim.siteManage.controlller;
 
+import java.io.Console;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.catalina.Service;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.kh.daemoim.siteManage.dto.StopMember;
@@ -16,16 +21,19 @@ import edu.kh.daemoim.groupManage.dto.GroupManageDto;
 import edu.kh.daemoim.groupManage.dto.GroupMemberManageDto;
 import edu.kh.daemoim.siteManage.service.SiteManageService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping("siteManage")
 @RequiredArgsConstructor
+@Slf4j
 public class SiteManageController {
 
 	private final SiteManageService service;
 
 	@GetMapping("")
-	public String siteManage(Model model) {
+	public String siteManage(Model model
+			) {
 
 		// 서비스 호출 후 결과 받아오기
 		Map<String, Object> map = service.getSiteManage();
@@ -42,10 +50,14 @@ public class SiteManageController {
 		// 회원조회 - 최근 가입한 회원 5개
 		List<GroupMemberManageDto> memberList = (List<GroupMemberManageDto>) map.get("memberList");
 
+		// 신고 목록 조회
+		List<StopMember> reportList = (List<StopMember>) service.getReportList();
+
 		model.addAttribute("countList", countList);
 		model.addAttribute("groupList", groupList);
 		model.addAttribute("memberList", memberList);
-
+		model.addAttribute("reportList",reportList);
+		
 		return "siteManage/main";
 	}
 
@@ -89,21 +101,18 @@ public class SiteManageController {
 	 * @param reason
 	 */
 	@PostMapping("resign")
-	public String resignMember(@RequestParam("email") String email,
-			@RequestParam("reason") String reason,
+	public String resignMember(@RequestParam("email") String email, @RequestParam("reason") String reason,
 			RedirectAttributes ra) {
 
 		// 이메일로 회원 찾기
 		StopMember member = service.findMemberByEmail2(email);
-		
-	
-		
+
 		if (member != null) {
-						
+
 			member.setStopReason(reason);
-			
+
 			int result = service.resignMember(member);
-			
+
 			ra.addFlashAttribute("message", "탈퇴 완료 되었습니다.");
 		}
 		ra.addFlashAttribute("message", "올바른 이메일을 입력해주세요");
@@ -111,7 +120,37 @@ public class SiteManageController {
 		return "redirect:/siteManage";
 	}
 	
+
+	
+	@GetMapping("/detail/{reportNo}")
+
+	public ResponseEntity<StopMember> getreportDetail(@PathVariable("reportNo") int reportNo){
 	
 
+		
+	StopMember reportDetail = service.getReportDetail(reportNo);
+	
+	if(reportDetail != null) {
+		return ResponseEntity.ok(reportDetail);  // 보고서가 존재하는 경우 200 OK 응답
+	}else {
+		return ResponseEntity.notFound().build(); // 보고서가 존재하지 않을 경우 404 Not Found 응답
+	}
+	
+	}
+	
+	/** 신고목록 삭제
+	 * @param reportNo
+	 */
+	@GetMapping("/delete/{reportNo}")
+	@ResponseBody
+	public void deleteReport(@PathVariable("reportNo") int reportNo) {
+		
+		service.deleteReportOut(reportNo);
+	}
+	
+	
+
+	
+	
 	
 }

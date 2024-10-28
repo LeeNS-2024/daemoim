@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import edu.kh.daemoim.board.mapper.BoardMapper;
+import edu.kh.daemoim.groupMain.dto.Schedule;
 import edu.kh.daemoim.board.dto.Board;
 import edu.kh.daemoim.board.dto.Pagination;
 import lombok.RequiredArgsConstructor;
@@ -83,6 +84,25 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public int updateReadCount(int boardNo) {
 		return mapper.updateReadCount(boardNo);
+	}
+	
+	// 일정 조회
+	@Override
+	public Map<String, Object> selectScheduleList(int groupNo) {
+		
+		List<Schedule> scheduleList = mapper.selectScheduleList(groupNo);
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("scheduleList", scheduleList);
+		
+		return map;
+		
+	}
+	
+	// 일정 참석
+	@Override
+	public int attendSchedule(int scheduleNo, int groupNo, int memberNo) {
+		return mapper.attendSchedule(scheduleNo, groupNo, memberNo);
 	}
 
 	

@@ -14,12 +14,9 @@ public interface ChattingService {
 	List<Chat> getMemberNos(int groupNo);
 
 	// 채팅내용 불러오기
-	List<Chat> getContent(int groupNo);
+	List<Chat> getContent(int groupNo, int memberNo);
 
 	// 채팅룸 정보 가져가기
 	Map<String, Object> getChatInfo(int memberNo);
-
-	// 읽은날자수정
-	void updateReadDate(int groupNo, int memberNo);
 
 }

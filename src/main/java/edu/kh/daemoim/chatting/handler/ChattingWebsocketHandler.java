@@ -55,8 +55,8 @@ public class ChattingWebsocketHandler extends TextWebSocketHandler{
 		
 		int result = service.insertChatting(chat);
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd hh:mm");
-		chat.setChatWriteDate( sdf.format( new Date() ) );
+//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd hh:mm");
+//		chat.setChatWriteDate( sdf.format( new Date() ) );
 		
 		List<Chat> memberNoList = service.getMemberNos(chat.getGroupNo());
 		List<Integer> noList = new ArrayList<>();

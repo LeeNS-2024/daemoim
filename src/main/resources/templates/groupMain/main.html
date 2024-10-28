@@ -24,18 +24,19 @@
 <body>
 
   <!-- 모임 배경사진 -->
-  <!-- <div class="screen">
-    <img src="${groupHeaderImg}" alt="모임배경사진">
-  </div> -->
-
-  <!-- 모임 소개 -->
+  <div class="screen">
   
-  <div class="introduce-box">
-    
-    <th:block th:each="introduce : ${introduces}">
-      <div th:text="${introduce}"></div>
+      <img th:src="${groupHeaderImg}" alt="모임배경사진">
     </div>
-    
+
+    <!-- 모임 소개 -->
+
+    <div class="introduce-box">
+
+      <th:block th:each="introduce : ${introduces}">
+        <div th:text="${introduce}"></div>
+    </div>
+
     <main class="main-container">
 
       <!-- 왼쪽 사이드바 -->
@@ -44,52 +45,53 @@
         <a href="#">일반 게시판</a>
         <a href="#">사진첩</a>
         <a href="#">일정</a>
+        <a href="#" id="manageA">모임 관리페이지</a> <!-- th:if= "${session.loginMember?.memberNo} === ${group.memberNo}" -->
       </div>
-      
-    <!-- 컨텐츠 영역 -->
-    <section class="container-row">
 
-      <!-- 박스 레이아웃 -->
-      <section class="box-container">
-        <!-- 공지사항-->
-        <div class="notice">
-          <table>
-            <thead>
-              <tr>
+      <!-- 컨텐츠 영역 -->
+      <section class="container-row">
+        <!-- 박스 레이아웃 -->
+        <section class="box-container">
+          <!-- 공지사항-->
+          <h3>공지사항</h3>
+          <div class="notice">
+            <table>
+              <thead>
+                <tr>
 
-              </tr>
-            </thead>
-            <tbody>
-              <tr th:each="board : ${boardList}">
-                <td>공지</td>
-                <td th:text="${board.boardTitle}">공지 제목</td>
-                <td th:text="${board.boardWriteDate}">날짜</td>
-              </tr>
-            </tbody>
-          </table>
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="board : ${boardList}">
+                  <td>공지</td>
+                  <td th:text="${board.boardTitle}">공지 제목</td>
+                  <td th:text="${board.boardWriteDate}">날짜</td>
+                </tr>
+              </tbody>
+            </table>
 
-        </div>
-
-
-        <!-- 사진첩 -->
-
-
-        <!-- 사진첩 섹션 -->
-        <div class="photo-gallery">
-          <h3>사진첩</h3>
-          <div class="gallery-grid">
-
-            <th:block th:each="photo : ${photos}" th:object="${photo}">
-              <div class="photo-item">
-                <img th:src="${photo.fileLocation}" th:alt="*{boardImgOriginalName}" class="gallery-photo">
-                <p th:text="*{boardImgOriginalName}">사진 제목</p>
-              </div>
-
-            </th:block>
           </div>
-        </div>
 
-        <!-- 
+
+          <!-- 사진첩 -->
+
+
+          <!-- 사진첩 섹션 -->
+          <div class="photo-gallery">
+            <h3>사진첩</h3>
+            <div class="gallery-grid">
+
+              <th:block th:each="photo : ${photos}" th:object="${photo}">
+                <div class="photo-item">
+                  <img th:src="${photo.fileLocation}" th:alt="*{boardImgOriginalName}" class="gallery-photo">
+                  <p th:text="*{boardImgOriginalName}">사진 제목</p>
+                </div>
+
+              </th:block>
+            </div>
+          </div>
+
+          <!-- 
             <div class="photo-box bg-white rounded-lg shadow p-4">
               <div class="flex items-center justify-between mb-4">
                   <button class="text-sm text-gray-500">더보기</button>
@@ -103,33 +105,44 @@
                   </div>
               </div>
           </div> -->
-      </section>
+        </section>
 
-      <!-- 모임일정 -->
+        <!-- 모임일정 -->
 
-      <section class="group-section">
+        <section class="group-section">
+          <div class="schedule-box">
+            <th:block th:each="schedule : ${schedules}" th:object="${schedule}">
+              <div class="schedule-item">
+                <div class="item date">날짜 D - <span th:text="${schedule.dDay}"></span></div>
+                <div class="item detail-date">상세 일시 <span th:text="${schedule.scheduleDate}"></span></div>
+                <div class="item location">위치 <span th:text="${schedule.location}"></span></div>
+                <div class="item cost">비용 <span th:text="${schedule.cost}"></span></div>
+                <i class="fa-solid fa-users"></i>
+                <div class="item number"><span th:text="${schedule.memberCount}"></span>/50</div>
 
-        <div class="schedule-box">
+              </div>
+            </th:block>
+          </div>
+        </section>
 
-          <th:block th:each="schedule : ${schedules}" th:object="${schedule}">
-            <section>
-              <div class="date">날짜 D - <span th:text="${schedule.dDay}"></span> </div>
-              <div class="detail-date">상세 일시 <span th:text="${schedule.scheduleDate}"></span> </div>
-              <div class="location">위치 <span th:text="${schedule.location}"></span></div>
-              <div class="cost">비용 <span th:text="${schedule.cost}"></span></div>
-              <div class="number"> <span th:text="${schedule.memberCount}"></span>/50</div>
-          </th:block>
-      </section>
-
-      </div>
+  </div>
 
 
-    </section>
 
-    </section>
+
+  </section>
 
   </main>
 
+  <script th:inline="javascript">
+    const groupNo = location.pathname.split("/")[2];
+    const manageA = document.querySelector("#manageA");
+    manageA.addEventListener("click", e=>{
+      e.preventDefault();
+      location.href = "/groupManage/" + groupNo + "/manageGroup";
+    })
+
+  </script>
   <script src="/js/groupMain/groupNotice.js"></script>
 </body>
 

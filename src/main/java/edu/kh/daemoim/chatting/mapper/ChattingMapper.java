@@ -12,13 +12,12 @@ import edu.kh.daemoim.chatting.dto.ChatRoom;
 public interface ChattingMapper {
 	
 	// [ws] 마지막 접속일 < 읽음처리 < 현재시간
-	void updateChatCount(@Param("memberNo") int memberNo, @Param("groupNo") int groupNo);
+	int updateChatCount(@Param("memberNo") int memberNo, @Param("groupNo") int groupNo);
 
 	// [ws] 마지막 접속일 업데이트
+	int searchChatRoomUser(@Param("memberNo") int memberNo, @Param("groupNo") int groupNo);
 	int updateChatContectDate(@Param("memberNo") int memberNo, @Param("groupNo") int groupNo);
-
-	// [ws] 마지막접속일 없으면 만들기
-	void insertChatContectDate(@Param("memberNo") int memberNo, @Param("groupNo") int groupNo);
+	int insertChatContectDate(@Param("memberNo") int memberNo, @Param("groupNo") int groupNo);
 	
 	// [ws] 전달받은 채팅 입력
 	int insertChatting(Chat chat);
@@ -37,5 +36,6 @@ public interface ChattingMapper {
 
 	// 채팅내역 불러오기
 	List<Chat> getContent(int groupNo);
+
 
 }

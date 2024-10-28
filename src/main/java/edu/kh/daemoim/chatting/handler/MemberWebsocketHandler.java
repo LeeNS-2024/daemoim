@@ -1,9 +1,7 @@
 package edu.kh.daemoim.chatting.handler;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -54,14 +52,11 @@ public class MemberWebsocketHandler extends TextWebSocketHandler{
 		ChatRoom chatRoom = objectMapper.readValue(message.getPayload(), ChatRoom.class);
 		
 		List<Chat> memberNoList = service.getMemberNos(chatRoom.getGroupNo());
-		log.debug("[수행] handleTextMessage 타깃리스트1 : {}", memberNoList.toString());
 		List<Integer> noList = new ArrayList<>();
 		memberNoList.forEach( e -> noList.add( e.getMemberNo() ) );
-		log.debug("[수행] handleTextMessage 타깃리스트2 : {}", noList.toString());
 		
 		List<Chat> memberNickList = new ArrayList<>();
 		
-		log.debug("[수행] handleTextMessage 타깃리스트3 : {}", memberNickList.toString());
 		
 		// 로그인중인 회원 뽑아내기
 		for(WebSocketSession wss : sessions) {
@@ -69,11 +64,11 @@ public class MemberWebsocketHandler extends TextWebSocketHandler{
 			HttpSession clientSession = (HttpSession)wss.getAttributes().get("session");
 			
 			int clientNo = ((MyPage)clientSession.getAttribute("loginMember")).getMemberNo();
-			log.debug("[수행] handleTextMessage 조회번호 : {}", clientNo);
+			log.debug("[수행] MemberWebsocketHandler 조회번호 : {}", clientNo);
 			if(noList.contains(clientNo)) {
 				String clientNickname = ((MyPage)clientSession.getAttribute("loginMember")).getMemberNickname();
 				memberNickList.add( new Chat().builder().memberNickname(clientNickname).build() );
-				log.debug("[수행] handleTextMessage 리스트추가 : {}", clientNickname);
+				log.debug("[수행] MemberWebsocketHandler 리스트추가 : {}", clientNickname);
 			}
 		} // for end
 		
@@ -86,11 +81,11 @@ public class MemberWebsocketHandler extends TextWebSocketHandler{
 			
 			int targetNo = ((MyPage)clientSession.getAttribute("loginMember")).getMemberNo();
 			
-			if( chatRoom.getLoginMemberNo() == targetNo) {
-				log.debug("sendData to : {}", targetNo);
+			if(noList.contains(targetNo)) {
 				wss.sendMessage(textMessage);
-				break;
+				log.debug("[수행] MemberWebsocketHandler sendData to : {}", targetNo);
 			}
+			
 		} // for end
 		
 	} // handleTextMessage() end

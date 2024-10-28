@@ -4,36 +4,51 @@
 
 	<resultMap type="Board" id="board_rm">
   
-  	<!-- id 태그 : PK 역할 필드, 컬럼 작성 태그(필수 작성) -->
-  	<id property="boardNo" column="BOARD_NO"/>
+	  	<!-- id 태그 : PK 역할 필드, 컬럼 작성 태그(필수 작성) -->
+	  	<id property="boardNo" column="BOARD_NO"/>
+	  
+		<!-- collection 태그
+		select로 조회된 결과를 컬렉션(List)에 담아
+		지정된 필드에 세팅
+		
+		property : List를 담을 DTO의 필드명
+		select : 실행할 select의 id
+		column : 조회 결과 중 지정된 컬럼의 값을 파라미터로 전달
+		javaType : List(컬렉션)의 타입을 지정
+		ofType : List(컬렉션)의 제네릭(타입 제한) 지정
+		-->
+		<collection 
+			property="imageList"
+			select="selectImageList"
+			column="BOARD_NO"
+			javaType="java.util.ArrayList"
+			ofType="BoardImg"
+		/>
+		
+		<collection
+			property="commentList"
+			select="selectCommentList"
+			column="BOARD_NO"
+			javaType="java.util.ArrayList"
+			ofType="Comment"
+		/>
+	
+	
+	
+  	</resultMap>
   
-	<!-- collection 태그
-	select로 조회된 결과를 컬렉션(List)에 담아
-	지정된 필드에 세팅
-	
-	property : List를 담을 DTO의 필드명
-	select : 실행할 select의 id
-	column : 조회 결과 중 지정된 컬럼의 값을 파라미터로 전달
-	javaType : List(컬렉션)의 타입을 지정
-	ofType : List(컬렉션)의 제네릭(타입 제한) 지정
-	-->
-	<collection 
-		property="imageList"
-		select="selectImageList"
-		column="BOARD_NO"
-		javaType="java.util.ArrayList"
-		ofType="BoardImg"
-	/>
-	
-	<collection 
-		property="commentList"
-		select="selectCommentList"
-		column="BOARD_NO"
-		javaType="java.util.ArrayList"
-		ofType="Comment"
-	/>
-	
-  </resultMap>
+	<resultMap type="Schedule" id="schedule_rm">
+	  
+		<id property="scheduleNo" column="SCHEDULE_NO"/>
+		
+		<collection 
+			property="memberImages"
+			select="selectMemberImageList"
+			column="SCHEDULE_NO"
+			javaType="java.util.ArrayList"
+			ofType="Schedule"
+		/>
+	</resultMap>
   
   
   
@@ -293,11 +308,12 @@
   <!-- DB에서 모든 게시판 종류를 조회 -->
   <select id="selectBoardTypeList" resultType="map">
   	SELECT 
-  		BOARD_TYPE_CODE "boardTypeCode",
-  		BOARD_NAME "boardName"
-  	FROM
-  		"BOARD_TYPE"
-  	ORDER BY BOARD_TYPE_CODE ASC
+  		T.BOARD_TYPE_CODE "boardTypeCode",
+  		T.BOARD_NAME "boardName",
+  		B.GROUP_NO "groupNo"
+  	FROM "BOARD_TYPE" T
+  	JOIN BOARD B ON (B.BOARD_TYPE_CODE = T.BOARD_TYPE_CODE)
+  	ORDER BY T.BOARD_TYPE_CODE ASC
   </select>
 
   <!-- 특정 게시글의 이미지를 order 순서로 조회 -->
@@ -317,6 +333,32 @@
   		BOARD_NO = #{boardNo}
   </update>
   
+  <select id="selectScheduleList" resultMap="schedule_rm">
+  	SELECT 
+  		S.SCHEDULE_NO, 
+  		LOCATION, 
+  		SCHEDULE_DATE, 
+  		LOCATION_ADDRESS,
+  		COST,
+  		(SELECT COUNT(MEMBER_NO)
+  		 FROM SCHEDULE_MEMBER M
+  		 WHERE S.SCHEDULE_NO = M.SCHEDULE_NO) AS COUNT
+	FROM SCHEDULE S
+	WHERE S.GROUP_NO = #{groupNo}
+  </select>
+  
+  
+  <select id="selectMemberImageList" resultType="string">
+ 	SELECT MB.MEMBER_IMG
+	FROM SCHEDULE_MEMBER M
+	JOIN MEMBER MB ON M.MEMBER_NO = MB.MEMBER_NO
+	WHERE M.SCHEDULE_NO = #{scheduleNo}
+  </select>
+  
+  <update id="attendSchedule">
+  	INSERT INTO SCHEDULE_MEMBER
+  	VALUES(#{scheduleNo}, #{memberNo}, #{groupNo})
+  </update>
   
   
   

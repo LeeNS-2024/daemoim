@@ -14,4 +14,9 @@ public interface FindIdPwMapper {
 	// 아이디 띄우기
 	String memberId(String email);
 
+	// 비밀번호 찾기 후 변경 
+	int chagePwAuthKeyPage(
+			@Param("findPwMemberId") String findPwMemberId,
+			@Param("encPw") String encPw);
+
 }

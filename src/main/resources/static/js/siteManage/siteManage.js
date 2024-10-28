@@ -26,7 +26,7 @@ document.getElementById("resignForm").addEventListener("submit", e => {
   var reason = document.getElementById("reason2").value;
 
   // 입력값 검증
-  if(email === "" || reason === "" ){
+  if (email === "" || reason === "") {
     alert("모든 항목을 입력해주세요");
     return;
   }
@@ -35,4 +35,92 @@ document.getElementById("resignForm").addEventListener("submit", e => {
 
 });
 
+/* 모달 */
+function showReportDetailModal(reportNo) {
+  console.log(reportNo);
+  fetch(`/siteManage/detail/${reportNo}`)
+    .then(response => response.json())
+    .then(data => {
+      // data에 신고 상세 내용이 담겨있음
+      document.getElementById("modalReportDetail").innerText = data.reportDetail;
+      document.getElementById("reportDetailModal").style.display = "block"; // 모달 열기
+      const viewStatus = document.querySelectorAll(".report-view-status");
+      viewStatus?.forEach(view => {
+        if (view.dataset.reportNo == reportNo) {
+          view.innerText = "확인완료";
+        }
+      })
+    })
+    .catch(error => console.error('error:', error));
+}
+
+
+const addReportEvent = () => {
+  const reportDetailArr = document.querySelectorAll(".reportDetail");
+  reportDetailArr?.forEach(reportDetail => {
+    reportDetail.addEventListener("click", () => {
+      const reportNo = reportDetail.dataset.reportNo;
+
+      showReportDetailModal(reportNo);
+    })
+  })
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  addReportEvent();
+  reportDelete();
+})
+
+
+const reportDelete = () => {
+  console.log("삭제버튼함수실행");
+  
+  const deleteReport = document.querySelectorAll(".deleteReport")
+  deleteReport?.forEach(deleteReport => {
+    deleteReport.addEventListener("click", () => {
+      console.log("삭제버튼실행");
+      const reportNo = deleteReport.dataset.reportNo;
+      fetch(`/siteManage/delete/${reportNo}`)
+        .then(response => response.json())
+        .then(data => {
+     
+
+          const reportTr = document.querySelectorAll(".report-tr");
+
+          
+          reportTr?.forEach(tr => {
+            if (tr.dataset.reportNo == reportNo) {
+              tr.remove();
+            }
+          })
+        })
+        .catch(error => console.error('error:', error));
+  
+
+    })
+})
+
+}
+
+/* 조회 여부 없데이트 */
+/*function updateReportViewStatus(reportNo){
+  fetch(`/siteManage/updateReportView/${reportNo}`, {method : 'POST'})
+  .then(response => {
+
+    if(response.ok){
+      const reportViewCell = document.getElementsByClassName(`report-view-status`);
+      if(reportViewCell){
+        reportViewCell.innerText = '조회O';
+      }
+    }else{
+      console.error("조회여부 변경 실패야!!!!!!!!!!!!");
+    }
+
+  })
+} */
+
+/* 모달창 닫기 */
+function closeModal() {
+  document.getElementById("reportDetailModal").style.display = "none"; // 모달 닫기
+}
 

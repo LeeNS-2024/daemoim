@@ -45,4 +45,22 @@ public interface SiteManageMapper {
 	// 회원 탈퇴
 	int deleteMember(StopMember member);
 
+	// 신고 목록 조회
+	List<StopMember> getStopMemberList();
+	
+	// 신고 목록 조회
+
+	List<StopMember> getReportList();
+
+	// 모달창
+	StopMember getReportDetail(int reportNo);
+
+	// 조회 여부 변경
+	int updateReportViewStatus(int reportNo);
+
+	// 신고목록 삭제
+	void deleteReportOut(int reportNo);
+
+
+
 }

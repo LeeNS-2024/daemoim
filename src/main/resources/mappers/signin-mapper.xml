@@ -9,11 +9,11 @@
         MEMBER_EMAIL,
         MEMBER_NICKNAME, 
         MEMBER_TEL,
-   <!--    MEMBER_ADDRESS,  -->
-   <!--    PROFILE_IMG,  -->
-      AUTHORITY,
-      TO_CHAR(ENROLL_DATE, 
-         'YYYY"년" MM"월" DD"일" HH24"시" MI"분" SS"초"') ENROLL_DATE
+        MEMBER_IM,
+        MEMBER_IMG, 
+        AUTHORITY,
+        TO_CHAR(ENROLL_DATE, 
+        'YYYY"년" MM"월" DD"일" HH24"시" MI"분" SS"초"') ENROLL_DATE
    FROM "MEMBER"
    WHERE MEMBER_ID = #{memberId}
    AND   MEMBER_DEL_FL = 'N'

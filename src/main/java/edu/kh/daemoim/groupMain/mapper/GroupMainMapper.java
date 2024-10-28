@@ -46,5 +46,7 @@ public interface GroupMainMapper {
 	 */
 	String getIntroduce(int groupNo);
 
+
+
 	
 }

@@ -47,5 +47,15 @@
 			MEMBER_NO = #{memberNo}
 	</update>
 	
+	 <select id="selectMemberByNo" resultType="edu.kh.daemoim.myPage.dto.MyPage" parameterType="int">
+        SELECT MEMBER_NO AS memberNo,
+               MEMBER_ID AS memberId,
+               MEMBER_NICKNAME AS memberNickname,
+               MEMBER_IM AS memberIm,
+               MEMBER_IMG AS memberImg
+        FROM MEMBER
+        WHERE MEMBER_NO = #{memberNo}
+    </select>
+    
 	
 </mapper>

@@ -30,7 +30,7 @@
 
 <select id="memberId">
 	select
-		MEBMER_ID
+		MEMBER_ID
 	FROM
 		"MEMBER"
 	WHERE
@@ -38,6 +38,15 @@
 
 
 </select>
+
+<update id="chagePwAuthKeyPage">
+		UPDATE "MEMBER"
+		SET
+			MEMBER_PW = #{encPw}
+		WHERE
+			MEMBER_ID = #{findPwMemberId}
+	</update>
+
 
 
   </mapper>

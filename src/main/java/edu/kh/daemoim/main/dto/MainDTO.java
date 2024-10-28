@@ -20,4 +20,5 @@ public class MainDTO {
     private String categoryName;
     private int currentPopulation; // 현재 해당 모임의 인원
     private int maxPopulation;
+    private int groupNo;
 }

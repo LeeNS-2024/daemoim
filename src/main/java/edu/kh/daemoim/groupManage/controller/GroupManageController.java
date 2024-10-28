@@ -67,7 +67,7 @@ public class GroupManageController {
 		return service.getCategoryList(categoryNo);
 	}
 	
-	/** 그룹 생성
+	/** 모임 생성
 	 * @param inputGroup : 생성할 그룹의 정보를 담은 객체
 	 * @param groupImg : 그룹의 이미지 정보가 담긴 객체
 	 * @return
@@ -76,10 +76,8 @@ public class GroupManageController {
 	public String createGroup(
 			@ModelAttribute GroupManageDto inputGroup,
 			@RequestParam("groupImg") MultipartFile groupImg,
-			@SessionAttribute("loginMember") MyPage loginMember ) {
-		System.out.println("연결확인");
-		// 이미지, 가입제한사항 빼고 다들어갈거임
-		// 모임이름, 소개, 카테고리넘버, 카테고리리스트넘버
+			@SessionAttribute("loginMember") MyPage loginMember,
+			Model model ) {
 
 		// 세션에서 로그인한 멤버의 멤버넘를 받아와 input그룹에 저장
 		inputGroup.setMemberNo( loginMember.getMemberNo() );
@@ -88,9 +86,10 @@ public class GroupManageController {
 		int result = service.createGroup(inputGroup, groupImg);
 		
 		if(result == 0) {
-			
+			model.addAttribute("message", "모임 생성에 실패 하였습니다.");
+			return "redirect:/groupManage/createGroup";
 		}
-		return "redirect:/";
+		return "redirect:/groupMain/" + inputGroup.getGroupNo();
 	}
 	
 	/** 모임 관리- 상세정보수정 페이지로 이동
