@@ -124,3 +124,19 @@ function closeModal() {
   document.getElementById("reportDetailModal").style.display = "none"; // 모달 닫기
 }
 
+/* 회원목록 전체보기 */
+
+function toggleRows() {
+  // 숨겨진 행과 버튼 참조
+  const hiddenRows = document.querySelectorAll(".hidden-row");
+  const button = document.getElementById("toggleButton");
+
+  // 토글하여 전체보기 또는 기본보기 상태 설정
+  if (button.textContent === "전체보기") {
+      hiddenRows.forEach(row => row.style.display = "table-row");
+      button.textContent = "기본보기";
+  } else {
+      hiddenRows.forEach(row => row.style.display = "none");
+      button.textContent = "전체보기";
+  }
+}
