@@ -13,4 +13,7 @@ public interface MainMapper {
 
     // 로그인한 회원의 가입한 모임 조회
     List<MainDTO> selectJoinGroups(int memberNo);
+
+
+	MainDTO findGroupByNo(int groupNo);
 }
