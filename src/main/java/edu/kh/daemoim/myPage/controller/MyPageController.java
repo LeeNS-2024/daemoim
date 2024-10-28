@@ -1,5 +1,6 @@
 package edu.kh.daemoim.myPage.controller;
 
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -22,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RequestMapping("myPage")
 @SessionAttributes({ "loginMember" })
+
 public class MyPageController {
 
 	private final MyPageService service;

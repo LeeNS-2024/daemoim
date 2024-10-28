@@ -20,7 +20,7 @@ public interface MyPageService {
 	// 비밀번호 변경
 	int changePw(String currentPw, String newPw, MyPage loginMember);
 
-	// 프로필 수저
+	// 프로필 수정
 	String profile(MultipartFile profileImg, int memberNo) ;
 	
 	

@@ -11,18 +11,78 @@ const checkObj = {
   "authKey": false
 };
 
-/* ----- 이메일 유효성 검사 ----- */
-
-// 1) 이메일 유효성 검사에 필요한 요소 얻어오기
+const idMessage = document.querySelector("#FindPw-message");
 const findPwMemberEmail = document.querySelector("#findPwMemberEmail");
 const emailMessage = document.getElementById("findIdemailMessage");
 const findPwMemberId = document.querySelector("#findPwMemberId")
+
+const idMessageObj = {}; // 빈 객체
+idMessageObj.normal = "";
+idMessageObj.invaild = "알맞은 아이디 형식으로 작성해 주세요.";
+idMessageObj.duplication = "";
+idMessageObj.check = "존재하는 이메일입니다.";
+
+// 3) 아이디 입력 시 마다 데이더 검사
+findPwMemberId?.addEventListener("input", () => {
+
+  
+  const inputId = memberId.value.trim();
+
+  // 4) 입력된 아이디이 없을 경우
+  if (inputId.length === 0) {
+    emailMessage.innerText = idMessageObj.normal;
+    emailMessage.classList.remove("confirm", "error");
+    checkObj.memberId = false;
+    memberId.value = "";
+    return;
+  }
+
+  // 5) 아이디 유효성 검사(정규 표현식)
+  const regEx = /^[a-zA-Z0-9]{3,10}$/; // 한글,영어,숫자로만 3~10글자
+  if (regEx.test(inputId) === false) {
+    idMessage.innerText = idMessageObj.invalid;
+    idMessage.classList.remove("confirm");
+    idMessage.classList.add("error");
+    checkObj.memberId = false;
+    return;
+
+  } else {
+    idMessage.innerText = '일치합니다'
+  }
+  // 6) 아이디 중복 검사
+  fetch("findPwEmail?id=" + encodeURIComponent(inputId) + "&email=" + encodeURIComponent(inputEmail))
+    .then(response => {
+      if (response.ok) return response.text();
+      throw new Error("아이디 중복 검사 에러");
+    })
+    .then(count => {
+      if (count == 1) {
+        emailMessage.innerText = idMessageObj.duplication;
+        emailMessage.classList.remove("confirm");
+        emailMessage.classList.add("error");
+        checkObj.memberId = false;
+        return;
+      }
+
+      emailMessage.innerText = emailMessageObj.check;
+      emailMessage.classList.remove("error");
+      emailMessage.classList.add("confirm");
+      checkObj.memberId = true;
+
+    })
+    .catch(err => console.error(err));
+});
+
+/* ----- 이메일 유효성 검사 ----- */
+
+// 1) 이메일 유효성 검사에 필요한 요소 얻어오기
+
 // 2) 이메일 메시지를 미리 작성
 const emailMessageObj = {}; // 빈 객체
-emailMessageObj.normal = "메일을 받을 수 있는 이메일을 입력해주세요.";
+emailMessageObj.normal = "";
 emailMessageObj.invaild = "알맞은 이메일 형식으로 작성해 주세요.";
-emailMessageObj.duplication = "존재하지 않는 이메일 입니다.";
-emailMessageObj.check = "존재하는 이메일입니다.";
+emailMessageObj.duplication = "알맞은 이메일을 입력해 주세요";
+emailMessageObj.check = "이메일 인증을 받아 주세요";
 
 // 3) 이메일이 입력될 때 마다 유효성 검사를 수행
 findPwMemberEmail.addEventListener("input", e => {
@@ -250,11 +310,12 @@ checkPwAuthKeyBtn.addEventListener("click", () => {
       authKeyMessage.classList.add("confirm");
       authKeyMessage.classList.remove("error");
 
+      
       checkObj.authKey = true; // 인증 완료 표시
 
-     
+      location.href = "findIdPw/findPwChangePage?findPwMemberId=" + findPwMemberId.value; 
+  
     }
- 
   })
   .catch(err => console.error(err));
 
