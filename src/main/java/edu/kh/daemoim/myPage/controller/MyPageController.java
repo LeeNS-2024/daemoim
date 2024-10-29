@@ -1,5 +1,7 @@
 package edu.kh.daemoim.myPage.controller;
 
+import java.util.List;
+
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,30 +18,39 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import edu.kh.daemoim.main.dto.MainDTO;
 import edu.kh.daemoim.myPage.dto.MyPage;
 import edu.kh.daemoim.myPage.service.MyPageService;
 import jakarta.mail.Session;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("myPage")
-@SessionAttributes({ "loginMember"})
+@SessionAttributes({"loginMember"})
 public class MyPageController {
 
 	private final MyPageService service;
 
-	@GetMapping("info/{memberNo}")
-	public String info(@PathVariable("memberNo") int memberNo, 
-            @SessionAttribute("loginMember") MyPage loginMember, 
-            Model model) {
-
-
-		MyPage userInfo = service.findMemberByNo(memberNo);
-
-	    model.addAttribute("userInfo", userInfo);
+	@GetMapping("info")
+	public String info() {
 
 	    return "myPage/myPage-info";
+	}
+	
+	@GetMapping("memberInfo/{memberNickname}")
+	public String memberInfo(
+			@PathVariable("memberNickname") String memberNickname,
+			@SessionAttribute("loginMember") MyPage loginMember,
+			Model model) {
+		
+		MyPage userInfo = service.findMemberNickname(memberNickname);
+		
+        model.addAttribute("userInfo", userInfo);
+		
+		
+		return "myPage/memberPage";
 	}
 
 	@GetMapping("changePw")
@@ -173,5 +184,21 @@ public class MyPageController {
 		
 		return "redirect:info";
 	}
+
+	@GetMapping("myGroup")
+	public String myGroup(
+			HttpSession session,
+			Model model) {
+        MyPage loginMember = (MyPage) session.getAttribute("loginMember");
+
+
+        if (loginMember != null) {
+            int memberNo = loginMember.getMemberNo();
+            List<MainDTO> joinGroups = service.findMyGroup(memberNo);
+            model.addAttribute("joinGroups", joinGroups);
+        }
+		return "myPage/myGroup";
+	}
+	
 	
 }

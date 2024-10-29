@@ -23,7 +23,7 @@ public class Notification {
 
 	private int groupNo;
 	private String notificationType; 
-	private int pkNo; 
+	private int pkNo;
 
 	private String sendMemberProfileImg;
 }

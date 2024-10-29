@@ -1,8 +1,11 @@
 package edu.kh.daemoim.myPage.service;
 
+import java.util.List;
+
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.springframework.web.multipart.MultipartFile;
 
+import edu.kh.daemoim.main.dto.MainDTO;
 import edu.kh.daemoim.myPage.dto.MyPage;
 
 public interface MyPageService {
@@ -23,7 +26,13 @@ public interface MyPageService {
 	// 프로필 수정
 	String profile(MultipartFile profileImg, int memberNo) ;
 
-	MyPage findMemberByNo(int memberNo);
+	// 상대 회원 정보 보기
+	MyPage findMemberNickname(String memberNickname);
+
+
+	// 가입한 모임 이름
+	List<MainDTO> findMyGroup(int memberNo);
+
 	
 	
 

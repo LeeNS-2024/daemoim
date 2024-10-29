@@ -24,6 +24,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import edu.kh.daemoim.board.dto.Board;
+import edu.kh.daemoim.board.dto.Comment;
 import edu.kh.daemoim.board.dto.Pagination;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,8 +37,9 @@ public class BoardController {
 	
 	private final BoardService service;
 	
-	@GetMapping("boardPage")
-	public String boardPage() {
+	@GetMapping("{groupNo:[0-9]+}")
+	public String boardPage(
+		@PathVariable("groupNo") int groupNo) {
 		return "board/boardList";
 	}
 	
@@ -46,8 +48,9 @@ public class BoardController {
 		return "board/boardSchedule";
 	}
 	
-	@GetMapping("boardCalendar")
-	public String boardCalendarPage() {
+	@GetMapping("boardCalendar/{groupNo:[0-9]+}")
+	public String boardCalendarPage(
+		@PathVariable("groupNo") int groupNo) {
 		return "board/boardCalendar";
 	}
 	
@@ -191,6 +194,16 @@ public class BoardController {
 		  return "board/report"; }
 		 */
 	  
+	  model.addAttribute("board",board);
+	  
+	  if(board.getImageList().isEmpty() == false) {
+	  	int start = 0;
+	  	
+	  	if(board.getThumbnail() != null) start = 1;
+	  	
+	  	model.addAttribute("start", start); 
+	  }
+	  
 		if(boardTypeCode == 3)
 		return "board/imageAlbumDetail";
 		else
@@ -242,9 +255,7 @@ public class BoardController {
 	  return "redirect:/board/" + groupNo + "/" + boardTypeCode + "/" + boardNo; 
 	  }
 	  
-	  
-	  // 관리자페이지에서 신고한 내용을 조회하거나 + 작업을 할 경우 추가구문 있을 예정
-		
+		// 관리자페이지에서 따로 조회 가능하게 만들어둠
 		
 		return "board/report";
 	}
@@ -269,8 +280,9 @@ public class BoardController {
 	@PostMapping("/attendSchedule")
 	@ResponseBody
 	public int attendSchedule(
-		@RequestBody int scheduleNo,
-		@RequestBody int groupNo,
+
+		@RequestParam("scheduleNo") int scheduleNo,
+		@RequestParam("groupNo") int groupNo,
 		@SessionAttribute(value="loginMember", required=false) MyPage loginMember,
 		RedirectAttributes ra) {
 		
@@ -280,17 +292,91 @@ public class BoardController {
 		
 		String message = null;
 		
-		if(result > 0) message = "일정 참석 완료";
-		else message = "일정 참석 실패";
+		if(result > 0) message = "일정 참석 완료하였습니다.";
+		else message = "일정 참석 실패하였습니다.";
 		
 		ra.addFlashAttribute("message" , message);
 		
 		return result;
 	}
 	
+	@PostMapping("/cancelSchedule")
+	@ResponseBody
+	public int cancelSchedule(
+		@RequestParam("scheduleNo") int scheduleNo,
+		@RequestParam("groupNo") int groupNo,
+		@SessionAttribute(value="loginMember", required=false) MyPage loginMember,
+		RedirectAttributes ra) {
+		
+		int memberNo = loginMember.getMemberNo();
+		
+		int result = service.cancelSchedule(scheduleNo, groupNo, memberNo);
+		
+		String message = null;
+		
+		if(result > 0) message = "일정 참석이 취소되었습니다.";
+		else message = "실행 중 오류가 발생하였습니다.";
+		
+		ra.addFlashAttribute("message" , message);
+		
+		return result;
+	}
+	
+	@PostMapping("/createSchedule")
+	@ResponseBody
+	public int createSchedule(
+		@RequestBody Map<String, Object> scheduleData) {
+		
+		String scheduleDate = (String) scheduleData.get("scheduleDate");
+    String location = (String) scheduleData.get("location");
+    int cost = Integer.parseInt(scheduleData.get("cost").toString());
+    int groupNo = Integer.parseInt(scheduleData.get("groupNo").toString());
+    
+    // 추출한 데이터를 Map으로 생성하여 서비스에 전달합니다.
+    Map<String, Object> scheduleMap = new HashMap<>();
+    scheduleMap.put("scheduleDate", scheduleDate);
+    scheduleMap.put("location", location);
+    scheduleMap.put("cost", cost);
+    scheduleMap.put("groupNo", groupNo);
+     
+    int result = service.createSchedule(scheduleMap);
+    
+    return result;
+	}
+	
+	/** 좋아요 up 및 down
+	 * @param boardNo
+	 * @param loginMember
+	 * @return
+	 */
+	@ResponseBody
+	@PostMapping("like")
+	public Map<String, Object> boardLike(
+		@RequestBody int boardNo,
+		@SessionAttribute("loginMember") MyPage loginMember){
+		
+		int memberNo = loginMember.getMemberNo();
+		
+		return service.boardLike(boardNo, memberNo);
+	}
 	
 	
-	
+	/** 댓글 목록 조회(비동기방식)
+	 * @param boardNo
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("commentList")
+	public String selectCommentList(
+		@RequestParam("groupNo") int groupNo,
+		@RequestParam("boardTypeCode") int boardTypeCode,
+		@RequestParam("boardNo") int boardNo,
+		Model model) {
+		
+		List<Comment> commentList = service.selectCommentList(groupNo, boardTypeCode,boardNo);
+		
+		return null;
+	}
 	
 	
 	

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,11 +17,15 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 
 import edu.kh.daemoim.board.dto.Board;
+import edu.kh.daemoim.groupMain.dto.Schedule;
 import edu.kh.daemoim.groupManage.dto.GroupManageDto;
+import edu.kh.daemoim.groupManage.dto.GroupMemberManageDto;
 import edu.kh.daemoim.groupManage.dto.ManageCategory;
 import edu.kh.daemoim.groupManage.service.GroupManageService;
 import edu.kh.daemoim.main.dto.MainDTO;
 import edu.kh.daemoim.myPage.dto.MyPage;
+import edu.kh.daemoim.sse.dto.Notification;
+import edu.kh.daemoim.sse.service.SseService;
 import jakarta.servlet.annotation.MultipartConfig;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +37,7 @@ import lombok.extern.slf4j.Slf4j;
 public class GroupManageController {
 	
 	private final GroupManageService service;
+	private final SseService sseService;
 	
 	/** 모임생성 페이지로 이동
 	 * @return
@@ -213,6 +219,64 @@ public class GroupManageController {
 		model.addAttribute("period", period);
 		
 		return "groupManage/managePopularBoard";
+	}
+	
+	/** 알림페이지로
+	 * @param period : 조회할 기간
+	 * @return
+	 */
+	@GetMapping("{groupNo:[0-9]+}/notification")
+	public String gotoNotification(
+			Model model,
+			@PathVariable("groupNo") int groupNo) {
+		
+		// 모임정보 불러오기
+		GroupManageDto group = service.selectGroup(groupNo);
+		
+		// 전달받은 모임정보를 전달하기위해 세팅
+		model.addAttribute("group", group);
+		
+		// 멤버리스트 호출
+		List<GroupMemberManageDto> memberList = service.getMemberList(groupNo);
+		// 전달받은 모임정보를 전달하기위해 세팅
+		model.addAttribute("memberList", memberList);
+		
+		// 스케쥴리스트 호출
+		List<Schedule> scheduleList = service.getScheduleList(groupNo);
+		// 전달받은 모임정보를 전달하기위해 세팅
+		model.addAttribute("scheduleList", scheduleList);
+		
+		return "groupManage/manageNotification";
+	}
+	
+	/** 일정
+	 * @param period : 조회할 기간
+	 * @return
+	 */
+	@ResponseBody
+	@GetMapping("searchScheduleMember")
+	public List<Integer> searchScheduleMember(
+			@RequestParam("scheduleNo") int scheduleNo ) {
+		
+		List<Integer> memberNoList = service.searchScheduleMember(scheduleNo);
+		
+		return memberNoList;
+	}
+	
+	
+	/** 알림쏘기
+	 * @param notiList
+	 */
+	@ResponseBody
+	@PostMapping("{groupNo:[0-9]+}/notification")
+	public int gotoNotification(
+			@RequestBody List<Notification> notiList) {
+		
+		for(Notification noti : notiList) {
+			sseService.insertNotification(noti);
+		}
+		
+		return 0;
 	}
 	
 

@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import edu.kh.daemoim.board.mapper.BoardMapper;
 import edu.kh.daemoim.groupMain.dto.Schedule;
 import edu.kh.daemoim.board.dto.Board;
+import edu.kh.daemoim.board.dto.Comment;
 import edu.kh.daemoim.board.dto.Pagination;
 import lombok.RequiredArgsConstructor;
 
@@ -104,11 +105,34 @@ public class BoardServiceImpl implements BoardService{
 	public int attendSchedule(int scheduleNo, int groupNo, int memberNo) {
 		return mapper.attendSchedule(scheduleNo, groupNo, memberNo);
 	}
+	
+	// 일정 참석 취소
+	@Override
+	public int cancelSchedule(int scheduleNo, int groupNo, int memberNo) {
+		return mapper.cancelSchedule(scheduleNo, groupNo, memberNo);
+	}
+	
+	// 일정 생성
+	@Override
+	public int createSchedule(Map<String, Object> scheduleMap) {
+		return mapper.createSchedule(scheduleMap);
+	}
 
+	// 좋아요 up 및 down
+	@Override
+	public Map<String, Object> boardLike(int boardNo, int memberNo) {
+		
+		// 좋아요를 이미 눌렀는지 확인
+		int result = mapper.checkBoardLike(boardNo, memberNo);
+		
+		return null;
+	}
 	
-
-	
-	
+	// 댓글 목록 조회
+	@Override
+	public List<Comment> selectCommentList(int groupNo, int boardTypeCode, int boardNo) {
+		return mapper.selectCommentList(groupNo, boardTypeCode, boardNo);
+	}
 	
 	
 	

@@ -10,19 +10,16 @@
 
 <body>
   <section id="sideMenu"> 
-    <th:block th:replace="~{myPage/sideMenu}"></th:block>
   </section>
   <main class="profile-container">
     <h1 class="myPage-title">프로필</h1>
     <span class="myPage-subject">프로필 이미지를 변경할 수 있습니다.</span>
 
-    <form action="profile" method="POST" name="myPageImgFrm" id="profile" enctype="multipart/form-data">
       <div class="profile-image-area">
         <img th:with="user=#{user.default.image}" 
-           th:src="${session.loginMember.memberImg}" 
-             id="profileImg">
+         th:text="${userInfo.memberIm}" id="memberIm" placeholder="자기소개 입력" name="memberIm"
+         id="profileImg">
       </div>
-      <span id="deleteImage">x</span>
 
       <div class="profile-btn-area">
         <label for="imageInput">이미지 선택</label>
@@ -30,25 +27,21 @@
         <button type="submit">변경하기</button>
       </div>
     </form>
-    <!-- 닉네임과 자기소개 변경 양식 -->
     <form action="info" method="POST" name="myPageFrm">
       <div class="myPage-row">
         <label for="memberNickname">닉네임</label>
-        <input type="text" name="memberNickname" maxlength="10" id="memberNickname" th:value="${session.loginMember.memberNickname}">
+        <input name="memberNickname" maxlength="10" id="memberNickname" th:text="${userInfo.memberNickname}">
       </div>
 
       <div class="profile-details">
         <div class="profile-introduce-section">
           <label for="memberIm">자기소개</label><br>
-          <input type="text" th:value="${session.loginMember.memberIm}" id="memberIm" placeholder="자기소개 입력" name="memberIm">
+          <input th:text="${userInfo.memberIm}" id="memberIm" placeholder="자기소개 입력" name="memberIm">
         </div>
-        <button id="changeBtn" type="submit" >변경</button>
 
       </div>
-    </form>
   </main>
 
-  <script src="/js/myPage/myPage-info.js"></script>
 </body>
 
 </html>

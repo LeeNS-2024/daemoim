@@ -4,6 +4,7 @@
 
    <select id="getGroupsByCategory" resultType="CategoryDTO">
     SELECT 
+    	g.GROUP_NO AS "groupNo",
         g.GROUP_NAME AS "groupName",
         g.GROUP_MAIN_IMG AS "groupMainImg", 
         g.GROUP_INTRODUCE AS "groupIntroduce", 

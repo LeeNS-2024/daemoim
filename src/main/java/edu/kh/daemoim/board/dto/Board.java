@@ -24,11 +24,11 @@ public class Board {
 	private String boardContent;
 	private String boardWriteDate;
 	private String boardUpdateDate;
-	private int readCount;
+	private int 	 readCount;
 	private String boardDelFl;
-	private int memberNo;
-	private int boardTypeCode;
-	private int groupNo;
+	private int 	 memberNo;
+	private int 	 boardTypeCode;
+	private int 	 groupNo;
 	
 	//MEMBER 테이블 JOIN 컬럼
 	private String memberNickname;

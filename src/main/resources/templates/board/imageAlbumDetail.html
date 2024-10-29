@@ -15,7 +15,7 @@
 
 <body>
   <main>
-    <th:block th:replace="${board/report.html}"></th:block>
+    <th:block th:replace="~{board/report}"></th:block>
     <section class="image-detail" th:object="${board}">
       <!-- 제목 -->
       <h1 class="image-title" th:text="*{boardTitle}">게시글 제목</h1>
@@ -24,8 +24,8 @@
       <div class="image-header">
         <div class="image-writer">
           <!-- 프로필 이미지 -->
-          <img th:unless="*{profileImg}" th:src="#{user.default.image}">
-          <img th:if="*{profileImg}" th:src="*{profileImg}">
+          <img th:unless="*{memberImg}" th:src="#{user.default.image}">
+          <img th:if="*{memberImg}" th:src="*{memberImg}">
 
           <span th:text="*{memberNickname}">작성자 닉네임</span>
 
@@ -61,11 +61,11 @@
           <div class="image-grid">
             <th:block th:each="img : ${board.imageList}">
               <div class="image-item">
-                <img th:src="|${img.imgPath}${img.imgRename}|" th:alt="${img.imgOriginalName}"
-                  th:title="${img.imgOriginalName}">
+                <img th:src="|${img.boardImgPath}${img.boardImgRename}|" th:alt="${img.boardImgOriginalName}"
+                  th:title="${img.boardImgOriginalName}">
                 <div class="image-hover">
-                  <span class="original-name" th:text="${img.imgOriginalName}"></span>
-                  <a th:href="|${img.imgPath}${img.imgRename}|" th:download="${img.imgOriginalName}"
+                  <span class="original-name" th:text="${img.boardImgOriginalName}"></span>
+                  <a th:href="|${img.boardImgPath}${img.boardImgRename}|" th:download="${img.boardImgOriginalName}"
                     class="download-btn">
                     <i class="fas fa-download"></i>
                   </a>
@@ -89,7 +89,9 @@
     </section>
 
     <!-- 댓글 영역-->
-    <th:block th:replace="~{board/comment}"></th:block>
+    <!-- 
+    <th:block th:replace="~{board/comment}"></th:block> 
+     -->
   </main>
 
   <th:block th:replace="~{common/footer}"></th:block>
@@ -102,12 +104,13 @@
   </div>
 
   <script th:inline="javascript">
+    // 로그인 true, 비회원 false
     const loginCheck = /*[[${session.loginMember != null}]]*/ false;
+    // 로그인한 회원 닉네임
     const memberNickname = /*[[${session.loginMember?.memberNickname}]]*/ null;
+    // 상세조회한 게시글 정보
     const boardDetail = /*[[${board}]]*/ null;
   </script>
-
-  <th:block th:></th:block>
 
   <script src="/js/board/imageAlbumDetail.js"></script>
   <script src="/js/board/comment.js"></script>

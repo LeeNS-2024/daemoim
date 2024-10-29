@@ -30,23 +30,14 @@
       <div class="image-upload-container">
         <h5>이미지 업로드 (<span id="imageCount">0</span>/20)</h5>
         <div class="img-box" id="imageList">
-          <!-- 이미지 프리뷰 템플릿 -->
-          <div class="image-preview-template" style="display: none;">
-            <div class="preview-wrapper">
-              <img class="preview" alt="이미지 미리보기">
-              <span class="file-name"></span>
-            </div>
-            <button type="button" class="delete-image">&times;</button>
-          </div>
-
           <!-- 이미지 추가 버튼 -->
           <div class="add-image-btn">
             <label for="imageInput">
               <i class="fas fa-plus"></i>
               <span>이미지 추가</span>
             </label>
-            <input type="file" id="imageInput" name="images" multiple accept="image/*" style="display: none;">
           </div>
+          <input type="file" id="imageInput" multiple accept="image/*">
         </div>
       </div>
 

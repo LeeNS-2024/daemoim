@@ -30,9 +30,12 @@ import lombok.extern.slf4j.Slf4j;
 public class SiteManageController {
 
 	private final SiteManageService service;
+  
+  
+	@GetMapping("main")
+	public String siteManage(Model model
+			) {
 
-	@GetMapping("")
-	public String siteManage(Model model) {
 
 		// 서비스 호출 후 결과 받아오기
 		Map<String, Object> map = service.getSiteManage();
