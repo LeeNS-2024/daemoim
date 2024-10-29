@@ -7,9 +7,11 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
@@ -36,7 +38,7 @@ public class SseController {
 		
 		String clientId = loginMember.getMemberNo()+ "";
 		
-		SseEmitter emitter = new SseEmitter( 1000L);
+		SseEmitter emitter = new SseEmitter( 10*60*1000L);
 		
 		emitters.put(clientId, emitter);
 
@@ -60,6 +62,9 @@ public class SseController {
 		Map<String, Object> map
 			= service.insertNotification(notification);
 		
+		if (map == null || map.get("receiveMemberNo") == null) {
+		    throw new IllegalStateException("알림 삽입 실패: receiveMemberNo가 null입니다.");
+		}
 		String clientId = map.get("receiveMemberNo").toString();
 		
 		SseEmitter emitter = emitters.get(clientId);
@@ -103,13 +108,12 @@ public class SseController {
 	  }
 
 	  /** 알림 삭제 */
-	  @DeleteMapping("notification")
-	  public void deleteNotification(
-	    @RequestBody int notificationNo){
-	    service.deleteNotification(notificationNo);
+	  @DeleteMapping("notification/{notificationNo}")
+	  public void deleteNotification(@PathVariable("notificationNo") int notificationNo) {
+	      service.deleteNotification(notificationNo);
 	  }
 	  
-	  /** [전체 ]알림 삭제 */
+	  /** [전체]알림 삭제 */
 	  @DeleteMapping("notification/all")
 	  public void deleteAllNotification(
 			  @SessionAttribute("loginMember") MyPage loginMember){
@@ -122,9 +126,8 @@ public class SseController {
 	   */
 	  @PutMapping("notification")
 	  public void updateNotification(
-	  		@RequestBody int notificationNo) {
-	  	
-	  	service.updateNotification(notificationNo);
+			  @RequestParam(name="notificationNo") int notificationNo) {
+	      service.updateNotification(notificationNo);
 	  }
 	  
 	  /** 
@@ -132,9 +135,8 @@ public class SseController {
 	   * @param notificationNo
 	   */
 	  @PutMapping("notification/all")
-	  public void updateNotification(
+	  public void updateAllNotification(
 			  @SessionAttribute("loginMember") MyPage loginMember) {
-		  
-		  service.updateAllNotification(loginMember.getMemberNo());
+	      service.updateAllNotification(loginMember.getMemberNo());
 	  }
 }

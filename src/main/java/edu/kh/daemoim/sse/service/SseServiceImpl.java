@@ -1,5 +1,6 @@
 package edu.kh.daemoim.sse.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,12 +22,12 @@ public class SseServiceImpl implements SseService{
 	@Override
 	public Map<String, Object> insertNotification(Notification notification) {
 		
-		Map<String, Object> map = null;
+		Map<String, Object> map = new HashMap<>();
 		
 		int result = mapper.insertNotification(notification);
 		
 		if(result > 0) {
-			map = mapper.selectReceiveMember(notification.getNotificationNo());
+			map.put("receiveMemberNo", notification.getReceiveMemberNo());
 		}
 		
 		return map;

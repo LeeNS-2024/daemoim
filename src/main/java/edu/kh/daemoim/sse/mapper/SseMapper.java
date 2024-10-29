@@ -12,7 +12,7 @@ public interface SseMapper {
 
 	int insertNotification(Notification notification);
 
-	Map<String, Object> selectReceiveMember(int notificationNo);
+	/* Map<String, Object> selectReceiveMember(int notificationNo); */
 
 	List<Notification> selectNotificationList(int memberNo);
 
