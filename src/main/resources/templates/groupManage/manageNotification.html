@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>대모임</title>
+  <link rel="stylesheet" href="/css/groupManage/manageGroup.css">
+</head>
+<body>
+
+  <!-- 해더 -->
+  <th:block th:replace= "~{common/header}" ></th:block>
+  
+
+  <main class="space-around">
+
+    <!-- 사이드메뉴 -->
+    <th:block th:replace= "~{groupManage/manageGroup :: th-lfSide }" ></th:block>
+
+
+    <section class="mainSec">
+      <h1><th:block th:text="${group.groupName}"></th:block> 알림</h1>
+      <section>
+        <div>알림내용</div>
+        <form action="#">
+          <textarea name="" id=""></textarea>
+          <section class="noti-table">
+
+            <section class="noti-thead">
+              <article class="noti-bodyBoxs">
+                <div>
+                  c
+                </div>
+                <div>
+                  nick
+                </div>
+              </article>
+            </section>
+            <section>
+              <input type="checkbox"> 전체선택
+            </section>
+            <section class="noti-tbody">
+              <article class="noti-bodyBoxs">
+                <div>
+                  <input type="checkbox" name="memberNo" value="#">
+                </div>
+                <div>
+                  샘플유저1
+                </div>
+              </article>
+              <article class="noti-bodyBoxs">
+                <div>
+                  <input type="checkbox" name="memberNo" value="#">
+                </div>
+                <div>
+                  샘플유저1
+                </div>
+              </article>
+              <article class="noti-bodyBoxs">
+                <div>
+                  <input type="checkbox" name="memberNo" value="#">
+                </div>
+                <div>
+                  샘플유저1
+                </div>
+              </article>
+              <article class="noti-bodyBoxs">
+                <div>
+                  <input type="checkbox" name="memberNo" value="#">
+                </div>
+                <div>
+                  샘플유저1
+                </div>
+              </article>
+              <article class="noti-bodyBoxs">
+                <div>
+                  <input type="checkbox" name="memberNo" value="#">
+                </div>
+                <div>
+                  샘플유저1
+                </div>
+              </article>
+            </section>
+
+          </section>
+
+          <button>
+            보내기
+          </button>
+        </form>
+      </section>
+      
+    </section>
+
+
+    <section id="sideSec2">
+    </section>
+
+  </main>
+  
+  <!-- 푸터 -->
+  <th:block th:replace= "~{common/footer}" ></th:block>
+  <th:block th:replace= "~{common/common}" ></th:block>
+  <th:block th:replace= "~{groupManage/manageGroup :: th-manageGroupFooter }" ></th:block>
+
+</body>
+</html>

@@ -25,4 +25,9 @@ public class MainServiceImpl implements MainService {
     public List<MainDTO> selectJoinGroups(int memberNo) {
         return mapper.selectJoinGroups(memberNo);
     }
+    
+    @Override
+    public MainDTO findGroupByNo(int groupNo) {
+    	return mapper.findGroupByNo(groupNo);
+    }
 }

@@ -1,6 +1,7 @@
 function attendSchedule(scheduleNo, groupNo) {
   fetch('/board/attendSchedule', {
       method: 'POST',
+
       headers: {'Content-Type': 'application/x-www-form-urlencoded'},
       body: new URLSearchParams({scheduleNo: scheduleNo, groupNo: groupNo})
   })
@@ -28,6 +29,7 @@ function cancelSchedule(scheduleNo, groupNo) {
 
 document.querySelectorAll('.attend').forEach(button => {
   button.addEventListener('click', () => {
+
     // 현재 클릭된 버튼의 schedule-box 부모 요소 찾기
     const scheduleBox = button.closest('.schedule-box');
       
@@ -113,6 +115,7 @@ document.addEventListener("DOMContentLoaded", function() {
           console.error("오류 발생:", error);
           alert("일정 생성 중 오류가 발생했습니다.");
       });
+
   });
 });
 

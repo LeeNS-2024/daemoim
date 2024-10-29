@@ -33,9 +33,9 @@
               </div>
               <hr>
               <article class="pwjoin">
-                <a href="findIdPw" style="color: black; text-decoration: none; text-decoration-line: none;">아이디 비밀번호 찾기</a>
+                <a href="findIdPw" style="color: black; text-decoration: none;">아이디 비밀번호 찾기</a>
                 <span> | </span>
-                <a href="tacou" style="color: black; text-decoration: none; text-decoration-line: none;">회원가입</a>
+                <a href="tacou" style="color: black; text-decoration: none;">회원가입</a>
               </article>
             </div>
           </fieldset>
@@ -45,24 +45,28 @@
       <!-- 추천 모임 목록 -->
       <th:block th:if="${recommendedGroups != null && !#lists.isEmpty(recommendedGroups)}">
         <section class="activity-section">
-            <div class="category-container">
-                <div class="category-box" th:each="group : ${recommendedGroups}">
-                    <div class="icon">
-                        <img th:src="${group != null && group.groupMainImg != null ? group.groupMainImg : '/images/default.png'}" alt="[[${group.groupName}]] 아이콘" />
-                    </div>
-                    <div class="details">
-                        <a th:href="@{/groupMain/{groupName}(groupName=${group.groupName})}" class="categoryGroup-name" style="color: black; text-decoration: none;">[[${group.groupName}]]</a>
-                        <div class="group-name">[[${group.groupIntroduce}]]</div>
-                        <div class="location">[[${group.categoryName}]]</div>
-                        <div class="participants">
-                            <i class="fa-solid fa-users"> &nbsp;</i>
-                            <div>
-                                [[${group.currentPopulation}]] / [[${group.maxPopulation}]]
-                            </div>
-                        </div>
-                    </div>
+          <div class="category-container">
+            <div class="category-box" th:each="group : ${recommendedGroups}">
+              <div class="icon">
+                <img th:src="${group.groupMainImg != null ? group.groupMainImg : '/images/default.png'}" />
+              </div>
+              <div class="details">
+                <a th:href="@{/groupMain/{groupNo}(groupNo=${group.groupNo})}" 
+                   class="categoryGroup-name" 
+                   style="color: black; text-decoration: none;">
+                    [[${group.groupName}]]
+                </a>
+                <div class="group-name">[[${group.groupIntroduce}]]</div>
+                <div class="location">[[${group.categoryName}]]</div>
+                <div class="participants">
+                  <i class="fa-solid fa-users"> &nbsp;</i>
+                  <div>
+                    [[${group.currentPopulation}]] / [[${group.maxPopulation}]]
+                  </div>
                 </div>
+              </div>
             </div>
+          </div>
         </section>
       </th:block>
     </th:block>
@@ -70,40 +74,41 @@
     <!-- 로그인 상태일 때 내가 가입한 모임 목록 -->
     <th:block th:if="${loginMember != null}">
       <h2>내가 가입한 모임</h2>
-
       <th:block th:unless="${joinGroups != null && !#lists.isEmpty(joinGroups)}">
         <p>가입한 모임이 없습니다.</p>
       </th:block>
 
       <th:block th:if="${joinGroups != null && !#lists.isEmpty(joinGroups)}">
         <section class="activity-section">
-            <div class="category-container">
-                <div class="category-box" th:each="group : ${joinGroups}">
-                    <div class="icon">
-                      <img th:src="${group.groupMainImg != null ? group.groupMainImg : '/images/default.png'}" alt="[[${group.groupName}]] 아이콘" />
-                    </div>
-                    <div class="details">
-                        <a th:href="@{/groupMain/{groupName}(groupName=${group.groupName})}" class="categoryGroup-name" style="color: black; text-decoration: none;">[[${group.groupName}]]</a>
-                        <div class="group-name">[[${group.groupIntroduce}]]</div>
-                        <div class="location">[[${group.categoryName}]]</div>
-                        <div class="participants">
-                          <i class="fa-solid fa-users"> &nbsp;</i>
-                          <div>
-                              [[${group.currentPopulation}]] / [[${group.maxPopulation}]]
-                          </div>
-                        </div>
-                    </div>
+          <div class="category-container">
+            <div class="category-box" th:each="group : ${joinGroups}">
+              <div class="icon">
+                <img th:src="${group.groupMainImg != null ? group.groupMainImg : '/images/default.png'}" />
+              </div>
+              <div class="details">
+                <a th:href="@{/groupMain/{groupNo}(groupNo=${group.groupNo})}" 
+                   class="categoryGroup-name" 
+                   style="color: black; text-decoration: none;">
+                    [[${group.groupName}]]
+                </a>
+                <div class="group-name">[[${group.groupIntroduce}]]</div>
+                <div class="location">[[${group.categoryName}]]</div>
+                <div class="participants">
+                  <i class="fa-solid fa-users"> &nbsp;</i>
+                  <div>
+                    [[${group.currentPopulation}]] / [[${group.maxPopulation}]]
+                  </div>
                 </div>
+              </div>
             </div>
+          </div>
         </section>
       </th:block>
     </th:block>
 
-
     <section class="scroll-top">
       <button id="scrollTopBtn"><i class="fa-solid fa-circle-chevron-up"></i></button>
     </section>
-
   </main>
   
   <th:block th:replace="~{common/footer}"></th:block>

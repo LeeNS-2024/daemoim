@@ -43,6 +43,8 @@ public interface GroupMainService {
 	 */
 	String getIntroduce(int groupNo);
 
+
+
 	
 
 

@@ -54,11 +54,7 @@ memberNickname?.addEventListener("input", () => {
 
   const lengthCheck = inputValue.length >= 3 && inputValue.length <= 10;
   const validCharactersCheck = /^[a-zA-Z0-9가-힣]+$/.test(inputValue); // 영어, 숫자, 한글만 허용
-  
-  // ^ : 시작
-  // $ : 끝
-  // [] : 한 칸(한 문자)에 들어갈 수 있는 문자 패턴 기록
-  // + : 1개 이상
+
 
   // 조건이 하나라도 false인 경우
   if( (lengthCheck && validCharactersCheck) === false ){

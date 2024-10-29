@@ -1,80 +1,84 @@
+/* 전체 페이지 설정 */
 body {
   font-family: Arial, sans-serif;
-  background-color: #f0f2f5;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
+  background-color: #f4f4f4;
   margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
 }
 
+/* 로그인 컨테이너 설정 */
 .login-container {
-  background-color: #ffffff;
-  padding: 60px;
-  border-radius: 15px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-  width: 400px;
-  text-align: center;
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
 }
 
+/* 타이틀 설정 */
 .login-title {
-  margin-bottom: 40px;
-  font-size: 28px;
-  font-weight: bold;
-  color: #333333;
+  text-align: center;
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 30px;
 }
 
+/* 입력 그룹 설정 */
 .input-group {
   margin-bottom: 20px;
-  text-align: left;
 }
 
-.input-group label {
+label {
   display: block;
-  margin-bottom: 8px;
   font-weight: bold;
-  color: #333333;
-  font-size: 16px;
+  color: #444;
+  margin-bottom: 10px;
 }
 
-.input-group input {
+input[type="text"], input[type="password"] {
   width: 100%;
-  padding: 14px;
-  border: 1px solid #cccccc;
-  border-radius: 8px;
+  box-sizing: border-box;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
   font-size: 16px;
-  transition: border-color 0.3s;
-}
-
-.input-group input:focus {
-  border-color: #007bff;
   outline: none;
 }
 
+input[type="text"]:focus, input[type="password"]:focus {
+  border-color: #007bff;
+}
+
+/* 로그인 버튼 설정 */
 button[type="submit"] {
   width: 100%;
-  padding: 16px;
+  padding: 12px;
   background-color: #007bff;
-  color: #ffffff;
+  color: #fff;
   border: none;
-  border-radius: 8px;
-  font-size: 18px;
-  font-weight: bold;
+  border-radius: 5px;
+  font-size: 16px;
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s;
+  transition: background-color 0.3s;
 }
 
 button[type="submit"]:hover {
   background-color: #0056b3;
-  transform: translateY(-2px);
 }
 
+/* 아이디/비밀번호 찾기 링크 설정 */
 a {
   display: block;
+  text-align: center;
   margin-top: 20px;
   color: #007bff;
   text-decoration: none;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 a:hover {

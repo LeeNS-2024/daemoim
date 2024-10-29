@@ -269,6 +269,7 @@ public class BoardController {
 	@PostMapping("/attendSchedule")
 	@ResponseBody
 	public int attendSchedule(
+
 		@RequestParam("scheduleNo") int scheduleNo,
 		@RequestParam("groupNo") int groupNo,
 		@SessionAttribute(value="loginMember", required=false) MyPage loginMember,

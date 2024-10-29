@@ -76,36 +76,79 @@ form input, form textarea, form button {
     margin-top: 5px;
 }
 
-.modal{
-    position:absolute;
-    display:none;
-    
-    justify-content: center;
-    top:0;
-    left:0;
-
-    width:100%;
-    height:100%;
-
-    
-
-    background-color: rgba(0,0,0,0.4);
+table .reportDetail:hover{
+    cursor: pointer;
 }
 
-.modal_body{
-    position:absolute;
-    top:50%; /* 모달을 화면가운데 놓기위함.  */
 
-
-    width:400px;  /* 모달의 가로크기  */
-    height:600px; /* 모달의 세로크기 */
-    padding:40px;  
-
-    text-align: center;
-
-    background-color: rgb(255,255,255); /* 모달창 배경색 흰색 */
-    border-radius:10px; /* 테두리  */
-    box-shadow:0 2px 3px 0 rgba(34,36,38,0.15);/*  테두리 그림자  */
-
-    transform:tr
+/* 모달창 */
+.modal {
+    display: none; /* 기본적으로 모달은 숨김 */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4); /* 배경 어둡게 */
 }
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 40px;
+    border: 1px solid #888;
+    width: 60%; /* 모달 너비 */
+    height: 50%;
+    
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+.modal-content p {
+    margin-top: 40px; /* 상세 내용 위 간격 */
+}
+
+/* 전체보기 토글 */
+ /* 숨긴 행 스타일 */
+ .hidden-row {
+    display: none;
+}
+
+  /* 제목과 버튼을 같은 행에 정렬 */
+  .header-with-button {
+    display: flex;
+    align-items: center;
+    gap: 10px;  /* 제목과 버튼 사이의 간격 */
+}
+
+/* 둥근모서리 버튼 스타일 */
+#toggleButton {
+    padding: 8px 16px;
+    background-color: #fab2c4d8;  /* 버튼 배경색 */
+    color: #ffffff;  /* 버튼 텍스트 색 */
+
+    border: none;
+    border-radius: 8px;  /* 둥근 모서리 */
+    cursor: pointer;
+    font-size: 14px;
+}
+
+/* 버튼 hover 효과 */ 
+#toggleButton:hover {
+    background-color: #ffffff;  /* hover 시 약간 어두운 배경 */
+    color: #333;
+}
+
