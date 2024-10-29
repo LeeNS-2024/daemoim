@@ -1,14 +1,13 @@
-// 전역 변수 선언
-const MAX_IMAGES = 20;
-const MAX_FILE_SIZE = 10 * 1024 * 1024; // 파일 크기 제한 (10MB)
-
-// DOM 요소
 const form = document.getElementById('boardWriteFrm');
 const imageInput = document.getElementById('imageInput');
 const imageList = document.getElementById('imageList');
 const imageCount = document.getElementById('imageCount');
 const addImageBtn = document.querySelector('.add-image-btn');
-let imageArray = []; // Array로 변경하여 순서 관리
+let imageArray = [];
+
+const MAX_IMAGES = 20;
+const MAX_FILE_SIZE = 10 * 1024 * 1024; // 파일 크기 제한 (10MB)
+
 
 // 이미지 미리보기 생성 함수
 function createPreviewElement(file, index) {
@@ -52,6 +51,7 @@ function createPreviewElement(file, index) {
   return preview;
 }
 
+
 // 이미지 제거 함수
 function removeImage(indexToRemove) {
   imageArray = imageArray.filter((_, index) => index !== indexToRemove);
@@ -59,8 +59,10 @@ function removeImage(indexToRemove) {
   updateImageCount();
 }
 
+
 // 이미지 디스플레이 새로고침
 function refreshImageDisplay() {
+
   // 추가 버튼을 제외한 모든 프리뷰 제거
   const previews = imageList.querySelectorAll('.image-preview');
   previews.forEach(preview => preview.remove());
@@ -72,11 +74,13 @@ function refreshImageDisplay() {
   });
 }
 
+
 // 이미지 개수 업데이트
 function updateImageCount() {
   imageCount.textContent = imageArray.length;
   addImageBtn.style.display = imageArray.length >= MAX_IMAGES ? 'none' : 'flex';
 }
+
 
 // 파일 유효성 검사
 function validateFile(file) {
@@ -90,6 +94,7 @@ function validateFile(file) {
   }
   return true;
 }
+
 
 // 파일 입력 처리
 function handleFileSelect(e) {
@@ -111,6 +116,7 @@ function handleFileSelect(e) {
   // 입력 초기화 (같은 파일을 다시 선택할 수 있도록)
   e.target.value = '';
 }
+
 
 // 폼 제출 처리
 function handleSubmit(e) {
@@ -155,6 +161,7 @@ function handleSubmit(e) {
     });
 }
 
+
 // 취소 버튼 처리
 function handleCancel(e) {
   e.preventDefault();
@@ -162,6 +169,7 @@ function handleCancel(e) {
     history.back();
   }
 }
+
 
 // 이벤트 리스너 등록
 document.addEventListener('DOMContentLoaded', () => {

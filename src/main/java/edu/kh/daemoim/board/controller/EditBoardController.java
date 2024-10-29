@@ -79,7 +79,6 @@ public class EditBoardController {
 		ra.addFlashAttribute("message", message);
 
 		return "redirect:" + path;
-
 	}
 
 }

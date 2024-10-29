@@ -30,6 +30,12 @@ public interface BoardMapper {
 	List<Board> selectBoardList(@Param("groupNo")				int groupNo,
 															@Param("boardTypeCode")	int boardTypeCode, 
 															@Param("rowBounds")			RowBounds rowBounds);
+	
+	/** 게시글 상세 조회
+	 * @param map
+	 * @return
+	 */
+	Board selectDetail(Map<String, Integer> map);
 
 	/** 검색조건이 맞는 게시글 수 조회
 	 * @param paramMap
@@ -48,12 +54,6 @@ public interface BoardMapper {
 	 * @return
 	 */
 	List<Map<String, String>> selectBoardTypeList();
-
-	/** 게시글 상세 조회
-	 * @param map
-	 * @return
-	 */
-	Board selectDetail(Map<String, Integer> map);
 
 	/** 조회수 1 증가
 	 * @param boardNo
