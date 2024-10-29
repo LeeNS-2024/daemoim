@@ -1,3 +1,5 @@
+const urlParts = window.location.href.split("/");
+
 document.addEventListener('DOMContentLoaded', function() {
   var calendarEl = document.getElementById('calendar');
   let popup = document.getElementById('popup'); // 팝업 엘리먼트
@@ -8,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // FullCalendar 초기화
   var calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: 'dayGridMonth',
-    events: '/schedules/list',  // 서버에서 SCHEDULE 데이터를 가져옴
+    events: '/schedules/list/' + urlParts[urlParts.length - 1],  // 서버에서 SCHEDULE 데이터를 가져옴
     dayMaxEventRows: true,  // 날짜 칸 안에서 최대 이벤트 행을 제한함
     moreLinkClick: 'popover',  // "더 보기" 버튼을 팝업으로 표시하지 않음
 

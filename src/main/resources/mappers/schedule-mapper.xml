@@ -5,5 +5,6 @@
 	<select id="getAllSchedules" resultType="Schedule">
         SELECT SCHEDULE_NO, LOCATION, SCHEDULE_DATE, LOCATION_ADDRESS, COST, GROUP_NO
         FROM SCHEDULE
+        WHERE GROUP_NO = #{groupNo}
     </select>
 </mapper>

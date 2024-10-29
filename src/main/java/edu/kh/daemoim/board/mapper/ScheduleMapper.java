@@ -11,6 +11,6 @@ import edu.kh.daemoim.groupMain.dto.Schedule;
 public interface ScheduleMapper {
 
 	
-	List<Schedule> getAllSchedules();
+	List<Schedule> getAllSchedules(int groupNo);
 
 }

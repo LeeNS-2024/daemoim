@@ -6,6 +6,6 @@ import edu.kh.daemoim.groupMain.dto.Schedule;
 
 public interface ScheduleService {
 
-	List<Schedule> getAllSchedules();
+	List<Schedule> getAllSchedules(int groupNo);
 
 }
