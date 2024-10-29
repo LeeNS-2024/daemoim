@@ -43,6 +43,13 @@ public interface GroupMainService {
 	 */
 	String getIntroduce(int groupNo);
 
+	/** 모임회원 체크
+	 * @param groupNo
+	 * @param memberNo
+	 * @return
+	 */
+	boolean checkLoginMember(int groupNo, int memberNo);
+
 
 
 	

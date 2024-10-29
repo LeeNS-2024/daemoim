@@ -55,6 +55,19 @@ public class GroupMainServiceImpl implements GroupMainService {
 		return mapper.getIntroduce(groupNo);
 	}
 
+	
+	// 모임 회원 체크
+	@Override
+	public boolean checkLoginMember(int groupNo, int memberNo) {
+	
+		int result = mapper.checkLoginMember(groupNo, memberNo);
+		if(result > 0) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+
 
 
 

@@ -40,13 +40,25 @@
     <main class="main-container">
 
       <!-- 왼쪽 사이드바 -->
-      <div class="sidebar">
-        <a href="#">공지사항</a>
-        <a href="#">일반 게시판</a>
-        <a href="#">사진첩</a>
-        <a href="#">일정</a>
-        <a href="#" id="manageA">모임 관리페이지</a> <!-- th:if= "${session.loginMember?.memberNo} === ${group.memberNo}" -->
-      </div>
+       <th:block th:if= "${memberGroupCheck}">
+         <div class="sidebar">
+           <a href="#">공지사항</a>
+           <a href="#">일반 게시판</a>
+           <a href="#">사진첩</a>
+           <a href="#">일정</a>
+           <label for="joinGroup" method = "post" action= "joinGroup">
+           </label>
+           <a href="#" id="manageA">모임 관리페이지</a> <!-- th:if= "${session.loginMember?.memberNo} === ${group.memberNo}" -->
+        </div>
+        
+      </th:block>
+      <th:block th:unless= "${memberGroupCheck}">
+        <th:block th:if= "${memberGroupCheck}">
+         <div class="sidebar">
+           <a href="/groupMain/{groupNo}">모임 가입신청</a>
+        </div>
+
+       </th:block>
 
       <!-- 컨텐츠 영역 -->
       <section class="container-row">
