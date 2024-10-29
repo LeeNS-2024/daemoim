@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
 import edu.kh.daemoim.board.dto.Board;
+import edu.kh.daemoim.board.dto.Comment;
 import edu.kh.daemoim.groupMain.dto.Schedule;
 
 @Mapper
@@ -93,4 +94,23 @@ public interface BoardMapper {
 	 */
 	int createSchedule(Map<String, Object> scheduleMap);
 
+	/** 좋아요를 이미 눌렀는지 확인
+	 * @param groupNo
+	 * @param boardTypeCode
+	 * @param boardNo
+	 * @param memberNo
+	 * @return
+	 */
+	int checkBoardLike(@Param("boardNo")       int boardNo, 
+										 @Param("memberNo") 		 int memberNo);
+	
+	/** 댓글 목록 조회
+	 * @param groupNo
+	 * @param boardTypeCode
+	 * @param boardNo
+	 * @return
+	 */
+	List<Comment> selectCommentList(@Param("groupNo")				int groupNo, 
+																  @Param("boardTypeCode")	int boardTypeCode, 
+																  @Param("boardNo")				int boardNo);
 }
