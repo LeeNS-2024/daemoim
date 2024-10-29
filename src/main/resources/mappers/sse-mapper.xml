@@ -8,10 +8,10 @@
 
 		<selectKey order="BEFORE" resultType="_int"
 							 keyProperty="notificationNo">
-			SELECT SEQ_NOTI_NO.NEXTVAL FROM DUAL
+			SELECT SEQ_NOTIFICATION_NO.NEXTVAL FROM DUAL
 		</selectKey>
 		
-		INSERT INTO "NOTIFICATION"
+		INSERT INTO NOTIFICATION
 		VALUES (
 			#{notificationNo},
 			#{notificationContent},
@@ -23,7 +23,7 @@
 		)
 	</insert>
 	
-	<select id="selectReceiveMember" resultType="Notification">
+	<!-- <select id="selectReceiveMember" resultType="Notification">
 		SELECT
 			NOTIFICATION_NO,
 			NOTIFICATION_CONTENT,
@@ -46,7 +46,7 @@
 		FROM NOTIFICATION
 		WHERE
 			RECEIVE_MEMBER_NO = #{receiveMemberNo}
-	</select>
+	</select> -->
 	
 	<select id="selectNotificationList" resultType="Notification">
 		SELECT
@@ -71,17 +71,19 @@
 		FROM NOTIFICATION
 		WHERE
 			RECEIVE_MEMBER_NO = #{receiveMemberNo}
+		ORDER BY NOTIFICATION_DATE DESC
 	</select>
 	
 	<select id="notReadCheck" resultType="_int">
 		SELECT COUNT(*)
 		FROM NOTIFICATION
 		WHERE RECEIVE_MEMBER_NO = #{receiveMemberNo}
+		AND NOTIFICATION_CHECK = 'N'
 	</select>
 	
 	<delete id="deleteNotification">
-		DELETE FROM NOTIFICATION
-		WHERE NOTIFICATION_NO = #{notificationNo}
+	    DELETE FROM NOTIFICATION
+	    WHERE NOTIFICATION_NO = #{notificationNo}
 	</delete>
 	
 	<delete id="deleteAllNotification">
@@ -90,13 +92,13 @@
 	</delete>
 	
 	<update id="updateNotification">
-		UPDATE "NOTIFICATION"
+		UPDATE NOTIFICATION
 		SET NOTIFICATION_CHECK = 'Y'
 		WHERE NOTIFICATION_NO = #{notificationNo}
 	</update>
 	
 	<update id="updateAllNotification">
-		UPDATE "NOTIFICATION"
+		UPDATE NOTIFICATION
 		SET NOTIFICATION_CHECK = 'Y'
 		WHERE RECEIVE_MEMBER_NO = #{receiveMemberNo}
 	</update>

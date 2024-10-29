@@ -29,7 +29,7 @@ public class GroupManageDto {
 	private String categoryName;
 	private String categoryListName;
 	
-	private String memberNickname; // 모임장닉네임
+	private String memberNickname; // 닉네임
 	
 	private int    memberCount;	// 모임활동갯수
 	private int    activeCount;	// 모임활동갯수

@@ -3,6 +3,7 @@ package edu.kh.daemoim.siteManage.service;
 import java.util.List;
 import java.util.Map;
 
+import edu.kh.daemoim.groupManage.dto.GroupMemberManageDto;
 import edu.kh.daemoim.siteManage.dto.StopMember;
 
 public interface SiteManageService {
@@ -40,19 +41,19 @@ public interface SiteManageService {
 	 * @param reportNo
 	 * @return
 	 */
-	StopMember getReportDetail(int reportNo);
+	StopMember getReportDetail(int reportListNo);
 
 	/** 조회 여부 변경
 	 * @param reportNo
 	 * @return
 	 */
-	int updateReportViewStatus(int reportNo);
+	int updateReportViewStatus(int reportListNo);
 
 	/**
 	 *  신고목록 삭제
 	 * @param reportNo
 	 */
-	void deleteReportOut(int reportNo);
-	
+	void deleteReportOut(int reportListNo);
+
 	
 }

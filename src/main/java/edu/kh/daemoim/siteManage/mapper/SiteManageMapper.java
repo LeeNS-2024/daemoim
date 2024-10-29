@@ -53,13 +53,13 @@ public interface SiteManageMapper {
 	List<StopMember> getReportList();
 
 	// 모달창
-	StopMember getReportDetail(int reportNo);
+	StopMember getReportDetail(int reportListNo);
 
 	// 조회 여부 변경
-	int updateReportViewStatus(int reportNo);
+	int updateReportViewStatus(int reportListNo);
 
 	// 신고목록 삭제
-	void deleteReportOut(int reportNo);
+	void deleteReportOut(int reportListNo);
 
 
 

@@ -86,11 +86,15 @@
 
             <!-- 회원 조회 섹션 -->
             <section id="members" class="section">
+         
+               
+
                 <div class="header-with-button">
                     <h2>회원 조회</h2>
                     <!-- 전체보기 버튼 -->
                     <button type="button" onclick="toggleRows()" id="toggleButton">전체보기</button>
                 </div>
+              
                 <!-- 회원 조회 테이블 -->
                 <table>
                     <thead>
@@ -140,18 +144,20 @@
                         <!-- 신고 목록 테이블 -->
                         <th:block th:if="${reportList}" th:each="report, iterStat : ${reportList}"
                             th:object="${report}">
-                            <tr th:data-report-no="*{reportNo}" class="report-tr">
+                            <tr th:data-report-list-no="*{reportListNo}" class="report-tr">
                                 <th th:text="${iterStat.index + 1}">#</th>
                                 <th
                                     th:text="*{reportNo} == 1 ? '댓글' : (*{reportNo} == 2 ? '게시글' : (*{reportNo} == 3 ? '기타' : ''))">
                                     신고분류</th>
-                                <th th:text="*{reportDetail}" th:data-report-no="*{reportNo}" class="reportDetail">신고내용
+                                <th th:text="*{reportDetail}" th:data-report-list-no="*{reportListNo}"
+                                    class="reportDetail">신고내용
                                 </th>
                                 <th th:text="*{reportDate}">신고날짜</th>
                                 <th th:text="*{memberEmail}">신고 받은 계정 이메일</th>
-                                <th th:text="*{reportView} == 'N' ? '조회X' : '확인 완료'" class="report-view-status"
-                                    th:data-report-no="*{reportNo}">신고조회 여부</th>
-                                <th><button class="deleteReport" th:data-report-no="*{reportNo}">삭제</button></th>
+                                <th th:text="*{reportView} == 'N' ? 'X' : '확인 완료'" class="report-view-status"
+                                    th:data-report-list-no="*{reportListNo}">신고조회 여부</th>
+                                <th><button class="deleteReport" th:data-report-list-no="*{reportListNo}">삭제</button>
+                                </th>
                             </tr>
                         </th:block>
 
@@ -184,8 +190,8 @@
                     <label for="email">이메일</label>
                     <input type="email" name="email" id="email" placeholder="이메일을 입력하세요">
 
-                    <label for="days">정지 기간 (일)</label>
-                    <input type="number" name="days" id="days" placeholder="정지 기간 입력">
+                    <label for="years">정지 기간 (년)</label>
+                    <input type="number" name="years" id="years" placeholder="정지 기간 입력">
 
                     <label for="reason">정지 사유</label>
                     <textarea name="reason" id="reason" placeholder="정지 사유 입력"></textarea>
@@ -217,6 +223,12 @@
         </main>
     </div>
     <script src="/js/siteManage/siteManage.js"></script>
+    <script>
+        const alertMessage = /*[[${alertMessage}]]*/ '';
+        if (alertMessage) {
+            alert(alertMessage);
+        }
+    </script>
 </body>
 
 </html>

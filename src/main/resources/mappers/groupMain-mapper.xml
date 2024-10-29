@@ -80,5 +80,14 @@
 		WHERE GROUP_NO = #{groupNo}
 
 	</select>
+	
+	<!-- 모임 가입 회원 확인  -->
+	<select id="checkLoginMember" resultType="_int">
+	SELECT COUNT(*)
+	FROM MEMBER_GROUP
+	WHERE MEMBER_NO = #{memberNo}
+	AND GROUP_NO = #{groupNo}
+	
+	</select>
 
 </mapper>

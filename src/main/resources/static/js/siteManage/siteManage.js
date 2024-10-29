@@ -1,16 +1,20 @@
+
+/* 계정 정지 클릭시 */
 document.getElementById("suspendForm").addEventListener("submit", e => {
   // 기본 폼 제출 동작 방지
   e.preventDefault();
 
   var email = document.getElementById("email").value;
-  var days = document.getElementById("days").value;
+  var years = document.getElementById("years").value;
   var reason = document.getElementById("reason").value;
 
+  const message = /*[[${message}]]*/ "";
+
   // 입력값 검증
-  if (email === "" || days === "" || reason === "") {
+  if (email === "" || years === "" || reason === "") {
     alert("모든 항목을 입력해주세요.");
     return;
-  }
+  } 
 
   // 폼을 서버로 제출
   e.target.submit();
@@ -36,69 +40,76 @@ document.getElementById("resignForm").addEventListener("submit", e => {
 });
 
 /* 모달 */
-function showReportDetailModal(reportNo) {
-  console.log(reportNo);
-  fetch(`/siteManage/detail/${reportNo}`)
-    .then(response => response.json())
+function showReportDetailModal(reporListNo) {
+  fetch(`/siteManage/detail/${reporListNo}`)
+    .then(response => {
+      if (!response.ok) throw new Error("오류");
+      return response.json();
+    })
     .then(data => {
       // data에 신고 상세 내용이 담겨있음
       document.getElementById("modalReportDetail").innerText = data.reportDetail;
       document.getElementById("reportDetailModal").style.display = "block"; // 모달 열기
-      const viewStatus = document.querySelectorAll(".report-view-status");
-      viewStatus?.forEach(view => {
-        if (view.dataset.reportNo == reportNo) {
+
+      // 조회 상태 업데이트 - dataset으로 확실하게 요소 찾기
+      const viewStatusElements = document.querySelectorAll(".report-view-status");
+      viewStatusElements.forEach(view => {
+        if (view.dataset.reportListNo == reporListNo) {
           view.innerText = "확인완료";
+          
         }
-      })
+      });
     })
     .catch(error => console.error('error:', error));
 }
 
-
 const addReportEvent = () => {
   const reportDetailArr = document.querySelectorAll(".reportDetail");
-  reportDetailArr?.forEach(reportDetail => {
+  reportDetailArr.forEach(reportDetail => {
     reportDetail.addEventListener("click", () => {
-      const reportNo = reportDetail.dataset.reportNo;
-
-      showReportDetailModal(reportNo);
-    })
-  })
-}
+      const reporListNo = reportDetail.dataset.reportListNo;
+      showReportDetailModal(reporListNo);
+    });
+  });
+};
 
 document.addEventListener("DOMContentLoaded", () => {
   addReportEvent();
   reportDelete();
-})
+});
 
-
+/* 신고목록에서 삭제 */
 const reportDelete = () => {
-  console.log("삭제버튼함수실행");
-  
+
+
   const deleteReport = document.querySelectorAll(".deleteReport")
   deleteReport?.forEach(deleteReport => {
     deleteReport.addEventListener("click", () => {
-      console.log("삭제버튼실행");
-      const reportNo = deleteReport.dataset.reportNo;
-      fetch(`/siteManage/delete/${reportNo}`)
-        .then(response => response.json())
+
+      const reportListNo = deleteReport.dataset.reportListNo;
+      fetch(`/siteManage/delete/${reportListNo}`)
+        .then(response => {
+          if (!response.ok) throw new Error("삭제 실패");
+          return response.text();
+        })
         .then(data => {
-     
+
 
           const reportTr = document.querySelectorAll(".report-tr");
 
-          
+        
+
           reportTr?.forEach(tr => {
-            if (tr.dataset.reportNo == reportNo) {
+            if (tr.dataset.reportListNo == reportListNo) {
               tr.remove();
             }
           })
         })
         .catch(error => console.error('error:', error));
-  
+
 
     })
-})
+  })
 
 }
 
@@ -133,10 +144,10 @@ function toggleRows() {
 
   // 토글하여 전체보기 또는 기본보기 상태 설정
   if (button.textContent === "전체보기") {
-      hiddenRows.forEach(row => row.style.display = "table-row");
-      button.textContent = "기본보기";
+    hiddenRows.forEach(row => row.style.display = "table-row");
+    button.textContent = "기본보기";
   } else {
-      hiddenRows.forEach(row => row.style.display = "none");
-      button.textContent = "전체보기";
+    hiddenRows.forEach(row => row.style.display = "none");
+    button.textContent = "전체보기";
   }
 }

@@ -1,6 +1,7 @@
 package edu.kh.daemoim.myPage.service;
 
 import java.io.File;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -10,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import edu.kh.daemoim.common.exception.FileUploadFailException;
 import edu.kh.daemoim.common.util.FileUtil;
+import edu.kh.daemoim.main.dto.MainDTO;
 import edu.kh.daemoim.myPage.dto.MyPage;
 import edu.kh.daemoim.myPage.mapper.MyPageMapper;
 import lombok.RequiredArgsConstructor;
@@ -111,4 +113,12 @@ public class MyPageServiceImpl implements MyPageService{
 		
 		return mapper.selectMemberNickname(memberNickname);
 	}
+	
+	
+	@Override
+	public List<MainDTO> findMyGroup(int memberNo) {
+		return mapper.findMyGroup(memberNo);
+	}
 }
+
+
