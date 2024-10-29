@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>모임 상세정보 수정</title>
+  <title>대모임</title>
 
   <link rel="stylesheet" href="/css/groupManage/manageGroup.css">
 
@@ -27,7 +27,7 @@
           모임공지
         </a>
 
-        <a href="#">
+        <a th:href="@{/groupManage/{groupNo}/notification(groupNo=${group.groupNo})}">
           <i class="fa-solid fa-lightbulb" style="color: #fc6e55;"></i>
           모임알림
         </a>

@@ -108,6 +108,13 @@ public class SseController {
 	    @RequestBody int notificationNo){
 	    service.deleteNotification(notificationNo);
 	  }
+	  
+	  /** [전체 ]알림 삭제 */
+	  @DeleteMapping("notification/all")
+	  public void deleteAllNotification(
+			  @SessionAttribute("loginMember") MyPage loginMember){
+		  service.deleteAllNotification(loginMember.getMemberNo());
+	  }
 
 	  /** 
 	   * 알림 읽음 여부 변경(N->Y)
@@ -118,5 +125,16 @@ public class SseController {
 	  		@RequestBody int notificationNo) {
 	  	
 	  	service.updateNotification(notificationNo);
-	  	}
+	  }
+	  
+	  /** 
+	   * [전체]알림 읽음 여부 변경(N->Y)
+	   * @param notificationNo
+	   */
+	  @PutMapping("notification/all")
+	  public void updateNotification(
+			  @SessionAttribute("loginMember") MyPage loginMember) {
+		  
+		  service.updateAllNotification(loginMember.getMemberNo());
+	  }
 }

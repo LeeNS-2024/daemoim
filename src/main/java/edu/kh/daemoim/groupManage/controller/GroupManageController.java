@@ -215,5 +215,24 @@ public class GroupManageController {
 		return "groupManage/managePopularBoard";
 	}
 	
+	/** 인기글 관리페이지 들어가기
+	 * @param period : 조회할 기간
+	 * @return
+	 */
+	@GetMapping("{groupNo:[0-9]+}/notification")
+	public String gotoNotification(
+			Model model,
+			@PathVariable("groupNo") int groupNo,
+			@RequestParam(name="period", required=false, defaultValue="30") int period ) {
+		
+		// 모임정보 불러오기
+		GroupManageDto group = service.selectGroup(groupNo);
+		
+		// 전달받은 모임정보를 전달하기위해 세팅
+		model.addAttribute("group", group);
+		
+		return "groupManage/manageNotification";
+	}
+	
 
 }
