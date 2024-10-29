@@ -15,6 +15,7 @@ import lombok.ToString;
 @Builder
 public class CategoryDTO {
 	
+	private String groupNo;
 	private String groupMainImg;
     private String groupName;
     private String groupIntroduce;

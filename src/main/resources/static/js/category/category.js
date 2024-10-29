@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <img src="${group.groupMainImg ? group.groupMainImg : '/images/default.png'}" alt="${group.groupName} 아이콘" />
                     </div>
                     <div class="details">
-                        <a href="/groupMain/${group.groupName}" class="categoryGroup-name" style="color: black; text-decoration: none;">
+                        <a href="/groupMain/${group.groupNo}" class="categoryGroup-name" style="color: black; text-decoration: none;">
                             ${group.groupName}
                         </a>
                         <div class="group-name">${group.groupIntroduce}</div>
