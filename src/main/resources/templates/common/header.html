@@ -22,19 +22,14 @@
         
         <div class="loginBtnBox">
           <div class="notification-container">
-
             <button class="notification-btn fa-regular fa-bell" id="my-element">
               <div class="notification-count-area"></div>
             </button>
-      
             <ul class="notification-list">
-      
             </ul>
-            
           </div>
-          
-          <a th:href="@{/myPage/info/{memberNo}(memberNo=${session.loginMember.memberNo})}" class="headerLoginBtn">내정보</a>
-
+        
+          <a href="/myPage/info" class="headerLoginBtn">내정보</a>
           <a href="/logout" class="headerLoginBtn">로그아웃</a>
         </div>
       </th:block>
