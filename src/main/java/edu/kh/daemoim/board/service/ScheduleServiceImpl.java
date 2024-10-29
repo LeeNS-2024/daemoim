@@ -17,7 +17,7 @@ public class ScheduleServiceImpl implements ScheduleService{
 	private final ScheduleMapper mapper;
 	
 	@Override
-	public List<Schedule> getAllSchedules() {
-		return mapper.getAllSchedules();
+	public List<Schedule> getAllSchedules(int groupNo) {
+		return mapper.getAllSchedules(groupNo);
 	}
 }

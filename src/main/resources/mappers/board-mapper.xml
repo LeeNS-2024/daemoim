@@ -17,6 +17,8 @@
 		javaType : List(컬렉션)의 타입을 지정
 		ofType : List(컬렉션)의 제네릭(타입 제한) 지정
 		-->
+		
+<!--  		
 		<collection 
 			property="imageList"
 			select="selectImageList"
@@ -24,7 +26,9 @@
 			javaType="java.util.ArrayList"
 			ofType="BoardImg"
 		/>
-		
+		  -->
+		  
+<!-- 		
 		<collection
 			property="commentList"
 			select="selectCommentList"
@@ -32,7 +36,7 @@
 			javaType="java.util.ArrayList"
 			ofType="Comment"
 		/>
-	
+	 -->
 	
 	
   	</resultMap>
@@ -269,59 +273,60 @@
   
   <!-- 게시글 상세 조회 -->
   <select id="selectDetail" resultMap="board_rm">
-  	SELECT 
-		BOARD_NO, BOARD_TITLE, BOARD_CONTENT,
-		BOARD_CODE, READ_COUNT, B.MEMBER_NO ,
-		MEMBER_NICKNAME, PROFILE_IMG,
-		
-		TO_CHAR(BOARD_WRITE_DATE, 'YYYY"년" MM"월" DD"일" HH24:MI:SS')
-			AS "BOARD_WRITE_DATE",
-			
-		TO_CHAR(BOARD_UPDATE_DATE, 'YYYY"년" MM"월" DD"일" HH24:MI:SS')
-			AS "BOARD_UPDATE_DATE",
-			
-		(SELECT COUNT(*) 
-		 FROM BOARD_LIKE L
-		 WHERE L.BOARD_NO = #{boardNo}) AS "LIKE_COUNT",
-		 
-		(SELECT BOARD_IMG_PATH || BOARD_IMG_RENAME
-		 FROM BOARD_IMG I
-		 WHERE I.BOARD_NO = #{boardNo}
-		 AND BOARD_IMG_ORDER = 0) AS "THUMBNAIL",
-		 
-		(SELECT COUNT(*) 
-		 FROM "LIKE"
-		 WHERE BOARD_NO  = #{boardNo}
-		 AND   MEMBER_NO = #{memberNo}) AS "LIKE_CHECK"
-		
-	FROM 
-		"BOARD" B
-	JOIN 
-		"MEMBER" M ON (B.MEMBER_NO = M.MEMBER_NO)
-	WHERE 
-		BOARD_NO = #{boardNo}
-	AND   
-		BOARD_TYPE_CODE = #{boardTypeCode}
-  </select>
-  
+    SELECT 
+        BOARD_NO, BOARD_TITLE, BOARD_CONTENT, GROUP_NO,
+        BOARD_TYPE_CODE, READ_COUNT, B.MEMBER_NO,
+        MEMBER_NICKNAME, MEMBER_IMG,
+        
+        TO_CHAR(BOARD_WRITE_DATE, 'YYYY"년" MM"월" DD"일" HH24:MI:SS') AS "BOARD_WRITE_DATE",
+        TO_CHAR(BOARD_UPDATE_DATE, 'YYYY"년" MM"월" DD"일" HH24:MI:SS') AS "BOARD_UPDATE_DATE",
+        
+        (SELECT COUNT(*) 
+         FROM "LIKE" L
+         WHERE L.BOARD_NO = #{boardNo}) AS "LIKE_COUNT",
+         
+        (SELECT BOARD_IMG_PATH || BOARD_IMG_RENAME
+         FROM BOARD_IMG I
+         WHERE I.BOARD_NO = #{boardNo}
+         AND BOARD_IMG_ORDER = 0
+         AND ROWNUM = 1) AS "THUMBNAIL_PATH",
+         
+        (SELECT COUNT(*) 
+         FROM "LIKE"
+         WHERE BOARD_NO = #{boardNo}
+         AND MEMBER_NO = #{memberNo}) AS "LIKE_CHECK"
+        
+    FROM 
+        "BOARD" B
+    JOIN 
+        "MEMBER" M ON (B.MEMBER_NO = M.MEMBER_NO)
+    WHERE 
+        GROUP_NO = #{groupNo}
+    AND 
+        BOARD_TYPE_CODE = #{boardTypeCode}
+    AND
+        BOARD_NO = #{boardNo}
+</select>
+
 
   <!-- DB에서 모든 게시판 종류를 조회 -->
   <select id="selectBoardTypeList" resultType="map">
   	SELECT 
   		T.BOARD_TYPE_CODE "boardTypeCode",
-  		T.BOARD_NAME "boardName",
-  		B.GROUP_NO "groupNo"
+  		T.BOARD_NAME "boardName"
   	FROM "BOARD_TYPE" T
-  	JOIN BOARD B ON (B.BOARD_TYPE_CODE = T.BOARD_TYPE_CODE)
   	ORDER BY T.BOARD_TYPE_CODE ASC
   </select>
 
   <!-- 특정 게시글의 이미지를 order 순서로 조회 -->
   <select id="selectImageList" resultType="BoardImg">
   	SELECT * 
-  	FROM BOARD_IMG
-  	WHERE BOARD_NO = #{boardNo}
-  	ORDER BY BOARD_IMG_ORDER ASC
+  	FROM 
+  		BOARD_IMG
+  	WHERE 
+  		BOARD_NO = #{boardNo}
+  	ORDER BY 
+  		BOARD_IMG_ORDER ASC
   </select>
   
   <update id="updateReadCount">
@@ -340,6 +345,7 @@
   		SCHEDULE_DATE, 
   		LOCATION_ADDRESS,
   		COST,
+  		GROUP_NO,
   		(SELECT COUNT(MEMBER_NO)
   		 FROM SCHEDULE_MEMBER M
   		 WHERE S.SCHEDULE_NO = M.SCHEDULE_NO) AS COUNT
@@ -355,51 +361,61 @@
 	WHERE M.SCHEDULE_NO = #{scheduleNo}
   </select>
   
-  <update id="attendSchedule">
+ 
+	<update id="attendSchedule">
   	INSERT INTO SCHEDULE_MEMBER
   	VALUES(#{scheduleNo}, #{memberNo}, #{groupNo})
   </update>
   
+
+  <update id="cancelSchedule">
+  	DELETE FROM SCHEDULE_MEMBER
+	WHERE SCHEDULE_NO = #{scheduleNo}
+	AND MEMBER_NO = #{memberNo}
+	AND GROUP_NO = #{groupNo}
+  </update>
   
   
+  <insert id="createSchedule">
+  	INSERT INTO SCHEDULE
+	VALUES(DAEMOIM.SEQ_SCHEDULE_NO.NEXTVAL, 
+		   #{location},
+		   TO_DATE(#{scheduleDate}, 'YYYY-MM-DD"T"HH24:MI'),
+		   #{location},
+		   #{cost},
+		   #{groupNo})
+  </insert>
   
+  <select id="checkBoardLike" resultType="_int">
+  	SELECT 
+  		COUNT(*)
+  	FROM
+  		"LIKE"
+  	WHERE
+  		MEMBER_NO = #{memberNo}
+  	AND
+  		BOARD_NO = #{boardNo}
+  </select>
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  <select id="selectCommentList" resultType="Comment">
+  	SELECT LEVEL, C.*
+  	FROM
+  		(SELECT 
+  			COMMENT_NO, COMMENT_CONTENT,
+  			TO_CHAR(COMMENT_WRITE_DATE, 'YYYY"년" MM"월" DD"일" HH24"시" MI"분" SS"초") COMMENT_WRITE_DATE,
+  			GROUP_NO, BOARD_TYPE_CODE, BOARD_NO, MEMBER_NICKNAME, MEMBER_IMG, PARENT_COMMENT_NO, COMMENT_DEL_FL
+  		FROM "COMMENT"
+  		JOIN MEMBER USING(BOARD_NO)
+  		WHERE BOARD_NO = #{boardNo}) C
+  	WHERE COMMENT_DEL_FL = 'N'
+  	OR 0 != (SELECT COUNT(*) 
+  			 FROM "COMMENT" SUB
+  			 WHERE SUB.PARENT_COMMENT_NO = C.COMMENT_NO
+  			 AND COMMENT_DEL_FL = 'N')
+  	START WITH PARENT_COMMENT_NO IS NULL
+  	CONNECT BY PRIOR COMMENT_NO = PARENT_COMMENT_NO
+  	ORDER SIBLINGS BY COMMENT_NO
+  </select>
 
   
 </mapper>

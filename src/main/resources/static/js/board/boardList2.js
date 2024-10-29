@@ -1,5 +1,7 @@
 const pageNoList = document.querySelectorAll(".pagination a");
 
+const urlParts = window.location.href.split("/");
+
 $(function () {
   // Datepicker를 #calendar에 적용
   $("#calendar").datepicker({
@@ -7,8 +9,8 @@ $(function () {
     onSelect: function(dateText, inst) {
      // 날짜 셀 클릭 시에만 이동
      if ($(inst.dpDiv.find('.ui-state-active')).length) {
-      const baseUrl = "/board/boardCalendar";
-      window.location.href = `${baseUrl}?date=${dateText}`;
+      const baseUrl = "/board/boardCalendar/" + urlParts[urlParts.length - 1];
+      window.location.href = `${baseUrl}`;
      }
     }
   });

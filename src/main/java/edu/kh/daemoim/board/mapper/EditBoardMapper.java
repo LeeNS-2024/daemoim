@@ -21,7 +21,6 @@ public interface EditBoardMapper {
 	 * @param uploadList
 	 * @return
 	 */
-	/*
-	 * int insertUploadList(List<BoardImg> uploadList);
-	 */
+	  int insertUploadList(List<BoardImg> uploadList);
+	 
 }
