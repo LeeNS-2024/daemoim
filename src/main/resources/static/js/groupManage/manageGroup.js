@@ -963,11 +963,142 @@ const tableAjaxRequest = (int) => {
 
 };
 
+
+
+/********************************************************************** */
+/********************************************************************** */
+
+
+
+
 // 게시판 전체보기버튼 클릭시
  const gotoBoard1 = document.querySelector(".gotoBoard1"); // 공지게시판
  const gotoBoard2 = document.querySelector(".gotoBoard2"); // 일반게시판
  gotoBoard1?.addEventListener("click", () => {location.href = "/board/" + groupNo + "/1" });
  gotoBoard2?.addEventListener("click", () => {location.href = "/board/" + groupNo + "/2" });
+
+
+/********************************************************************** */
+/********************************************************************** */
+
+/* 알림보내기 */
+const selectAll = document.querySelector(".noti-selectAll input");
+selectAll?.addEventListener("change", ()=> {
+  const inputTags = document.querySelectorAll(".noti-tbody input");
+  
+  inputTags.forEach(e=>{
+    e.checked = selectAll.checked;
+  })
+  
+});
+
+// 일정선택이벤트
+const selectSchedule = document.querySelector("#selectSchedule");
+selectSchedule?.addEventListener("change", e=>{
+  selectAll.checked = false;
+  const scheduleNo = e.target.value;
+  const inputTags = document.querySelectorAll(".noti-tbody input");
+  
+  if(scheduleNo == 0){
+    selectAll.checked = false;
+    inputTags.forEach(e=>{
+      e.checked = false;
+    })
+    return;
+  }
+
+  fetch("/groupManage/searchScheduleMember?scheduleNo=" + scheduleNo)
+  .then(response => {
+    if(response.ok) return response.json();
+    throw new Error("일정조회오류" + response.status);
+  })
+  .then(numList => {
+    console.log(numList);
+    inputTags.forEach(e=>{
+      if(numList.includes( Number(e.value) )) {
+        e.checked = true;
+      } else {
+        e.checked = false;
+      }
+    })
+
+  })
+  .catch(err => console.error(err));
+});
+
+
+// 제출이벤트
+const sendBtn = document.querySelector("#sendBtn");
+sendBtn?.addEventListener("click", ()=>{
+  const notificationContent = document.querySelector('[name="notificationContent"]');
+
+  if(notificationContent.value.trim().length === 0){
+    alert("알림 내용을 입력해 주세요");
+    return;
+  }
+
+  const inputTags = document.querySelectorAll(".noti-tbody input");
+  
+  const objList = [];
+  let count = 0;
+
+  inputTags.forEach(e=>{
+
+    if(e.checked) {
+      const inputObj = {
+  
+        "notificationContent" : notificationContent.value,
+        "notificationUrl" : "/boardMain/" + groupNo,
+        "sendMemberNo" : chatLoginMemberNo,
+        "receiveMemberNo" :   e.value,
+        "groupNo" : groupNo
+      }
+      objList.push(inputObj);
+      count ++;
+    }
+  })
+  
+  if(count === 0){
+    alert("알림을 보낼 회원을 1명이상 선택해 주세요");
+    return;
+  }
+
+  if(!confirm(count + "명의 회원에게 알림을 보내겠습니까?")) return;
+
+
+
+  fetch("notification", {
+    method : "POST",
+    headers : {"Content-Type" : "application/json"},
+    body : JSON.stringify( objList )
+  })
+  .then(response => {
+    if(response.ok) return response.text();
+    throw new Error("일정조회오류" + response.status);
+  })
+  .then(result => {
+    if(result > 0 ){
+      alert("알림을 보내었습니다");
+      notificationContent.value = '';
+      selectAll.checked = false;
+      inputTags.forEach(e=>{
+        e.checked = false;
+      })
+    } else {
+      alert("실패");
+    }
+
+  })
+  .catch(err => console.error(err));
+}) // 알림제출 종료
+
+
+
+
+
+/********************************************************************** */
+/********************************************************************** */
+
 
 document.addEventListener("DOMContentLoaded", ()=>{
 

@@ -12,7 +12,9 @@ import org.springframework.web.multipart.MultipartFile;
 import edu.kh.daemoim.board.dto.Board;
 import edu.kh.daemoim.board.dto.Comment;
 import edu.kh.daemoim.common.util.FileUtil;
+import edu.kh.daemoim.groupMain.dto.Schedule;
 import edu.kh.daemoim.groupManage.dto.GroupManageDto;
+import edu.kh.daemoim.groupManage.dto.GroupMemberManageDto;
 import edu.kh.daemoim.groupManage.dto.ManageCategory;
 import edu.kh.daemoim.groupManage.mapper.GroupManageMapper;
 import lombok.RequiredArgsConstructor;
@@ -239,6 +241,24 @@ public class GroupManageServiceImpl implements GroupManageService {
 		String headerLocation = group.getGroupHeaderImg();
 		
 		return headerLocation;
+	}
+	
+	// 모임 회원 리스트 호출
+	@Override
+	public List<GroupMemberManageDto> getMemberList(int groupNo) {
+		return mapper.getMemberList(groupNo);
+	}
+	
+	// 일정 호출
+	@Override
+	public List<Schedule> getScheduleList(int groupNo) {
+		return mapper.getScheduleList(groupNo);
+	}
+	
+	// 일정회원불러오기
+	@Override
+	public List<Integer> searchScheduleMember(int scheduleNo) {
+		return mapper.searchScheduleMember(scheduleNo);
 	}
 
 }

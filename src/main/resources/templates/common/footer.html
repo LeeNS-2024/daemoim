@@ -68,11 +68,11 @@
   <span class="chat-unReaded"><!-- 안읽은 메시지갯수 --></span>
 </section>
 
+
+
 <script th:inline="javascript">
   const chatLoginCheck = /*[[${session.loginMember} ? true : false]]*/ false;
   const chatLoginMemberNo = /*[[${session.loginMember?.memberNo}]]*/ "로그인한 회원 번호";
-  console.log("챗. 로그인 여부 : " + chatLoginCheck);
-  console.log("챗. 로그인 한 회원 번호 : " + chatLoginMemberNo);
 </script>
 <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1.5.1/dist/sockjs.min.js"></script>
 <script src="/js/footer.js"></script>
