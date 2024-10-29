@@ -24,22 +24,29 @@ import lombok.RequiredArgsConstructor;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("myPage")
-@SessionAttributes({ "loginMember"})
+@SessionAttributes({"loginMember"})
 public class MyPageController {
 
 	private final MyPageService service;
 
-	@GetMapping("info/{memberNo}")
-	public String info(@PathVariable("memberNo") int memberNo, 
-            @SessionAttribute("loginMember") MyPage loginMember, 
-            Model model) {
-
-
-		MyPage userInfo = service.findMemberByNo(memberNo);
-
-	    model.addAttribute("userInfo", userInfo);
+	@GetMapping("info")
+	public String info() {
 
 	    return "myPage/myPage-info";
+	}
+	
+	@GetMapping("memberInfo/{memberNickname}")
+	public String memberInfo(
+			@PathVariable("memberNickname") String memberNickname,
+			@SessionAttribute("loginMember") MyPage loginMember,
+			Model model) {
+		
+		MyPage userInfo = service.findMemberNickname(memberNickname);
+		
+        model.addAttribute("userInfo", userInfo);
+		
+		
+		return "myPage/memberPage";
 	}
 
 	@GetMapping("changePw")
