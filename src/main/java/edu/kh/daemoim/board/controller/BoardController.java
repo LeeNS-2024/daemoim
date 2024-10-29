@@ -36,8 +36,9 @@ public class BoardController {
 	
 	private final BoardService service;
 	
-	@GetMapping("boardPage")
-	public String boardPage() {
+	@GetMapping("{groupNo:[0-9]+}")
+	public String boardPage(
+		@PathVariable("groupNo") int groupNo) {
 		return "board/boardList";
 	}
 	
@@ -46,8 +47,9 @@ public class BoardController {
 		return "board/boardSchedule";
 	}
 	
-	@GetMapping("boardCalendar")
-	public String boardCalendarPage() {
+	@GetMapping("boardCalendar/{groupNo:[0-9]+}")
+	public String boardCalendarPage(
+		@PathVariable("groupNo") int groupNo) {
 		return "board/boardCalendar";
 	}
 	

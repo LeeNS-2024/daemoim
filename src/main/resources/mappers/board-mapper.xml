@@ -313,10 +313,8 @@
   <select id="selectBoardTypeList" resultType="map">
   	SELECT 
   		T.BOARD_TYPE_CODE "boardTypeCode",
-  		T.BOARD_NAME "boardName",
-  		B.GROUP_NO "groupNo"
+  		T.BOARD_NAME "boardName"
   	FROM "BOARD_TYPE" T
-  	JOIN BOARD B ON (B.BOARD_TYPE_CODE = T.BOARD_TYPE_CODE)
   	ORDER BY T.BOARD_TYPE_CODE ASC
   </select>
 

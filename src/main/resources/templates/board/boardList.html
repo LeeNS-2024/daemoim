@@ -11,8 +11,6 @@
     <link rel="stylesheet" href="/css/board/boardList.css">
 </head>
 <body>
-
-    
     <!-- Header -->
     <div class="header">
         <img th:src="${groupHeaderImg}" alt="보드해더이미지" style="width: 99vw;">
@@ -45,7 +43,7 @@
                             <td>
                                 <img th:if="*{thumbnail}" th:src="*{thumbnail}" class="img">
 
-                                <a th:href="@{board/{boardTypeCode}/{boardNo} (boardTypeCode=*{boardTypeCode}, boardNo=*{boardNo})}"
+                                <a th:href="@{{groupNo}/{boardTypeCode}/{boardNo} (groupNo = ${groupNo}, boardTypeCode = ${boardTypeCode}, boardNo = *{boardNo})}"
                                    th:text="*{boardTitle}">게시글 제목</a>
 
                                 <th:block th:text="|[*{commentCount}]|">댓글 수</th:block>
