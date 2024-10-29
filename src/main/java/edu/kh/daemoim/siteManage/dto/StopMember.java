@@ -27,5 +27,7 @@ public class StopMember {
 		private int stopTerm;
 		private String stopReason;
 		private String stopDate;
+		private int reportListNo;
+		
 		
 }

@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import edu.kh.daemoim.groupMain.dto.Notice;
 import edu.kh.daemoim.groupMain.dto.PhotoBox;
 import edu.kh.daemoim.groupMain.dto.Schedule;
+import io.lettuce.core.dynamic.annotation.Param;
 
 @Mapper
 public interface GroupMainMapper {
@@ -45,6 +46,13 @@ public interface GroupMainMapper {
 	 * @return
 	 */
 	String getIntroduce(int groupNo);
+
+	/**모임 회원 체크
+	 * @param groupNo
+	 * @param memberNo
+	 * @return
+	 */
+	int checkLoginMember(@Param("groupNo") int groupNo, @Param("memberNo") int memberNo);
 
 
 

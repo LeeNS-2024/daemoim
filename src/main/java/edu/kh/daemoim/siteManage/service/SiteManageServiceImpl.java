@@ -22,6 +22,7 @@ public class SiteManageServiceImpl implements SiteManageService {
 
 	private final SiteManageMapper mapper;
 
+
 	// 사이트매니저 필요정보 얻어오기
 	@Override
 	public Map<String, Object> getSiteManage() {
@@ -77,20 +78,18 @@ public class SiteManageServiceImpl implements SiteManageService {
 
 	// 계정 정지
 	@Override
+
 	public int StopMember(StopMember member) {
+	    int result = mapper.updateOut(member); // 정지 상태로 업데이트
+        if (result == 0) return 0;
 
-		int result = 0;
+        result = mapper.insertStop(member); // 정지 테이블에 추가
+        if (result == 0) return 0;
 
-		result = mapper.updateOut(member);
-		if (result == 0)
-			return 0;
-		result = mapper.insertStop(member);
-		if (result == 0)
-			return 0;
-		result = mapper.deleteReport(member);
-
-		return result;
+        result = mapper.deleteReport(member); // 신고 목록에서 삭제
+        return result;
 	}
+
 
 	// 회원 탈퇴
 	@Override
@@ -114,12 +113,12 @@ public class SiteManageServiceImpl implements SiteManageService {
 
 	// 모달창
 	@Override
-	public StopMember getReportDetail(int reportNo) {
+	public StopMember getReportDetail(int reportListNo) {
 
-		int result = mapper.updateReportViewStatus(reportNo);
+		int result = mapper.updateReportViewStatus(reportListNo);
 		System.out.println("result : " + result);
 		if(result> 0){
-			return mapper.getReportDetail(reportNo);
+			return mapper.getReportDetail(reportListNo);
 		} else {
 			return null;
 		}
@@ -127,16 +126,19 @@ public class SiteManageServiceImpl implements SiteManageService {
 
 	// 조회여부 변경
 	@Override
-	public int updateReportViewStatus(int reportNo) {
+	public int updateReportViewStatus(int reportListNo) {
 	
-		return mapper.updateReportViewStatus(reportNo);
+		return mapper.updateReportViewStatus(reportListNo);
 	}
 
 	// 신고목록 삭제
 	@Override
-	public void deleteReportOut(int reportNo) {
-		mapper.deleteReportOut(reportNo);
+	public void deleteReportOut(int reportListNo) {
+		mapper.deleteReportOut(reportListNo);
 		
 	}
+
+
+
 	
 }

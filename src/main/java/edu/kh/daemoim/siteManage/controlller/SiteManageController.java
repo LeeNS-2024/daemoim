@@ -30,10 +30,12 @@ import lombok.extern.slf4j.Slf4j;
 public class SiteManageController {
 
 	private final SiteManageService service;
-
+  
+  
 	@GetMapping("main")
 	public String siteManage(Model model
 			) {
+
 
 		// 서비스 호출 후 결과 받아오기
 		Map<String, Object> map = service.getSiteManage();
@@ -56,8 +58,8 @@ public class SiteManageController {
 		model.addAttribute("countList", countList);
 		model.addAttribute("groupList", groupList);
 		model.addAttribute("memberList", memberList);
-		model.addAttribute("reportList",reportList);
-		
+		model.addAttribute("reportList", reportList);
+
 		return "siteManage/main";
 	}
 
@@ -71,8 +73,8 @@ public class SiteManageController {
 	 * @return
 	 */
 	@PostMapping("suspend")
-	public String stopMember(@RequestParam("email") String email, @RequestParam("days") int days,
-			@RequestParam("reason") String reason, RedirectAttributes ra) {
+	public String stopMember(@RequestParam("email") String email, @RequestParam("years") int years,
+			@RequestParam("reason") String reason, RedirectAttributes ra, Model model) {
 
 		// 이메일로 회원 찾기
 		StopMember member = service.findMemberByEmail(email);
@@ -80,12 +82,12 @@ public class SiteManageController {
 		if (member != null) {
 
 			// 계정 정지처리
-			member.setStopTerm(days);
+			member.setStopTerm(years);
 			member.setStopReason(reason);
 
 			int result = service.StopMember(member);
 
-			ra.addFlashAttribute("message", days + "일 동안 정지되었습니다");
+			ra.addFlashAttribute("message", years + "일 동안 정지되었습니다");
 
 		} else {
 			ra.addFlashAttribute("message", "올바른 이메일을 입력해주세요");
@@ -102,53 +104,54 @@ public class SiteManageController {
 	 */
 	@PostMapping("resign")
 	public String resignMember(@RequestParam("email") String email, @RequestParam("reason") String reason,
-	                           RedirectAttributes ra) {
+			RedirectAttributes ra) {
 
-	    // 이메일로 회원 찾기
-	    StopMember member = service.findMemberByEmail2(email);
+		// 이메일로 회원 찾기
+		StopMember member = service.findMemberByEmail2(email);
 
-	    if (member != null) {
-	        member.setStopReason(reason);
+		if (member != null) {
+			member.setStopReason(reason);
 
-	        int result = service.resignMember(member);
-	        ra.addFlashAttribute("message", "탈퇴 완료 되었습니다.");
-	    } else {
-	        ra.addFlashAttribute("message", "올바른 이메일을 입력해주세요.");
-	    }
+			int result = service.resignMember(member);
+			ra.addFlashAttribute("message", "탈퇴 완료 되었습니다.");
+		} else {
+			ra.addFlashAttribute("message", "올바른 이메일을 입력해주세요.");
+		}
 
-	    return "redirect:/siteManage#withdrawal";
+		return "redirect:/siteManage#withdrawal";
 	}
 
-	
-	@GetMapping("/detail/{reportNo}")
+	/**
+	 * 신고목록 불러오기
+	 * 
+	 * @param reportNo
+	 * @return
+	 */
 
-	public ResponseEntity<StopMember> getreportDetail(@PathVariable("reportNo") int reportNo){
-	
+	@GetMapping("/detail/{reportListNo}")
 
-		
-	StopMember reportDetail = service.getReportDetail(reportNo);
-	
-	if(reportDetail != null) {
-		return ResponseEntity.ok(reportDetail);  // 보고서가 존재하는 경우 200 OK 응답
-	}else {
-		return ResponseEntity.notFound().build(); // 보고서가 존재하지 않을 경우 404 Not Found 응답
+	public ResponseEntity<StopMember> getreportDetail(@PathVariable("reportListNo") int reportListNo) {
+
+		StopMember reportDetail = service.getReportDetail(reportListNo);
+
+		if (reportDetail != null) {
+			return ResponseEntity.ok(reportDetail); // 보고서가 존재하는 경우 200 OK 응답
+		} else {
+			return ResponseEntity.notFound().build(); // 보고서가 존재하지 않을 경우 404 Not Found 응답
+		}
+
 	}
-	
-	}
-	
-	/** 신고목록 삭제
+
+	/**
+	 * 신고목록 삭제
+	 * 
 	 * @param reportNo
 	 */
-	@GetMapping("/delete/{reportNo}")
+	@GetMapping("/delete/{reportListNo}")
 	@ResponseBody
-	public void deleteReport(@PathVariable("reportNo") int reportNo) {
-		
-		service.deleteReportOut(reportNo);
-	}
-	
-	
+	public void deleteReport(@PathVariable("reportListNo") int reportListNo) {
 
-	
-	
-	
+		service.deleteReportOut(reportListNo);
+	}
+
 }
