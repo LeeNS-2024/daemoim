@@ -4,7 +4,9 @@
             <img th:src="${group.groupMainImg != null ? group.groupMainImg : '/images/default.png'}" alt="[[${group.groupName}]] 아이콘" />
         </div>
         <div class="details">
-            <a th:href="@{/groupMain/{groupName}(groupName=${group.groupName})}" class="categoryGroup-name" style="color: black; text-decoration: none;">
+            <a th:href="@{'/groupMain/' + ${group.groupNo}}" 
+               class="categoryGroup-name" 
+               style="color: black; text-decoration: none;">
                 [[${group.groupName}]]
             </a>
             <div class="group-name">[[${group.groupIntroduce}]]</div>

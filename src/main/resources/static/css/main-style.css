@@ -524,8 +524,13 @@ footer nav a {
 .group-name {
   font-size: 16px;
   margin-bottom: 5px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* 표시할 줄 수 */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
 }
-
 
 
 .location {
