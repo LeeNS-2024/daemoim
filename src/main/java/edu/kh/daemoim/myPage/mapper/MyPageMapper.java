@@ -27,8 +27,11 @@ public interface MyPageMapper {
 		int profile(
 				@Param("url") String url,
 				@Param("memberNo") int memberNo);
+		
+		// 회원 정보 보기
+		MyPage selectMemberNickname(String memberNickname);
 
-		MyPage selectMemberByNo(int memberNo);
+		
 		
 		
 		

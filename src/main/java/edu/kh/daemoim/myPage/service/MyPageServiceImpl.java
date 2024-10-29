@@ -106,9 +106,9 @@ public class MyPageServiceImpl implements MyPageService{
 			return profileWebPath + rename;
 		}
 		
-		@Override
-		public MyPage findMemberByNo(int memberNo) {
-			return mapper.selectMemberByNo(memberNo);
-		}
+	@Override
+	public MyPage findMemberNickname(String memberNickname) {
 		
+		return mapper.selectMemberNickname(memberNickname);
+	}
 }
