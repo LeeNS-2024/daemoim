@@ -9,6 +9,7 @@ public interface SigninMapper {
 
    MyPage login(String memberId);
 
-int authoritycheck(String memberId);
+   int authoritycheck(String memberId);
+
 
 }

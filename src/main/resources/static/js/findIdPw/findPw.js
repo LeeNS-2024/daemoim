@@ -320,6 +320,3 @@ checkPwAuthKeyBtn.addEventListener("click", () => {
   .catch(err => console.error(err));
 
 });
-
-
-
