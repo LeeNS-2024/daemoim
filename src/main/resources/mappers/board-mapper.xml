@@ -340,6 +340,7 @@
   		SCHEDULE_DATE, 
   		LOCATION_ADDRESS,
   		COST,
+  		GROUP_NO,
   		(SELECT COUNT(MEMBER_NO)
   		 FROM SCHEDULE_MEMBER M
   		 WHERE S.SCHEDULE_NO = M.SCHEDULE_NO) AS COUNT
@@ -359,6 +360,23 @@
   	INSERT INTO SCHEDULE_MEMBER
   	VALUES(#{scheduleNo}, #{memberNo}, #{groupNo})
   </update>
+  
+  <update id="cancelSchedule">
+  	DELETE FROM SCHEDULE_MEMBER
+	WHERE SCHEDULE_NO = #{scheduleNo}
+	AND MEMBER_NO = #{memberNo}
+	AND GROUP_NO = #{groupNo}
+  </update>
+  
+  <insert id="createSchedule">
+  	INSERT INTO SCHEDULE
+	VALUES(DAEMOIM.SEQ_SCHEDULE_NO.NEXTVAL, 
+		   #{location},
+		   TO_DATE(#{scheduleDate}, 'YYYY-MM-DD"T"HH24:MI'),
+		   #{location},
+		   #{cost},
+		   #{groupNo})
+  </insert>
   
   
   

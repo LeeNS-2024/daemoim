@@ -269,8 +269,9 @@ public class BoardController {
 	@PostMapping("/attendSchedule")
 	@ResponseBody
 	public int attendSchedule(
-		@RequestBody int scheduleNo,
-		@RequestBody int groupNo,
+
+		@RequestParam("scheduleNo") int scheduleNo,
+		@RequestParam("groupNo") int groupNo,
 		@SessionAttribute(value="loginMember", required=false) MyPage loginMember,
 		RedirectAttributes ra) {
 		
@@ -280,12 +281,56 @@ public class BoardController {
 		
 		String message = null;
 		
-		if(result > 0) message = "일정 참석 완료";
-		else message = "일정 참석 실패";
+		if(result > 0) message = "일정 참석 완료하였습니다.";
+		else message = "일정 참석 실패하였습니다.";
 		
 		ra.addFlashAttribute("message" , message);
 		
 		return result;
+	}
+	
+	@PostMapping("/cancelSchedule")
+	@ResponseBody
+	public int cancelSchedule(
+		@RequestParam("scheduleNo") int scheduleNo,
+		@RequestParam("groupNo") int groupNo,
+		@SessionAttribute(value="loginMember", required=false) MyPage loginMember,
+		RedirectAttributes ra) {
+		
+		int memberNo = loginMember.getMemberNo();
+		
+		int result = service.cancelSchedule(scheduleNo, groupNo, memberNo);
+		
+		String message = null;
+		
+		if(result > 0) message = "일정 참석이 취소되었습니다.";
+		else message = "실행 중 오류가 발생하였습니다.";
+		
+		ra.addFlashAttribute("message" , message);
+		
+		return result;
+	}
+	
+	@PostMapping("/createSchedule")
+	@ResponseBody
+	public int createSchedule(
+		@RequestBody Map<String, Object> scheduleData) {
+		
+		String scheduleDate = (String) scheduleData.get("scheduleDate");
+    String location = (String) scheduleData.get("location");
+    int cost = Integer.parseInt(scheduleData.get("cost").toString());
+    int groupNo = Integer.parseInt(scheduleData.get("groupNo").toString());
+    
+    // 추출한 데이터를 Map으로 생성하여 서비스에 전달합니다.
+    Map<String, Object> scheduleMap = new HashMap<>();
+    scheduleMap.put("scheduleDate", scheduleDate);
+    scheduleMap.put("location", location);
+    scheduleMap.put("cost", cost);
+    scheduleMap.put("groupNo", groupNo);
+     
+    int result = service.createSchedule(scheduleMap);
+    
+    return result;
 	}
 	
 	
