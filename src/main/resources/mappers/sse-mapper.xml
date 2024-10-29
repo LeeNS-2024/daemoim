@@ -8,7 +8,7 @@
 
 		<selectKey order="BEFORE" resultType="_int"
 							 keyProperty="notificationNo">
-			SELECT SEQ_NOTI_NO.NEXTVAL FROM DUAL
+			SELECT SEQ_NOTIFICATION_NO.NEXTVAL FROM DUAL
 		</selectKey>
 		
 		INSERT INTO "NOTIFICATION"

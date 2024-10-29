@@ -486,9 +486,18 @@ tbody tr:hover{
 }
 /* *********************************** */
 /* 노티ㅍl케이션 */
+#noti-form{
+  display: flex;
+  flex-direction: column;
+}
+#noti-form>textarea{
+  height: 150px;
+  border: 1px solid #666;
+  margin: 20px;
+}
 .noti-table{
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 .noti-table>section{
   display: flex;
@@ -497,21 +506,60 @@ tbody tr:hover{
   justify-content: flex-start;
   width: 960px;
 }
+.noti-table>section>*{
+  display: flex;
+  align-items: center;
+}
 .noti-table>.noti-thead{
-
+  justify-content: space-around;
+  height: 70px;
+}
+.noti-table>.noti-thead>.noti-selsectAll{
+  font-size: 1.3em;
+}
+.noti-table>.noti-thead #selectSchedule{
+  height: 30px;
+  border: 1px solid #333;
+  margin: 10px;
+}
+.noti-table>.noti-thead button{
+  width: 300px;
+  height: 30px;
+  background-color: #333;
+  border-radius: 8px;
+  color: #dfdfdf;
+  font-size: 1.3em; 
+}
+#sendBtn:hover{
+  cursor:pointer;
+}
+.noti-table>.noti-thead{
+  height: 70px;
 }
 .noti-table>.noti-thead>.noti-bodyBoxs{
-  border: #333;
+  border: 1px solid #333;
   display: flex;
   flex-direction: row;
+  width: 300px;
+  margin: 10px;
 }
 .noti-table>.noti-tbody{
-
+  
 }
 .noti-table>.noti-tbody>.noti-bodyBoxs{
+  border: 1px solid #333;
   display: flex;
   flex-direction: row;
+  justify-content: space-around;
+  width: 300px;
+  height: 75px;
+  margin: 10px;
 }
+.noti-table>.noti-tbody>.noti-bodyBoxs>div{
+  display: flex;
+  align-items: center;
+}
+
 
 
 
