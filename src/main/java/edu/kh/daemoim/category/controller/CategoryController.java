@@ -39,6 +39,7 @@ public class CategoryController {
             @RequestParam(value = "type") String category,
             @RequestParam(value = "query", required = false, defaultValue = "") String query) {
         
+    	log.info("category 이름 : {}, 검색어 : {}", category, query);
         return service.getGroupsByCategory(category, query);
     }
 }

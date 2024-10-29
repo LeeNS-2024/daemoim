@@ -120,3 +120,35 @@ table .reportDetail:hover{
 .modal-content p {
     margin-top: 40px; /* 상세 내용 위 간격 */
 }
+
+/* 전체보기 토글 */
+ /* 숨긴 행 스타일 */
+ .hidden-row {
+    display: none;
+}
+
+  /* 제목과 버튼을 같은 행에 정렬 */
+  .header-with-button {
+    display: flex;
+    align-items: center;
+    gap: 10px;  /* 제목과 버튼 사이의 간격 */
+}
+
+/* 둥근모서리 버튼 스타일 */
+#toggleButton {
+    padding: 8px 16px;
+    background-color: #fab2c4d8;  /* 버튼 배경색 */
+    color: #ffffff;  /* 버튼 텍스트 색 */
+
+    border: none;
+    border-radius: 8px;  /* 둥근 모서리 */
+    cursor: pointer;
+    font-size: 14px;
+}
+
+/* 버튼 hover 효과 */ 
+#toggleButton:hover {
+    background-color: #ffffff;  /* hover 시 약간 어두운 배경 */
+    color: #333;
+}
+

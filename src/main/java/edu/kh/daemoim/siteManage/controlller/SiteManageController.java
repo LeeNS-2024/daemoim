@@ -91,7 +91,7 @@ public class SiteManageController {
 			ra.addFlashAttribute("message", "올바른 이메일을 입력해주세요");
 		}
 
-		return "redirect:/siteManage";
+		return "redirect:/siteManage#suspend";
 	}
 
 	/**
@@ -102,24 +102,22 @@ public class SiteManageController {
 	 */
 	@PostMapping("resign")
 	public String resignMember(@RequestParam("email") String email, @RequestParam("reason") String reason,
-			RedirectAttributes ra) {
+	                           RedirectAttributes ra) {
 
-		// 이메일로 회원 찾기
-		StopMember member = service.findMemberByEmail2(email);
+	    // 이메일로 회원 찾기
+	    StopMember member = service.findMemberByEmail2(email);
 
-		if (member != null) {
+	    if (member != null) {
+	        member.setStopReason(reason);
 
-			member.setStopReason(reason);
+	        int result = service.resignMember(member);
+	        ra.addFlashAttribute("message", "탈퇴 완료 되었습니다.");
+	    } else {
+	        ra.addFlashAttribute("message", "올바른 이메일을 입력해주세요.");
+	    }
 
-			int result = service.resignMember(member);
-
-			ra.addFlashAttribute("message", "탈퇴 완료 되었습니다.");
-		}
-		ra.addFlashAttribute("message", "올바른 이메일을 입력해주세요");
-
-		return "redirect:/siteManage";
+	    return "redirect:/siteManage#withdrawal";
 	}
-	
 
 	
 	@GetMapping("/detail/{reportNo}")
