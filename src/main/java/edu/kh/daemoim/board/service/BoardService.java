@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import edu.kh.daemoim.board.dto.Board;
+import edu.kh.daemoim.groupMain.dto.Schedule;
 
 public interface BoardService {
 
@@ -52,5 +53,19 @@ public interface BoardService {
 	 * @return
 	 */
 	int attendSchedule(int scheduleNo, int groupNo, int memberNo);
+
+	/** 일정 참석 취소
+	 * @param scheduleNo
+	 * @param groupNo
+	 * @param memberNo
+	 * @return
+	 */
+	int cancelSchedule(int scheduleNo, int groupNo, int memberNo);
+
+	/** 일정 생성
+	 * @param scheduleMap
+	 * @return
+	 */
+	int createSchedule(Map<String, Object> scheduleMap);
 
 }

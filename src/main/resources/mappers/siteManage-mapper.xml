@@ -72,14 +72,16 @@
 		FROM SCHEDULE S
 		WHERE S.GROUP_NO =
 		G.GROUP_NO) AS ACTIVE_COUNT
+
 		FROM
 		"GROUP" G
 		WHERE
 		GROUP_DEL_FL = 'N'
+
 		ORDER
 		BY
 		ACTIVE_COUNT DESC
-
+		
 	</select>
 
 	<!-- 최근 가입한 회원 조회 -->
@@ -90,16 +92,17 @@
 		MEMBER_EMAIL,
 		TO_CHAR(ENROLL_DATE, 'YYYY"년"MM"월"DD"일"')
 		"ENROLL_DATE",
-		MEMBER_DEL_FL
+		MEMBER_OUT_FL
 		FROM "MEMBER"
 		WHERE
-		MEMBER_OUT_FL = 'N'
+		MEMBER_DEL_FL = 'N'
 		ORDER
 		BY
 		ENROLL_DATE DESC
+	
 
 	</select>
-
+	<!--OFFSET 0 ROWS FETCH NEXT 5 ROWS ONLY-->
 	<!--회원 정지(이메일 맞는지 확인) -->
 	<select id="findMemberByEmail" resultType="StopMember">
 		SELECT

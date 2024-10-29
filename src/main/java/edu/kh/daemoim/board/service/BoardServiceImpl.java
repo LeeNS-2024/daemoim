@@ -104,6 +104,18 @@ public class BoardServiceImpl implements BoardService{
 	public int attendSchedule(int scheduleNo, int groupNo, int memberNo) {
 		return mapper.attendSchedule(scheduleNo, groupNo, memberNo);
 	}
+	
+	// 일정 참석 취소
+	@Override
+	public int cancelSchedule(int scheduleNo, int groupNo, int memberNo) {
+		return mapper.cancelSchedule(scheduleNo, groupNo, memberNo);
+	}
+	
+	// 일정 생성
+	@Override
+	public int createSchedule(Map<String, Object> scheduleMap) {
+		return mapper.createSchedule(scheduleMap);
+	}
 
 	
 

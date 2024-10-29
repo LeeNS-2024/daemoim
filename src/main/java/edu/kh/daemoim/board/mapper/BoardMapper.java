@@ -76,4 +76,21 @@ public interface BoardMapper {
 			@Param("groupNo") int groupNo,
 			@Param("memberNo") int memberNo);
 
+	/** 일정 참석 취소
+	 * @param scheduleNo
+	 * @param groupNo
+	 * @param memberNo
+	 * @return
+	 */
+	int cancelSchedule(
+			@Param("scheduleNo") int scheduleNo, 
+			@Param("groupNo") int groupNo,
+			@Param("memberNo") int memberNo);
+
+	/** 일정 생성
+	 * @param scheduleMap
+	 * @return
+	 */
+	int createSchedule(Map<String, Object> scheduleMap);
+
 }

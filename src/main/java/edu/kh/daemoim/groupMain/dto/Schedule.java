@@ -34,6 +34,4 @@ public class Schedule {
 	
 	private List<String> memberImages;
 	
-//	private List<Schedule> scheduleList;
-	
 }
