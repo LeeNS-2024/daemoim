@@ -7,4 +7,7 @@ public interface SigninService {
    // 로그인
    MyPage login(String memberId, String memberPw);
 
+   // 권한 확인
+   int authoritycheck(String memberId);
+
 }

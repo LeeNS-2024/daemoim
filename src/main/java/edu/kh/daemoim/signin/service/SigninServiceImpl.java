@@ -36,5 +36,11 @@ public class SigninServiceImpl implements SigninService{
       
       return loginMember;
    }
-
+   @Override
+		public int authoritycheck(String memberId) {
+	   
+		return mapper.authoritycheck(memberId);
+		
+		
+	}
 }

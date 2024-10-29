@@ -1,66 +1,94 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Arial', sans-serif;
-}
+/* myPage-changePw.css */
 
 body {
-  background-color: #f9f9f9;
-  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
 }
 
-/* Container to hold the side menu and form */
-.container {
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  min-height: 100vh;
-  padding: 20px;
-}
-
-/* Side menu alignment */
-.side-menu {
-  flex: 0 0 250px; /* Fixed width for side menu */
-  margin-right: 30px; /* Space between side menu and form */
-}
-
-/* Centered section for password change */
-.changePage {
-  flex: 1;
+main {
   display: flex;
   justify-content: center;
   align-items: center;
+  min-height: 100vh;
 }
 
-.changePageMain {
-  width: 100%;
-  max-width: 500px;
-  background-color: #fff;
-  padding: 20px;
+.myPage-content {
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 80%;
+  max-width: 800px;
+  position: relative;
+}
+
+.myPage-content th\:block {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.myPage-content th\:block::before {
+  content: '사이드 메뉴';
+  font-weight: bold;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.myPage-main {
+  margin-top: 60px;
+  padding: 20px;
+  text-align: center;
+}
+
+.myPage-title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.changePw-box {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.myPage-subject {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 25px;
 }
 
 .myPage-row {
-  margin-bottom: 15px;
   display: flex;
   flex-direction: column;
+  margin-bottom: 20px;
 }
 
 label {
-  font-size: 1rem;
+  font-weight: bold;
   margin-bottom: 5px;
-  color: #333;
 }
 
 input[type="password"] {
-  padding: 10px;
-  font-size: 1rem;
-  width: 100%;
+  padding: 12px;
   border: 1px solid #ccc;
-  border-radius: 5px;
-  transition: border 0.3s ease;
+  border-radius: 4px;
+  font-size: 16px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
 }
 
 input[type="password"]:focus {
@@ -68,18 +96,24 @@ input[type="password"]:focus {
   outline: none;
 }
 
-button.myPage-submit {
-  background-color: #007bff;
-  color: white;
-  padding: 10px 20px;
-  font-size: 1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin-top: 10px;
+.signUp-message {
+  font-size: 13px;
+  color: #999;
+  margin-top: -10px;
+  margin-bottom: 25px;
 }
 
-button.myPage-submit:hover {
+.myPage-submit {
+  background-color: #007bff;
+  color: #fff;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: background-color 0.3s ease;
+}
+
+.myPage-submit:hover {
   background-color: #0056b3;
 }
