@@ -61,16 +61,16 @@ public class EditBoardServiceImpl implements EditBoardService{
 			String boardImgOriginalName = images.get(i).getOriginalFilename();
 			
 			// 변경된 파일명
-			String rename = FileUtil.rename(boardImgOriginalName);
+			String boardImgRename = FileUtil.rename(boardImgOriginalName);
 			
 			// DB INSERT를 위한 BoardImg 객체 생성
 			BoardImg img 
 				= BoardImg.builder()
 					.boardImgOriginalName(boardImgOriginalName) 	// 원본명
-					.boardImgRename(rename) 											// 변경명
+					.boardImgRename(boardImgRename) 											// 변경명
 					.boardImgPath(webPath)  											// 웹 접근 경로
 					.boardNo(boardNo)  														// 이미지가 삽입된 게시글 번호
-					.boardImgOrder(i)															// 5개의 이미지 칸 중에서 제출된 칸의 순서
+					.boardImgOrder(i)															// 최대 20개의 이미지 칸 중에서 제출된 칸의 순서
 					.uploadFile(images.get(i)) 										// 실제 업로드된 이미지 데이터
 					.build();
 			
