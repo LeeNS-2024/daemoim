@@ -191,6 +191,16 @@ public class BoardController {
 		  return "board/report"; }
 		 */
 	  
+	  model.addAttribute("board",board);
+	  
+	  if(board.getImageList().isEmpty() == false) {
+	  	int start = 0;
+	  	
+	  	if(board.getThumbnail() != null) start = 1;
+	  	
+	  	model.addAttribute("start", start); 
+	  }
+	  
 		if(boardTypeCode == 3)
 		return "board/imageAlbumDetail";
 		else
@@ -242,9 +252,7 @@ public class BoardController {
 	  return "redirect:/board/" + groupNo + "/" + boardTypeCode + "/" + boardNo; 
 	  }
 	  
-	  
-	  // 관리자페이지에서 신고한 내용을 조회하거나 + 작업을 할 경우 추가구문 있을 예정
-		
+		// 관리자페이지에서 따로 조회 가능하게 만들어둠
 		
 		return "board/report";
 	}

@@ -40,14 +40,17 @@
               <h3>
                 <!-- 검색이 아닌 경우 -->
                 <a th:unless="${param.key}"
-                   th:href="@{/board/{boardTypeCode}/{boardNo}
-                            (boardTypeCode=${boardTypeCode},
+                   th:href="@{/board/{groupNo}/{boardTypeCode}/{boardNo}
+                            (groupNo=${groupNo},
+                             boardTypeCode=${boardTypeCode},
                              boardNo=*{boardNo})}"
                    th:text="*{boardTitle}">게시글 제목</a>
                    <!-- 검색인 경우 -->
                 <a th:if="${param.key}"
-                   th:href="@{/board/{boardTypeCode}/{boardNo} 
-                            (boardTypeCode=${boardTypeCode}, boardNo=*{boardNo},
+                   th:href="@{/board/{groupNo}/{boardTypeCode}/{boardNo} 
+                            (groupNo=${groupNo},
+                             boardTypeCode=${boardTypeCode}, 
+                             boardNo=${boardNo},
                              key=${param.key}, query=${param.query})}"
                    th:text="*{boardTitle}">게시글 제목</a>
               </h3>
