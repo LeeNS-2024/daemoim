@@ -386,6 +386,36 @@
 		   #{groupNo})
   </insert>
   
+  <select id="checkBoardLike" resultType="_int">
+  	SELECT 
+  		COUNT(*)
+  	FROM
+  		"LIKE"
+  	WHERE
+  		MEMBER_NO = #{memberNo}
+  	AND
+  		BOARD_NO = #{boardNo}
+  </select>
+  
+  <select id="selectCommentList" resultType="Comment">
+  	SELECT LEVEL, C.*
+  	FROM
+  		(SELECT 
+  			COMMENT_NO, COMMENT_CONTENT,
+  			TO_CHAR(COMMENT_WRITE_DATE, 'YYYY"년" MM"월" DD"일" HH24"시" MI"분" SS"초") COMMENT_WRITE_DATE,
+  			GROUP_NO, BOARD_TYPE_CODE, BOARD_NO, MEMBER_NICKNAME, MEMBER_IMG, PARENT_COMMENT_NO, COMMENT_DEL_FL
+  		FROM "COMMENT"
+  		JOIN MEMBER USING(BOARD_NO)
+  		WHERE BOARD_NO = #{boardNo}) C
+  	WHERE COMMENT_DEL_FL = 'N'
+  	OR 0 != (SELECT COUNT(*) 
+  			 FROM "COMMENT" SUB
+  			 WHERE SUB.PARENT_COMMENT_NO = C.COMMENT_NO
+  			 AND COMMENT_DEL_FL = 'N')
+  	START WITH PARENT_COMMENT_NO IS NULL
+  	CONNECT BY PRIOR COMMENT_NO = PARENT_COMMENT_NO
+  	ORDER SIBLINGS BY COMMENT_NO
+  </select>
 
   
 </mapper>

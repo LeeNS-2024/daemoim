@@ -24,6 +24,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import edu.kh.daemoim.board.dto.Board;
+import edu.kh.daemoim.board.dto.Comment;
 import edu.kh.daemoim.board.dto.Pagination;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -343,9 +344,39 @@ public class BoardController {
     return result;
 	}
 	
+	/** 좋아요 up 및 down
+	 * @param boardNo
+	 * @param loginMember
+	 * @return
+	 */
+	@ResponseBody
+	@PostMapping("like")
+	public Map<String, Object> boardLike(
+		@RequestBody int boardNo,
+		@SessionAttribute("loginMember") MyPage loginMember){
+		
+		int memberNo = loginMember.getMemberNo();
+		
+		return service.boardLike(boardNo, memberNo);
+	}
 	
 	
-	
+	/** 댓글 목록 조회(비동기방식)
+	 * @param boardNo
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("commentList")
+	public String selectCommentList(
+		@RequestParam("groupNo") int groupNo,
+		@RequestParam("boardTypeCode") int boardTypeCode,
+		@RequestParam("boardNo") int boardNo,
+		Model model) {
+		
+		List<Comment> commentList = service.selectCommentList(groupNo, boardTypeCode,boardNo);
+		
+		return null;
+	}
 	
 	
 	
