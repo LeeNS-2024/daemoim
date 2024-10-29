@@ -16,9 +16,16 @@
     
           <p>회원님의 ID는: <span th:text="${memberId}"></span>입니다.</p>
 </section>
-                <label for="gologin">
-               <button>   <a href="/signin">로그인</a></button>
-                </label>
+           <div class="login">
+                  <label for="gologin">
+                 <button>   <a href="/signin">로그인</a></button>
+                  </label>
+
+                  <label for="goFindPw">
+                    <button><a href="/findPwPage">비밀번호 찾기</a></button>
+                  </label>
+
+           </div>
   </div>
 </div>
 </body>

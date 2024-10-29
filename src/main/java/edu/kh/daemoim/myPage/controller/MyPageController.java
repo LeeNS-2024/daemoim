@@ -1,5 +1,7 @@
 package edu.kh.daemoim.myPage.controller;
 
+import java.util.List;
+
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,9 +18,11 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import edu.kh.daemoim.main.dto.MainDTO;
 import edu.kh.daemoim.myPage.dto.MyPage;
 import edu.kh.daemoim.myPage.service.MyPageService;
 import jakarta.mail.Session;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -180,5 +184,21 @@ public class MyPageController {
 		
 		return "redirect:info";
 	}
+
+	@GetMapping("myGroup")
+	public String myGroup(
+			HttpSession session,
+			Model model) {
+        MyPage loginMember = (MyPage) session.getAttribute("loginMember");
+
+
+        if (loginMember != null) {
+            int memberNo = loginMember.getMemberNo();
+            List<MainDTO> joinGroups = service.findMyGroup(memberNo);
+            model.addAttribute("joinGroups", joinGroups);
+        }
+		return "myPage/myGroup";
+	}
+	
 	
 }

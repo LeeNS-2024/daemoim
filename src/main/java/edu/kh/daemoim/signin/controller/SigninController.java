@@ -36,16 +36,22 @@ public class SigninController {
       
       // myPage DTO 만들었는데 수정해야 할 수 있음 MemeberDTO로
       MyPage loginMember = service.login(memberId, memberPw);
+     
+      int authoritycheck = service.authoritycheck(memberId);
       
       if(loginMember == null) {// 로그인 실패
     	  ra.addAttribute("message", "이메일와 비밀번호가 매치되지 않습니다.");
     	  return "redirect:/signin";
-      }else {
-         model.addAttribute("loginMember", loginMember);
+      } else if(authoritycheck > 3) {
+    	  model.addAttribute("loginMember", loginMember);
+    	  return "redirect:/";
+      }
+      else {
          
+    	  return "siteManage/main";
       }
       
-      return "redirect:/";
+      
       }
    @GetMapping("logout")
 	public String logout(SessionStatus status) {

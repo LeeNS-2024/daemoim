@@ -31,7 +31,7 @@ public class SiteManageController {
 
 	private final SiteManageService service;
 
-	@GetMapping("")
+	@GetMapping("main")
 	public String siteManage(Model model
 			) {
 
