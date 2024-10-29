@@ -27,26 +27,28 @@ import lombok.extern.slf4j.Slf4j;
 public class EditBoardController {
 
 	private final EditBoardService service;
-	
+
 	private final BoardService boardService;
-	
-	/** 게시글 작성 화면으로 전환
+
+	/**
+	 * 게시글 작성 화면으로 전환
+	 * 
 	 * @param groupNo
 	 * @param boardTypeCode
 	 * @return
 	 */
 	@GetMapping("{groupNo:[0-9]+}/{boardTypeCode:[0-9]+}/insert")
-	public String boardInsert(
-		@PathVariable("groupNo") int groupNo,
-		@PathVariable("boardTypeCode") int boardTypeCode
-		) {
-		
-		if(boardTypeCode == 3)
-		return "/board/imageAlbumWrite";
-		else return "/board/boardWrite";
+	public String boardInsert(@PathVariable("groupNo") int groupNo, @PathVariable("boardTypeCode") int boardTypeCode) {
+
+		if (boardTypeCode == 3)
+			return "/board/imageAlbumWrite";
+		else
+			return "/board/boardWrite";
 	}
-	
-	/** 게시글 등록하기
+
+	/**
+	 * 게시글 등록하기
+	 * 
 	 * @param groupNo
 	 * @param boardTypeCode
 	 * @param inputBoard
@@ -55,89 +57,29 @@ public class EditBoardController {
 	 * @param ra
 	 * @return
 	 */
-	/*
-	 * @PostMapping("{groupNo:[0-9]+}/{boardTypeCode:[0-9]+}/insert")
-	 * 
-	 * @ResponseBody public String boardInsert(
-	 * 
-	 * @PathVariable("groupNo") int groupNo,
-	 * 
-	 * @PathVariable("boardTypeCode") int boardTypeCode,
-	 * 
-	 * @ModelAttribute edu.kh.daemoim.board.dto.Board inputBoard,
-	 * 
-	 * @SessionAttribute("loginMember") MyPage loginMember,
-	 * 
-	 * @RequestParam("images") List<MultipartFile> images, RedirectAttributes ra ) {
-	 * 
-	 * inputBoard.setMemberNo(loginMember.getMemberNo());
-	 * 
-	 * int boardNo = service.boardInsert(inputBoard, images);
-	 * 
-	 * String path = null; String message = null;
-	 * 
-	 * if(boardNo == 0) { path = "insert"; message = "게시글작성을 실패하였습니다"; } else { path
-	 * = "/board/" + groupNo + "/" + boardTypeCode + "/" + boardNo; message =
-	 * "게시글이 작성되었습니다"; } ra.addFlashAttribute("message", message);
-	 * 
-	 * return "redirect:" + path;
-	 * 
-	 * }
-	 */
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	@PostMapping("{groupNo:[0-9]+}/{boardTypeCode:[0-9]+}/insert")
+	@ResponseBody
+	public String boardInsert(@PathVariable("groupNo") int groupNo, @PathVariable("boardTypeCode") int boardTypeCode,
+			@ModelAttribute edu.kh.daemoim.board.dto.Board inputBoard, @SessionAttribute("loginMember") MyPage loginMember,
+			@RequestParam("images") List<MultipartFile> images, RedirectAttributes ra) {
+
+		inputBoard.setMemberNo(loginMember.getMemberNo());
+
+		int boardNo = service.boardInsert(inputBoard, images);
+		String path = null;
+		String message = null;
+
+		if (boardNo == 0) {
+			path = "insert";
+			message = "게시글작성을 실패하였습니다";
+		} else {
+			path = "/board/" + groupNo + "/" + boardTypeCode + "/" + boardNo;
+			message = "게시글이 작성되었습니다";
+		}
+		ra.addFlashAttribute("message", message);
+
+		return "redirect:" + path;
+
+	}
+
 }
