@@ -338,47 +338,7 @@ public class BoardController {
 		return "board/comment :: comment-list";
 	}
 	
-	
-	/** 현재 게시물이 포함된 목록의 페이지로 리다이렉트
-	 * @param groupNo
-	 * @param boardTypeCode
-	 * @param boardNo
-	 * @param paramMap
-	 * @return
-	 * @throws UnsupportedEncodingException 
-	 */
-	@PostMapping("{groupNo:[0-9]+}/{boardTypeCode:[0-9]+}/{boardNo:[0-9]+}/goToList")
-	public String goToList(
-		@PathVariable("groupNo") int groupNo,
-		@PathVariable("boardTypeCode") int boardTypeCode,
-		@PathVariable("boardNo") int boardNo,
-		@RequestParam Map<String, Object> paramMap) throws UnsupportedEncodingException {
-		
-		paramMap.put("groupNo", groupNo);
-		paramMap.put("boardTypeCode", boardTypeCode);
-		paramMap.put("boardNo", boardNo);
-		
-		int cp = service.getCurrentPage(paramMap);
-		
-		String url = "redirect:/board/" + groupNo + "/" + boardTypeCode + "/" + boardNo + "?cp=" + cp;
-		
-		if(paramMap.get("key") != null) {
-			String query = URLEncoder.encode(paramMap.get("query").toString(), "UTF-8");
-			
-			url += "&key=" + paramMap.get("key") + "&query=" + query;
-		}
-		
-		return url;
-	}
-	
-	public String boardExceptionHandler(Exception e, Model model) {
-		
-		model.addAttribute("e", e);
-		model.addAttribute("errorMessage", "게시글 관련 오류 발생");
-		
-		return "error/500";
-	}
-	
+
 	/** 현재 게시글이 포함된 목록의 페이지로 redirect
 	 * @param boardCode
 	 * @param boardNo
@@ -403,30 +363,15 @@ public class BoardController {
 		return url;
 	}
 	
+	// 게시글 관련 오류발생했을 경우 500번 html 띄우기
+	public String boardExceptionHandler(Exception e, Model model) {
+		
+		model.addAttribute("e", e);
+		model.addAttribute("errorMessage", "게시글 관련 오류 발생");
+		
+		return "error/500";
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 }

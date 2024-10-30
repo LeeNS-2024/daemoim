@@ -123,7 +123,4 @@ reportBtn?.addEventListener("click", () => {
     alert("로그인 후 이용해 주세요");
     return;
   }
-
-  // 신고 모달 또는 페이지로 이동하는 로직 구현
-  // ...
 });
