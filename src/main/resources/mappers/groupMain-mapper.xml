@@ -92,8 +92,8 @@
 
 	<!--모임 가입신청 확인 버튼 클릭 시 -->
 	<insert id="joinGroup">
-		INSERT INTO MEMBER_GROUP
-		VALUES(#{memberNo}, #{groupNo}, DEFAULT, DEFAULT, DEFAULT)
+		INSERT INTO INVITE
+		VALUES(#{memberNo}, #{groupNo}, DEFAULT, DEFAULT)
 	
 
 	</insert>
