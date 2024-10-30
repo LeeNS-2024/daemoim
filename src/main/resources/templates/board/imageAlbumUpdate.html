@@ -32,7 +32,7 @@
           <!-- 기존 이미지 목록 -->
           <th:block th:each="image : ${board.imageList}">
             <div class="preview-wrapper existing-image">
-              <img class="preview" th:src="${image.imageUrl}" th:alt="${image.imageOriginal}">
+              <img class="preview" th:src="${image.boardImgPath}" th:alt="${image.boardImgOriginalName}">
               <span class="file-name" th:text="${image.imageOriginal}"></span>
               <input type="hidden" name="existingImages" th:value="${image.imageNo}">
               <button type="button" class="delete-image">&times;</button>

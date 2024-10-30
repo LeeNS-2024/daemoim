@@ -63,8 +63,8 @@ public class EditBoardController {
 	 * @param ra
 	 * @return
 	 */
+	@ResponseBody
 	@PostMapping("{groupNo:[0-9]+}/{boardTypeCode:[0-9]+}/insert")
-
 	public String boardInsert(
 			@PathVariable("groupNo") int groupNo, 
 			@PathVariable("boardTypeCode") int boardTypeCode,
@@ -78,17 +78,15 @@ public class EditBoardController {
 		int boardNo = service.boardInsert(inputBoard, images);
 		String path = null;
 		String message = null;
-
 		if (boardNo == 0) {
-			path = "/board/" + groupNo + "/insert";
 			message = "게시글작성을 실패하였습니다";
 		} else {
-			path = "/board/" + groupNo + "/" + boardTypeCode + "/" + boardNo;
+			path =  "/board/" + groupNo + "/" + boardTypeCode + "/" + boardNo;
 			message = "게시글이 작성되었습니다";
 		}
 		ra.addFlashAttribute("message", message);
 
-		return "redirect:" + path;
+		return path;
 	}
 	
 	/** 게시글 삭제
@@ -169,8 +167,9 @@ public class EditBoardController {
 		// 게시글이 존재하고 로그인한 회원이 작성한 글이 맞을 경우
 		// 수정 화면으로 forward
 		model.addAttribute("board", board);
-		if(boardTypeCode == 3) return "board/imageAlbumUpdate";
-		else return "board/boardUpdate";
+		
+		if(boardTypeCode == 3) return "/board/imageAlbumUpdate";
+		else return "/board/boardUpdate";
 	}
 	
 	/** 게시글 수정

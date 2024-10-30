@@ -129,7 +129,11 @@ let beforeCommentRow;
 //  댓글 수정 confirm 출력하면서 코드실행
 const UpdateCommentCheck = (btn) => {
 
-  confirmM("수정중인 댓글이 있습니다." + "현재 댓글을 수령하시겠습니까?")
+  /* 댓글 수정 화면이 1개만 열려 있을 수 있게 하기 */
+  const temp = document.querySelectorAll(".update-textarea");
+
+  if(temp.length() > 0){
+  confirmM("수정중인 댓글이 있습니다." + "현재 댓글을 수정하시겠습니까?")
     .then(result => {
       if (!result) return;
 
@@ -145,11 +149,23 @@ const UpdateCommentCheck = (btn) => {
       childeCommentBtn.addEventListener("click", () => ChildCommentCheck(childeCommentBtn));
       updateCommentBtn.addEventListener("click", () => UpdateCommentCheck(updateCommentBtn));
       deleteCommentBtn.addEventListener("click", () => deleteCommentCheck(deleteCommentBtn));
-      UpdateComment(btn);
-    })
+      createUpdateArea(btn);
+    });
+  } else {
+
+    // 백업본 버튼에 이벤트 추가
+    const childeCommentBtn = beforeCommentRow.querySelector(".child-comment-btn");
+    const updateCommentBtn = beforeCommentRow.querySelector(".update-comment-btn");
+    const deleteCommentBtn = beforeCommentRow.querySelector(".delete-comment-btn");
+
+    childeCommentBtn.addEventListener("click", () => ChildCommentCheck(childeCommentBtn));
+    updateCommentBtn.addEventListener("click", () => UpdateCommentCheck(updateCommentBtn));
+    deleteCommentBtn.addEventListener("click", () => deleteCommentCheck(deleteCommentBtn));
+    createUpdateArea(btn);
+  }
 
 }
-
+const createUpdateArea = (btn) => {
 // 1. 수정하려는 댓글(li) 요소 얻어오기
 const commentRow = btn.closest("li");
 const commentNo = commentRow.dataset.commentNo; // 댓글 번호
@@ -182,11 +198,11 @@ const commentBtnArea = document.createElement("div");
 commentBtnArea.classList.add("comment-btn-area");
 
 // 8. 수정 버튼 생성
-const updateBtn = document.createElement("button");
-updateBtn.innerText = "수정";
+const commentUpdateBtn = document.createElement("button");
+commentUpdateBtn.innerText = "수정";
 
 // 수정 버튼 클릭 시 댓글 수정 (ajax)
-updateBtn.addEventListener("click", () => {
+commentUpdateBtn.addEventListener("click", () => {
   const data = {
     "commentNo": commentNo,
     "commentContent": textarea.value
@@ -254,9 +270,9 @@ cancelBtn.addEventListener("click", () => {
 
 // 10. 버튼 영역에 수정/취소 버튼 추가 후
 //     댓글 행에 버튼 영역 추가
-commentBtnArea.append(updateBtn, cancelBtn);
+commentBtnArea.append(commentUpdateBtn, cancelBtn);
 commentRow.append(commentBtnArea);
-
+}
 
 /* confirmM에 사용하는 구문들 모아두는 영역 */
 
@@ -304,12 +320,7 @@ const ChildComment = (btn) => {
 }
 
 
-// ***** 댓글 수정화면으로 전환 *****
-const UpdateComment = (btn) => {
 
-  /* 댓글 수정 화면이 1개만 열려 있을 수 있게 하기 */
-  const temp = document.querySelector(".update-textarea");
-}
 
 
 
