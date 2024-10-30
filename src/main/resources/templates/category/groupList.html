@@ -4,6 +4,7 @@
             <img th:src="${group.groupMainImg != null ? group.groupMainImg : '/images/default.png'}" alt="[[${group.groupName}]] 아이콘" />
         </div>
         <div class="details">
+            <div class="location">[[${group.categoryListName}]]</div>
             <a th:href="@{'/groupMain/' + ${group.groupNo}}" 
                class="categoryGroup-name" 
                style="color: black; text-decoration: none;">
@@ -11,7 +12,6 @@
             </a>
             <div class="group-name">[[${group.groupIntroduce}]]</div>
             <div class="location">[[${group.categoryName}]]</div>
-            <div class="location">[[${group.categoryListName}]]</div>
             <div class="participants">
                 <i class="fa-solid fa-users"></i>
                 <div>[[${group.currentPopulation}]] / [[${group.maxPopulation}]]</div>
