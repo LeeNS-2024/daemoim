@@ -185,18 +185,6 @@ public class BoardController {
 		  }
 		  */
 	  }
-	  
-		/*
-		  // 신고 기능 // 로그인한 회원이 작성한 글 Yes + 비회원 if(loginMember == null) {
-		  ra.addFlashAttribute("message", "로그인 후 이용해주세요"); return "redirect:/board/" +
-		  groupNo + "/" + boardTypeCode + "/" + boardNo; } else
-		  if(loginMember.getMemberNo() == board.getMemberNo()) {
-		  ra.addFlashAttribute("message", "본인 글은 신고할 수 없습니다"); return
-		  "redirect:/board/" + groupNo + "/" + boardTypeCode + "/" + boardNo; } else {
-		  
-		  return "board/report"; }
-		 */
-	  
 	  model.addAttribute("board",board);
 	  
 	  if(board.getImageList().isEmpty() == false) {
