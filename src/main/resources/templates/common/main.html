@@ -10,10 +10,10 @@
   <th:block th:replace="~{common/common}"></th:block>
 </head>
 <body>
-
+  <th:block th:replace="~{common/header}"></th:block>
+  
   <main class="main">
 
-    <th:block th:replace="~{common/header}"></th:block>
 
     <!-- 세션 값이 있는지 확인
     <p th:text="${loginMember != null ? '로그인 상태입니다' : '로그인 상태가 아닙니다'}"></p>
@@ -45,7 +45,7 @@
       <!-- 추천 모임 목록 -->
       <th:block th:if="${recommendedGroups != null && !#lists.isEmpty(recommendedGroups)}">
         <h4 class="centered-title" style="color: rgb(28, 138, 106);"> &nbsp;&nbsp; ★ 추천 모임</h4>
-        <h1 class="centered-title" style="color: black;">" 마음으로 이어진 모임 " <br><br>
+        <h1 class="centered-title" style="color: black;">" 마음으로 이어진 모임 " <br><br> </h1>
 
         </h1>
 
@@ -78,12 +78,13 @@
 
     <!-- 로그인 상태일 때 내가 가입한 모임 목록 -->
     <th:block th:if="${loginMember != null}">
-      <h2>내가 가입한 모임</h2>
       <th:block th:unless="${joinGroups != null && !#lists.isEmpty(joinGroups)}">
         <p>가입한 모임이 없습니다.</p>
       </th:block>
-
+      
       <th:block th:if="${joinGroups != null && !#lists.isEmpty(joinGroups)}">
+        <h4 class="centered-title" style="color: rgb(244, 54, 48);"><br><br><br> &nbsp;&nbsp; ♥ 내가 가입한 모임</h4>
+        <h1 class="centered-title" style="color: black;">" 마음으로 이어진 모임 " <br><br> </h1>
         <section class="activity-section">
           <div class="category-container">
             <div class="category-box" th:each="group : ${joinGroups}">
@@ -114,10 +115,13 @@
     <section class="scroll-top">
       <button id="scrollTopBtn"><i class="fa-solid fa-circle-chevron-up"></i></button>
     </section>
-  </main>
-  
-  <th:block th:replace="~{common/footer}"></th:block>
+    <br>
+    <br>
 
+    <th:block th:replace="~{common/footer}"></th:block>
+  </main>
+
+  
   <script src="/js/main.js"></script>
 
 </body>

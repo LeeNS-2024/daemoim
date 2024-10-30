@@ -16,17 +16,26 @@
 /* Reset */
 * {
   border: 0;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 html, body {
   height: 100%;
-  overflow-x: hidden; /* 가로 스크롤 제거 */
+  overflow-x: hidden; 
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 /************ 헤더 css ************/
 .header {
-  width: 100%;
-  background-color: #fdf5f5;
+  width: calc(100% - 17px);
+  background-color: white;
   padding: 10px 20px;
   box-sizing: border-box;
   position: fixed;
@@ -37,6 +46,7 @@ html, body {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  box-shadow: 0 10px 16px rgba(0, 0, 0, 0.2);
 }
 
 .logo {
@@ -55,8 +65,8 @@ html, body {
 }
 
 .logo img {
-  width: 100%; /* 이미지가 부모 요소에 맞춰 자동 조정 */
-  height: auto; /* 이미지 비율 유지 */
+  width: 100%; 
+  height: auto;
   object-fit: contain; 
 }
 
@@ -76,7 +86,7 @@ html, body {
   align-items: center;
   gap: 20px;
   white-space: nowrap;
-  overflow: hidden;
+  overflow: visible;
   flex-shrink: 0;
 }
 
@@ -112,7 +122,8 @@ html, body {
 
 .notification-container {
   position: relative;
-  z-index: 1100;
+  z-index: 1201;
+  margin-right: 15px;
 } 
 .loginBtnBox {
   margin-left: auto;
@@ -169,7 +180,7 @@ header > section:nth-child(3) {
 
 .notification-container {
   position: relative;
-  z-index: 1100; 
+  z-index: 1201; 
   margin-right: 15px; 
 }
 
@@ -178,7 +189,7 @@ header > section:nth-child(3) {
   cursor: pointer;
   background-color: rgba(255, 255, 255, 1);
   border: none;
-  z-index: 1100; 
+  z-index: 1201; 
 }
 
 .notification-btn.fa-solid {
@@ -199,18 +210,18 @@ header > section:nth-child(3) {
   align-items: center;
   background-color: red;
   color: white;
+  z-index: 1300; 
 }
 
 .notification-list {
   position: absolute;
-  top: 30px;
-  left: 50%; /* 알림 버튼 기준으로 설정 */
-  transform: translateX(-100%); /* 왼쪽으로 창이 열리도록 조정 */
+  top: 100px;
+  left: 0; /* 알림 버튼 기준으로 설정 */
   width: 380px;
   height: 400px;
   padding: 10px;
   list-style: none;
-  z-index: 1200;
+  z-index: 1201;
   background: #f0f3fa;
   overflow-y: auto;
   border: 1px solid #ccc;
@@ -300,17 +311,13 @@ header > section:nth-child(3) {
 }
 
 /************ 메인 컨텐츠 css ************/
-body {
-  display: flex;
-  flex-direction: column;
-  min-height: 99vh;
-}
-
 .main {
   font-family: 'NEXON Lv1 Gothic OTF';
   padding-top: 200px;
-  padding-bottom: 60px;
   flex-grow: 1;
+  
+  display: flex;
+  flex-direction: column;
 }
 
 .centered-title {
@@ -340,6 +347,7 @@ body {
   /* display: flex;
   padding: 15px;
   align-items: center; */
+      
 }
 
 .category-box:hover {
@@ -387,6 +395,7 @@ body {
 
 .group-name {
   font-size: 16px;
+  margin-top: 5px;
   margin-bottom: 5px;
   display: -webkit-box;
   -webkit-line-clamp: 3; 
@@ -511,15 +520,10 @@ footer {
   width: 100%;
   text-align: center;
   padding: 10px;
-  bottom: 0;
-  left: 0;
+  background-color: #fdf5f5; 
   height: 50px;
-  z-index: 10;
-}
-
-footer nav a {
-  text-decoration: none;
+  margin-top: auto; 
+  font-size: 14px;
   color: black;
-  margin-right: 10px;
 }
 
