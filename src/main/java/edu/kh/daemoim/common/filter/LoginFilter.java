@@ -2,6 +2,8 @@ package edu.kh.daemoim.common.filter;
 
 import java.io.IOException;
 
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -29,6 +31,7 @@ public class LoginFilter implements Filter {
 		HttpSession session = req.getSession();
 		if ( session.getAttribute("loginMember") == null ) {
 			// 없다면
+	        session.setAttribute("message", "로그인 회원만 입장할 수 있습니다.");
 			resp.sendRedirect("/");
 			log.info("[보안] >> 로그인_권한_페이지 : 리턴");
 		} else {
