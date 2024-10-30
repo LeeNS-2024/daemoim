@@ -271,12 +271,13 @@ public class GroupManageController {
 	@PostMapping("{groupNo:[0-9]+}/notification")
 	public int gotoNotification(
 			@RequestBody List<Notification> notiList) {
-		
+		int count = 0;
 		for(Notification noti : notiList) {
-			sseService.insertNotification(noti);
+			Map<String, Object> map = sseService.insertNotification(noti);
+			if(map.isEmpty() == false) count ++;
 		}
 		
-		return 0;
+		return count;
 	}
 	
 

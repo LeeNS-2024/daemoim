@@ -68,12 +68,59 @@
   <span class="chat-unReaded"><!-- 안읽은 메시지갯수 --></span>
 </section>
 
+<!-- alert -->
+<section class="msg-body mc-body  display-none">
+  <section>
+    <section class="msg-head">
+      <div class="msg-logo">
+        <p>D</p><p>e</p><p>a</p><p>m</p><p>o</p><p>i</p><p>m</p>
+      </div>
+      <div><i id="msg-closeBtn" class="fa-solid fa-xmark" style="color: #ff6600;"></i></div>
+    </section>
+    <section class="msg-main">
+      <pre id="msg-content"></pre>
+    </section>
+    <section class="msg-foot">
+      <div></div>
+      <div class="msg-logo">
+        <p>D</p><p>e</p><p>a</p><p>m</p><p>o</p><p>i</p><p>m</p>
+      </div>
+    </section>
+  </section>
+</section>
+
+<!-- confirm -->
+<section class="cnf-body mc-body display-none">
+  <section>
+    <section class="msg-head">
+      <div class="msg-logo">
+        <p>D</p><p>e</p><p>a</p><p>m</p><p>o</p><p>i</p><p>m</p>
+      </div>
+      <div></div>
+    </section>
+    <section class="msg-main">
+      <pre id="cnf-content"></pre>
+      <div class="cnf-btnBox">
+        <div id="cnf-yBtn">예</div>
+        <div id="cnf-nBtn">아니오</div>
+      </div>
+    </section>
+    <section class="msg-foot">
+      <div></div>
+      <div class="msg-logo">
+        <p>D</p><p>e</p><p>a</p><p>m</p><p>o</p><p>i</p><p>m</p>
+      </div>
+    </section>
+  </section>
+</section>
 
 
 <script th:inline="javascript">
   const chatLoginCheck = /*[[${session.loginMember} ? true : false]]*/ false;
   const chatLoginMemberNo = /*[[${session.loginMember?.memberNo}]]*/ "로그인한 회원 번호";
+  const messageCheck = /*[[${message} ? true : false]]*/ false;
+  const messageContent = /*[[${message}]]*/ "메시지내용";
 </script>
+<script src="https://kit.fontawesome.com/8695e357e4.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1.5.1/dist/sockjs.min.js"></script>
 <script src="/js/footer.js"></script>
-<script src="https://kit.fontawesome.com/8695e357e4.js" crossorigin="anonymous"></script>

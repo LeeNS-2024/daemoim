@@ -39,11 +39,17 @@ public class PopupController {
 	
 	private final PopupService service;
 	
-	// 개발용 미리보기창 호출
-//	@GetMapping("popup")
-//	public String goPopup(){
-//		return "common/popupViews";
-//	}
+//	 개발용 미리보기창 호출
+	@GetMapping("")
+	public String goPopup(Model model){
+		StringBuilder sb = new StringBuilder();
+		sb.append("message testing");
+		sb.append("\n잘못된 접근입니다.");
+		sb.append("\n올바른 방식으로 접근해주세요");
+		sb.append("\n2024.10.30 글쓴이 올림");
+		model.addAttribute("message", sb.toString());
+		return "common/main";
+	}
 	
 	// 팝업 불러오기
 	@ResponseBody
