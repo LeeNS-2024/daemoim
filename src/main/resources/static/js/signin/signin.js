@@ -12,21 +12,21 @@ function getCookie(key){
 // HTML 로딩(랜더링)이 끝난 후 수행
 document.addEventListener("DOMContentLoaded", () => {
 
-  const saveEmail = getCookie("saveEmail"); // 쿠키에 저장된 Email 얻어오기
+  const saveId = getCookie("saveId"); // 쿠키에 저장된 Email 얻어오기
 
-  if(saveEmail == undefined) return; 
+  if(saveId == undefined) return; 
 
-  const memberEmail 
-    = document.querySelector("#loginForm input[name=memberEmail]");
+  const memberId
+    = document.querySelector("#loginForm input[name=memberId]");
 
   const checkbox 
-    = document.querySelector("#loginForm input[name=saveEmail]");
+    = document.querySelector("#loginForm input[name=saveId]");
 
   // 로그인 상태인 경우 함수 종료
-  if(memberEmail == null) return;
+  if(memberId == null) return;
 
   // 이메일 입력란에 저장된 이메일 출력
-  memberEmail.value = saveEmail;
+  memberId.value = saveId;
 
   // 이메일 저장 체크박스를 체크 상태로 바꾸기
   checkbox.checked = true;
