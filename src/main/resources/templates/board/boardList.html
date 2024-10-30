@@ -15,8 +15,7 @@
     <div class="header">
         <img th:src="${groupHeaderImg}" alt="보드해더이미지" style="width: 99vw;">
     </div>
-    
-    
+
     <!-- Container -->
     <div class="container">
         
@@ -49,7 +48,7 @@
                                 <th:block th:text="|[*{commentCount}]|">댓글 수</th:block>
                             </td>
 
-                            <td th:text="*{memberNo}">닉네임</td>
+                            <td th:text="*{memberNickname}">닉네임</td>
             
                             <td th:text="*{boardWriteDate}">2023-10-26</td>
             
@@ -69,7 +68,9 @@
                 <div id="calendar"></div>
             </div>
             <div>
-                <button th:if= "${session.loginMember}" id="btn-write">글 작성하기</button>
+                <a th:if= "${session.loginMember}"
+                   th:href="@{{groupNo}/insert (groupNo = ${groupNo})}"
+                   class="btn-write hidden">글 작성하기</a>
             </div>
         </div>
 

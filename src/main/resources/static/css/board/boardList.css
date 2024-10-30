@@ -74,7 +74,7 @@ body {
     background-color: #f1f1f1;
 }
 
-#btn-write {
+.btn-write {
     width: 100%;
     padding: 10px;
     background-color: #007bff;
@@ -84,9 +84,13 @@ body {
     font-size: 16px;
 }
 
-#btn-write:hover {
+.btn-write:hover {
     background-color: #0056b3;
 }
+
+.hidden {
+    display: none;
+  }
 
 /* 페이지네이션 스타일 */
 .pagination-area {

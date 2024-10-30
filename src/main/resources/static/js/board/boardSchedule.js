@@ -7,6 +7,7 @@ function attendSchedule(scheduleNo, groupNo) {
   })
   .then(response => {
           console.log(response);
+          location.reload();
   })
   .catch(error => {
       console.error('참석 요청 중 오류 발생:', error);
@@ -21,6 +22,7 @@ function cancelSchedule(scheduleNo, groupNo) {
   })
   .then(response => {
     console.log(response);
+    location.reload();
   })
   .catch(error => {
   console.error('참석 요청 중 오류 발생:', error);
