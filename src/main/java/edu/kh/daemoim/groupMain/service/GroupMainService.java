@@ -50,6 +50,13 @@ public interface GroupMainService {
 	 */
 	boolean checkLoginMember(int groupNo, int memberNo);
 
+	/** 모임 가입신청 확인 버튼 클릭 시
+	 * @param groupNo
+	 * @param memberNo
+	 * @return
+	 */
+	boolean joinGroup(int groupNo, int memberNo);
+
 
 
 	

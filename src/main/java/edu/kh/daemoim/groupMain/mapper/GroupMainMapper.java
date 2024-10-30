@@ -1,13 +1,14 @@
 package edu.kh.daemoim.groupMain.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import edu.kh.daemoim.groupMain.dto.Notice;
 import edu.kh.daemoim.groupMain.dto.PhotoBox;
 import edu.kh.daemoim.groupMain.dto.Schedule;
-import io.lettuce.core.dynamic.annotation.Param;
 
 @Mapper
 public interface GroupMainMapper {
@@ -53,6 +54,14 @@ public interface GroupMainMapper {
 	 * @return
 	 */
 	int checkLoginMember(@Param("groupNo") int groupNo, @Param("memberNo") int memberNo);
+
+	/**모임 가입신청 확인 버튼 클릭 시
+	 * @param groupNo
+	 * @param memberNo
+	 * @return
+	 */
+	
+	int joinGroup(Map<String, Object> paramMap);
 
 
 
