@@ -3,7 +3,7 @@ const imageInput = document.getElementById('imageInput');
 const imageList = document.getElementById('imageList');
 const imageCount = document.getElementById('imageCount');
 const addImageBtn = document.querySelector('.add-image-btn');
-let imageArray = [];
+let imageArray = []; // 이미지 저장할 배열
 
 const MAX_IMAGES = 20;
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 파일 크기 제한 (10MB)
@@ -49,7 +49,7 @@ function createPreviewElement(file, index) {
   preview.appendChild(previewWrapper);
 
   return preview;
-}
+} // createPreviewElement end
 
 
 // 이미지 제거 함수
