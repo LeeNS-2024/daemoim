@@ -247,6 +247,15 @@ const selectNotificationList = () => {
           const notiList = document.querySelector(".notification-list");
           notiList.innerHTML = '';
 
+          // 알림이 없을 때 빈 목록 메시지 표시
+          if (selectList.length === 0) {
+              const emptyMessage = document.createElement("div");
+              emptyMessage.className = 'no-notifications';
+              emptyMessage.innerText = '새로운 알림이 없습니다.';
+              notiList.appendChild(emptyMessage);
+              return;
+          }
+
           // 전체 읽음 버튼 생성
           const allReadBtn = document.createElement("button");
           allReadBtn.className = 'all-read-btn';
@@ -329,6 +338,7 @@ const selectNotificationList = () => {
 
 
 
+
 /* 읽지 않은 알림 개수 조회 및 
    알림 유무 표시 여부 변경 */
   const notReadCheck = () => {
@@ -342,7 +352,7 @@ const selectNotificationList = () => {
       throw new Error("알림 개수 조회 실패");
     })
     .then(count => {
-      console.log(count);
+      console.log("알림 개수 : ", count);
   
       const notificationBtn =
         document.querySelector(".notification-btn");
@@ -376,34 +386,42 @@ const selectNotificationList = () => {
 
 // 페이지 로딩 완료 후 수행
 document.addEventListener("DOMContentLoaded", () => {
-  const notificationCountArea = document.querySelector(".notification-count-area");
-    if (notificationCountArea) {
-        connectSse();
-        notReadCheck();
-    } else {
-        console.error("알림 요소가 존재하지 않습니다.");
-    }
+  let notificationCountArea = document.querySelector(".notification-count-area");
+  if (!notificationCountArea) {
+      notificationCountArea = document.createElement("div");
+      notificationCountArea.className = "notification-count-area";
+      notificationCountArea.innerText = "0"; // 초기 알림 개수
+      document.body.appendChild(notificationCountArea); // 원하는 부모 요소에 추가
+  }
 
+  // 알림 버튼 생성 확인 및 생성
+  let notificationBtn = document.querySelector(".notification-btn");
+  if (!notificationBtn) {
+      notificationBtn = document.createElement("button");
+      notificationBtn.className = "notification-btn fa-regular";
+      document.body.appendChild(notificationBtn); // 원하는 부모 요소에 추가
+  }
 
-  // 종 버튼(알림) 클릭 시 알림 목록이 출력하기
-  const notificationBtn 
-    = document.querySelector(".notification-btn");
+  // 알림 SSE 연결 및 알림 개수 업데이트
+  connectSse();
+  notReadCheck();
 
-  notificationBtn?.addEventListener("click", () => {
+  // 알림 버튼 클릭 시 알림 목록을 토글
+  notificationBtn.addEventListener("click", () => {
+      let notificationList = document.querySelector(".notification-list");
 
-    const notificationList 
-      = document.querySelector(".notification-list");
+      // 알림 목록이 없을 때 동적으로 생성
+      if (!notificationList) {
+          notificationList = document.createElement("div");
+          notificationList.className = "notification-list";
+          document.body.appendChild(notificationList); // 원하는 부모 요소에 추가
+      }
 
-    if( notificationList.classList.contains("notification-show") ){
-      
-      notificationList.classList.remove("notification-show");
-    }
-
-    else { 
-      selectNotificationList();
-
-      notificationList.classList.add("notification-show");
-    }
+      // 알림 목록 토글
+      notificationList.classList.toggle("notification-show");
+      if (notificationList.classList.contains("notification-show")) {
+          selectNotificationList(); // 알림 목록 조회 함수
+      }
   });
 
 

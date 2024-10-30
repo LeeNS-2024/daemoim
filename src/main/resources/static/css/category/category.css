@@ -1,13 +1,13 @@
 /* 검색창을 화면 중앙에 정렬 */
 .search-section {
-  margin-top: 220px;
+  margin-top: 250px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .input-wrapper {
-  width: 100%;
+  width: 400px;
   max-width: 400px;
 }
 
@@ -36,12 +36,15 @@
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 8px;
-  max-width: 300px; /* 카드의 최대 너비를 줄여 더 촘촘하게 배치 */
+  max-width: 300px; 
   width: 100%;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   padding: 20px;
   display: block;
   transition: transform 0.2s, box-shadow 0.2s; /* hover 효과 추가 */
+  display: flex;
+    flex-direction: row;
+    align-items: flex-start;
 }
 
 .category-box:hover {
@@ -85,7 +88,6 @@
 }
 
 .location {
-  font-size: 14px;
   color: #777;
   margin-bottom: 15px;
 }
@@ -93,9 +95,15 @@
 .participants {
   display: flex;
   align-items: center;
-  margin-top: 15px; /* 참가자 정보 위에 여백 추가 */
+  margin-top: 15px; 
 }
 
 .participants i {
   margin-right: 5px;
+}
+
+.participants div{
+  font-size: 18px;
+  color: black;
+
 }
