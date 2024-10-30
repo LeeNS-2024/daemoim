@@ -136,19 +136,27 @@ table .reportDetail:hover{
 
 /* 둥근모서리 버튼 스타일 */
 #toggleButton {
-    padding: 8px 16px;
-    background-color: #fab2c4d8;  /* 버튼 배경색 */
-    color: #ffffff;  /* 버튼 텍스트 색 */
-
+    background-color: #4a90e2;
+    color: white;
     border: none;
-    border-radius: 8px;  /* 둥근 모서리 */
-    cursor: pointer;
+    border-radius: 20px;
+    padding: 8px 16px;
     font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 /* 버튼 hover 효과 */ 
 #toggleButton:hover {
-    background-color: #ffffff;  /* hover 시 약간 어두운 배경 */
-    color: #333;
+    background-color: #357ABD;
+    transform: scale(1.05);
+
+}
+.home-button {
+   
 }
 
+.home-button:hover {
+ 
+}
