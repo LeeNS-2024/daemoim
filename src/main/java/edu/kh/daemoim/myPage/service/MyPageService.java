@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.springframework.web.multipart.MultipartFile;
 
+import edu.kh.daemoim.groupManage.dto.GroupMemberManageDto;
 import edu.kh.daemoim.main.dto.MainDTO;
 import edu.kh.daemoim.myPage.dto.MyPage;
 
@@ -32,6 +33,11 @@ public interface MyPageService {
 
 	// 가입한 모임 이름
 	List<MainDTO> findMyGroup(int memberNo);
+	
+
+	GroupMemberManageDto getGroupMemberInfo(int memberNo, int groupNo);
+
+	int groupOut(int memberNo, int groupNo);
 
 	
 	

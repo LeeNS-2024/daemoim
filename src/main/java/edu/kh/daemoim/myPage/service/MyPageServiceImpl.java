@@ -119,6 +119,13 @@ public class MyPageServiceImpl implements MyPageService{
 	public List<MainDTO> findMyGroup(int memberNo) {
 		return mapper.findMyGroup(memberNo);
 	}
+
+	@Override
+	public int groupOut(int memberNo, int groupNo) {
+
+		return mapper.groupOut(memberNo,groupNo );
+	}
+	
 }
 
 

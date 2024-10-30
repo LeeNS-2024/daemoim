@@ -12,35 +12,48 @@
         <p>가입한 모임이 없습니다.</p>
       </th:block>
 
-      <th:block th:if="${joinGroups != null && !#lists.isEmpty(joinGroups)}">
-        <section class="activity-section">
-          <div class="category-container">
-            <div class="category-box" th:each="group : ${joinGroups}">
-              <div class="icon">
-                <img th:src="${group.groupMainImg != null ? group.groupMainImg : '/images/default.png'}" />
-              </div>
-              <div class="details">
-                <a th:href="@{/groupMain/{groupNo}(groupNo=${group.groupNo})}" 
-                   class="categoryGroup-name" 
-                   style="color: black; text-decoration: none;">
-                    [[${group.groupName}]]
-                </a>
-                <div class="group-name">[[${group.groupIntroduce}]]</div>
-                <div class="location">[[${group.categoryName}]]</div>
-                <div class="participants">
-                  <i class="fa-solid fa-users"> &nbsp;</i>
-                  <div>
-                    [[${group.currentPopulation}]] / [[${group.maxPopulation}]]
+
+    <form action="myGroup" method="myGroup" id="myGroup" class="myGroup">
+      
+          <th:block th:if="${joinGroups != null && !#lists.isEmpty(joinGroups)}">
+            <div>
+              <section class="activity-section">
+                <div class="group-box-board">
+                  <div class="group-out-img">
+                    <div class="category-container">
+                      <div class="category-box" th:each="group : ${joinGroups}">
+                        <div class="icon">
+                          <img th:src="${group.groupMainImg != null ? group.groupMainImg : '/images/default.png'}" />
+                        </div>
+                        <div class="details">
+                          <a th:href="@{/groupMain/{groupNo}(groupNo=${group.groupNo})}" 
+                             class="categoryGroup-name" 
+                             style="color: black; text-decoration: none;">
+                              [[${group.groupName}]]
+                          </a>
+                          <div class="group-name">[[${group.groupIntroduce}]]</div>
+                          <div class="location">[[${group.categoryName}]]</div>
+                          <div class="participants">
+                            <i class="fa-solid fa-users"> &nbsp;</i>
+                            <div>
+                              [[${group.currentPopulation}]] / [[${group.maxPopulation}]]
+                            </div>
+                          </div>
+                        </div>
+                        <!-- Button with data attribute to hold groupNo -->
+                        <button type="button" class="outGroupBtn" th:data-group-no="${group.groupNo}">
+                          모임에서 나가기
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </section>
             </div>
-            <div class=""></div>
-          </div>
-        </section>
-      </th:block>
-    </th:block>
+          </th:block>
+    </form>
+    
   
-  <script src="/js/board/boardList.js"></script>
+  <script src="/js/myPage/myPage-myGroup.js"></script>
 </body>
 </html>
