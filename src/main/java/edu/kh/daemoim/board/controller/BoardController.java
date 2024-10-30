@@ -375,10 +375,31 @@ public class BoardController {
 		
 		List<Comment> commentList = service.selectCommentList(groupNo, boardTypeCode,boardNo);
 		
-		return null;
+		Board board = Board.builder().commentList(commentList).build();
+		
+		model.addAttribute("board", board);
+		
+		return "board/comment :: comment-list";
 	}
 	
 	
+	@PostMapping("{groupNo:[0-9]+}/{boardTypeCode:[0-9]+}/{boardNo:[0-9]+}/goToList")
+	public String goToList(
+		@PathVariable("groupNo") int groupNo,
+		@PathVariable("boardTypeCode") int boardTypeCode,
+		@PathVariable("boardNo") int boardNo,
+		@RequestParam Map<String, Object> paramMap) {
+		
+		paramMap.put("groupNo", groupNo);
+		paramMap.put("boardTypeCode", boardTypeCode);
+		paramMap.put("boardNo", boardNo);
+		
+		int cp = service.getCurrentPage(paramMap);
+		
+		
+		
+		return null;
+	}
 	
 	
 	

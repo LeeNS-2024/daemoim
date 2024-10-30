@@ -134,7 +134,11 @@ public class BoardServiceImpl implements BoardService{
 		return mapper.selectCommentList(groupNo, boardTypeCode, boardNo);
 	}
 	
-	
+	// 현재 게시물이 속한 페이지 번호 조회
+	@Override
+	public int getCurrentPage(Map<String, Object> paramMap) {
+		return mapper.getCurrentPage(paramMap);
+	}
 	
 	
 	
