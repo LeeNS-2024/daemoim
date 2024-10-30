@@ -48,7 +48,7 @@
 			select="selectMemberImageList"
 			column="SCHEDULE_NO"
 			javaType="java.util.ArrayList"
-			ofType="Schedule"
+			ofType="Schedule"    
 		/>
 	</resultMap>
   
