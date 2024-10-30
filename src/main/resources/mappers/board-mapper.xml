@@ -18,7 +18,7 @@
 		ofType : List(컬렉션)의 제네릭(타입 제한) 지정
 		-->
 
-		<collection 
+		 <collection 
 			property="imageList"
 			select="selectImageList"
 			column="BOARD_NO"
@@ -26,7 +26,6 @@
 			ofType="BoardImg"
 		/>
 		  
-		
 		<collection
 			property="commentList"
 			select="selectCommentList"
@@ -400,10 +399,10 @@
   	FROM
   		(SELECT 
   			COMMENT_NO, COMMENT_CONTENT,
-  			TO_CHAR(COMMENT_WRITE_DATE, 'YYYY"년" MM"월" DD"일" HH24"시" MI"분" SS"초") COMMENT_WRITE_DATE,
-  			GROUP_NO, BOARD_TYPE_CODE, BOARD_NO, MEMBER_NICKNAME, MEMBER_IMG, PARENT_COMMENT_NO, COMMENT_DEL_FL
+  			TO_CHAR(COMMENT_WRITE_DATE, 'YYYY"년" MM"월" DD"일" HH24"시" MI"분" SS"초"') COMMENT_WRITE_DATE,
+  			BOARD_NO, MEMBER_NICKNAME, MEMBER_IMG, PARENT_COMMENT_NO, COMMENT_DEL_FL
   		FROM "COMMENT"
-  		JOIN MEMBER USING(BOARD_NO)
+  		JOIN MEMBER USING(MEMBER_NO)
   		WHERE BOARD_NO = #{boardNo}) C
   	WHERE COMMENT_DEL_FL = 'N'
   	OR 0 != (SELECT COUNT(*) 

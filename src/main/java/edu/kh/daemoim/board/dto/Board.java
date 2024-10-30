@@ -38,7 +38,7 @@ public class Board {
 	private int		 likeCount;
 	
 	private String thumbnail; // 썸네일 이미지
-	private String profileImg; // 작성자 프로필 이미지
+	private String memberImg; // 작성자 프로필 이미지
 	
 	//특정 게시글의 이미지 목록을 저장할 필드
 	private List<BoardImg> imageList;
