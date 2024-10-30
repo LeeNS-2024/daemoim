@@ -10,6 +10,7 @@ import org.apache.ibatis.session.RowBounds;
 import edu.kh.daemoim.board.dto.Board;
 import edu.kh.daemoim.board.dto.Comment;
 import edu.kh.daemoim.groupMain.dto.Schedule;
+import edu.kh.daemoim.siteManage.dto.StopMember;
 
 @Mapper
 public interface BoardMapper {
@@ -113,4 +114,16 @@ public interface BoardMapper {
 	List<Comment> selectCommentList(@Param("groupNo")				int groupNo, 
 																  @Param("boardTypeCode")	int boardTypeCode, 
 																  @Param("boardNo")				int boardNo);
+
+	/** 현재 게시물이 속해있는 페이지 조회
+	 * @param paramMap
+	 * @return
+	 */
+	int getCurrentPage(Map<String, Object> paramMap);
+
+	/** 신고 내용 DB에 저장
+	 * @param report
+	 * @return
+	 */
+	int reportInsert(StopMember report);
 }
