@@ -457,9 +457,15 @@ document.addEventListener("DOMContentLoaded", ()=>{
     }, 1000);
     chatBtnOn.classList.remove("display-none");
   }
-
+  
   // 전달받은 메시지가 있으면 메시지창 띄우기
   if(messageCheck) {
     alertM(messageContent);
+  }
+  
+  // 세션메세지 띄우기
+  if(sessionMessage){
+    alertM(sessionMessage);
+    fetch('/popup/removeMessage', { method: 'POST' });
   }
 });

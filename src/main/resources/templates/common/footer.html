@@ -114,12 +114,13 @@
   </section>
 </section>
 
-
 <script th:inline="javascript">
   const chatLoginCheck = /*[[${session.loginMember} ? true : false]]*/ false;
   const chatLoginMemberNo = /*[[${session.loginMember?.memberNo}]]*/ "로그인한 회원 번호";
   const messageCheck = /*[[${message} ? true : false]]*/ false;
   const messageContent = /*[[${message}]]*/ "메시지내용";
+  const sessionMessage = /*[[${session.message}]]*/ "";
+
 </script>
 <script src="https://kit.fontawesome.com/8695e357e4.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1.5.1/dist/sockjs.min.js"></script>

@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +25,7 @@ import edu.kh.daemoim.popup.service.PopupService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -38,18 +40,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class PopupController {
 	
 	private final PopupService service;
-	
-//	 개발용 미리보기창 호출
-	@GetMapping("")
-	public String goPopup(Model model){
-		StringBuilder sb = new StringBuilder();
-		sb.append("message testing");
-		sb.append("\n잘못된 접근입니다.");
-		sb.append("\n올바른 방식으로 접근해주세요");
-		sb.append("\n2024.10.30 글쓴이 올림");
-		model.addAttribute("message", sb.toString());
-		return "common/main";
-	}
 	
 	// 팝업 불러오기
 	@ResponseBody
@@ -235,4 +225,10 @@ public class PopupController {
 		return service.deletePopup(popupNo);
 	}
 	
+	// 세션에서 메시지 지우기
+	@PostMapping("removeMessage")
+	public ResponseEntity<Void> removeMessage(HttpSession session) {
+	    session.removeAttribute("message"); // 세션에서 메시지 제거
+	    return ResponseEntity.ok().build();
+	}
 }
