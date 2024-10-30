@@ -10,6 +10,7 @@ import org.apache.ibatis.session.RowBounds;
 import edu.kh.daemoim.board.dto.Board;
 import edu.kh.daemoim.board.dto.Comment;
 import edu.kh.daemoim.groupMain.dto.Schedule;
+import edu.kh.daemoim.siteManage.dto.StopMember;
 
 @Mapper
 public interface BoardMapper {
@@ -119,4 +120,10 @@ public interface BoardMapper {
 	 * @return
 	 */
 	int getCurrentPage(Map<String, Object> paramMap);
+
+	/** 신고 내용 DB에 저장
+	 * @param report
+	 * @return
+	 */
+	int reportInsert(StopMember report);
 }

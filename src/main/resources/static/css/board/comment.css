@@ -1,0 +1,131 @@
+/* 댓글 영역 전체 컨테이너 */
+#commentArea {
+  max-width: 1000px;
+  margin: 20px auto;
+  font-family: 'Arial', sans-serif;
+}
+
+/* 댓글 목록 영역 */
+.comment-list-area {
+  margin-bottom: 30px;
+}
+
+#commentList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* 댓글 행 스타일 */
+.comment-row {
+  border-bottom: 1px solid #e0e0e0;
+  padding: 15px 0;
+  margin: 5px 0;
+}
+
+/* 대댓글 스타일 */
+.child-comment {
+  margin-left: 30px;
+  background-color: #f8f9fa;
+  border-radius: 5px;
+  padding: 15px;
+}
+
+/* 댓글 작성자 정보 */
+.comment-writer {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.comment-writer img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+  object-fit: cover;
+}
+
+.comment-writer span {
+  margin-right: 10px;
+}
+
+.comment-date {
+  color: #666;
+  font-size: 0.9em;
+}
+
+/* 댓글 내용 */
+.comment-content {
+  margin: 10px 0;
+  line-height: 1.5;
+  color: #333;
+}
+
+/* 버튼 영역 */
+.comment-btn-area {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.comment-btn-area button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9em;
+  transition: background-color 0.2s;
+}
+
+.child-comment-btn {
+  background-color: #e9ecef;
+  color: #495057;
+}
+
+.update-comment-btn {
+  background-color: #e9ecef;
+  color: #495057;
+}
+
+.delete-comment-btn {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.comment-btn-area button:hover {
+  filter: brightness(95%);
+}
+
+/* 댓글 작성 영역 */
+.comment-write-area {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-radius: 5px;
+}
+
+#commentContent {
+  flex-grow: 1;
+  min-height: 100px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+#addComment {
+  width: 60px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+#addComment:hover {
+  background-color: #0056b3;
+}

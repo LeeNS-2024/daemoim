@@ -38,7 +38,9 @@ public class EditBoardController {
 	 * @return
 	 */
 	@GetMapping("{groupNo:[0-9]+}/{boardTypeCode:[0-9]+}/insert")
-	public String boardInsert(@PathVariable("groupNo") int groupNo, @PathVariable("boardTypeCode") int boardTypeCode) {
+	public String boardInsert(
+		@PathVariable("groupNo") int groupNo, 
+		@PathVariable("boardTypeCode") int boardTypeCode) {
 
 		if (boardTypeCode == 3)
 			return "/board/imageAlbumWrite";
@@ -59,9 +61,13 @@ public class EditBoardController {
 	 */
 	@PostMapping("{groupNo:[0-9]+}/{boardTypeCode:[0-9]+}/insert")
 	@ResponseBody
-	public String boardInsert(@PathVariable("groupNo") int groupNo, @PathVariable("boardTypeCode") int boardTypeCode,
-			@ModelAttribute edu.kh.daemoim.board.dto.Board inputBoard, @SessionAttribute("loginMember") MyPage loginMember,
-			@RequestParam("images") List<MultipartFile> images, RedirectAttributes ra) {
+	public String boardInsert(
+			@PathVariable("groupNo") int groupNo, 
+			@PathVariable("boardTypeCode") int boardTypeCode,
+			@ModelAttribute edu.kh.daemoim.board.dto.Board inputBoard, 
+			@SessionAttribute("loginMember") MyPage loginMember,
+			@RequestParam("images") List<MultipartFile> images, 
+			RedirectAttributes ra) {
 
 		inputBoard.setMemberNo(loginMember.getMemberNo());
 
@@ -80,5 +86,6 @@ public class EditBoardController {
 
 		return "redirect:" + path;
 	}
+	
 
 }

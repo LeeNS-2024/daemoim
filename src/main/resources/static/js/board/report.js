@@ -53,12 +53,14 @@ formTag.addEventListener("submit", (e) => {
     reasonInput.name = 'reportReason';
     reasonInput.value = reportReason.value;
     formTag.appendChild(reasonInput);
-
+    
     const detailsInput = document.createElement('input');
     detailsInput.type = 'hidden';
     detailsInput.name = 'reportDetails';
     detailsInput.value = reportDetails.value;
     formTag.appendChild(detailsInput);
+
+    // reason 내용과 details 내용을 합쳐야 되는데
 
     // 모든 검증 통과 시
     const url = location.pathname + "/report";
@@ -74,6 +76,8 @@ formTag.addEventListener("submit", (e) => {
         alert('신고 접수 중 오류가 발생했습니다.');
     }
 });
+
+
 
 // 신고 사유 선택 시 에러 메시지 제거
 const reportReasonSelect = document.getElementById('reportReason');
