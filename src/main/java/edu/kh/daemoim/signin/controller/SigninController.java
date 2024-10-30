@@ -32,7 +32,7 @@ public class SigninController {
    @PostMapping("/login")
    public String login(@RequestParam("memberId") String memberId,
                        @RequestParam("memberPw") String memberPw,
-                       @RequestParam(value = "saveEmail", required = false) String saveId, // 체크박스 값
+                       @RequestParam(value = "saveId", required = false) String saveId, // 체크박스 값
                        RedirectAttributes ra,
                        Model model,
                        SessionStatus status,
@@ -48,7 +48,7 @@ public class SigninController {
            } 
            // 탈퇴된 회원일 경우
            else if ("Y".equals(loginMember.getMemberDelFl())) {
-               ra.addFlashAttribute("alertMessage", "탈퇴된 회원입니다. 다시 로그인할 수 없습니다.");
+               ra.addFlashAttribute("message", "탈퇴된 회원입니다. 다시 로그인할 수 없습니다.");
                status.setComplete();
                return "redirect:/signin"; // 로그인 페이지로 리다이렉트
            } 
@@ -81,7 +81,7 @@ public class SigninController {
                }
            }
        } catch (Exception e) {
-           ra.addFlashAttribute("errorMessage", "로그인 중 오류가 발생했습니다.");
+           ra.addFlashAttribute("message", "로그인 중 오류가 발생했습니다.");
            return "redirect:/";
        }
    }
