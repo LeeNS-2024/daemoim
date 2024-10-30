@@ -169,7 +169,8 @@ public class EditBoardController {
 		// 게시글이 존재하고 로그인한 회원이 작성한 글이 맞을 경우
 		// 수정 화면으로 forward
 		model.addAttribute("board", board);
-		return "board/boardUpdate";
+		if(boardTypeCode == 3) return "board/imageAlbumUpdate";
+		else return "board/boardUpdate";
 	}
 	
 	/** 게시글 수정
