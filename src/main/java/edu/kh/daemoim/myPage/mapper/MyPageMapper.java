@@ -39,6 +39,9 @@ public interface MyPageMapper {
 		// 가입한 모임 
 		List<MainDTO> findMyGroup(int memberNo);
 
+		// 모임 탈퇴 
+		int groupOut(@Param("memberNo") int memberNo, @Param("groupNo") int groupNo);
+
 		
 		
 		

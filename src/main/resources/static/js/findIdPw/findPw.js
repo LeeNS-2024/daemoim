@@ -1,154 +1,72 @@
-/* 필수 입력 항목의 유효성 검사여부를 체크하기 위한 객체(체크리스트)*/
 const checkObj = {
-  "findPwEmail": false,
+  "findPwMemberEmail": false,
   "memberId": false,
-  "authKey": false
 };
 
-const idMessage = document.querySelector("#FindPw-message");
+const findPwMemberId = document.querySelector("#findPwMemberId");
 const findPwMemberEmail = document.querySelector("#findPwMemberEmail");
-const checkMessage = document.getElementById("findIdcheckMessage");
-const findPwMemberId = document.querySelector("#findPwMemberId")
+const emailMessage = document.getElementById("findPwEmailMessage");
 
-const idMessageObj = {}; // 빈 객체
-idMessageObj.normal = "";
-idMessageObj.invalid = "알맞은 아이디 형식으로 작성해 주세요.";
-idMessageObj.duplication = "알맞은 아이디 형식의 아이디 입니다.";
-idMessageObj.check = "이메일 인증을 받아 주세요.";
+const emailMessageObj = {
+  normal: "",
+  invalid: "알맞은 이메일 형식으로 작성해 주세요.",
+  duplication: "아이디와 이메일이 일치하지 않습니다.",
+  check: "존재하는 이메일입니다."
+};
 
-// 3) 아이디 입력 시 마다 데이더 검사
-findPwMemberId?.addEventListener("input", () => {
-
-  
+// 아이디 유효성 검사
+findPwMemberId.addEventListener("input", () => {
   const inputId = findPwMemberId.value.trim();
+  const regEx = /^[a-zA-Z0-9]{3,10}$/;
 
-  // 4) 입력된 아이디이 없을 경우
-  if (inputId.length === 0) {
-    checkMessage.innerText = idMessageObj.normal;
-    checkMessage.classList.remove("confirm", "error");
-    checkObj.memberId = false;
-    memberId.value = "";
-    return;
-  }
-
-  // 5) 아이디 유효성 검사(정규 표현식)
-  const regEx = /^[a-zA-Z0-9]{3,10}$/; // 한글,영어,숫자로만 3~10글자
-  if (regEx.test(inputId) === false) {
-    idMessage.innerText = idMessageObj.invalid;
-    idMessage.classList.remove("confirm");
-    idMessage.classList.add("error");
+  if (inputId.length === 0 || !regEx.test(inputId)) {
     checkObj.memberId = false;
     return;
-
-  } else {
-    idMessage.innerText = '일치합니다'
   }
-  // 6) 아이디 중복 검사
-  fetch("findPwId?id=" + encodeURIComponent(inputId) + "&email=" + encodeURIComponent(inputEmail))
-    .then(response => {
-      if (response.ok) return response.text();
-      throw new Error("아이디 중복 검사 에러");
-    })
-    .then(count => {
-      if (count == 1) {
-        checkMessage.innerText = idMessageObj.duplication;
-        checkMessage.classList.remove("confirm");
-        checkMessage.classList.add("error");
-        checkObj.memberId = false;
-        return;
-      }
-
-      checkMessage.innerText = checkMessageObj.check;
-      checkMessage.classList.remove("error");
-      checkMessage.classList.add("confirm");
-      checkObj.memberId = true;
-
-    })
-    .catch(err => console.error(err));
+  checkObj.memberId = true;
 });
 
-/* ----- 이메일 유효성 검사 ----- */
-
-// 1) 이메일 유효성 검사에 필요한 요소 얻어오기
-
-// 2) 이메일 메시지를 미리 작성
-const checkMessageObj = {}; // 빈 객체
-checkMessageObj.normal = "";
-checkMessageObj.invaild = "알맞은 이메일 형식으로 작성해 주세요.";
-checkMessageObj.duplication = "알맞은 이메일을 입력해 주세요";
-checkMessageObj.check = "이메일 인증을 받아 주세요";
-
-// 3) 이메일이 입력될 때 마다 유효성 검사를 수행
-findPwMemberEmail.addEventListener("input", e => {
-
-  // 입력된 값 얻어오기
+// 이메일 유효성 검사
+findPwMemberEmail.addEventListener("input", () => {
   const inputEmail = findPwMemberEmail.value.trim();
   const inputId = findPwMemberId.value.trim();
-  
-  // 4) 입력된 이메일이 없을 경우
-  if(inputEmail.length === 0){
-    
-    // 이메일 메시지를 normal 상태 메시지로 변경
-    checkMessage.innerText = checkMessageObj.normal;
+  const emailRegEx = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-    // #checkMessage에 색상 관련 클래스를 모두 제거
-    checkMessage.classList.remove("confirm", "error");
-
-    // checkObj에서 memberEmail을 false로 변경
-    checkObj.findPwMemberEmail = false;
-
-    findPwMemberEmail.value = ""; // 잘못 입력된 값(띄어쓰기) 제거
-    
-    return;
-  }
-
-
-  // 5) 이메일 형식이 맞는지 검사(정규 표현식을 이용한 검사)
-
-  // 이메일 형식 정규 표현식 객체
-  const regEx = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
-  // 입력 값이 이메일 형식이 아닌 경우
-  if( regEx.test(inputEmail) === false ){ 
-    checkMessage.innerText = checkMessageObj.invaild; // 유효 X 메시지
-    checkMessage.classList.add("error"); // 빨간 글씨 추가
-    checkMessage.classList.remove("confirm"); // 초록 글씨 제거
-    checkObj.findPwMemberEmail = false; // 유효하지 않다고 체크
-    return;
-  }
-
-  // 6) 이메일 중복 검사(AJAX)
-fetch("findPwEmail?id=" + encodeURIComponent(inputId) + "&email=" + encodeURIComponent(inputEmail))
-.then(response => {
-  if(response.ok){ // HTTP 응답 상태 코드 200번(응답 성공)
-    return response.text(); // 응답 결과를 text로 파싱
-  }
-  
-  // 상태 코드와 오류 메시지 출력 (디버깅용)
-  throw new Error("이메일 중복 검사 에러");
-})
-.then(count => {
-  // 매개 변수 count : 첫 번째 then에서 return된 값이 저장된 변수
-
-  if(count == 0 ){  // 아이디랑 이메일이 일치 하지 않음
-    checkMessage.innerText = checkMessageObj.duplication; 
-    checkMessage.classList.add("error");
-    checkMessage.classList.remove("confirm");
+  if (inputEmail.length === 0 || !emailRegEx.test(inputEmail)) {
+    emailMessage.innerText = emailMessageObj.invalid;
+    emailMessage.classList.add("error");
+    emailMessage.classList.remove("confirm");
     checkObj.findPwMemberEmail = false;
     return;
-  } 
+  }
 
-  // 일치함
-  checkMessage.innerText = checkMessageObj.check; 
-  checkMessage.classList.add("confirm");
-  checkMessage.classList.remove("error");
-  checkObj.findPwMemberEmail = true; // 유효한 이메일임을 기록
-})
-.catch(err => {
-  // catch에서 에러 메시지와 에러 내용을 출력하여 원인을 확인합니다.
-  console.error("Error: 이메일 중복 검사 에러", err);
+  // 아이디와 이메일이 유효한지 서버로 확인 요청
+  fetch(`/findPwEmail?id=${encodeURIComponent(inputId)}&email=${encodeURIComponent(inputEmail)}`)
+    .then(response => {
+      if (response.ok) return response.text();
+      throw new Error("아이디와 이메일 중복 검사 요청 에러");
+    })
+    .then(count => {
+      if (count === "0") {
+        emailMessage.innerText = emailMessageObj.duplication;
+        emailMessage.classList.add("error");
+        emailMessage.classList.remove("confirm");
+        checkObj.findPwMemberEmail = false;
+      } else {
+        emailMessage.innerText = emailMessageObj.check;
+        emailMessage.classList.add("confirm");
+        emailMessage.classList.remove("error");
+        checkObj.findPwMemberEmail = true;
+
+        // 아이디와 이메일이 유효하다고 확인되면 입력 필드를 비활성화
+        findPwMemberId.disabled = true;
+        findPwMemberEmail.disabled = true;
+      }
+    })
+    .catch(err => console.error("Error: 아이디와 이메일 중복 검사 에러", err));
 });
-});
+
+
 
 /*----- 이메일 인증 -----*/
 
