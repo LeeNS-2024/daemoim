@@ -216,10 +216,6 @@ public class BoardController {
 	
 	
 	
-	
-	// 신고 등록기능 만들어야됨 내가 생각을 잘못했었네 ㅇㅇ
-	// 헷갈리면 댓글등록 백엔드참고해서 만들면 될듯
-	
 	// 신고 등록
 	@PostMapping("report")
 	public int reportInsert(
