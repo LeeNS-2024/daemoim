@@ -83,5 +83,6 @@ public interface BoardService {
 	 * @return commentList
 	 */
 	List<Comment> selectCommentList(int groupNo, int boardTypeCode, int boardNo);
+	
 
 }

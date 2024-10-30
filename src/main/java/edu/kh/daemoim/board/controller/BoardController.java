@@ -1,5 +1,7 @@
 package edu.kh.daemoim.board.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
@@ -376,6 +378,30 @@ public class BoardController {
 		List<Comment> commentList = service.selectCommentList(groupNo, boardTypeCode,boardNo);
 		
 		return null;
+	}
+	
+	/** 현재 게시글이 포함된 목록의 페이지로 redirect
+	 * @param boardCode
+	 * @param boardNo
+	 * @param paramMap : 요청 파라미터가 모두 담긴 Map
+	 * @return
+	 * @throws UnsupportedEncodingException 
+	 */
+	@GetMapping("{groupNo:[0-9]+}/{boardTypeCode:[0-9]+}/{boardNo:[0-9]+}/goToList")
+	public String goToList(
+		@PathVariable("groupNo") int groupNo,
+		@PathVariable("boardTypeCode") int boardTypeCode,
+		@PathVariable("boardNo") int boardNo,
+		@RequestParam Map<String, Object> paramMap) throws UnsupportedEncodingException {
+		
+		// paramMap에 boardCode, boardNo 추가
+		paramMap.put("boardTypeCode", boardTypeCode);
+		paramMap.put("boardNo", boardNo);
+		
+		// 목록 조회 redirect
+		String url = "redirect:/board/" + groupNo;
+		
+		return url;
 	}
 	
 	

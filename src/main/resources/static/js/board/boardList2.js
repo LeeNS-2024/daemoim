@@ -2,6 +2,8 @@ const pageNoList = document.querySelectorAll(".pagination a");
 
 const urlParts = window.location.href.split("/");
 
+let boardTypeCode = 1;
+
 $(function () {
   // Datepicker를 #calendar에 적용
   $("#calendar").datepicker({
@@ -26,6 +28,12 @@ bannerList.forEach(item => {
 
     if(url.slice(url.lastIndexOf("/") + 1) == 3) return;
 
+    boardTypeCode = url.slice(url.lastIndexOf("/") + 1);
+
+    document.querySelector(".btn-write").classList.remove("hidden");
+
+    document.querySelector(".btn-write").href = `${location.pathname.replace("board", "editBoard")}/${boardTypeCode}/insert`;
+
     e.preventDefault();
 
     fetch(url)
@@ -36,6 +44,7 @@ bannerList.forEach(item => {
       .catch(error => {
         console.error("Error fetching data:", error);
     })
+
   })
 })
 
