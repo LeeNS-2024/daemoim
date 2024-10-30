@@ -1,26 +1,32 @@
 function getCookie(key){
-  const cookies = document.cookie; // "K=V;K=V;..." 
-  // ; 로 구분
-  const arr = cookies.split(";"); // ["K=V", "K=V"]
-  const cookieObj = {}; // 빈 객체 생성
+
+  const cookies = document.cookie; 
+  
+  const arr = cookies.split(";"); 
+
+  const cookieObj = {}; 
+
   for(let entry of arr){
+   
     const temp = entry.split("="); 
+
     cookieObj[temp[0]] = temp[1];
   }
+
   return cookieObj[key];
 }
-// HTML 로딩(랜더링)이 끝난 후 수행
+
 document.addEventListener("DOMContentLoaded", () => {
 
-  const saveId = getCookie("saveId"); // 쿠키에 저장된 Email 얻어오기
+  const saveId = getCookie("saveId"); 
 
   if(saveId == undefined) return; 
 
   const memberId
-    = document.querySelector("#loginForm input[name=memberId]");
+    = document.querySelector("#signinform input[name=memberId]");
 
   const checkbox 
-    = document.querySelector("#loginForm input[name=saveId]");
+    = document.querySelector("#signinform input[name=saveId]");
 
   // 로그인 상태인 경우 함수 종료
   if(memberId == null) return;

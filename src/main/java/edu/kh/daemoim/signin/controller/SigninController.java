@@ -56,15 +56,13 @@ public class SigninController {
            else {
                model.addAttribute("loginMember", loginMember);
 
-               // 로그인 성공 시 쿠키 설정
                Cookie cookie = new Cookie("saveId", memberId); // 이메일을 저장할 쿠키 생성
                cookie.setPath("/");
 
-               if (saveId == null) { // 체크 X
-                   cookie.setMaxAge(0); // 쿠키 삭제
-                   
+               if (saveId == null) { // 체크 X, 쿠키 삭제
+                   cookie.setMaxAge(0); // 쿠키 수명을 0으로 설정하여 삭제
                } else { // 체크 O
-                   cookie.setMaxAge(60 * 60 * 24); // 쿠키 수명 설정 (30일)
+                   cookie.setMaxAge(60 * 60 * 24 * 30); // 쿠키 수명 설정 (30일)
                }
 
                resp.addCookie(cookie); // 쿠키를 클라이언트에 추가

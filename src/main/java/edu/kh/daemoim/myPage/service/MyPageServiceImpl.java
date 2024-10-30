@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import edu.kh.daemoim.common.exception.FileUploadFailException;
 import edu.kh.daemoim.common.util.FileUtil;
+import edu.kh.daemoim.groupManage.dto.GroupMemberManageDto;
 import edu.kh.daemoim.main.dto.MainDTO;
 import edu.kh.daemoim.myPage.dto.MyPage;
 import edu.kh.daemoim.myPage.mapper.MyPageMapper;
@@ -125,7 +126,10 @@ public class MyPageServiceImpl implements MyPageService{
 
 		return mapper.groupOut(memberNo,groupNo );
 	}
-	
+	@Override
+	public GroupMemberManageDto getGroupMemberInfo(int memberNo, int groupNo) {
+	return null;
+}
 }
 
 
