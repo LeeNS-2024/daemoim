@@ -80,14 +80,25 @@
 		WHERE GROUP_NO = #{groupNo}
 
 	</select>
-	
-	<!-- 모임 가입 회원 확인  -->
+
+	<!-- 모임 가입 회원 확인 -->
 	<select id="checkLoginMember" resultType="_int">
-	SELECT COUNT(*)
-	FROM MEMBER_GROUP
-	WHERE MEMBER_NO = #{memberNo}
-	AND GROUP_NO = #{groupNo}
-	
+		SELECT COUNT(*)
+		FROM MEMBER_GROUP
+		WHERE MEMBER_NO = #{memberNo}
+		AND GROUP_NO = #{groupNo}
+
 	</select>
+
+	<!--모임 가입신청 확인 버튼 클릭 시 -->
+	<insert id="joinGroup">
+		INSERT INTO INVITE
+		VALUES(#{memberNo}, #{groupNo}, DEFAULT, DEFAULT)
+	
+
+	</insert>
+
+
+
 
 </mapper>

@@ -378,11 +378,10 @@ const selectNotificationList = () => {
 document.addEventListener("DOMContentLoaded", () => {
   const notificationCountArea = document.querySelector(".notification-count-area");
     if (notificationCountArea) {
-        // 요소가 존재할 때 필요한 작업 수행
         connectSse();
         notReadCheck();
     } else {
-        console.error("notification-count-area 요소가 존재하지 않습니다.");
+        console.error("알림 요소가 존재하지 않습니다.");
     }
 
 
@@ -432,6 +431,5 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
-
 
 

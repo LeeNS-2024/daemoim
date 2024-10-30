@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import edu.kh.daemoim.board.mapper.BoardMapper;
 import edu.kh.daemoim.groupMain.dto.Schedule;
+import edu.kh.daemoim.siteManage.dto.StopMember;
 import edu.kh.daemoim.board.dto.Board;
 import edu.kh.daemoim.board.dto.Comment;
 import edu.kh.daemoim.board.dto.Pagination;
@@ -134,10 +135,22 @@ public class BoardServiceImpl implements BoardService{
 		return mapper.selectCommentList(groupNo, boardTypeCode, boardNo);
 	}
 	
+	// 현재 게시물이 속한 페이지 번호 조회
+	@Override
+	public int getCurrentPage(Map<String, Object> paramMap) {
+		return mapper.getCurrentPage(paramMap);
+	}
 	
-	
-	
-	
+	// 신고 내용 DB에 저장
+	@Override
+	public int reportInsert(StopMember report) {
+		
+		int result = mapper.reportInsert(report);
+		
+		if(result > 0) return report.getReportNo();
+		
+		return 0;
+	}
 	
 	
 	

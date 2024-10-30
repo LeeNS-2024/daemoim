@@ -19,9 +19,9 @@
 				<th:block th:if="*{commentDelFl} == 'N'">
 					<p class="comment-writer">
 						<!-- 프로필 이미지 없을 경우 -->
-						<img th:unless="*{profileImg}" th:src="#{user.default.image}">
+						<img th:unless="*{memberImg}" th:src="#{user.default.image}">
 						<!-- 프로필 이미지 있을 경우 -->
-						<img th:if="*{profileImg}" th:src="*{profileImg}">
+						<img th:if="*{memberImg}" th:src="*{memberImg}">
 	
 						<span th:text="*{memberNickname}">닉네임</span>
 						<span class="comment-date" th:text="*{commentWriteDate}">작성일</span>
@@ -32,12 +32,12 @@
 					<!-- 버튼 영역 -->
 					<div class="comment-btn-area">
 						<button class="child-comment-btn">답글</button>
-	
+						
+						<!-- 로그인 회원과 댓글 작성자가 같은 경우 -->
 						<th:block th:if="${session.loginMember != null and session.loginMember.memberNo == comment.memberNo}">
 							<button class="update-comment-btn">수정</button>
 							<button class="delete-comment-btn">삭제</button>
 						</th:block>
-						<!-- 로그인 회원과 댓글 작성자가 같은 경우 -->
 	
 					</div>
 				</th:block>

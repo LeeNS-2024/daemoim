@@ -1,6 +1,8 @@
 package edu.kh.daemoim.myPage.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import edu.kh.daemoim.groupManage.dto.GroupMemberManageDto;
 import edu.kh.daemoim.main.dto.MainDTO;
 import edu.kh.daemoim.myPage.dto.MyPage;
 import edu.kh.daemoim.myPage.service.MyPageService;
@@ -200,5 +204,25 @@ public class MyPageController {
 		return "myPage/myGroup";
 	}
 	
-	
+	@PostMapping("/myGroup")
+	@ResponseBody
+	public Map<String, Object> outGroup(@RequestBody int groupNo, 
+	                                    @SessionAttribute("loginMember") MyPage loginMember, 
+	                                    RedirectAttributes ra) {
+	    Map<String, Object> result = new HashMap<>();
+
+	    int memberNo = loginMember.getMemberNo();
+	    int groupOutCheck = service.groupOut(memberNo, groupNo);
+	    if (groupOutCheck == 0) {
+	        result.put("status", "error");
+	        result.put("message", "모임 탈퇴에 실패했습니다.");
+	    } else {
+	        result.put("status", "success");
+	        result.put("message", "모임에서 성공적으로 탈퇴했습니다.");
+	    }
+	    return result;
+	}
+    
 }
+	
+

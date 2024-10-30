@@ -7,6 +7,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import edu.kh.daemoim.common.interceptor.GroupHeaderImgInterceptor;
 import edu.kh.daemoim.common.interceptor.GroupManageInterceptor;
+import edu.kh.daemoim.common.interceptor.ManagerFilterInterceptor;
+import edu.kh.daemoim.common.interceptor.BoardFilterInterceptor;
+import edu.kh.daemoim.common.interceptor.BoardScheduleFilterInterceptor;
 import edu.kh.daemoim.common.interceptor.BoardTypeInterceptor;
 
 @Configuration
@@ -28,6 +31,21 @@ public class InterceptorConfig implements WebMvcConfigurer{
 		return new GroupHeaderImgInterceptor();
 	}
 	
+	@Bean
+	public BoardFilterInterceptor boardFilterInterceptor() {
+		return new BoardFilterInterceptor();
+	}
+	
+	@Bean
+	public BoardScheduleFilterInterceptor boardScheduleFilterInterceptor() {
+		return new BoardScheduleFilterInterceptor();
+	}
+	
+	@Bean
+	public ManagerFilterInterceptor managerFilterInterceptor() {
+		return new ManagerFilterInterceptor();
+	}
+	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		
@@ -35,12 +53,22 @@ public class InterceptorConfig implements WebMvcConfigurer{
 				.addPathPatterns("/groupManage/**", "/groupMemberManage/**");
 		
 		registry.addInterceptor( groupHeaderImgInterceptor() )
-		.addPathPatterns("/groupMain/**", "/board/**");
+				.addPathPatterns("/groupMain/**", "/board/**");
 		
-		// BoardTypeInterceptor Bean을 인터셉터로 등록
 		registry.addInterceptor(boardTypeInterceptor())
-			      .addPathPatterns("/**")
-			      .excludePathPatterns("/css/**", "/js/**");
+			     .addPathPatterns("/**")
+			     .excludePathPatterns("/css/**", "/js/**");
+		
+		registry.addInterceptor( boardFilterInterceptor() )
+				.addPathPatterns("/board/**")
+				.excludePathPatterns("/board/boardSchedule/**");
+		
+		registry.addInterceptor( boardScheduleFilterInterceptor() )
+				.addPathPatterns("/board/boardSchedule/**");
+		
+		registry.addInterceptor( managerFilterInterceptor() )
+				.addPathPatterns("/groupManage/**", "/groupMemberManage/**")
+				.excludePathPatterns("/groupManage/createGroup");
 		
 	}
 

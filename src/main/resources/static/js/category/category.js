@@ -45,30 +45,41 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const renderGroups = (groups) => {
         groupContainer.innerHTML = '';  
-
+    
         groups.forEach(group => {
             console.log("그룹:", group); // 각 그룹 데이터 확인
             const groupHTML = `
-                <div class="category-box">
-                    <div class="icon">
-                        <img src="${group.groupMainImg ? group.groupMainImg : '/images/default.png'}" alt="${group.groupName} 아이콘" />
-                    </div>
-                    <div class="details">
-                        <a href="/groupMain/${group.groupNo}" class="categoryGroup-name" style="color: black; text-decoration: none;">
-                            ${group.groupName}
-                        </a>
-                        <div class="group-name">${group.groupIntroduce}</div>
-                        <div class="location">${group.categoryName}</div>
-                        <div class="participants">
-                            <i class="fa-solid fa-users"></i>
-                            <div>${group.currentPopulation} / ${group.maxPopulation}</div>
-                        </div>
+                <div class="category-box" data-group-no="${group.groupNo}">
+                <div class="icon">
+                    <img src="${group.groupMainImg ? group.groupMainImg : '/images/default.png'}" alt="${group.groupName} 아이콘" />
+                </div>
+                <div class="details">
+                    <div class="location">${group.categoryName}</div> <!-- location을 가장 위로 이동 -->
+                    <a href="/groupMain/${group.groupNo}" class="categoryGroup-name" style="color: black; text-decoration: none;">
+                        ${group.groupName}
+                    </a>
+                    <div class="group-name">${group.groupIntroduce}</div>
+                    <div class="participants">
+                        <i class="fa-solid fa-users"></i>
+                        <div>${group.currentPopulation} / ${group.maxPopulation}</div>
                     </div>
                 </div>
+            </div>
             `;
             groupContainer.insertAdjacentHTML('beforeend', groupHTML);
         });
+
+        document.querySelectorAll('.category-box').forEach(box => {
+        box.addEventListener('click', (event) => {
+            if (event.target.tagName !== 'A') {
+                const groupNo = box.getAttribute('data-group-no');
+                window.location.href = `/groupMain/${groupNo}`;
+            }
+        });
+    });
+
+
     };
 
-    getGroups(); // 페이지 로드 시 초기 데이터 로드
+    getGroups(); 
 });

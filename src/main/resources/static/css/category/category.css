@@ -26,8 +26,8 @@
 
 #groupContainer {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 두 개씩 나란히 배치 */
-  gap: 20px; /* 요소 간 간격 */
+  grid-template-columns: repeat(3, 1fr); /* 한 줄에 세 개씩 나란히 배치 */
+  gap: 5px; /* 요소 간 간격 줄이기 */
   justify-content: center;
   margin-top: 20px;
 }
@@ -36,41 +36,48 @@
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 8px;
-  max-width: 400px; /* 카드 최대 너비 */
+  max-width: 300px; /* 카드의 최대 너비를 줄여 더 촘촘하게 배치 */
   width: 100%;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  display: flex;
-  padding: 15px;
-  align-items: center;
+  padding: 20px;
+  display: block;
+  transition: transform 0.2s, box-shadow 0.2s; /* hover 효과 추가 */
+}
+
+.category-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .icon {
-  width: 20%;
-  margin-right: 20px;
+  width: 150px;  /* 너비를 고정하여 이미지 크기 설정 */
+  height: 150px; /* 높이를 고정하여 이미지 크기 설정 */
+  margin-bottom: 15px; /* 이미지 아래에 여백을 주어 텍스트와의 간격 확보 */
 }
 
 .icon img {
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover; /* 이미지가 영역을 꽉 채우도록 설정 */
   border-radius: 5%;
   background-color: #eee;
 }
 
 .details {
-  width: 75%;
+  width: 100%;
 }
 
 .categoryGroup-name {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }
 
 .group-name {
   font-size: 16px;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
   display: -webkit-box;
-  -webkit-line-clamp: 3; /* 표시할 줄 수 */
+  -webkit-line-clamp: 5; /* 표시할 줄 수: 5줄로 설정 */
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -80,12 +87,13 @@
 .location {
   font-size: 14px;
   color: #777;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 .participants {
   display: flex;
   align-items: center;
+  margin-top: 15px; /* 참가자 정보 위에 여백 추가 */
 }
 
 .participants i {

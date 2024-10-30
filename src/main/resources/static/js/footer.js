@@ -390,16 +390,82 @@ if(memsocket != null){
 } // socket end
 
 /* ******************************************************** */
+/* 메시지 */
+
+const alertM = (message)=>{
+  const massageWindow = document.querySelector(".msg-body");
+  const contentBox = document.querySelector("#msg-content");
+  contentBox.innerText = message;
+  massageWindow.classList.remove("display-none");
+  
+  const msgCloseButton = document.querySelector("#msg-closeBtn");
+  msgCloseButton.addEventListener("click", () => {
+    massageWindow.classList.add("display-none");
+  });
+};
+
+/* ******************************************************** */
+/* 컨펌창 */
+
+const confirmM = (message)=>{
+  return new Promise((resolve, reject) => {
+    const confirmWindow = document.querySelector(".cnf-body");
+    const contentBox = document.querySelector("#cnf-content");
+    const confirmYes = document.querySelector("#cnf-yBtn");
+    const confirmNo = document.querySelector("#cnf-nBtn");
+
+
+    // 메시지 설정
+    contentBox.innerText = message;
+    confirmWindow.classList.remove("display-none");
+
+    // 확인 버튼 클릭 시 resolve 호출
+    confirmYes.addEventListener("click", () => {
+      confirmWindow.classList.add("display-none");
+      resolve(true);  // '확인'을 눌렀을 때 true 반환
+    }, { once: true });
+
+    // 취소 버튼 또는 닫기 버튼 클릭 시 reject 호출
+    confirmNo.addEventListener("click", () => {
+      confirmWindow.classList.add("display-none");
+      resolve(false);  // '취소'를 눌렀을 때 false 반환
+    }, { once: true });
+
+  });
+
+};
+/*
+confirmM(message)
+.then(result => {
+  if(!result) return;
+  // 컨펌 진행함수 start 
+
+}); // 컨펌 진행함수 end
+*/
+
+/* ******************************************************** */
 /* 페이지 로딩시 */
 
 
 document.addEventListener("DOMContentLoaded", ()=>{
 
+  // 채팅아이콘 표시
   if(chatLoginCheck){
     setTimeout(() => {
+      // 안읽은 메시지 갯수 불러오기
       chatInfo(chatLoginMemberNo);
     }, 1000);
-    // 안읽은 메시지 갯수 불러오기
     chatBtnOn.classList.remove("display-none");
+  }
+  
+  // 전달받은 메시지가 있으면 메시지창 띄우기
+  if(messageCheck) {
+    alertM(messageContent);
+  }
+  
+  // 세션메세지 띄우기
+  if(sessionMessage){
+    alertM(sessionMessage);
+    fetch('/popup/removeMessage', { method: 'POST' });
   }
 });

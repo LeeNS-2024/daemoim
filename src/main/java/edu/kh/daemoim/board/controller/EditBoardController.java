@@ -43,10 +43,13 @@ public class EditBoardController {
 	 */
 	@GetMapping("{groupNo:[0-9]+}/{boardTypeCode:[0-9]+}/insert")
 	public String boardInsert(
-		@PathVariable("groupNo") int groupNo,
+		@PathVariable("groupNo") int groupNo, 
 		@PathVariable("boardTypeCode") int boardTypeCode) {
-		
-		return "/board/boardWrite";
+
+		if (boardTypeCode == 3)
+			return "/board/imageAlbumWrite";
+		else
+			return "/board/boardWrite";
 	}
 
 	/**
@@ -61,6 +64,7 @@ public class EditBoardController {
 	 * @return
 	 */
 	@PostMapping("{groupNo:[0-9]+}/{boardTypeCode:[0-9]+}/insert")
+
 	public String boardInsert(
 			@PathVariable("groupNo") int groupNo, 
 			@PathVariable("boardTypeCode") int boardTypeCode,
@@ -204,6 +208,6 @@ public class EditBoardController {
 		
 		return String.format("redirect:/board/%d/%d/%d", groupNo, boardTypeCode, boardNo); // 상세 조회
 	}
-	
+
 
 }

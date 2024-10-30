@@ -48,13 +48,6 @@ public class FileConfig implements WebMvcConfigurer {
    @Value("${daemoim.groupHeader.resource-location}")
    private String groupHeaderImgLocation;
    
-   //--------------------------------------
-   // 모임 사진첩 이미지 요청 경로 + 서버 연결 폴더
-   @Value("${daemoim.groupPhoto.resource-handler}")
-   private String groupPhotoImgHandler;
-   
-   @Value("${daemoim.groupPhoto.resource-location}")
-   private String groupPhotoImgLocation;
    
    //--------------------------------------
    // 팝업용 이미지 요청 경로 + 서버 연결 폴더
@@ -71,6 +64,14 @@ public class FileConfig implements WebMvcConfigurer {
    
    @Value("${daemoim.profile.resource-location}")
    private String profileResourceLocation;
+   
+   //--------------------------------------
+   // 게시판 이미지 
+   @Value("${daemoim.board.resource-handler}")
+   private String boardResourceHandler;
+   
+   @Value("${daemoim.board.resource-location}")
+   private String boardResourceLocation;
    
    /* MultipartResolver 설정 */
    @Bean
@@ -116,11 +117,7 @@ public class FileConfig implements WebMvcConfigurer {
       .addResourceHandler(groupHeaderImgHandler)
       .addResourceLocations(groupHeaderImgLocation);
       
-      // 모임사진첩이미지
-      registry
-      .addResourceHandler(groupPhotoImgHandler)
-      .addResourceLocations(groupPhotoImgLocation);
-      
+
       // 팝업이미지
       registry
       .addResourceHandler(mainPopupImgHandler)
@@ -130,9 +127,13 @@ public class FileConfig implements WebMvcConfigurer {
       registry
       .addResourceHandler(profileResourceHandler)
       .addResourceLocations(profileResourceLocation);
-   }
+     
+      // 게시판 이미지 
+     registry
+     .addResourceHandler(boardResourceHandler)
+     .addResourceLocations(boardResourceLocation);
    
-   
+}   
    
    
    

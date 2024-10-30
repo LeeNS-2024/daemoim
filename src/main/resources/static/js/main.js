@@ -44,3 +44,18 @@ document.getElementById('scrollTopBtn').addEventListener('click', () => {
     behavior: 'smooth'
   });
 });
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.category-box').forEach(box => {
+    box.addEventListener('click', (event) => {
+      if (event.target.tagName === 'A') {
+        return;
+      }
+      const link = box.querySelector('a.categoryGroup-name');
+      if (link) {
+        window.location.href = link.href;
+      }
+    });
+  });
+});

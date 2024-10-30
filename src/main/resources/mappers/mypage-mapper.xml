@@ -86,4 +86,16 @@
 	    g.GROUP_NO, g.GROUP_MAIN_IMG, g.GROUP_NAME, g.GROUP_INTRODUCE, c.CATEGORY_NAME, g.GROUP_MAX_POPULATION
 	</select>
 	
+	<update id="groupOut">
+		UPDATE
+			MEMBER_GROUP	
+		SET
+			MEMBER_GROUP_DEL_FL = 'Y'
+		WHERE
+			MEMBER_NO = #{memberNo}
+		AND
+			GROUP_NO = #{groupNo}
+	</update>
+	
+	
 </mapper>

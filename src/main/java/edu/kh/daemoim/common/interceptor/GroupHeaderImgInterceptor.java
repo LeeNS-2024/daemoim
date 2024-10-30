@@ -1,16 +1,14 @@
 package edu.kh.daemoim.common.interceptor;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import edu.kh.daemoim.board.dto.Comment;
 import edu.kh.daemoim.groupManage.service.GroupManageService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+// 모임 해더이미지 전달
 public class GroupHeaderImgInterceptor implements HandlerInterceptor {
 	
 	@Autowired
@@ -21,7 +19,7 @@ public class GroupHeaderImgInterceptor implements HandlerInterceptor {
 			ModelAndView modelAndView) throws Exception {
 		
 		String url = request.getRequestURI();
-			// /groupMemberManage/{groupNo}/**
+			// /board/{groupNo}/**
 		String groupNo = url.split("/")[2];
 			// {boardNo}
 		
@@ -30,7 +28,6 @@ public class GroupHeaderImgInterceptor implements HandlerInterceptor {
 			String groupHeaderImg = service.getGroupHeaderImg(groupNo);
 			
 			request.setAttribute("groupHeaderImg", groupHeaderImg);
-		    
 		}
 		
 		HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);

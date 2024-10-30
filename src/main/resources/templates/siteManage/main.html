@@ -7,11 +7,16 @@
     <title>관리자 대시보드</title>
     <th:block th:replace="~{common/common}"></th:block>
     <link rel="stylesheet" href="/css/siteManage/siteManage.css">
+    <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 </head>
 
 <body>
     <div class="container">
         <nav class="sidebar">
+
+            <button class="home-button" onclick="location.href='/'">
+                <i class="fa-solid fa-house fa-lg"></i>
+            </button>
             <ul>
                 <li><a href="#dashboard">대시보드</a></li>
                 <li><a href="#meetings">모임 조회</a></li>
@@ -86,15 +91,15 @@
 
             <!-- 회원 조회 섹션 -->
             <section id="members" class="section">
-         
-               
+
+
 
                 <div class="header-with-button">
                     <h2>회원 조회</h2>
                     <!-- 전체보기 버튼 -->
                     <button type="button" onclick="toggleRows()" id="toggleButton">전체보기</button>
                 </div>
-              
+
                 <!-- 회원 조회 테이블 -->
                 <table>
                     <thead>
@@ -218,7 +223,6 @@
 
 
             </section>
-            <p>오류 확인</p>
 
         </main>
     </div>
