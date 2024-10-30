@@ -19,11 +19,11 @@ const groupName = document.querySelector("#groupName");
 // 모임 이름 유효성검사 메세지 표시
 const nameMessage = document.querySelector("#groupNameMessage");
 const nameMessageConfirm = {
-  "nomal" : "사용할 모임명을 입력 해 주세요",
+  "nomal"    : "사용할 모임명을 입력 해 주세요",
   "shortage" : "3글자 이상의 이름을 사용해 주십시오.",
   "tooLong"  : "최대 500자까지 입력이 가능합니다.",
   "rules"    : "한글, 알파벳, 숫자, 띄어쓰기 만 입력 가능 합니다.",
-  "overlap" : "동일한 이름을 이미 사용중입니다.",
+  "overlap"  : "동일한 이름을 이미 사용중입니다.",
   "statusOk" : "사용 가능한 이름 입니다."
 };
 
@@ -179,7 +179,7 @@ imgInput.addEventListener("change", e => {
 
   // 업로드한 이미지 크기 확인
   if(img?.size > 1024*1024*1){
-    alert("10MB 이하의 이미지를 선택해 주세요");
+    alertM("10MB 이하의 이미지를 선택해 주세요");
     flag = true;
   }
 
@@ -312,7 +312,7 @@ const radioArr = document.querySelectorAll(".categoryRadio");
 radioArr.forEach(e=>{
   e.addEventListener("change", e=>{
 
-    // alert("e.value : " + e.target.value + ", e.value.type" + typeof Number( e.target.value ));
+    // alertM("e.value : " + e.target.value + ", e.value.type" + typeof Number( e.target.value ));
 
     getCategoryList( Number( e.target.value ) );
     createConfirm.category = true;
@@ -513,32 +513,32 @@ submitGroupCreate.addEventListener("submit", e => {
   //e.preventDefault();
 
   if(!createConfirm.groupName ){
-    alert("모임명이 잘못 입력되었습니다.");
+    alertM("모임명이 잘못 입력되었습니다.");
     e.preventDefault();
     return;
   }
   if(!createConfirm.groupIntroduce ){
-    alert("모임 소개글을 입력해 주세요.");
+    alertM("모임 소개글을 입력해 주세요.");
     e.preventDefault();
     return;
   }
   if(!createConfirm.category ){
-    alert("카테고리를 선택해 주셔야 합니다.");
+    alertM("카테고리를 선택해 주셔야 합니다.");
     e.preventDefault();
     return;
   }
   if(checkedCategoryList() === null ){
-    alert("세부카테고리를 선택해 주셔야 합니다.");
+    alertM("세부카테고리를 선택해 주셔야 합니다.");
     e.preventDefault();
     return;
   }
 /*   if(!createConfirm.groupLimitAge ){
-    alert("옳바른 나이제한을 입력해 주세요.");
+    alertM("옳바른 나이제한을 입력해 주세요.");
     e.preventDefault();
     return;
   } */
 
-  alert("모임이 생성되었습니다.");
+  alertM("모임이 생성되었습니다.");
 
 });
 
