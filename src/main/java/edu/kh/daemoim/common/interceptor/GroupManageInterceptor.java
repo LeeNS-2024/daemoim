@@ -8,10 +8,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import edu.kh.daemoim.board.dto.Comment;
 import edu.kh.daemoim.groupManage.service.GroupManageService;
-import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+// 모임 관리페이지 댓글 전달
 public class GroupManageInterceptor implements HandlerInterceptor{
 	
 	@Autowired

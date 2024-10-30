@@ -1,37 +1,31 @@
 /* 필수 입력 항목의 유효성 검사여부를 체크하기 위한 객체(체크리스트)*/
 const checkObj = {
-  "findPwMemberEmail": false,
-  "memberDomain": false,
-  "memberFullEmail": false,
+  "findPwEmail": false,
   "memberId": false,
-  "memberPw": false,
-  "memberPwConfirm": false,
-  "memberNickname": false,
-  "memberTel": false,
   "authKey": false
 };
 
 const idMessage = document.querySelector("#FindPw-message");
 const findPwMemberEmail = document.querySelector("#findPwMemberEmail");
-const emailMessage = document.getElementById("findIdemailMessage");
+const checkMessage = document.getElementById("findIdcheckMessage");
 const findPwMemberId = document.querySelector("#findPwMemberId")
 
 const idMessageObj = {}; // 빈 객체
 idMessageObj.normal = "";
-idMessageObj.invaild = "알맞은 아이디 형식으로 작성해 주세요.";
-idMessageObj.duplication = "";
-idMessageObj.check = "존재하는 이메일입니다.";
+idMessageObj.invalid = "알맞은 아이디 형식으로 작성해 주세요.";
+idMessageObj.duplication = "알맞은 아이디 형식의 아이디 입니다.";
+idMessageObj.check = "이메일 인증을 받아 주세요.";
 
 // 3) 아이디 입력 시 마다 데이더 검사
 findPwMemberId?.addEventListener("input", () => {
 
   
-  const inputId = memberId.value.trim();
+  const inputId = findPwMemberId.value.trim();
 
   // 4) 입력된 아이디이 없을 경우
   if (inputId.length === 0) {
-    emailMessage.innerText = idMessageObj.normal;
-    emailMessage.classList.remove("confirm", "error");
+    checkMessage.innerText = idMessageObj.normal;
+    checkMessage.classList.remove("confirm", "error");
     checkObj.memberId = false;
     memberId.value = "";
     return;
@@ -50,23 +44,23 @@ findPwMemberId?.addEventListener("input", () => {
     idMessage.innerText = '일치합니다'
   }
   // 6) 아이디 중복 검사
-  fetch("findPwEmail?id=" + encodeURIComponent(inputId) + "&email=" + encodeURIComponent(inputEmail))
+  fetch("findPwId?id=" + encodeURIComponent(inputId) + "&email=" + encodeURIComponent(inputEmail))
     .then(response => {
       if (response.ok) return response.text();
       throw new Error("아이디 중복 검사 에러");
     })
     .then(count => {
       if (count == 1) {
-        emailMessage.innerText = idMessageObj.duplication;
-        emailMessage.classList.remove("confirm");
-        emailMessage.classList.add("error");
+        checkMessage.innerText = idMessageObj.duplication;
+        checkMessage.classList.remove("confirm");
+        checkMessage.classList.add("error");
         checkObj.memberId = false;
         return;
       }
 
-      emailMessage.innerText = emailMessageObj.check;
-      emailMessage.classList.remove("error");
-      emailMessage.classList.add("confirm");
+      checkMessage.innerText = checkMessageObj.check;
+      checkMessage.classList.remove("error");
+      checkMessage.classList.add("confirm");
       checkObj.memberId = true;
 
     })
@@ -78,11 +72,11 @@ findPwMemberId?.addEventListener("input", () => {
 // 1) 이메일 유효성 검사에 필요한 요소 얻어오기
 
 // 2) 이메일 메시지를 미리 작성
-const emailMessageObj = {}; // 빈 객체
-emailMessageObj.normal = "";
-emailMessageObj.invaild = "알맞은 이메일 형식으로 작성해 주세요.";
-emailMessageObj.duplication = "알맞은 이메일을 입력해 주세요";
-emailMessageObj.check = "이메일 인증을 받아 주세요";
+const checkMessageObj = {}; // 빈 객체
+checkMessageObj.normal = "";
+checkMessageObj.invaild = "알맞은 이메일 형식으로 작성해 주세요.";
+checkMessageObj.duplication = "알맞은 이메일을 입력해 주세요";
+checkMessageObj.check = "이메일 인증을 받아 주세요";
 
 // 3) 이메일이 입력될 때 마다 유효성 검사를 수행
 findPwMemberEmail.addEventListener("input", e => {
@@ -95,10 +89,10 @@ findPwMemberEmail.addEventListener("input", e => {
   if(inputEmail.length === 0){
     
     // 이메일 메시지를 normal 상태 메시지로 변경
-    emailMessage.innerText = emailMessageObj.normal;
+    checkMessage.innerText = checkMessageObj.normal;
 
-    // #emailMessage에 색상 관련 클래스를 모두 제거
-    emailMessage.classList.remove("confirm", "error");
+    // #checkMessage에 색상 관련 클래스를 모두 제거
+    checkMessage.classList.remove("confirm", "error");
 
     // checkObj에서 memberEmail을 false로 변경
     checkObj.findPwMemberEmail = false;
@@ -116,9 +110,9 @@ findPwMemberEmail.addEventListener("input", e => {
 
   // 입력 값이 이메일 형식이 아닌 경우
   if( regEx.test(inputEmail) === false ){ 
-    emailMessage.innerText = emailMessageObj.invaild; // 유효 X 메시지
-    emailMessage.classList.add("error"); // 빨간 글씨 추가
-    emailMessage.classList.remove("confirm"); // 초록 글씨 제거
+    checkMessage.innerText = checkMessageObj.invaild; // 유효 X 메시지
+    checkMessage.classList.add("error"); // 빨간 글씨 추가
+    checkMessage.classList.remove("confirm"); // 초록 글씨 제거
     checkObj.findPwMemberEmail = false; // 유효하지 않다고 체크
     return;
   }
@@ -137,17 +131,17 @@ fetch("findPwEmail?id=" + encodeURIComponent(inputId) + "&email=" + encodeURICom
   // 매개 변수 count : 첫 번째 then에서 return된 값이 저장된 변수
 
   if(count == 0 ){  // 아이디랑 이메일이 일치 하지 않음
-    emailMessage.innerText = emailMessageObj.duplication; 
-    emailMessage.classList.add("error");
-    emailMessage.classList.remove("confirm");
+    checkMessage.innerText = checkMessageObj.duplication; 
+    checkMessage.classList.add("error");
+    checkMessage.classList.remove("confirm");
     checkObj.findPwMemberEmail = false;
     return;
   } 
 
   // 일치함
-  emailMessage.innerText = emailMessageObj.check; 
-  emailMessage.classList.add("confirm");
-  emailMessage.classList.remove("error");
+  checkMessage.innerText = checkMessageObj.check; 
+  checkMessage.classList.add("confirm");
+  checkMessage.classList.remove("error");
   checkObj.findPwMemberEmail = true; // 유효한 이메일임을 기록
 })
 .catch(err => {
@@ -320,6 +314,3 @@ checkPwAuthKeyBtn.addEventListener("click", () => {
   .catch(err => console.error(err));
 
 });
-
-
-

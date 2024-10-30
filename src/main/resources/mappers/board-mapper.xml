@@ -17,8 +17,7 @@
 		javaType : List(컬렉션)의 타입을 지정
 		ofType : List(컬렉션)의 제네릭(타입 제한) 지정
 		-->
-		
- 		
+
 		<collection 
 			property="imageList"
 			select="selectImageList"
@@ -26,7 +25,6 @@
 			javaType="java.util.ArrayList"
 			ofType="BoardImg"
 		/>
-
 		  
 		
 		<collection
@@ -36,7 +34,6 @@
 			javaType="java.util.ArrayList"
 			ofType="Comment"
 		/>
-
 	
 	
   	</resultMap>
@@ -50,7 +47,7 @@
 			select="selectMemberImageList"
 			column="SCHEDULE_NO"
 			javaType="java.util.ArrayList"
-			ofType="Schedule"
+			ofType="Schedule"    
 		/>
 	</resultMap>
   

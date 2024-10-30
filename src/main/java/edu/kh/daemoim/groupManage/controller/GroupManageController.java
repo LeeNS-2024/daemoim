@@ -22,11 +22,9 @@ import edu.kh.daemoim.groupManage.dto.GroupManageDto;
 import edu.kh.daemoim.groupManage.dto.GroupMemberManageDto;
 import edu.kh.daemoim.groupManage.dto.ManageCategory;
 import edu.kh.daemoim.groupManage.service.GroupManageService;
-import edu.kh.daemoim.main.dto.MainDTO;
 import edu.kh.daemoim.myPage.dto.MyPage;
 import edu.kh.daemoim.sse.dto.Notification;
 import edu.kh.daemoim.sse.service.SseService;
-import jakarta.servlet.annotation.MultipartConfig;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -271,12 +269,13 @@ public class GroupManageController {
 	@PostMapping("{groupNo:[0-9]+}/notification")
 	public int gotoNotification(
 			@RequestBody List<Notification> notiList) {
-		
+		int count = 0;
 		for(Notification noti : notiList) {
-			sseService.insertNotification(noti);
+			Map<String, Object> map = sseService.insertNotification(noti);
+			if(map.isEmpty() == false) count ++;
 		}
 		
-		return 0;
+		return count;
 	}
 	
 
