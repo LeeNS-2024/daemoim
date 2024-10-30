@@ -1,3 +1,4 @@
+/* Font */
 @font-face {
   font-family: 'PartialSansKR-Regular';
   src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-1@1.1/PartialSansKR-Regular.woff2') format('woff2');
@@ -5,564 +6,171 @@
   font-style: normal;
 }
 
-
-
-*{
-  border : none;
+@font-face {
+  font-family: 'NEXON Lv1 Gothic OTF';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv1 Gothic OTF.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
 }
+
+/* Reset */
+* {
+  border: 0;
+}
+
+html, body {
+  height: 100%;
+  overflow-x: hidden; /* 가로 스크롤 제거 */
+}
+
 /************ 헤더 css ************/
-
-@font-face {
-  font-family: 'PartialSansKR-Regular';
-  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-1@1.1/PartialSansKR-Regular.woff2') format('woff2');
-  font-weight: normal;
-  font-style: normal;
-}
-
 .header {
   width: 100%;
-  background-color: white;
+  background-color: #fdf5f5;
   padding: 10px 20px;
   box-sizing: border-box;
-  position: fixed; /* 헤더 고정 */
+  position: fixed;
   top: 0;
   left: 0;
-  z-index: 100; /* 다른 요소보다 위에 보이도록 설정 */
-  height: 180px;
+  z-index: 100;
+  height: 220px;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
-/* 상단 로고 */
 .logo {
   font-family: 'PartialSansKR-Regular';
   text-decoration: none;
-  color: black;
-  font-size: 50px;
+  color: #fc9562;
+  font-size: 80px;
   margin-right: auto;
+  width: 150px; 
+  height: 150px;
+  white-space: nowrap;
+  overflow: hidden; 
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-shrink: 0;
 }
 
-/* 검색 버튼과 로그인 버튼을 화면 오른쪽 최상단에 고정 */
-.login-search-wrapper {
-  top: 10px;
-  right: 20px;
+.logo img {
+  width: 100%; /* 이미지가 부모 요소에 맞춰 자동 조정 */
+  height: auto; /* 이미지 비율 유지 */
+  object-fit: contain; 
+}
+
+.top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 10px;
+  flex-wrap: nowrap;
+  overflow: hidden;
+}
+
+.login-search-wrapper,
+.notification-container {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  white-space: nowrap;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.headerSearchBtn, .headerLoginBtn {
+  font-size: 16px;
+  text-decoration: none;
+  color: black;
+}
+
+.headerSearchBtn {
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.headerLoginBtn {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 15px;
+} 
+
+.headerSearchBtn,
+.headerLoginBtn,
+.notification-btn {
+  font-size: 16px;
+  padding: 5px 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-shrink: 0;
+}
+
+.notification-container {
+  position: relative;
+  z-index: 1100;
+} 
+.loginBtnBox {
+  margin-left: auto;
   display: flex;
   align-items: center;
   gap: 30px;
-  z-index: 200;
+  flex-shrink: 0;
 }
-
-/* 검색 버튼 스타일 */
-.headerSearchBtn {
-  color: black;
-  font-size: 20px;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-}
-
-/* 로그인 버튼 스타일 */
-.headerLoginBtn {
-  font-size: 16px;
-  padding: 8px 12px;
-  background-color: #f1f1f1;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  text-decoration: none;
-  color: black;
-}
-
-/* 검색창 스타일 */
-.search {
-  display: flex;
-  align-items: center;
-  border: 1px solid black;
-  padding: 5px;
-}
-
-.search input {
-  border: none;
-  outline: none;
-  padding: 5px;
-  width: 180px;
-}
-
-.search button {
-  padding: 5px 10px;
-  background-color: #ccc;
-  border: none;
-  border-radius: 5px;
-}
-
-
-
-
-
-.loginBtnBox {
-  margin-left: auto; /* 부모의 오른쪽 끝에 위치하도록 설정 */
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  position: relative;
-}
-
 
 .login button {
   padding: 10px 20px;
   font-size: 14px;
   border-radius: 10px;
-  border: 1px solid #ccc; /* 회색 테두리 설정 */
-  background-color: #f1f1f1; /* 연한 회색 배경색 설정 */
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
 }
 
-.pwjoin{
-  display: flex;
-  justify-content: center;
-}
-
-/* 카테고리 버튼 스타일 */
+/* 카테고리 버튼 */
 .bottom-row {
   width: 100%;
-  margin-top: 10px; /* 카테고리 탭과 로그인 부분 사이 여백 */
+  margin-top: 10px;
+  overflow: hidden;
 }
 
 .categories {
   display: flex;
-  justify-content: center; /* 카테고리 버튼들을 중앙에 배치 */
-  gap: 10px; /* 버튼 간 간격 설정 */
+  justify-content: center;
+  gap: 10px;
   margin-top: 10px;
+  overflow: hidden;
+  flex-wrap: nowrap;
 }
 
 .categories a {
   padding: 10px 20px;
-  border-radius: 10px; /* 버튼 모서리 둥글게 설정 */
-  text-decoration: none; /* 밑줄 제거 */
-  color: black; /* 버튼 텍스트 색상 설정 */
-  font-size: 16px;
-}
-
-/************ 메인 컨텐츠 css ************/
-
-.main {
-  padding-top: 200px; /* 고정된 헤더의 높이만큼 패딩을 추가 */
-  padding-bottom: 60px; /* 하단 푸터와의 공간 확보 */
-}
-
-.category-container {
-  display: flex;
-  flex-wrap: wrap; /* 화면 크기에 따라 줄바꿈 */
-  justify-content: space-between; /* 아이템 간격 균일하게 배분 */
-  padding: 20px;
-}
-
-.category-box {
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  width: 45%; /* 카테고리 박스의 너비 설정 */
-  margin-bottom: 20px; /* 각 박스 간의 간격 설정 */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 효과 추가 */
-  display: flex;
-  padding: 15px;
-  align-items: center; /* 수직 가운데 정렬 */
-}
-
-.icon {
-  width: 20%; /* 아이콘의 너비 비율 설정 */
-  margin-right: 20px; /* 아이콘과 텍스트 간의 간격 설정 */
-}
-
-.icon img {
-  width: 100%;
-  height: auto;
-  background-color: #eee; /* 아이콘 배경색 설정 */
-}
-
-.details {
-  width: 75%; /* 텍스트 상세 부분의 너비 비율 설정 */
-}
-
-
-
-.location {
-  font-size: 14px;
-  color: #777;
-  margin-bottom: 10px;
-}
-
-.participants {
-  display: flex;
-  align-items: center; /* 참여자 목록을 수직 가운데 정렬 */
-}
-
-.participant {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%; /* 참여자 이미지를 둥글게 */
-  background-color: #ccc;
-  margin-right: 5px;
-  background-image: url('https://via.placeholder.com/30'); /* 대체 이미지 URL */
-  background-size: cover;
-}
-
-/************ 로그인 섹션 css ************/
-
-.login-section {
-  text-align: center;
-  margin-bottom: 30px;
-}
-
-.login-box {
-  padding: 20px;
-  width: 50%;
-  margin: 0 auto; 
-}
-
-.login-box button {
-  width: 100%;
-  padding: 15px;
-  font-size: 16px;
-}
-
-.login-box hr {
-  margin: 10px 0;
-}
-
-.login-box article {
-  display: flex;
-  justify-content: space-around;
-}
-
-/* 로그인 버튼 css */
-html, body {
-  height: 100%;
-}
-
-.wrapLoginButton {
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.wrapLoginButton .mainLoginButton {
-  width: 300px; 
-  height: 60px;
-  display: inline-flex;
-  font-family: 'Nunito', sans-serif;
-  font-size: 22px;
-  align-items: center;
-  justify-content: center;
-  text-transform: uppercase;
-  text-align: center;
-  letter-spacing: 1.3px;
-  font-weight: 700;
-  color: black;
-  background: white;
-  background: linear-gradient(90deg, white 0%, white 100%);
-  border: none;
-  border-radius: 1000px;
-  box-shadow: 12px 12px 24px black;
-  transition: all 0.3s ease-in-out 0s;
-  cursor: pointer;
-  outline: none;
-  position: relative;
-  padding: 10px;
-}
-
-.wrapLoginButton .mainLoginButton::before {
-  content: '';
-  border-radius: 1000px;
-  width: calc(300px + 12px); /* 고정된 너비 */
-  height: calc(60px + 12px); /* 고정된 높이 */
-  border: 6px solid black;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  opacity: 0;
-  transition: all .3s ease-in-out 0s;
-}
-
-.wrapLoginButton .mainLoginButton:hover, 
-.wrapLoginButton .mainLoginButton:focus {
-  color: #313133;
-  transform: translateY(-6px);
-}
-
-.wrapLoginButton .mainLoginButton:hover::before, 
-.wrapLoginButton .mainLoginButton:focus::before {
-  opacity: 1;
-}
-
-.wrapLoginButton .mainLoginButton::after {
-  content: '';
-  width: 30px;
-  height: 30px;
-  border-radius: 100%;
-  border: 6px solid black;
-  position: absolute;
-  z-index: -1;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  animation: ring 2.0s infinite;
-}
-
-.wrapLoginButton .mainLoginButton:hover::after, 
-.wrapLoginButton .mainLoginButton:focus::after {
-  animation: none;
-  display: none;
-}
-
-@keyframes ring {
-  0% {
-    width: 30px;
-    height: 30px;
-    opacity: 1;
-    z-index: 10000;
-  }
-  100% {
-    width: 100px;
-    height: 100px;
-    opacity: 0;
-  }
-}
-
-
-
-/************ 추천 모임 css ************/
-
-.group-section {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 두 개씩 나란히 표시 */
-  grid-gap: 30px; /* 그룹 간의 간격 설정 */
-  justify-items: center;
-}
-
-.group-box {
-  display: flex;
-  border: 1px solid black;
-  padding: 20px;
-  align-items: center;
-  min-width: 100px;
-  max-width: 400px;
-  width: 100%; 
-}
-
-.group-image {
-  flex: 1;
-  text-align: center;
-}
-
-.group-image img {
-  width: 100px;
-  height: 100px;
-  object-fit: cover; /* 이미지를 박스 크기에 맞게 잘라 표시 */
-}
-
-.group-info {
-  flex: 3;
-  padding-left: 20px;
-}
-
-.group-info a {
-  text-decoration: none;
-  font-size: 20px;
-  font-weight: bold;
-}
-
-.group-info h1 {
-  font-size: 16px;
-  margin: 10px 0;
-}
-
-/************ 팝업창 css ************/
-.popup-view, .popup-view *{/* 기본설정 */
-  box-sizing: border-box;
-}
-
-/* 팝업창 */
-.popup-view{
-  width: 302px; height: 302px; /* 이미지 크기 +2 씩 */
-  border: 1px solid rgb(0, 0, 0, 0.8);
-  position: absolute;
-  top: 20vw;
-  left: 40vh;
-
-  position: relative;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-}
-/* 팝업창 내부 이미지 박스 */
-.popup-view > .absoluteDiv{
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  z-index: 101;
-}
-.popup-underbar{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-
-  height: 32px;
-  padding: 3px;
-  background-color: rgb(0, 0, 0, 0.8);
-  color: white;
-
-  z-index: 102;
-}
-.display-non{ display: none !important; }
-
-/************ 반응형 처리 ************/
-
-@media (max-width: 768px) {
-  .header {
-    flex-direction: column; /* 수직으로 배치 */
-    align-items: flex-start;
-    height: auto; /* 콘텐츠에 따라 자동 높이 */
-  }
-
-  .logo {
-    margin-bottom: 10px;
-  }
-
-  .login-search-wrapper {
-    justify-content: flex-start; /* 수평으로 배치 */
-    flex-direction: column; /* 검색창과 로그인 버튼을 수직으로 배치 */
-    align-items: flex-start;
-    width: 100%;
-  }
-
-  .categories {
-    flex-wrap: wrap; /* 줄바꿈 허용 */
-    justify-content: center; /* 중앙에 배치 */
-  }
-}
-
-/************ 위로가기 버튼 css ************/
-
-.scroll-top {
-  position: fixed; 
-  bottom: 20px; 
-  right: 20px; 
-  z-index: 1000;
-}
-
-.scroll-top button {
-  font-size: 30px;
-  background: none;
-  border: none; 
-  box-shadow: none;
-  cursor: pointer; 
-  outline: none; 
-  color: black; 
-}
-
-/************ 푸터 css ************/
-
-footer {
-  width: 100%;
-  text-align: center;
-  padding: 10px;
-  bottom: 0;
-  left: 0;
-  height: 50px; 
-  z-index: 10; /* 콘텐츠 위로 겹치지 않도록 설정 */
-}
-
-footer nav a {
+  border-radius: 10px;
   text-decoration: none;
   color: black;
-  margin-right: 10px;
-}
-
-
-/* 카테고리 박스 스타일 */
-.category-container {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 두 개씩 배치 */
-  gap: 20px; /* 요소 간의 간격 */
-  justify-content: center;
-  padding: 20px;
-}
-
-.category-box {
-  width: 100%; /* 각 grid-item이 가능한 최대 크기를 사용 */
-  max-width: 400px; /* 카드 최대 너비를 설정하여 너무 커지지 않도록 제한 */
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  display: flex;
-  padding: 15px;
-  align-items: center;
-}
-
-.icon {
-  width: 20%;
-  margin-right: 20px;
-}
-
-.icon img {
-  width: 100%;
-  height: auto;
-  border-radius: 5%;
-  background-color: #eee;
-}
-
-.details {
-  width: 75%;
-}
-
-.categoryGroup-name {
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-.group-name {
   font-size: 16px;
-  margin-bottom: 5px;
-  display: -webkit-box;
-  -webkit-line-clamp: 3; /* 표시할 줄 수 */
-  -webkit-box-orient: vertical;
+  white-space: nowrap; 
   overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: normal;
-}
-
-
-.location {
-  font-size: 14px;
-  color: #777;
-  margin-bottom: 10px;
-}
-
-.participants {
-  display: flex;
-  align-items: center;
-}
-
-.participants i {
-  margin-right: 5px;
+  text-overflow: ellipsis; 
+  flex-shrink: 0;
 }
 
 
 
-/* 알림 css */
 
-/*  알림 */
-header>section:nth-child(3) {
+
+/************ 알림 css ************/
+header > section:nth-child(3) {
   position: relative;
 }
-/* 알림 버튼 */
+
 .notification-container {
   position: relative;
+  z-index: 1100; 
+  margin-right: 15px; 
 }
 
 .notification-btn {
@@ -570,14 +178,13 @@ header>section:nth-child(3) {
   cursor: pointer;
   background-color: rgba(255, 255, 255, 1);
   border: none;
+  z-index: 1100; 
 }
 
-/* 읽지 않은 알림이 존재하는 경우 */
 .notification-btn.fa-solid {
   color: black;
 }
 
-/* 알림 개수 표시 */
 .notification-count-area {
   position: absolute;
   bottom: -6px;
@@ -594,74 +201,78 @@ header>section:nth-child(3) {
   color: white;
 }
 
-/* 알림 목록 팝업창 */
 .notification-list {
   position: absolute;
   top: 30px;
-  left: 350px; /* 왼쪽으로 나타나게 설정 */
+  left: 50%; /* 알림 버튼 기준으로 설정 */
+  transform: translateX(-100%); /* 왼쪽으로 창이 열리도록 조정 */
   width: 380px;
   height: 400px;
   padding: 10px;
   list-style: none;
-  z-index: 2000;
+  z-index: 1200;
   background: #f0f3fa;
   overflow-y: auto;
   border: 1px solid #ccc;
   border-radius: 5px;
   box-shadow: 0 0 0 1px #eee, 0 4px 8px 0 rgba(0, 0, 0, .3);
-  display: none; /* 처음에 알림 창이 보이지 않게 함 */
+  display: none;
 }
 
-/* 알림 창 보이게 하기 */
+
 .notification-show {
-  display: block;
+  display: block !important;
 }
 
 .notification-item {
   background-color: white;
-  margin: 15px 0;
+  margin: 10px 0; 
+  padding: 8px; 
   border-radius: 5px;
   width: 100%;
-  height: 70px;
-  font-size: 15px;
-  letter-spacing: -1px;
+  height: auto; 
+  font-size: 14px;
+  letter-spacing: -0.5px; 
   position: relative;
 }
 
-.not-read{
+.not-read {
   background-color: rgba(176, 208, 238, 0.7)
 }
 
-.read{
-  background-color: rgba(238,238,238,0.5);
+.read {
+  background-color: rgba(238, 238, 238, 0.5);
 }
 
-.notification-text{
+.notification-text {
   display: flex;
   width: 100%;
   height: 100%;
+  gap: 10px; 
+  cursor: pointer;
   align-items: center;
   cursor: pointer;
 }
 
-.notification-text> img{
+.notification-text > img {
   width: 50px;
   height: 50px;
   margin: 5px;
   flex-shrink: 0;
 }
 
-.notification-content-container{
+.notification-content-container {
   height: 90%;
 }
 
-.notification-date{
+.notification-date {
   font-size: 12px;
   color: gray;
 }
 
-.notification-content{
-  width: 270px;
+.notification-content {
+  width: auto; /* 너비 자동 조정 */
+  font-size: 13px; /* 글자 크기 줄이기 */
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: normal;
@@ -670,7 +281,7 @@ header>section:nth-child(3) {
   -webkit-box-orient: vertical;
 }
 
-.notification-delete{
+.notification-delete {
   position: absolute;
   top: -5px;
   right: 2px;
@@ -680,10 +291,235 @@ header>section:nth-child(3) {
   font-weight: bold;
 }
 
-.notification-delete:hover{
+.notification-delete:hover {
   color: red;
 }
 
-.notification-item:hover > .notification-text{
+.notification-item:hover > .notification-text {
   text-decoration: underline;
 }
+
+/************ 메인 컨텐츠 css ************/
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 99vh;
+}
+
+.main {
+  font-family: 'NEXON Lv1 Gothic OTF';
+  padding-top: 200px;
+  padding-bottom: 60px;
+  flex-grow: 1;
+}
+
+.centered-title {
+  text-align: center;
+  margin: 20px 0;
+  
+}
+
+
+.category-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.category-box {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 15px;
+  width: 300px;
+  /* height: 160px;
+  margin-bottom: 20px; */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+  overflow: hidden;
+  /* display: flex;
+  padding: 15px;
+  align-items: center; */
+}
+
+.category-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.icon {
+  width: 100%;
+  height: 300px; /* 높이를 늘려서 이미지를 더 크게 표시 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box; 
+  overflow: hidden;
+  position: relative;
+}
+
+.icon img {
+  width: 100%; /* 부모 요소 너비에 맞게 설정 */
+  height: 100%; /* 높이를 자동으로 설정하여 비율 유지 */
+  object-fit: cover; /* 이미지가 영역을 꽉 채우도록 설정 */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* 이미지 중앙 정렬 */
+}
+
+.details {
+  padding: 20px;
+}
+
+.location {
+  font-size: 14px;
+  color: #777;
+  margin-bottom: 10px;
+}
+
+.categoryGroup-name {
+  font-size: 18px;
+  font-weight: bold;
+  color: #212121;
+  margin-bottom: 10px;
+}
+
+.group-name {
+  font-size: 16px;
+  margin-bottom: 5px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; 
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
+  
+}
+
+.participants {
+  display: flex;
+  align-items: center;
+}
+
+
+
+/************ 로그인 섹션 css ************/
+
+.login-section {
+  text-align: center;
+}
+
+.login-box {
+  width: 450px;
+  margin: 0 auto;
+}
+
+.login-box button {
+  width: 100%;
+  font-size: 16px;
+}
+
+
+.login-box article {
+  display: flex;
+  justify-content: space-around;
+}
+
+.mainLoginButton,
+.pwjoin a {
+  width: 400px;
+  height: 125px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 16px;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 0px;
+}
+.mainLoginButton{
+  margin-top: 30px;
+}
+
+.pwjoin {
+  display: flex;
+  align-items: center; /* 버튼을 중앙 정렬 */
+}
+
+/************ 팝업창 css ************/
+.popup-view, .popup-view * {
+  box-sizing: border-box;
+}
+
+.popup-view {
+  width: 302px;
+  height: 302px;
+  border: 1px solid rgb(0, 0, 0, 0.8);
+  position: absolute;
+  top: 20vw;
+  left: 40vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.popup-view > .absoluteDiv {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 101;
+}
+
+.popup-underbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 32px;
+  padding: 3px;
+  background-color: rgb(0, 0, 0, 0.8);
+  color: white;
+  z-index: 102;
+}
+
+.display-non {
+  display: none !important;
+}
+
+/************ 위로가기 버튼 css ************/
+.scroll-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.scroll-top button {
+  font-size: 30px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  color: black;
+}
+
+/************ 푸터 css ************/
+footer {
+  width: 100%;
+  text-align: center;
+  padding: 10px;
+  bottom: 0;
+  left: 0;
+  height: 50px;
+  z-index: 10;
+}
+
+footer nav a {
+  text-decoration: none;
+  color: black;
+  margin-right: 10px;
+}
+
