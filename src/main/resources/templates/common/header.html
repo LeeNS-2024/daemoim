@@ -1,15 +1,19 @@
 <header class="header">
   <section>
     <div class="top-row">
-      <a href="/" class="logo" >
+      <a href="/" class="logo">
         <img src="/images/mainHeader/logo.png" alt="대모임">
       </a>
-      <span><h1>대모임대모임대모임대모임대모임대모임대모임대모임대모임대모임대모임대모임대모임대모임대모임대모임대모임대모임대모임대모임</h1></span>
+        <a href="/" class="mainText">
+          <h1>Daemoim</h1>
+        </a>
+       
 
+      <!-- 로그인 상태에 따른 UI -->
       <th:block th:unless="${session.loginMember}">
         <div class="login-search-wrapper">
           <a href="/category/category" class="headerSearchBtn">
-            <i class="fa-solid fa-magnifying-glass"></i>
+            <i class="fa-solid fa-magnifying-glass"></i> 검색
           </a>
           <div class="loginBtnBox">
             <a href="/signin" class="headerLoginBtn">로그인</a>
@@ -17,30 +21,31 @@
         </div>
       </th:block>
 
-      <th:block th:if="${session.loginMember}" class="login-search-wrapper">
-        
-        
-        <div class="loginBtnBox">
-          <div>
-            <a href="/groupManage/createGroup">모임 생성</a>
-          </div>
-          <div class="notification-container">
-            <button class="notification-btn fa-regular fa-bell" id="my-element">
-              <div class="notification-count-area"></div>
-            </button>
       <th:block th:if="${session.loginMember}">
         <div class="login-search-wrapper">
           <div class="loginBtnBox">
+            <!-- 모임 생성 버튼 -->
+            <a href="/groupManage/createGroup" class="create-group-btn">
+              <i class="fa fa-plus-circle"></i> 모임 생성
+            </a>
+            
+            <!-- 알림 버튼 -->
             <div class="notification-container">
-              <button class="notification-btn fa-regular fa-bell" id="my-element">
-                <div class="notification-count-area"></div>
+              <button class="styled-notification-btn">
+                <i class="fa-regular fa-bell"></i>&nbsp; 알림
+                <div class="notification-count-area" style="display: none;">
+                  [[${notificationCount > 0 ? notificationCount : ''}]]
+                </div>
               </button>
             </div>
+
+            <!-- 검색 및 프로필 -->
             <a href="/category/category" class="headerSearchBtn">
-              <i class="fa-solid fa-magnifying-glass"></i>
+              <i class="fa-solid fa-magnifying-glass"></i> 검색
             </a>
             <a href="/myPage/info">
-              <img src="[[${session.loginMember.memberImg}]]" alt="프로필 이미지" class="profile-img" style="width: 40px; height: 40px; border-radius: 100%;">
+              <img th:src="${session.loginMember.memberImg != null ? session.loginMember.memberImg : '/images/default-profile.png'}"
+                   alt="프로필 이미지" class="profile-img" style="width: 40px; height: 40px; border-radius: 100%;">
             </a>
             <a href="/myPage/info" class="headerLoginBtn">[[${session.loginMember.memberNickname}]] 님</a>
             <a href="/logout" class="headerLoginBtn">로그아웃</a>
@@ -50,21 +55,24 @@
     </div>
   </section>
 
+  <!-- 카테고리 네비게이션 -->
   <section>
     <div class="bottom-row">
-      <nav class="categories" >
-        <!-- 각 카테고리를 클릭하면 category 페이지로 이동하면서, 카테고리 이름을 query parameter로 전달 -->
+      <nav class="categories">
         <a href="/category/category?type=allCategory" class="category-btn" data-category="allCategory">
           <i class="fa-solid fa-bars">
-            <span style="font-family: 'NEXON Lv1 Gothic OTF';">전체</span></i>
+            <span style="font-family: 'NEXON Lv1 Gothic OTF';">전체</span>
+          </i>
         </a>
         <a href="/category/category?type=activity" class="category-btn" data-category="activity">
           <i class="fa-solid fa-person-running">
-            <span style="font-family: 'NEXON Lv1 Gothic OTF';">액티비티</span></i>
+            <span style="font-family: 'NEXON Lv1 Gothic OTF';">액티비티</span>
+          </i>
         </a>
         <a href="/category/category?type=culture" class="category-btn" data-category="culture">
           <i class="fa-solid fa-star">
-            <span style="font-family: 'NEXON Lv1 Gothic OTF';">문화/여가</span></i>
+            <span style="font-family: 'NEXON Lv1 Gothic OTF';">문화/여가</span>
+          </i>
         </a>
         <a href="/category/category?type=develop" class="category-btn" data-category="develop">
           <i class="fa-solid fa-book">
@@ -76,13 +84,9 @@
             <span style="font-family: 'NEXON Lv1 Gothic OTF';">연애</span>
           </i>
         </a>
-        <!-- <a href="/board/1" class="category-btn">
-          <i class="fa-solid fa-plane">각 모임 게시판 가는 임시용</i>
-        </a> -->
       </nav>
     </div>
   </section>
-  
 </header>
 
 <!-- 팝업창 -->
