@@ -234,8 +234,6 @@ public class EditBoardController {
 		
 		String path = String.format("redirect:/board/%d/%d/%d", groupNo, boardTypeCode, boardNo);
 		
-		log.info("[기능] 수정이 완료되었습니다.");
-		log.info("[기능] " + path);
 		
 		return path; // 상세 조회
 	}
