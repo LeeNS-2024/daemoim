@@ -16,4 +16,6 @@ public interface MainMapper {
 
 
 	MainDTO findGroupByNo(int groupNo);
+
+	List<MainDTO> selectRecentChatGroups();
 }
