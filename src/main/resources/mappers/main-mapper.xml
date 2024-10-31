@@ -5,6 +5,8 @@
 
   <!-- 추천 모임 조회 -->
   <select id="selectRecommendedGroups" resultType="MainDTO">
+	  SELECT *
+	  FROM(
 	  SELECT 
 	    g.GROUP_NO AS "groupNo",
 	    g.GROUP_MAIN_IMG AS "groupMainImg", 
@@ -29,7 +31,43 @@
 	    COUNT(DISTINCT mg.MEMBER_NO) / g.GROUP_MAX_POPULATION &lt; 1
 	  ORDER BY 
 	    g.GROUP_MAX_POPULATION / COUNT(mg.MEMBER_NO) ASC
+	  ) 
+	  WHERE ROWNUM &lt;= 9
+	  
   </select>
+  
+  
+  <select id="selectRecentChatGroups" resultType="MainDTO">
+    SELECT *
+    FROM (
+    SELECT 
+        g.GROUP_NO AS "groupNo",
+        g.GROUP_MAIN_IMG AS "groupMainImg",
+        g.GROUP_NAME AS "groupName",
+        g.GROUP_INTRODUCE AS "groupIntroduce",
+        c.CATEGORY_NAME AS "categoryName",
+        COUNT(DISTINCT mg.MEMBER_NO) AS "currentPopulation",
+        g.GROUP_MAX_POPULATION AS "maxPopulation",
+        MAX(ch.CHAT_WRITE_DATE) AS "latestChatDate"
+    FROM 
+        "GROUP" g
+    JOIN 
+        MEMBER_GROUP mg ON g.GROUP_NO = mg.GROUP_NO
+    JOIN 
+        CATEGORY c ON g.CATEGORY_NO = c.CATEGORY_NO
+    JOIN 
+        CHAT ch ON g.GROUP_NO = ch.GROUP_NO
+    WHERE 
+        mg.MEMBER_GROUP_BAN = 'N' 
+        AND mg.MEMBER_GROUP_DEL_FL = 'N'
+        AND g.GROUP_DEL_FL = 'N'
+    GROUP BY 
+        g.GROUP_NO, g.GROUP_MAIN_IMG, g.GROUP_NAME, g.GROUP_INTRODUCE, c.CATEGORY_NAME, g.GROUP_MAX_POPULATION
+    ORDER BY 
+        MAX(ch.CHAT_WRITE_DATE) DESC
+    )
+    WHERE ROWNUM &lt;= 9
+	</select>
   
   <!-- 로그인 한 회원 가입한 모임 조회 -->
   <select id="selectJoinGroups" resultType="MainDTO">
