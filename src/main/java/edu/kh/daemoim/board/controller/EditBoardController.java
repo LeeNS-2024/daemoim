@@ -232,8 +232,10 @@ public class EditBoardController {
 		
 		ra.addFlashAttribute("message", message);
 		
+		String path = String.format("redirect:/board/%d/%d/%d", groupNo, boardTypeCode, boardNo);
 		
-		return String.format("redirect:/board/%d/%d/%d", groupNo, boardTypeCode, boardNo); // 상세 조회
+		
+		return path; // 상세 조회
 	}
 
 

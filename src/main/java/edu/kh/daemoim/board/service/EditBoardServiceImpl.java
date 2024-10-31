@@ -17,9 +17,11 @@ import edu.kh.daemoim.common.exception.FileUploadFailException;
 import edu.kh.daemoim.common.util.FileUtil;
 import edu.kh.daemoim.myPage.dto.MyPage;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @PropertySource("classpath:/config.properties")
 @Service
+@Slf4j
 @Transactional
 @RequiredArgsConstructor
 public class EditBoardServiceImpl implements EditBoardService{
@@ -146,7 +148,11 @@ public class EditBoardServiceImpl implements EditBoardService{
 				}
 			}
 			
-			
+			List<BoardImg> imgList = mapper.selectImageList(inputBoard.getBoardNo());
+			List<Integer> oderList = new ArrayList<>();
+			for(BoardImg img : imgList) {
+				oderList.add( img.getBoardImgOrder() );
+			}
 			// 3. 업로드된 이미지가 있을 경우
 			//    UPDATE 또는 INSERT +  transferTo()
 			
@@ -175,14 +181,9 @@ public class EditBoardServiceImpl implements EditBoardService{
 				
 				
 				// 1행씩 update 수행
-				result = mapper.updateImage(img);
+				if(oderList.contains(i)) result = mapper.updateImage(img);
+				else result = mapper.insertImage(img);
 				
-				// 수정이 실패 == 기존에 이미지가 없었다
-				// == 새로운 이미지가 새 order번째 자리에 추가 되었다
-				// --> INSERT
-				if(result == 0) {
-					result = mapper.insertImage(img);
-				}
 				
 				// 수정, 삭제가 모두 실패한 경우 --> 말도 안되는 상황
 				if(result == 0) {

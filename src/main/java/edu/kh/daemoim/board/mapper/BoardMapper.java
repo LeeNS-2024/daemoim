@@ -123,9 +123,7 @@ public interface BoardMapper {
 	 * @param boardNo
 	 * @return
 	 */
-	List<Comment> selectCommentList(@Param("groupNo")				int groupNo, 
-																  @Param("boardTypeCode")	int boardTypeCode, 
-																  @Param("boardNo")				int boardNo);
+	List<Comment> selectCommentList(@Param("boardNo")	int boardNo);
 
 	/** 현재 게시물이 속해있는 페이지 조회
 	 * @param paramMap

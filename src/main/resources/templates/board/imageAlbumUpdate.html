@@ -15,14 +15,15 @@
   <main>
     <form action="update" 
           method="POST" 
+          th:object="${board}"
           id="boardUpdateFrm" 
           class="board-write" 
           enctype="multipart/form-data">
 
-      <h1 class="board-name" th:text="${boardTitle}">게시판 이름</h1>
+      <h1 class="board-name" th:text="*{boardTitle}">게시판 이름</h1>
 
       <!-- 게시글 번호(숨김) -->
-      <input type="hidden" name="boardNo" th:value="${board.boardNo}">
+      <input type="hidden" name="boardNo" th:value="*{boardNo}">
 
       <!-- 제목 입력 영역 -->
       <div class="board-title">
@@ -35,11 +36,15 @@
         <h5>이미지 업로드 (<span id="imageCount">0</span>/20)</h5>
         <div class="img-box" id="imageList">
           <!-- 기존 이미지 목록 -->
-          <th:block th:each="image : ${board.imageList}">
+          <th:block th:each="img : ${board.imageList}">
             <div class="preview-wrapper existing-image">
-              <img class="preview" th:src="${boardImage.boardImgPath}" th:alt="${boardImage.boardImgOriginalName}">
-              <span class="file-name" th:text="${boardImage.imageOriginal}"></span>
-              <input type="hidden" name="existingImages" th:value="${boardImage.imageNo}">
+              <img class="preview" 
+                   th:src="|${img.boardImgPath}${img.boardImgRename}|" 
+                   th:alt="${img.boardImgOriginalName}">
+              <span class="file-name" th:text="${img.boardImgOriginalName}"></span>
+              <input type="hidden" 
+                     name="existingImages" 
+                     th:value="${img.boardImgNo}">
               <button type="button" class="delete-image">×</button>
             </div>
           </th:block>
@@ -59,16 +64,14 @@
               <i class="fas fa-plus"></i>
               <span>이미지 추가</span>
             </label>
-            <input type="file" id="imageInput" name="images" 
-                   multiple accept="image/*" style="display: none;">
           </div>
-          <input type="file" id="imageInput" multiple accept="image/*">
+          <input type="file" name="images" id="imageInput" multiple accept="image/*">
         </div>
       </div>
 
       <!-- 버튼 영역 -->
       <div class="board-btn-area">
-        <button type="submit" id="updateBtn">수정</button>
+        <button type="submit" id="writeBtn">수정</button>
         <button type="button" id="cancelBtn">취소</button>
       </div>
     </form>
@@ -79,3 +82,4 @@
 </body>
 
 </html>
+<input type="text" >

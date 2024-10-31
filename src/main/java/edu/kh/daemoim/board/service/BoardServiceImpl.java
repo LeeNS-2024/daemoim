@@ -155,8 +155,8 @@ public class BoardServiceImpl implements BoardService{
 	
 	// 댓글 목록 조회
 	@Override
-	public List<Comment> selectCommentList(int groupNo, int boardTypeCode, int boardNo) {
-		return mapper.selectCommentList(groupNo, boardTypeCode, boardNo);
+	public List<Comment> selectCommentList(int boardNo) {
+		return mapper.selectCommentList( boardNo);
 	}
 	
 	// 현재 게시물이 속한 페이지 번호 조회
