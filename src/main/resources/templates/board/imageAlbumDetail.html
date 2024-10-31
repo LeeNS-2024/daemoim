@@ -88,13 +88,12 @@
         <button id="reportBtn">신고</button>
       </div>
     </section>
-
-    <!-- 댓글 영역-->
-    <th:block th:replace="~{board/comment}"></th:block>
-    
-    <th:block th:replace="~{common/footer}"></th:block>
   </main>
-
+  <!-- 댓글 영역-->
+  <section>
+    <th:block th:replace="~{board/comment}"></th:block>
+  </section>
+  <th:block th:replace="~{common/footer}"></th:block>
 
   <!-- 이미지 확대 모달 -->
   <div id="imageModal" class="modal">
@@ -115,6 +114,7 @@
   <script src="/js/board/imageAlbumDetail.js"></script>
   <script src="/js/board/comment.js"></script>
   <script src="/js/board/report.js"></script>
+  <script src="/js/header.js"></script>
 </body>
 
 </html>

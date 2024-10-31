@@ -33,14 +33,18 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-// 좋아요 기능
+/* 좋아요 하트 클릭 시 */
 const boardLike = document.querySelector("#boardLike");
 boardLike.addEventListener("click", e => {
+
+  // 1. 로그인 여부 검사
   if (loginCheck === false) {
     alert("로그인 후 이용해 주세요");
     return;
   }
 
+
+  // 2. 비동기로 좋아요 요청
   fetch("/board/like", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -51,26 +55,39 @@ boardLike.addEventListener("click", e => {
       throw new Error("좋아요 실패");
     })
     .then(result => {
-      if (result.check === 'insert') {
+
+      // 좋아요 결과가 담긴 result 객체의 check 값에 따라
+      // 하트 아이콘을 비우기/채우기 지정
+      if (result.check === 'insert') { // 채우기
         boardLike.classList.add("fa-solid");
         boardLike.classList.remove("fa-regular");
 
-        const content = `<strong>${memberNickname}</strong>님이 <strong>${boardDetail.boardTitle}</strong> 게시글을 좋아합니다`;
+        // 게시글 작성자에게 알림 보내기
+        const content
+          = `<strong>${memberNickname}</strong>님이 <strong>${boardDetail.boardTitle}</strong> 게시글을 좋아합니다`;
 
+        // type, url, pkNo, content
         sendNotification(
           "boardLike",
-          location.pathname,
+          location.pathname,  // 게시글 상세 조회 페이지 주소
           boardDetail.boardNo,
           content
         );
-      } else {
+
+      } else { // 비우기
         boardLike.classList.add("fa-regular");
         boardLike.classList.remove("fa-solid");
       }
+
+      // 좋아요 하트 다음 형제 요소의 내용을 
+      // result.count로 변경
       boardLike.nextElementSibling.innerText = result.count;
+
     })
     .catch(err => console.error(err));
-});
+
+
+})
 
 // 삭제 기능
 const deleteBtn = document.querySelector("#deleteBtn");

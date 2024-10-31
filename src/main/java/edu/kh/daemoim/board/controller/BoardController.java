@@ -3,6 +3,9 @@ package edu.kh.daemoim.board.controller;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -163,7 +166,7 @@ public class BoardController {
 					}
 		  }
 		  // 조회수가 증가된 경우 쿠키세팅(하루에 한 번 조회수 늘릴 수 있게 / 필요시 사용가능하게 주석으로 만들어둠)
-		  /*
+		  
 		  if(result > 0){
 		  	board.setReadCount(board.getReadCount() + 1);
 		  	c.setPath("/");
@@ -183,7 +186,7 @@ public class BoardController {
 		  	c.setMaxAge((int)diff);
 		  	resp.addCookie(c);
 		  }
-		  */
+		  
 	  }
 	  model.addAttribute("board",board);
 	  
@@ -206,13 +209,12 @@ public class BoardController {
 	
 	// 신고 등록
 	@PostMapping("report")
-	public int reportInsert(
-		@RequestBody StopMember report,
-		@SessionAttribute("loginMember") MyPage loginMember) {
-		
-		report.setMemberNo(loginMember.getMemberNo());
-		
-		return service.reportInsert(report);
+	public String reportInsert(
+		@RequestBody StopMember report
+		) {
+		// 고쳐야됨
+
+		return null;
 	}
 	
 	

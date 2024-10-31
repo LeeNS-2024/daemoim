@@ -165,16 +165,7 @@ public class BoardServiceImpl implements BoardService{
 		return mapper.getCurrentPage(paramMap);
 	}
 	
-	// 신고 내용 DB에 저장
-	@Override
-	public int reportInsert(StopMember report) {
-		
-		int result = mapper.reportInsert(report);
-		
-		if(result > 0) return report.getReportNo();
-		
-		return 0;
-	}
+
 	
 	
 	
