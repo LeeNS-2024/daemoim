@@ -251,7 +251,7 @@ const selectNotificationList = () => {
           if (selectList.length === 0) {
               const emptyMessage = document.createElement("div");
               emptyMessage.className = 'no-notifications';
-              emptyMessage.innerText = '새로운 알림이 없습니다.';
+              emptyMessage.innerText = '새 알림 없음!';
               notiList.appendChild(emptyMessage);
               return;
           }
@@ -386,13 +386,13 @@ const selectNotificationList = () => {
 
 // 페이지 로딩 완료 후 수행
 document.addEventListener("DOMContentLoaded", () => {
-  let notificationCountArea = document.querySelector(".notification-count-area");
-  if (!notificationCountArea) {
-      notificationCountArea = document.createElement("div");
-      notificationCountArea.className = "notification-count-area";
-      notificationCountArea.innerText = "0"; // 초기 알림 개수
-      document.body.appendChild(notificationCountArea); // 원하는 부모 요소에 추가
-  }
+  // let notificationCountArea = document.querySelector(".notification-count-area");
+  // if (!notificationCountArea) {
+  //     notificationCountArea = document.createElement("div");
+  //     notificationCountArea.className = "notification-count-area";
+  //     notificationCountArea.innerText = "0"; // 초기 알림 개수
+  //     document.body.appendChild(notificationCountArea); // 원하는 부모 요소에 추가
+  // }
 
   // 알림 버튼 생성 확인 및 생성
   let notificationBtn = document.querySelector(".notification-btn");

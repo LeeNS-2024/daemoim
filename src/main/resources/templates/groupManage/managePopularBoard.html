@@ -54,7 +54,10 @@
           <th:block th:if= "${boardList}" th:each= "board:${boardList}" th:object="${board}">
             <tr class="boardTr">
               <td th:text="*{rnum}">게시글번호</td><!-- 게시글번호로 쓸 필드 없어서 좋아요체크로가져옴 -->
-              <td class="boardTitle"><span class="likeCount" th:unless= "*{likeCount == 0}" th:text="*{likeCount}">좋아요수</span><a href="#" th:text="*{boardTitle}">제목</a><span class="commentCount" th:unless= "*{commentCount == 0}" th:text="|[*{commentCount}]|">댓글수</span></td>
+              <td class="boardTitle">
+                <span class="likeCount" th:unless= "*{likeCount == 0}" th:text="*{likeCount}">좋아요수</span>
+                <a th:href="@{/board/{groupNo}/{boardTypeCode}/{boardNo}(groupNo=*{groupNo},boardTypeCode=*{boardTypeCode},boardNo=*{boardNo})}" th:text="*{boardTitle}">제목</a>
+                <span class="commentCount" th:unless= "*{commentCount == 0}" th:text="|[*{commentCount}]|">댓글수</span></td>
               <td th:text="*{readCount}">조회수</td>
               <td th:text="*{boardWriteDate}">작성일</td>
               <td class="boardNickname" th:text="*{memberNickname}">작성자</td>

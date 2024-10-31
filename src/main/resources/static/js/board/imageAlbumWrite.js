@@ -143,21 +143,23 @@ function handleSubmit(e) {
     formData.append('images', file);
   });
 
-  fetch(form.action, {
+  fetch(form.action+'2', {
     method: 'POST',
     body: formData
   })
-    .then(response => response.json())
-    .then(data => {
-      if (data.success) {
-        location.href = data.redirectUrl;
+    .then(response =>{
+      if(response.ok) return response.text();
+      throw new Error("게시글 등록 중 오류가 발생했습니다.");
+      })
+    .then(result => {
+      if (result !==null) {
+        location.href = result;
       } else {
         alert(data.message || '게시글 등록에 실패했습니다.');
       }
     })
     .catch(error => {
       console.error('Error:', error);
-      alert('게시글 등록 중 오류가 발생했습니다.');
     });
 }
 

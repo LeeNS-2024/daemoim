@@ -22,12 +22,12 @@
 
                     <!-- 프로필 이미지 -->
                     <!-- 프로필 이미지가 없을 경우 기본 이미지 출력 -->
-                    <img th:unless= "*{profileImg}"
+                    <img th:unless= "*{memberImg}"
                          th:src="#{user.default.image}">
                     
                     <!-- 프로필 이미지가 있을 경우 출력 (예정)-->
-                    <img th:if= "*{profileImg}"
-                         th:src="#{profileImg}">
+                    <img th:if= "*{memberImg}"
+                         th:src="#{memberImg}">
 
 
                     <span th:text="*{memberNickname}">작성자 닉네임</span>

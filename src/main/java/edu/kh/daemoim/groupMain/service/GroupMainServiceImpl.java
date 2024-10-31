@@ -30,9 +30,9 @@ public class GroupMainServiceImpl implements GroupMainService {
 
 	// 공지사항 불러오기
 	@Override
-	public List<Notice> selectBoardList() {
+	public List<Notice> selectBoardList(int groupNo) {
 
-		return mapper.selectBoardList();
+		return mapper.selectBoardList(groupNo);
 	}
 
 	// 사진 불러오기

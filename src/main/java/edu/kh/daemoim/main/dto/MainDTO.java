@@ -1,5 +1,9 @@
 package edu.kh.daemoim.main.dto;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
+import edu.kh.daemoim.myPage.dto.MyPage;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -21,4 +25,8 @@ public class MainDTO {
     private int currentPopulation; // 현재 해당 모임의 인원
     private int maxPopulation;
     private int groupNo;
+    
+    private LocalDateTime latestChatDate; // 마지막 채팅 조회 
+    
+    private List<MyPage> members;
 }

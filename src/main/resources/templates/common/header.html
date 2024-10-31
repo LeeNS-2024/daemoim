@@ -4,13 +4,16 @@
       <a href="/" class="logo" >
         <img src="/images/mainHeader/logo.png" alt="대모임">
       </a>
+      <span><h1>대모임대모임대모임대모임대모임대모임대모임대모임대모임대모임대모임대모임대모임대모임대모임대모임대모임대모임대모임대모임</h1></span>
 
-      <th:block th:unless="${session.loginMember}" class="login-search-wrapper">
-        <a href="/category/category" class="headerSearchBtn">
-          <i class="fa-solid fa-magnifying-glass"></i>
-        </a>
-        <div class="loginBtnBox">
-          <a href="/signin" class="headerLoginBtn">로그인</a>
+      <th:block th:unless="${session.loginMember}">
+        <div class="login-search-wrapper">
+          <a href="/category/category" class="headerSearchBtn">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </a>
+          <div class="loginBtnBox">
+            <a href="/signin" class="headerLoginBtn">로그인</a>
+          </div>
         </div>
       </th:block>
 
@@ -25,15 +28,23 @@
             <button class="notification-btn fa-regular fa-bell" id="my-element">
               <div class="notification-count-area"></div>
             </button>
+      <th:block th:if="${session.loginMember}">
+        <div class="login-search-wrapper">
+          <div class="loginBtnBox">
+            <div class="notification-container">
+              <button class="notification-btn fa-regular fa-bell" id="my-element">
+                <div class="notification-count-area"></div>
+              </button>
+            </div>
+            <a href="/category/category" class="headerSearchBtn">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </a>
+            <a href="/myPage/info">
+              <img src="[[${session.loginMember.memberImg}]]" alt="프로필 이미지" class="profile-img" style="width: 40px; height: 40px; border-radius: 100%;">
+            </a>
+            <a href="/myPage/info" class="headerLoginBtn">[[${session.loginMember.memberNickname}]] 님</a>
+            <a href="/logout" class="headerLoginBtn">로그아웃</a>
           </div>
-          <a href="/category/category" class="headerSearchBtn">
-            <i class="fa-solid fa-magnifying-glass"></i>
-          </a>
-          <a href="/myPage/info">
-            <img src="[[${session.loginMember.memberImg}]]" alt="프로필 이미지" class="profile-img" style="width: 40px; height: 40px; border-radius: 100%;">
-          </a>
-          <a href="/myPage/info" class="headerLoginBtn">[[${session.loginMember.memberNickname}]] 님</a>
-          <a href="/logout" class="headerLoginBtn">로그아웃</a>
         </div>
       </th:block>
     </div>
@@ -44,23 +55,30 @@
       <nav class="categories" >
         <!-- 각 카테고리를 클릭하면 category 페이지로 이동하면서, 카테고리 이름을 query parameter로 전달 -->
         <a href="/category/category?type=allCategory" class="category-btn" data-category="allCategory">
-          <i class="fa-solid fa-bars"> 전체</i>
+          <i class="fa-solid fa-bars">
+            <span style="font-family: 'NEXON Lv1 Gothic OTF';">전체</span></i>
         </a>
         <a href="/category/category?type=activity" class="category-btn" data-category="activity">
-          <i class="fa-solid fa-person-running"> 액티비티</i>
+          <i class="fa-solid fa-person-running">
+            <span style="font-family: 'NEXON Lv1 Gothic OTF';">액티비티</span></i>
         </a>
         <a href="/category/category?type=culture" class="category-btn" data-category="culture">
-          <i class="fa-solid fa-star"> 문화/여가</i>
+          <i class="fa-solid fa-star">
+            <span style="font-family: 'NEXON Lv1 Gothic OTF';">문화/여가</span></i>
         </a>
         <a href="/category/category?type=develop" class="category-btn" data-category="develop">
-          <i class="fa-solid fa-book"> 자기계발</i>
+          <i class="fa-solid fa-book">
+            <span style="font-family: 'NEXON Lv1 Gothic OTF';">자기계발</span>
+          </i>
         </a>
         <a href="/category/category?type=dating" class="category-btn" data-category="dating">
-          <i class="fa-solid fa-heart"> 연애</i>
+          <i class="fa-solid fa-heart">
+            <span style="font-family: 'NEXON Lv1 Gothic OTF';">연애</span>
+          </i>
         </a>
-        <a href="/board/1" class="category-btn">
+        <!-- <a href="/board/1" class="category-btn">
           <i class="fa-solid fa-plane">각 모임 게시판 가는 임시용</i>
-        </a>
+        </a> -->
       </nav>
     </div>
   </section>

@@ -357,8 +357,11 @@ public class BoardController {
 		paramMap.put("boardTypeCode", boardTypeCode);
 		paramMap.put("boardNo", boardNo);
 		
+		String url = null;
+		
 		// 목록 조회 redirect
-		String url = "redirect:/board/" + groupNo;
+		if(boardTypeCode == 3) url = "redirect:/board/" + groupNo + "/" + boardTypeCode;
+		else url = "redirect:/board/" + groupNo;
 		
 		return url;
 	}

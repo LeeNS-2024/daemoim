@@ -115,12 +115,3 @@ goToListBtn.addEventListener("click", () => {
 
   location.href = url;
 });
-
-// 신고 기능
-const reportBtn = document.querySelector("#reportBtn");
-reportBtn?.addEventListener("click", () => {
-  if (!loginCheck) {
-    alert("로그인 후 이용해 주세요");
-    return;
-  }
-});
