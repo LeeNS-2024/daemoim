@@ -223,11 +223,13 @@ public class MyPageController {
 	    return result;
 	}
     
-	@GetMapping("memberPage/{memberNo}")
+	@GetMapping("memberPage/{memberNickname}")
 	public String memberPage(){
 		
 		
-		return "memberPage/{memberNo}";
+		
+		
+		return "myPage/memberPage";
 		
 	}
 	
