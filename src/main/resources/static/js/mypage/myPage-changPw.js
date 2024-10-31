@@ -7,8 +7,8 @@ changePw?.addEventListener("submit", e => {
 
   // 입력 요소 모두 얻어오기
   const currentPw = document.querySelector("#currentPw");
-  const newPw = document.querySelector("#newPw");
-  const newPwConfirm = document.querySelector("#newPwConfirm");
+  const newPw = document.getElementById("newPw");
+  const newPwConfirm = document.getElementById("newPwConfirm");
 
   let str; // undefined 상태
 
@@ -29,7 +29,7 @@ changePw?.addEventListener("submit", e => {
 
   const lengthCheck = newPw.value.length >= 6 && newPw.value.length <= 20;
   const letterCheck = /[a-zA-Z]/.test(newPw.value); // 영어 알파벳 포함
-  const numberCheck = /\d/.test(newPw.value); // 숫자 포함
+  const numberCheck = /[0-9]+\d/.test(newPw.value); // 숫자 포함
   const specialCharCheck = /[\!\@\#\_\-]/.test(newPw.value); // 특수문자 포함
 
   // 조건이 하나라도 만족하지 못하면
