@@ -72,7 +72,7 @@ public class SiteManageController {
 	 * @param model
 	 * @return
 	 */
-	@PostMapping("suspend")
+	@PostMapping("/suspend")
 	public String stopMember(@RequestParam("email") String email, @RequestParam("years") int years,
 			@RequestParam("reason") String reason, RedirectAttributes ra, Model model) {
 
@@ -93,7 +93,7 @@ public class SiteManageController {
 			ra.addFlashAttribute("message", "올바른 이메일을 입력해주세요");
 		}
 
-		return "redirect:/siteManage#suspend";
+		return "redirect:/siteManage/main#suspend";
 	}
 
 	/**
@@ -102,7 +102,7 @@ public class SiteManageController {
 	 * @param email
 	 * @param reason
 	 */
-	@PostMapping("resign")
+	@PostMapping("/resign")
 	public String resignMember(@RequestParam("email") String email, @RequestParam("reason") String reason,
 			RedirectAttributes ra) {
 
@@ -118,7 +118,7 @@ public class SiteManageController {
 			ra.addFlashAttribute("message", "올바른 이메일을 입력해주세요.");
 		}
 
-		return "redirect:/siteManage#withdrawal";
+		return "redirect:/siteManage/main#withdrawal";
 	}
 
 	/**

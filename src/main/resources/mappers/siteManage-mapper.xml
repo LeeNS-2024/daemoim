@@ -117,7 +117,7 @@
 
 	</select>
 
-	<!--회원 정지(이메일 맞는지 확인) -->
+	<!--회원 탈퇴(이메일 맞는지 확인) -->
 	<select id="findMemberByEmail2" resultType="StopMember">
 		SELECT
 		MEMBER_NO

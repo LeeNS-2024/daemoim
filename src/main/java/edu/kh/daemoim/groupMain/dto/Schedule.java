@@ -20,7 +20,7 @@ public class Schedule {
 	private String location;
 	private String scheduleDate;
 	private String locationAddress;
-	private int cost;
+	private String cost;
 	
 	private int groupNo;
 	
