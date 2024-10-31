@@ -1077,7 +1077,7 @@ sendBtn?.addEventListener("click", ()=>{
       const inputObj = {
   
         "notificationContent" : notificationContent.value,
-        "notificationUrl" : "/boardMain/" + groupNo,
+        "notificationUrl" : "/groupMain/" + groupNo,
         "sendMemberNo" : chatLoginMemberNo,
         "receiveMemberNo" :   e.value,
         "groupNo" : groupNo
