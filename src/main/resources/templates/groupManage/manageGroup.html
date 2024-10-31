@@ -357,7 +357,7 @@
   
         </form><!-- form end -->
 
-
+        <th:block th:replace= "~{common/footer}" ></th:block>
     </div>
 
 
@@ -368,11 +368,10 @@
 
     </section>
   </main>
-
+  
   <!-- 푸터 -->
-  <th:block th:replace="~{common/footer}"></th:block>
   <th:block th:replace="~{common/common}"></th:block>
-
+  
   <script th:inline="javascript">
     const originalGroupName = /*[[${group.groupName}]]*/ "변경전 모임명";
     // 기본이미지 호출용, 모임 이미지가 필수라면 삭제
@@ -383,19 +382,19 @@
     const groupOriginalHeaderImg = /*[[${group.groupHeaderImg}]]*/ "변경전 모임 해더이미지";
     const originalImg = [groupOriginalMainImg, groupOriginalHeaderImg];
     const beforeCategoryListNo = /*[[${group.categoryListNo}]]*/ "변경전 카테고리 리스트 번호";
-  </script>
-
-  <section style="display: none;" id="manageGroupFooter" th:fragment="th-manageGroupFooter">
-
-    <script th:inline="javascript">
-      const pagination = /*[[${pagination}]]*/ "페이지네이션 객체";
-      const groupNo = /*[[${group.groupNo}]]*/ "그룹번호";
     </script>
 
-    <script src="/js/groupManage/manageGroup.js"></script>
-    <script src="https://kit.fontawesome.com/8695e357e4.js" crossorigin="anonymous"></script>
+<section style="display: none;" id="manageGroupFooter" th:fragment="th-manageGroupFooter">
+  
+  <script th:inline="javascript">
+    const pagination = /*[[${pagination}]]*/ "페이지네이션 객체";
+    const groupNo = /*[[${group.groupNo}]]*/ "그룹번호";
+    </script>
 
-  </section>
+<script src="/js/groupManage/manageGroup.js"></script>
+<script src="https://kit.fontawesome.com/8695e357e4.js" crossorigin="anonymous"></script>
+
+</section>
 
 
 </body>

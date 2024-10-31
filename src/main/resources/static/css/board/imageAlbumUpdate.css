@@ -90,7 +90,7 @@
   overflow: hidden;
 }
 
-/* 이미지 삭제 버튼 */
+/* 삭제 버튼 스타일 */
 .delete-image {
   position: absolute;
   top: 5px;
@@ -106,11 +106,13 @@
   align-items: center;
   justify-content: center;
   font-size: 16px;
+  z-index: 10;
+  transition: all 0.2s ease;
 }
 
-/* 기존 이미지 스타일 */
-.existing-image {
-  border: 2px solid #4CAF50;
+.delete-image:hover {
+  background-color: rgba(255, 0, 0, 1);
+  transform: scale(1.1);
 }
 
 /* 이미지 추가 버튼 */
@@ -119,30 +121,17 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 100%;
-  min-height: 200px;
+  height: 200px;
   border: 2px dashed #ddd;
   border-radius: 8px;
   cursor: pointer;
   transition: 0.3s;
+  background-color: white;
 }
 
 .add-image-btn:hover {
   border-color: #999;
   background-color: #f0f0f0;
-}
-
-.add-image-btn label {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  cursor: pointer;
-}
-
-.add-image-btn i {
-  font-size: 24px;
-  color: #666;
 }
 
 /* 버튼 영역 */
@@ -162,13 +151,45 @@
   transition: 0.3s;
 }
 
-#updateBtn {
-  background-color: #2196F3;
+#writeBtn {
+  background-color: #4CAF50;
   color: white;
 }
 
 #cancelBtn {
   background-color: #666;
+  color: white;
+}
+
+.board-btn-area button:hover {
+  opacity: 0.8;
+}
+
+/* 파일 입력 숨기기 */
+#imageInput {
+  display: none;
+}
+
+/* 기존 이미지 스타일 */
+.existing-image {
+  border: 2px solid #4CAF50;
+}
+
+.add-image-btn label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.add-image-btn i {
+  font-size: 24px;
+  color: #666;
+}
+
+#updateBtn {
+  background-color: #2196F3;
   color: white;
 }
 

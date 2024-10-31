@@ -1,3 +1,9 @@
+document.addEventListener("keydown", function(event) {
+  if (event.key === "Enter") {
+    alert("엔터를 누르지 마세요");
+    event.preventDefault(); // 엔터 키의 기본 동작을 막습니다.
+  }
+});
 /* 필수 입력 항목의 유효성 검사여부를 체크하기 위한 객체(체크리스트)*/
 const checkObj = {
   "memberEmail": false,
@@ -74,7 +80,7 @@ memberEmail.addEventListener("input", e => {
   .then(count => {
     // 매개 변수 count : 첫 번째 then에서 return된 값이 저장된 변수
 
-    if(count > 1){ // 중복인 경우
+    if(count > 0){ // 중복인 경우
       emailMessage.innerText = emailMessageObj.duplication; // 중복 메시지
       emailMessage.classList.add("error");
       emailMessage.classList.remove("confirm");
@@ -492,7 +498,7 @@ const telMessageObj = {};
 telMessageObj.normal = "한글,영어,숫자로만 3~10글자";
 telMessageObj.invalid = "전화번호가 유효하지 않습니다";
 telMessageObj.duplication = "이미 사용중인 전화번호 입니다.";
-telMessageObj.check = "사용 가능한 닉네임 입니다.";
+telMessageObj.check = "사용가능한 전화번호 입니다.";
 
 // 3) 전화번호 입력 시 마다 유효성 검사
 memberTel.addEventListener("input", () => {
@@ -510,7 +516,7 @@ memberTel.addEventListener("input", () => {
   }
 
   // 5) 전화번호 유효성 검사(정규 표현식)
-  const regEx = /^[a-zA-Z0-9가-힣]{3,10}$/; // 한글,영어,숫자로만 3~10글자
+  const regEx = /^010\d{8}$/; // 한글,영어,숫자로만 3~10글자
   if (regEx.test(inputTel) === false) {
     telMessage.innerText = telMessageObj.invalid;
     telMessage.classList.remove("confirm");
@@ -521,6 +527,7 @@ memberTel.addEventListener("input", () => {
   } else {
     telMessage.innerText = '유효한 전화번호 입니다'
   }
+
   // 6) 전화번호 중복 검사
   fetch("/telCheck?tel=" + inputTel)
     .then(response => {
@@ -528,7 +535,7 @@ memberTel.addEventListener("input", () => {
       throw new Error("닉네임 중복 검사 에러");
     })
     .then(count => {
-      if (count == 1) {
+      if (count > 0) {
         telMessage.innerText = telMessageObj.duplication;
         telMessage.classList.remove("confirm");
         telMessage.classList.add("error");
@@ -569,6 +576,7 @@ signUpForm.addEventListener("submit", e => {
         case "memberTel"       : str = "전화번호가 유효하지 않습니다"; break;
         case "memberTel"       : str = "이미 사용중인 전화번호 입니다"; break;
         case "authKey"         : str = "이메일이 인증되지 않았습니다"; break;
+        default                : str = "회원가입"
       }
 
       alert(str); // 경고 출력

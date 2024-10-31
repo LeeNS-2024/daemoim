@@ -94,7 +94,7 @@ eventSource.addEventListener("message", e => {
   console.log(obj);
 
   // 알림 모양 변경
-  const notificationBtn = document.querySelector(".notification-btn");
+  const notificationBtn = document.querySelector(".styled-notification-btn");
   notificationBtn.classList.add("fa-solid");
   notificationBtn.classList.remove("fa-regular");
 
@@ -173,12 +173,14 @@ const sendNotification = (content, sendMemberNo, receiveMemberNo, groupNo, url, 
 // 비동기로 알림 목록 조회
 // 알림 읽음 처리
 const updateNotification = (notificationNo) => {
-  fetch(`/notification`, {
+  fetch(`/notification?notificationNo=${notificationNo}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ notificationNo }) 
   })
   .then(response => {
+    console.log("응답 상태 확인:", response.status);
+
       if (response.ok) {
         notReadCheck();
 
@@ -251,7 +253,7 @@ const selectNotificationList = () => {
           if (selectList.length === 0) {
               const emptyMessage = document.createElement("div");
               emptyMessage.className = 'no-notifications';
-              emptyMessage.innerText = '새로운 알림이 없습니다.';
+              emptyMessage.innerText = '새 알림 없음!';
               notiList.appendChild(emptyMessage);
               return;
           }
@@ -290,7 +292,7 @@ const selectNotificationList = () => {
               notiItem.className = 'notification-item';
               notiItem.setAttribute('data-notification-id', data.notificationNo);
 
-              if (data.notificationCheck == 'N') {
+              if (data.notificationCheck === 'N') {
                   notiItem.classList.add("not-read");
               } else {
                   notiItem.classList.add("read");
@@ -298,11 +300,21 @@ const selectNotificationList = () => {
 
               const notiText = document.createElement("div");
               notiText.className = 'notification-text';
-              notiText.addEventListener("click", () => {
-                  if (data.notificationCheck == 'N') {
-                      updateNotification(data.notificationNo);
+
+              // 클릭 시 읽음 처리
+              notiText.addEventListener("click", (e) => {
+                e.preventDefault();
+
+                  if (data.notificationCheck === 'N') {
+                    updateNotification(data.notificationNo)
+                    .then(() => {
+                      window.location.href = data.notificationUrl;
+                    })
+                    .catch(err => console.error("알림 업데이트 오류 : ", err));
+
+                  } else {
+                    window.location.href = data.notificationUrl;
                   }
-                  location.href = data.notificationUrl;
               });
 
               const senderProfile = document.createElement("img");
@@ -354,11 +366,8 @@ const selectNotificationList = () => {
     .then(count => {
       console.log("알림 개수 : ", count);
   
-      const notificationBtn =
-        document.querySelector(".notification-btn");
-      
-      const notificationCountArea =
-        document.querySelector(".notification-count-area");
+      const notificationBtn = document.querySelector(".styled-notification-btn i");
+      const notificationCountArea = document.querySelector(".notification-count-area");
   
       // 알림 개수를 화면에 표시
       notificationCountArea.innerText = count;
@@ -368,10 +377,12 @@ const selectNotificationList = () => {
       if(count > 0){
         notificationBtn.classList.add("fa-solid");
         notificationBtn.classList.remove("fa-regular");
+        notificationCountArea.style.display = "block";
       }
       else { // 모든 알림을 읽은 상태
         notificationBtn.classList.add("fa-regular");
         notificationBtn.classList.remove("fa-solid");
+        notificationCountArea.style.display = "none";
       }
     })
     .catch(err => console.error(err));
@@ -386,41 +397,23 @@ const selectNotificationList = () => {
 
 // 페이지 로딩 완료 후 수행
 document.addEventListener("DOMContentLoaded", () => {
-  let notificationCountArea = document.querySelector(".notification-count-area");
-  if (!notificationCountArea) {
-      notificationCountArea = document.createElement("div");
-      notificationCountArea.className = "notification-count-area";
-      notificationCountArea.innerText = "0"; // 초기 알림 개수
-      document.body.appendChild(notificationCountArea); // 원하는 부모 요소에 추가
-  }
+  const notificationBtn = document.querySelector(".styled-notification-btn");
 
-  // 알림 버튼 생성 확인 및 생성
-  let notificationBtn = document.querySelector(".notification-btn");
-  if (!notificationBtn) {
-      notificationBtn = document.createElement("button");
-      notificationBtn.className = "notification-btn fa-regular";
-      document.body.appendChild(notificationBtn); // 원하는 부모 요소에 추가
-  }
+  connectSse(); // SSE 연결
+  notReadCheck(); // 알림 수 확인
 
-  // 알림 SSE 연결 및 알림 개수 업데이트
-  connectSse();
-  notReadCheck();
-
-  // 알림 버튼 클릭 시 알림 목록을 토글
   notificationBtn.addEventListener("click", () => {
       let notificationList = document.querySelector(".notification-list");
 
-      // 알림 목록이 없을 때 동적으로 생성
       if (!notificationList) {
           notificationList = document.createElement("div");
           notificationList.className = "notification-list";
-          document.body.appendChild(notificationList); // 원하는 부모 요소에 추가
+          document.body.appendChild(notificationList);
       }
 
-      // 알림 목록 토글
       notificationList.classList.toggle("notification-show");
       if (notificationList.classList.contains("notification-show")) {
-          selectNotificationList(); // 알림 목록 조회 함수
+          selectNotificationList();
       }
   });
 

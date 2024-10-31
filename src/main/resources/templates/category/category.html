@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/css/category/category.css">
     <th:block th:replace="~{common/common}"></th:block>
     <script src="/js/category/category.js" defer></script> 
+
 </head>
 
 <body>
@@ -24,7 +25,17 @@
     <section class="categorySearch">
         <div id="groupContainer"></div>
     </section>
-
+    <section class="scroll-top">
+        <button id="scrollTopBtn"><i class="fa-solid fa-circle-chevron-up"></i></button>
+    </section>
+    <script>
+        document.getElementById('scrollTopBtn').addEventListener('click', () => {
+            window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+  });
+});
+    </script>
     <footer>
         <th:block th:replace="~{common/footer}"></th:block>
     </footer>

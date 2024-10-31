@@ -353,14 +353,24 @@ public class BoardController {
 		@RequestParam Map<String, Object> paramMap) throws UnsupportedEncodingException {
 		
 		// paramMap에 boardCode, boardNo 추가
+		paramMap.put("groupNo", groupNo);
 		paramMap.put("boardTypeCode", boardTypeCode);
 		paramMap.put("boardNo", boardNo);
 		
-		String url = null;
+		int cp = service.getCurrentPage(paramMap);
 		
-		// 목록 조회 redirect
-		if(boardTypeCode == 3) url = "redirect:/board/" + groupNo + "/" + boardTypeCode;
-		else url = "redirect:/board/" + groupNo;
+		// 일반 목록 조회
+		String url = "redirect:/board/" + groupNo + "/" + "boardTypeCode" + "?cp=" + cp;
+		
+		// 검색해서 들어왔을 경우(검색 목록 조회)
+		if(paramMap.get("key") != null) {
+			
+			String query = URLEncoder.encode(paramMap.get("query").toString(), "UTF-8");
+			
+			url += "&key=" + paramMap.get("key") + "&query=" + query;
+		}
+    // 목로 조회 redirect
+    if(boardTypeCode != 3) url = "redirect:/board/" + groupNo;
 		
 		return url;
 	}

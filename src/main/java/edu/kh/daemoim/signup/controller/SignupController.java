@@ -76,10 +76,10 @@ public class SignupController {
 		
 		if(result > 0) {
 			path = "/";
-			message = "회원 가입 실패....";
+			message = "회원가입 성공";
 		}else {
 			path = "signUp";
-			message = "가입 성공....";
+			message = "회원가입 실패";
 		}
 		
 		ra.addFlashAttribute("message",message);

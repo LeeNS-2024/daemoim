@@ -19,6 +19,11 @@ public class MainServiceImpl implements MainService {
         return mapper.selectRecommendedGroups();
     }
     
+    @Override
+    public List<MainDTO> getRecentChatGroups() {
+    	return mapper.selectRecentChatGroups();
+    }
+    
     
     // 로그인한 회원의 가입한 모임 조회
     @Override

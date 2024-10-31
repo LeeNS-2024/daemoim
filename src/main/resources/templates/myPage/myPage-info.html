@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>내정보 페이지</title>
-  <link rel="stylesheet" href="/css/myPage/myPage-info.css">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>내정보 페이지</title>
+    <link rel="stylesheet" href="/css/myPage/myPageInfo.css">
 </head>
 
 <body>
@@ -24,8 +24,8 @@
       </div>
 
       <div class="profile-btn-area">
-        <label for="imageInput">이미지 선택</label>
-        <input type="file" name="profileImg" id="imageInput" accept="image/*">
+        <label for="imageInput">이미지 선택
+        <input type="file" name="profileImg" id="imageInput" accept="image/*"></label>
         <button type="submit">변경하기</button>
       </div>
     </form>
@@ -42,10 +42,11 @@
           <input type="text" th:value="${session.loginMember.memberIm}" id="memberIm" placeholder="자기소개 입력" name="memberIm">
         </div>
         <button id="changeBtn" type="submit" >변경</button>
-
       </div>
     </form>
   </main>
+
+   <th:block th:replace="~{common/footer}"></th:block>
 
   <script src="/js/myPage/myPage-info.js"></script>
 </body>

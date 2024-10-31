@@ -139,5 +139,25 @@ public interface BoardMapper {
 	 */
 	int reportInsert(StopMember report);
 
+	/** 좋아요 DB에 저장
+	 * @param boardNo
+	 * @param memberNo
+	 * @return
+	 */
+	int insertBoardLike(@Param("boardNo")int boardNo, 
+										  @Param("memberNo")int memberNo);
 
+	/** 좋아요 DB에서 삭제
+	 * @param boardNo
+	 * @param memberNo
+	 * @return
+	 */
+	int deleteBoardLike(@Param("boardNo")int boardNo, 
+											@Param("memberNo")int memberNo);
+
+	/** 페이지에 좋아요 개수 체크
+	 * @param boardNo
+	 * @return
+	 */
+	int getLikeCount(int boardNo);
 }

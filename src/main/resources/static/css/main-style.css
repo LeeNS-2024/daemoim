@@ -2,13 +2,16 @@
 @font-face {
   font-family: 'PartialSansKR-Regular';
   src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-1@1.1/PartialSansKR-Regular.woff2') format('woff2');
-  font-weight: normal;
-  font-style: normal;
 }
 
 @font-face {
   font-family: 'NEXON Lv1 Gothic OTF';
   src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv1 Gothic OTF.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Cafe24Nyangi-W-v1.0';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2410-1@1.0/Cafe24Nyangi-W-v1.0.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
 }
@@ -24,6 +27,7 @@
 html, body {
   height: 100%;
   overflow-x: hidden; 
+  overflow-y: auto; 
 }
 
 body {
@@ -55,19 +59,18 @@ body {
   color: #fc9562;
   font-size: 80px;
   margin-right: auto;
-  width: 150px; 
+  width: 150px;
   height: 150px;
   white-space: nowrap;
-  overflow: hidden; 
   overflow: hidden;
   text-overflow: ellipsis;
   flex-shrink: 0;
 }
 
 .logo img {
-  width: 100%; 
+  width: 100%;
   height: auto;
-  object-fit: contain; 
+  object-fit: contain;
 }
 
 .top-row {
@@ -78,6 +81,27 @@ body {
   gap: 10px;
   flex-wrap: nowrap;
   overflow: hidden;
+}
+
+.mainText {
+  margin: 1px;
+  font-size: 4em;
+  font-family: 'Cafe24Nyangi-W-v1.0';
+  text-decoration: none;
+  color: black;
+  position: absolute;
+  top: 30px; 
+  left: 50%; 
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+/* 화면이 줄어들 때 위치와 크기 조정 */
+@media (max-width: 1825px) {
+  .mainText {
+    top: 0px; 
+    font-size: 30px;
+  }
 }
 
 .login-search-wrapper,
@@ -91,6 +115,7 @@ body {
 }
 
 .headerSearchBtn, .headerLoginBtn {
+  font-family: 'NEXON Lv1 Gothic OTF';
   font-size: 16px;
   text-decoration: none;
   color: black;
@@ -107,7 +132,7 @@ body {
   border: 1px solid #ccc;
   border-radius: 5px;
   margin-right: 15px;
-} 
+}
 
 .headerSearchBtn,
 .headerLoginBtn,
@@ -120,11 +145,6 @@ body {
   flex-shrink: 0;
 }
 
-.notification-container {
-  position: relative;
-  z-index: 1201;
-  margin-right: 15px;
-} 
 .loginBtnBox {
   margin-left: auto;
   display: flex;
@@ -133,12 +153,51 @@ body {
   flex-shrink: 0;
 }
 
-.login button {
-  padding: 10px 20px;
+/* 알림 및 모임 생성 버튼 스타일 */
+.styled-notification-btn {
+  font-family: 'NEXON Lv1 Gothic OTF';
+  position: relative; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 14px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  background-color: #f1f1f1;
+  font-weight: bold;
+  text-decoration: none;
+  color: white;
+  background-color: rgb(28, 138, 106);
+  padding: 10px 15px;
+  border-radius: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s, transform 0.3s;
+  gap: 8px;
+  width: fit-content;
+}
+
+.styled-btn i {
+  font-size: 16px;
+}
+
+.styled-notification-btn:hover {
+  background-color: rgb(12, 78, 60);
+  transform: scale(1.05);
+}
+
+/* 알림 수 표시 영역 */
+.notification-count-area {
+  position: absolute;
+  top: -5px;
+  left: -5px; 
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  font-size: 15px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: red;
+  color: white;
+  z-index: 1;
 }
 
 /* 카테고리 버튼 */
@@ -163,73 +222,32 @@ body {
   text-decoration: none;
   color: black;
   font-size: 16px;
-  white-space: nowrap; 
+  white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis; 
+  text-overflow: ellipsis;
   flex-shrink: 0;
 }
 
-
-
-
-
-/************ 알림 css ************/
-header > section:nth-child(3) {
-  position: relative;
+.category-btn:hover {
+  background-color: #a7a6a6a2;
 }
 
-.notification-container {
-  position: relative;
-  z-index: 1201; 
-  margin-right: 15px; 
-}
-
-.notification-btn {
-  font-size: 20px;
-  cursor: pointer;
-  background-color: rgba(255, 255, 255, 1);
-  border: none;
-  z-index: 1201; 
-}
-
-.notification-btn.fa-solid {
-  color: black;
-}
-
-.notification-count-area {
-  position: absolute;
-  bottom: -6px;
-  right: -10px;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  font-size: 9px;
-  font-weight: bold;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: red;
-  color: white;
-  z-index: 1300; 
-}
-
+/************ 알림 리스트 ************/
 .notification-list {
   position: absolute;
-  top: 100px;
-  left: 0; /* 알림 버튼 기준으로 설정 */
+  top: 105px;
+  right: 180px;
   width: 380px;
   height: 400px;
   padding: 10px;
-  list-style: none;
-  z-index: 1201;
-  background: #f0f3fa;
-  overflow-y: auto;
+  background: white;
   border: 1px solid #ccc;
-  border-radius: 5px;
-  box-shadow: 0 0 0 1px #eee, 0 4px 8px 0 rgba(0, 0, 0, .3);
+  border-radius: 15px;
+  box-shadow: 0 0 0 1px #eee, 0 4px 8px rgba(0, 0, 0, 0.3);
   display: none;
+  z-index: 1501;
+  overflow: hidden;
 }
-
 
 .notification-show {
   display: block !important;
@@ -237,15 +255,17 @@ header > section:nth-child(3) {
 
 .notification-item {
   background-color: white;
-  margin: 10px 0; 
-  padding: 8px; 
+  margin: 10px 0;
+  padding: 8px;
   border-radius: 5px;
   width: 100%;
-  height: auto; 
+  height: auto;
   font-size: 14px;
-  letter-spacing: -0.5px; 
+  letter-spacing: -0.5px;
   position: relative;
+  list-style-type: none;
 }
+
 
 .not-read {
   background-color: rgba(176, 208, 238, 0.7)
@@ -256,13 +276,13 @@ header > section:nth-child(3) {
 }
 
 .notification-text {
+  font-family: 'NEXON Lv1 Gothic OTF';
   display: flex;
   width: 100%;
   height: 100%;
-  gap: 10px; 
+  gap: 10px;
   cursor: pointer;
   align-items: center;
-  cursor: pointer;
 }
 
 .notification-text > img {
@@ -282,8 +302,8 @@ header > section:nth-child(3) {
 }
 
 .notification-content {
-  width: auto; /* 너비 자동 조정 */
-  font-size: 13px; /* 글자 크기 줄이기 */
+  width: auto;
+  font-size: 13px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: normal;
@@ -310,12 +330,47 @@ header > section:nth-child(3) {
   text-decoration: underline;
 }
 
+
+/* 전체 읽음 버튼 */
+.all-read-btn {
+  background-color: rgb(28, 138, 106); /* 원하는 배경색 */
+  color: white;
+  padding: 8px 15px;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin: 5px 0; 
+}
+
+.all-read-btn:hover {
+  background-color: rgb(28, 138, 106); /* 호버 시 색상 */
+}
+
+/* 전체 삭제 버튼 */
+.all-delete-btn {
+  background-color: rgb(244, 54, 48); /* 원하는 배경색 */
+  color: white;
+  padding: 8px 15px;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin: 5px 0; /* 상하 여백 */
+  margin-left: 140px
+}
+
+.all-delete-btn:hover {
+  background-color: rgb(244, 54, 48); /* 호버 시 색상 */
+}
+
 /************ 메인 컨텐츠 css ************/
 .main {
   font-family: 'NEXON Lv1 Gothic OTF';
   padding-top: 200px;
   flex-grow: 1;
-  
   display: flex;
   flex-direction: column;
 }
@@ -328,10 +383,12 @@ header > section:nth-child(3) {
 
 
 .category-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3열로 설정 */
+  gap: 20px; /* 각 요소 사이 간격 */
+  justify-items: center; /* 각 요소를 중앙에 정렬 */
+  width: 100%; /* 컨테이너가 부모 요소의 너비를 채우도록 설정 */
+  
 }
 
 .category-box {
@@ -353,6 +410,22 @@ header > section:nth-child(3) {
 .category-box:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.recommendBtn{
+  color: rgb(244, 54, 48);
+  background-color: rgba(228, 87, 87, 0.582);
+  padding: 3px 8px;
+  border-radius: 12px;
+  margin-left: 5px;
+}
+
+.lastChatBtn{
+  color: white;
+  background-color: #53a4fc;
+  padding: 3px 8px;
+  border-radius: 12px;
+  margin-left: 5px;
 }
 
 .icon {
@@ -411,7 +484,63 @@ header > section:nth-child(3) {
   align-items: center;
 }
 
+.profile-images {
+  display: flex;
+  gap: 5px;
+  margin-top: 10px;
+}
 
+.profile-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #ddd;
+}
+
+/* 모임 생성 버튼 스타일 */
+.create-group-btn {
+  font-family: 'NEXON Lv1 Gothic OTF';
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
+  text-decoration: none;
+  color: white;
+  background-color: #fc9562;
+  padding: 10px 15px;
+  border-radius: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s, transform 0.3s;
+  gap: 8px;
+}
+
+.create-group-btn i {
+  font-size: 16px; /* 아이콘 크기 */
+}
+
+.create-group-btn:hover {
+  background-color: #ff6f3c;
+  transform: scale(1.05); /* 약간의 확대 효과 */
+}
+
+.headerSearchBtn {
+  font-family: 'NEXON Lv1 Gothic OTF';
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
+  text-decoration: none;
+  color: white;
+  background-color: #1082fd;
+  padding: 10px 15px;
+  border-radius: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s, transform 0.3s;
+  gap: 8px;
+}
 
 /************ 로그인 섹션 css ************/
 
