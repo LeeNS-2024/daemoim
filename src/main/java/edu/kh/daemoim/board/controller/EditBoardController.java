@@ -63,7 +63,7 @@ public class EditBoardController {
 	 * @param ra
 	 * @return
 	 */
-	@ResponseBody
+	
 	@PostMapping("{groupNo:[0-9]+}/{boardTypeCode:[0-9]+}/insert")
 	public String boardInsert(
 			@PathVariable("groupNo") int groupNo, 
@@ -79,6 +79,7 @@ public class EditBoardController {
 		String path = null;
 		String message = null;
 		if (boardNo == 0) {
+			path = "/editBoard/" + groupNo + "/" + boardTypeCode + "/insert";
 			message = "게시글작성을 실패하였습니다";
 		} else {
 			path =  "/board/" + groupNo + "/" + boardTypeCode + "/" + boardNo;
@@ -86,7 +87,7 @@ public class EditBoardController {
 		}
 		ra.addFlashAttribute("message", message);
 
-		return path;
+		return "redirect:" + path;
 	}
 	
 	/** 게시글 삭제
