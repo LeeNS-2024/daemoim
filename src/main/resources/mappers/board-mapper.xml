@@ -472,6 +472,7 @@
 			BOARD_NO = #{boardNo}
 	</select>
 
+	<!-- 신고 DB에 저장 -->
 	<insert id="reportInsert" parameterType="StopMember" useGeneratedKeys="true">
 	
 		<selectKey order="BEFORE" resultType="_int" keyProperty="reportNo">
@@ -491,6 +492,29 @@
 			#{reportListNo}
 			)
 	</insert>
+
+	<!-- 좋아요 DB에 저장 -->
+	<insert id="insertBoardLike">
+		INSERT INTO "LIKE" (MEMBER_NO, BOARD_NO)
+		VALUES(#{memberNo}, #{boardNo})
+	</insert>
+	
+	
+	
+	
+	<!-- 좋아요 DB에서 삭제 -->
+	<delete id="deleteBoardLike">
+		DELETE FROM "LIKE"
+		WHERE MEMBER_NO = #{memberNo}
+		AND   MEMBER_NO = #{boardNo}
+	</delete>
+	
+	<select id="getLikeCount">
+		SELECT COUNT(*)
+		FROM "LIKE"
+		WGERE BOARD_NO = #{boardNo}
+	</select>
+
 
   
 </mapper>

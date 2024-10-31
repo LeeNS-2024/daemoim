@@ -126,7 +126,28 @@ public class BoardServiceImpl implements BoardService{
 		// 좋아요를 이미 눌렀는지 확인
 		int result = mapper.checkBoardLike(boardNo, memberNo);
 		
-		return null;
+		int result2 = 0;
+		if(result == 0) {
+			result2 = mapper.insertBoardLike(boardNo, memberNo);
+		} else {
+			result2 = mapper.deleteBoardLike(boardNo, memberNo);
+		}
+		
+		int count = 0;
+		if(result2 > 0) {
+			count = mapper.getLikeCount(boardNo);
+		} else {
+			return null;
+		}
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("count", count);
+		
+		if(result == 0) map.put("check", "insert");
+		else 						map.put("check", "delete");
+		
+		return map;
 	}
 	
 	// 댓글 목록 조회

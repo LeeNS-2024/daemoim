@@ -19,7 +19,7 @@ public interface GroupMainService {
 	 * @return
 	 */
 
-	List<Notice> selectBoardList();
+	List<Notice> selectBoardList(int groupNo);
 
 	/**
 	 *  사진불러오기
@@ -56,6 +56,9 @@ public interface GroupMainService {
 	 * @return
 	 */
 	boolean joinGroup(int groupNo, int memberNo);
+
+	
+
 
 
 

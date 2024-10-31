@@ -1180,4 +1180,18 @@ document.addEventListener("DOMContentLoaded", ()=>{
     }
   })
 
+  // 메인칸 높이 지정하기
+  const mainSec = document.querySelector('.mainSec');
+  const children = Array.from(mainSec.children);
+  let heightSum = 0;
+  children?.forEach(e => {
+    heightSum += e.offsetHeight;
+    // 자식 요소의 상단, 하단 마진 가져오기
+    const childStyle = getComputedStyle(e);
+    heightSum += parseFloat(childStyle.marginTop);
+    heightSum += parseFloat(childStyle.marginBottom);
+    console.log( e.offsetHeight);
+  });
+  mainSec.style.height = `${heightSum}px`;
+
 });

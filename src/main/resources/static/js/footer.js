@@ -139,6 +139,8 @@ const openChat = (groupNo) => {
       const btnGroupNo = chatGroup.dataset.groupNo;
       if(btnGroupNo == groupNo){
         chatGroup.classList.add("slectedGroup");
+        chatGroup.querySelector(".chat-unReaded")?.remove();
+        
       } else {
         chatGroup.classList.remove("slectedGroup");
       }

@@ -24,10 +24,12 @@
 
 <body>
 
-  <!-- 모임 배경사진 -->
-  <div class="screen">
-    <img th:src="${groupHeaderImg}" alt="모임배경사진">
-  </div>
+<!-- 모임 배경사진 -->
+<div class="screen">
+  <a href="/" th:href="@{/}"> <!-- 메인 페이지로 이동하는 링크 추가 -->
+      <img th:src="${groupHeaderImg}" alt="모임배경사진">
+  </a>
+</div>
 
   <!-- 모임 소개 -->
   <div class="introduce-box">
@@ -87,6 +89,7 @@
         <!-- 사진첩 섹션 -->
         <div class="photo-gallery">
           <h3>사진첩</h3>
+
           <div class="gallery-grid">
 
             <th:block th:each="photo : ${photos}" th:object="${photo}">
@@ -141,18 +144,6 @@
     </section>
 
   </main>
-
-  <th:block th:replace= "~{common/footer}"></th:block>
-  
-
-
-
-
-
-
-
-
-
 
   <script th:inline="javascript">
     const groupNo = location.pathname.split("/")[2];

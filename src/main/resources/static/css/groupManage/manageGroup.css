@@ -31,10 +31,11 @@
 /* ************ 메인 ************ */
 main{
   margin: 220px; /* 해더에 밀림 ㅜㅜ */
-  min-height: 63vh;
   font-family: 'Pretendard-Regular';
+  min-height: 100vh; /* 전체 화면 높이 확보 */
 }
 .space-around{
+  width: 100%; /* 부모 너비를 전체 화면에 맞춤 */
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -46,12 +47,13 @@ main{
 }
 .mainSec{
   width: 1070px;
+  height: auto; /* 높이 자동 조정 */
   display: flex;
   flex-direction: column;
   align-items: center;  
   padding: 15px;
   margin: 15px;
-  background-color: rgb(245, 245, 245);
+  background-color: rgb(240, 240, 240);
   border-radius: 10px;
 }
 .mainSec > h1{
@@ -83,7 +85,7 @@ main{
   border-radius: 5px;
   padding: 30px;
   margin: 10px;
-  background-color: rgb(230, 230, 230);
+  background-color: rgb(225, 225, 225);
 }
 .serviceIntroduce{
   margin: 0 0 10px;
@@ -344,6 +346,7 @@ input[type="radio"]:checked + label { /* 라벨이 꼭 뒤에잇어야함 */
   color: black;
   white-space: nowrap;
   display: flex; /* p태그 정렬용 */
+  margin: 5px;
 }
 #sideSec1 > #sideCommentList > a > .commentNickname{
   font-size: 0.8em;
@@ -405,6 +408,9 @@ tr th{height: 40px; background-color: #A0937D;}
 tr>td {
   text-align: center;
   height: 36px;
+}
+tbody tr:nth-of-type(2n-1){
+  background-color: rgb(255 255 255);
 }
 tbody tr:nth-of-type(2n){
   background-color: #ececec;

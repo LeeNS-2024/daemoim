@@ -107,35 +107,6 @@
           </section>
         </section>
 
-
-        <!-- ********** 모임 참여제한기능 ********** -->
-
-        <!-- <label for="limitAge">나이제한</label>
-        <input type="checkbox" id="limit-age">
-        <section class="display-none" id="limit-ageSec">
-          <input type="number" name="floorAge">
-          <span id="floorAgeText" class="grey">세 이상</span>
-          <br>
-          <input type="number" name="roofAge">
-          <span id="roofAgeText" class="grey">세 이하</span>
-          <div id="limit-ageMessage">최소나이와 최대나이 중 필요한 나이를 입력 하세요</div>
-        </section>
-
-        <br>
-        <label for="limitGender">성별</label>
-        <input type="checkbox" id="limit-gender">
-        <section class="display-none" id="limit-genderSec">
-          <label for="gender-m">모두</label>
-          <input type="radio" name="gender" id="gender-all" value="0" checked>
-          <br>
-          <label for="gender-m">남성만</label>
-          <input type="radio" name="gender" id="gender-m" value="1">
-          <br>
-          <label for="gender-w">여성만</label>
-          <input type="radio" name="gender" id="gender-w" value="2">
-        </section>
-        
-        <hr> -->
         <!-- 완료 버튼 -->
         <i class="fa-solid fa-gear" style="color: #ff0000;"></i>
         <div class="divInline">: 필수입력정보입니다.</div>
@@ -149,10 +120,10 @@
 
     </section>
 
+    <th:block th:replace= "~{common/footer}" ></th:block>
   </main>
 
   <!-- 푸터 -->
-  <th:block th:replace= "~{common/footer}" ></th:block>
   <th:block th:replace= "~{common/common}" ></th:block>
 
   <script th:inline="javascript">

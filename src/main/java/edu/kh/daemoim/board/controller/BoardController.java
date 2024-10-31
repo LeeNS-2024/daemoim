@@ -370,6 +370,8 @@ public class BoardController {
 			
 			url += "&key=" + paramMap.get("key") + "&query=" + query;
 		}
+    // 목로 조회 redirect
+    if(boardTypeCode != 3) url = "redirect:/board/" + groupNo;
 		
 		return url;
 	}
