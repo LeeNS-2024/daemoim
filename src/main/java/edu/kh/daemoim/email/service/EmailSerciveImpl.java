@@ -49,7 +49,7 @@ public class EmailSerciveImpl implements EmailService{
 			//이메일 발송 시 사용할 html 파일의 이름에 따라 
 			// 이메일 제목, 내용을 다르게 설정
 			switch(htmlName) {
-			case "signUpcheck" :
+			case "signUpCheck" :
 				emailTitle = "회원 가입 인증번호 입니다.";
 				break;
 			case "findId" :

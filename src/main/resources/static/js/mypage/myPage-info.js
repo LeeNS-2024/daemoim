@@ -183,28 +183,8 @@ if(imageInput != null){ // 프로필 변경 화면인 경우
     updatePreview(file); // 미리보기 함수 호출
   })
 
-/* X버튼 클릭 시 기본 이미지로 변환 */
 
-deleteImage.addEventListener("click",()=>{
-
-  // 미리 보기를 기본 이미지로 변경
-  profileImg.src = userDefaultImage;
-
-  // input태그와
-  // 마지막 선택된 파일을 저장하는 lastValidFile에
-  // 저장된 값을 모두 삭제 
-
-  imageInput.value ='';
-  lastVaildFile = null;
-
-  statusCheck = 0; // 삭제 상태 체크
-});
-
-
-
-
-
-
+  
 
 }
 
