@@ -19,25 +19,24 @@ body {
 
 /* 사이드바 스타일 */
 .sidebar {
-  width: 245px;
-  background-color: white;
-  height: 53vh;
-  /* 화면 전체 높이 */
-  padding-top: 5px;
-  padding-left: 10px;
-  bottom: 0;
-  left: 0;
-  font-size: 18px;
+  width: 200px;
+  padding: 20px;
+  background-color: #ffffff;
+  color: #000000;
+  height: 100vh;
 
 }
 
 .sidebar a {
-  display: block;
-  color: black;
-  padding: 15px;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  color: #0a0909;
   text-decoration: none;
-
+  font-weight: bold;
+  margin-bottom: 10px;
   transition: background-color 0.3s;
+  
 }
 
 .sidebar a:hover {
@@ -88,7 +87,7 @@ body {
   /* 높이를 자동으로 조정 */
   background-color: white;
   margin-bottom: 30px;
-  font-size: 18px;
+  font-size: 15px;
   text-align: center;
   /* 텍스트를 가운데 정렬 */
   display: flex;
@@ -104,7 +103,7 @@ body {
   margin-top: 90px;
   color: black;
   /* 첫 번째 문장을 강조 */
-  font-size: 80px;
+  font-size: 70px;
   font-family: "Black Han Sans", sans-serif;
 
 }
@@ -113,7 +112,7 @@ body {
 .introduce-box>div:nth-child(2) {
   color: black;
   /* 첫 번째 문장을 강조 */
-  font-size: 80px;
+  font-size: 70px;
   font-family: "Black Han Sans", sans-serif;
   margin-bottom: 50px;
 
