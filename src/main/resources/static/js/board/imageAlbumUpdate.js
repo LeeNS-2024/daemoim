@@ -30,14 +30,21 @@ function initializeExistingImages() {
     const imageNo = wrapper.querySelector('input[name="existingImages"]').value;
 
     deleteBtn.addEventListener('click', () => {
-      if (confirm('이미지를 삭제하시겠습니까?')) {
-        deletedImages.add(imageNo);
-        wrapper.remove();
-        updateImageCount();
-      }
+      confirmM("사진을 삭제하시겠습니까?")
+        .then(result => {
+          if(!result) return;
+          deletedImages.add(imageNo);
+          wrapper.remove();
+          updateImageCount();
+        });
     });
-  });
+  }
+  )
 }
+
+
+
+
 
 // 이미지 미리보기 생성
 function createPreviewElement(file) {
@@ -62,11 +69,13 @@ function createPreviewElement(file) {
 
   // 삭제 버튼 이벤트
   deleteBtn.addEventListener('click', () => {
-    if (confirm('추가한 이미지를 삭제하시겠습니까?')) {
+    confirmM("추가한 사진을 삭제하시겠습니까?")
+    .then(result => {
+      if(!result) return;
       currentImages.delete(file);
       preview.remove();
       updateImageCount();
-    }
+    });
   });
 
   return preview;
@@ -216,7 +225,9 @@ form.addEventListener('submit', async (e) => {
 
 // 취소 버튼 처리
 document.getElementById('cancelBtn').addEventListener('click', () => {
-  if (confirm('수정을 취소하시겠습니까?\n변경사항이 저장되지 않습니다.')) {
+  confirmM("수정을 취소하시겠습니까?\n변경사항이 저장되지 않습니다.")
+  .then(result => {
+    if(!result) return;
     history.back();
-  }
+  })
 });
