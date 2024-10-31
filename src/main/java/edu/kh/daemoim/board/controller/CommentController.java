@@ -5,11 +5,13 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import edu.kh.daemoim.board.dto.Comment;
 import edu.kh.daemoim.board.service.CommentService;
 import edu.kh.daemoim.myPage.dto.MyPage;
+import jakarta.mail.Session;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,6 +28,7 @@ public class CommentController {
 	 * @param loginMember
 	 * @return
 	 */
+	@ResponseBody
 	@PostMapping("comment")
 	public int commentInsert(
 		@RequestBody Comment comment,
@@ -57,13 +60,18 @@ public class CommentController {
 	 * @param loginMember
 	 * @return
 	 */
-	@DeleteMapping("comment")
+	@ResponseBody
+	@DeleteMapping("/comment")
 	public int commentDelete(
 		@RequestBody int commentNo,
 		@SessionAttribute("loginMember") MyPage loginMember
 		) {
 		
-		return service.commentDelete(commentNo, loginMember.getMemberNo());
+		int memberNo = loginMember.getMemberNo();
+		
+		
+		
+		return service.commentDelete(commentNo, memberNo);
 	}
 	
 	

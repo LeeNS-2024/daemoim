@@ -324,12 +324,10 @@ public class BoardController {
 	 */
 	@GetMapping("commentList")
 	public String selectCommentList(
-		@RequestParam("groupNo") int groupNo,
-		@RequestParam("boardTypeCode") int boardTypeCode,
 		@RequestParam("boardNo") int boardNo,
 		Model model) {
 		
-		List<Comment> commentList = service.selectCommentList(groupNo, boardTypeCode,boardNo);
+		List<Comment> commentList = service.selectCommentList(boardNo);
 		
 		Board board = Board.builder().commentList(commentList).build();
 		

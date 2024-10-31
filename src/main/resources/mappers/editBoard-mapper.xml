@@ -83,5 +83,15 @@
   			#{boardNo})
   	</insert>
 
+  <!-- 특정 게시글의 이미지를 order 순서로 조회 -->
+  <select id="selectImageList" resultType="BoardImg">
+  	SELECT BOARD_IMG_ORDER
+  	FROM 
+  		BOARD_IMG
+  	WHERE 
+  		BOARD_NO = #{boardNo}
+  	ORDER BY 
+  		BOARD_IMG_ORDER ASC
+  </select>
 
 </mapper>

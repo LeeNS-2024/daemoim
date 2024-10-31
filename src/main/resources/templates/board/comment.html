@@ -34,7 +34,11 @@
 						<button class="child-comment-btn">답글</button>
 
 						<!-- 로그인 회원과 댓글 작성자가 같은 경우 -->
-						<th:block th:if="${session.loginMember != null and session.loginMember.memberNo == comment.memberNo}">
+						 <script th:inline="javascript">
+/* 							console.log([[${session.loginMember.memberNo}]]);
+							console.log([[${comment.memberNo}]]); */
+						 </script>
+						<th:block th:if="${session.loginMember != null && session.loginMember.memberNo == comment.memberNo}">
 							<button class="update-comment-btn">수정</button>
 							<button class="delete-comment-btn">삭제</button>
 						</th:block>

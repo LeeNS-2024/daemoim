@@ -17,9 +17,11 @@ import edu.kh.daemoim.common.exception.FileUploadFailException;
 import edu.kh.daemoim.common.util.FileUtil;
 import edu.kh.daemoim.myPage.dto.MyPage;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @PropertySource("classpath:/config.properties")
 @Service
+@Slf4j
 @Transactional
 @RequiredArgsConstructor
 public class EditBoardServiceImpl implements EditBoardService{
@@ -127,6 +129,7 @@ public class EditBoardServiceImpl implements EditBoardService{
 	public int boardUpdate(Board inputBoard, List<MultipartFile> images, String deleteOrderList) {
 	// 1. 게시글 부분(제목/내용) 수정
 			int result = mapper.boardUpdate(inputBoard);
+			log.info("[기능] 게시글수정 :{}", result);
 			if(result == 0) return 0; // 수정 실패 시
 			
 			
@@ -136,6 +139,7 @@ public class EditBoardServiceImpl implements EditBoardService{
 			// deleteOrderList에 작성된 값이 있다면
 			if(deleteOrderList != null && deleteOrderList.equals("") == false) {
 				
+				log.info("[기능] 이미지 딜리트됨, 순서 :{}", deleteOrderList);
 				result = mapper.deleteImage(deleteOrderList, inputBoard.getBoardNo());
 				
 				// 삭제된 행이 없을 경우 -> SQL 실패
@@ -146,7 +150,12 @@ public class EditBoardServiceImpl implements EditBoardService{
 				}
 			}
 			
-			
+			List<BoardImg> imgList = mapper.selectImageList(inputBoard.getBoardNo());
+			List<Integer> oderList = new ArrayList<>();
+			for(BoardImg img : imgList) {
+				oderList.add( img.getBoardImgOrder() );
+			}
+			log.info("[기능] 이미지 수정, 순서 :{}", oderList.toString());
 			// 3. 업로드된 이미지가 있을 경우
 			//    UPDATE 또는 INSERT +  transferTo()
 			
@@ -161,6 +170,7 @@ public class EditBoardServiceImpl implements EditBoardService{
 				
 				// 업로드된 파일이 있으면
 				String originalName = images.get(i).getOriginalFilename();
+				log.info("[기능] 이미지 업로드됨, 순서 : %d, 이름 : %s", i, originalName);
 				String rename = FileUtil.rename(originalName);
 				
 				// 필요한 모든 값을 저장한 DTO 생성
@@ -175,14 +185,9 @@ public class EditBoardServiceImpl implements EditBoardService{
 				
 				
 				// 1행씩 update 수행
-				result = mapper.updateImage(img);
+				if(oderList.contains(i)) result = mapper.updateImage(img);
+				else result = mapper.insertImage(img);
 				
-				// 수정이 실패 == 기존에 이미지가 없었다
-				// == 새로운 이미지가 새 order번째 자리에 추가 되었다
-				// --> INSERT
-				if(result == 0) {
-					result = mapper.insertImage(img);
-				}
 				
 				// 수정, 삭제가 모두 실패한 경우 --> 말도 안되는 상황
 				if(result == 0) {
@@ -192,6 +197,7 @@ public class EditBoardServiceImpl implements EditBoardService{
 				uploadList.add(img); // 업로드된 파일 리스트에 img 추가
 			}// for end
 			
+			log.info("[기능] 이미지 업로드 uploadList.isEmpty() {}", uploadList.isEmpty() + "");
 			// 새로운 이미지가 없는 경우
 			if(uploadList.isEmpty()) return result;
 			

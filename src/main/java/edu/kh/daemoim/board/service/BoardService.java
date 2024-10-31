@@ -83,7 +83,7 @@ public interface BoardService {
 	 * @param boardNo
 	 * @return commentList
 	 */
-	List<Comment> selectCommentList(int groupNo, int boardTypeCode, int boardNo);
+	List<Comment> selectCommentList(int boardNo);
 	
 
 	/** 현재 게시물이 속한 페이지 번호 조회

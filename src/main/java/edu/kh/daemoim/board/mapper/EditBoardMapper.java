@@ -56,5 +56,8 @@ public interface EditBoardMapper {
 	 * @return result
 	 */
 	int insertImage(BoardImg img);
+
+
+	List<BoardImg> selectImageList(int boardNo);
 	
 }

@@ -11,6 +11,13 @@ const MAX_FILE_SIZE = 10 * 1024 * 1024; // 파일 크기 제한 (10MB)
 
 // 이미지 미리보기 생성 함수
 function createPreviewElement(file, index) {
+  // const submitInput = document.createElement("input");
+  // submitInput.type = "file";
+
+
+
+
+
   const preview = document.createElement('div');
   preview.className = 'image-preview';
   preview.dataset.index = index;
