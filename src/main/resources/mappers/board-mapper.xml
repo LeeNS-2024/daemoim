@@ -261,6 +261,7 @@
 		<when test='key == "w"'>
 			AND MEMBER_NICKNAME LIKE '%' || #{query} || '%'
 		</when>
+		
 	</choose>
 		 
 	ORDER BY 

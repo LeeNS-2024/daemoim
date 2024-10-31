@@ -1,12 +1,17 @@
 document.addEventListener("DOMContentLoaded", function () {
   // 공지사항 데이터를 가져와서 화면에 표시하는 함수
   function loadBoardList() {
-    fetch('/board/boardList')  // API 호출
+    console.log("호출 : /groupMain/boardList?groupNo=" + groupNo);
+    fetch("/groupMain/boardList?groupNo=" + groupNo)  // API 호출
       .then(response => {
         if (response.ok) return response.json();
+        throw new Error(response.status);
       })  // 응답을 JSON으로 파싱
-      .then(data => renderBoardList(data.slice(0, 5)))  // 파싱한 데이터를 렌더링
-      .catch(error => console.error("출력오류"));
+      .then(data => {
+        console.log(data);
+        renderBoardList(data.slice(0, 5))
+      })  // 파싱한 데이터를 렌더링
+      .catch(error => console.error(error));
   }
 
 

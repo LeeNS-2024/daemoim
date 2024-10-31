@@ -9,22 +9,29 @@
 		BOARD_WRITE_DATE
 		FROM BOARD
 		WHERE BOARD_DEL_FL = 'N'
+		AND
+		GROUP_NO = #{groupNo}
 		ORDER BY
 		BOARD_WRITE_DATE DESC
-		FETCH FIRST 5 ROWS ONLY
+		FETCH FIRST 5 ROWS
+		ONLY
 	</select>
 
 
 
 
 	<select id="selectBoardList" resultType="Notice">
-		SELECT BOARD_NO,
-		BOARD_TITLE,
-		BOARD_WRITE_DATE
+		SELECT
+			BOARD_NO,
+			BOARD_TITLE,
+			TO_CHAR(BOARD_WRITE_DATE, 'YYYY-MM-DD') AS "BOARD_WRITE_DATE"
 		FROM BOARD
-		WHERE BOARD_DEL_FL = 'N'
+		WHERE
+			BOARD_DEL_FL = 'N'
+		AND GROUP_NO = #{groupNo}
+		AND BOARD_TYPE_CODE = 1
 		ORDER BY
-		BOARD_WRITE_DATE DESC
+			BOARD_WRITE_DATE DESC
 		FETCH FIRST 5 ROWS ONLY
 	</select>
 
@@ -53,10 +60,15 @@
 	<select id="getSchedule" resultType="Schedule">
 
 		SELECT
-		SCHEDULE_DATE -
-		CURRENT_DATE AS D_DAY,
+		CASE
+		WHEN SCHEDULE_DATE
+		- CURRENT_DATE = 0 THEN 'day'
+		ELSE TO_CHAR(SCHEDULE_DATE -
+		CURRENT_DATE)
+		END AS D_DAY,
 		TO_CHAR(SCHEDULE_DATE, 'MM"월" DD"일" HH24"시"
-		II"분" "("DY")"') AS SCHEDULE_DATE,
+		II"분" "("DY")"')
+		AS SCHEDULE_DATE,
 		LOCATION,
 		COST,
 		(SELECT COUNT(*) FROM
@@ -68,9 +80,12 @@
 
 		WHERE
 		B.GROUP_NO = #{groupNo}
+		AND
+		SCHEDULE_DATE >= CURRENT_DATE
 		ORDER BY
 		SCHEDULE_DATE DESC
-		FETCH FIRST 6 ROWS ONLY
+		FETCH FIRST 6
+		ROWS ONLY
 	</select>
 
 	<select id="getIntroduce" resultType="string">
@@ -84,7 +99,8 @@
 	<!-- 모임 가입 회원 확인 -->
 	<select id="checkLoginMember" resultType="_int">
 		SELECT COUNT(*)
-		FROM MEMBER_GROUP
+		FROM
+		MEMBER_GROUP
 		WHERE MEMBER_NO = #{memberNo}
 		AND GROUP_NO = #{groupNo}
 
@@ -93,8 +109,9 @@
 	<!--모임 가입신청 확인 버튼 클릭 시 -->
 	<insert id="joinGroup">
 		INSERT INTO INVITE
-		VALUES(#{memberNo}, #{groupNo}, DEFAULT, DEFAULT)
-	
+		VALUES(#{memberNo}, #{groupNo},
+		DEFAULT, DEFAULT)
+
 
 	</insert>
 

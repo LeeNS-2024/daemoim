@@ -24,7 +24,7 @@ public interface GroupMainMapper {
 	 * @return
 	 */
 
-	List<Notice> selectBoardList();
+	List<Notice> selectBoardList(int groupNo);
 
 	/**
 	 *  사진 불러오기

@@ -1,17 +1,23 @@
-// 전역 변수 선언
-const MAX_IMAGES = 20;
-const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
-
-// DOM 요소
 const form = document.getElementById('boardUpdateFrm');
 const imageInput = document.getElementById('imageInput');
 const imageList = document.getElementById('imageList');
 const imageCount = document.getElementById('imageCount');
 const addImageBtn = document.querySelector('.add-image-btn');
+let imageArray = []; // 새로 추가할 이미지 저장 배열
+const deleteOrderList = new Set(); // 삭제된 기존 이미지의 번호
 
-// 이미지 관리를 위한 Set
-const currentImages = new Set(); // 새로 추가된 이미지
-const deletedImages = new Set(); // 삭제된 기존 이미지의 번호
+const MAX_IMAGES = 20;
+const MAX_FILE_SIZE = 10 * 1024 * 1024; // 파일 크기 제한 (10MB)
+
+// 이미지 미리보기 생성 함수
+function createPreviewElement(file, index, isExisting = false, imageNo = null) {
+  const preview = document.createElement('div');
+  preview.className = 'image-preview';
+  if (isExisting) {
+    preview.dataset.no = imageNo;
+  } else {
+    preview.dataset.index = index;
+  }
 
 // 페이지 로드 시 초기화
 document.addEventListener('DOMContentLoaded', () => {
@@ -84,55 +90,54 @@ function createPreviewElement(file) {
 // 호버 시 미리보기 설정
 function setupHoverPreview() {
   const previewWrappers = document.querySelectorAll('.preview-wrapper');
+  const fileName = document.createElement('div');
+  fileName.className = 'file-name';
+  fileName.textContent = isExisting ? file.alt : file.name;
 
-  previewWrappers.forEach(wrapper => {
-    wrapper.addEventListener('mouseover', (e) => {
-      const img = wrapper.querySelector('.preview');
+  if (isExisting) {
+    img.src = file.src;
+    img.alt = file.alt;
+  } else {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
 
-      const popup = document.createElement('div');
-      popup.className = 'preview-popup';
-      const popupImg = new Image();
-      popupImg.src = img.src;
-      popup.appendChild(popupImg);
+  previewWrapper.appendChild(img);
+  previewWrapper.appendChild(deleteBtn);
+  previewWrapper.appendChild(fileName);
+  preview.appendChild(previewWrapper);
 
-      popup.style.left = e.pageX + 10 + 'px';
-      popup.style.top = e.pageY + 10 + 'px';
+  return preview;
+}
 
-      document.body.appendChild(popup);
+// 이미지 제거 함수
+function removeImage(indexToRemove) {
+  imageArray = imageArray.filter((_, index) => index !== indexToRemove);
+  refreshImageDisplay();
+}
 
-      wrapper.addEventListener('mousemove', movePopup);
-      wrapper.addEventListener('mouseout', removePopup);
+// 이미지 디스플레이 새로고침
+function refreshImageDisplay() {
+  // 새로 추가된 이미지 프리뷰만 제거
+  const newPreviews = imageList.querySelectorAll('.image-preview:not([data-no])');
+  newPreviews.forEach(preview => preview.remove());
 
-      function movePopup(e) {
-        popup.style.left = e.pageX + 10 + 'px';
-        popup.style.top = e.pageY + 10 + 'px';
-      }
-
-      function removePopup() {
-        popup.remove();
-        wrapper.removeEventListener('mousemove', movePopup);
-        wrapper.removeEventListener('mouseout', removePopup);
-      }
-    });
+  // 이미지 재렌더링
+  imageArray.forEach((file, index) => {
+    const preview = createPreviewElement(file, index);
+    imageList.insertBefore(preview, addImageBtn);
   });
 }
 
-// 총 이미지 개수 계산
-function getTotalImageCount() {
-  const existingImagesCount = document.querySelectorAll('.existing-image').length;
-  return existingImagesCount + currentImages.size;
-}
-
-// 이미지 개수 업데이트 및 버튼 표시 상태 관리
+// 이미지 개수 업데이트
 function updateImageCount() {
-  const totalCount = getTotalImageCount();
+  const existingImagesCount = imageList.querySelectorAll('.image-preview[data-no]').length;
+  const totalCount = existingImagesCount + imageArray.length;
   imageCount.textContent = totalCount;
-
-  if (totalCount >= MAX_IMAGES) {
-    addImageBtn.style.display = 'none';
-  } else {
-    addImageBtn.style.display = 'flex';
-  }
+  addImageBtn.style.display = totalCount >= MAX_IMAGES ? 'none' : 'flex';
 }
 
 // 파일 유효성 검사
@@ -141,87 +146,87 @@ function validateFile(file) {
     alert(`${file.name}의 크기가 10MB를 초과합니다.`);
     return false;
   }
-
   if (!file.type.startsWith('image/')) {
     alert(`${file.name}은(는) 이미지 파일이 아닙니다.`);
     return false;
   }
-
   return true;
 }
 
-// 이미지 입력 처리
-imageInput.addEventListener('change', (e) => {
+// 파일 입력 처리
+function handleFileSelect(e) {
   const files = Array.from(e.target.files);
+  const existingImagesCount = imageList.querySelectorAll('.image-preview[data-no]').length;
+  const remainingSlots = MAX_IMAGES - (existingImagesCount + imageArray.length);
 
-  for (const file of files) {
-    if (getTotalImageCount() >= MAX_IMAGES) {
-      alert(`이미지는 최대 ${MAX_IMAGES}장까지만 업로드 가능합니다.`);
-      break;
-    }
-
-    if (!validateFile(file)) continue;
-
-    currentImages.add(file);
-    const preview = createPreviewElement(file);
-    imageList.insertBefore(preview, addImageBtn);
+  if (files.length > remainingSlots) {
+    alert(`이미지는 최대 ${MAX_IMAGES}장까지만 업로드 가능합니다.`);
+    files.length = remainingSlots;
   }
 
-  updateImageCount();
-  imageInput.value = '';
-});
+  const validFiles = files.filter(validateFile);
+  if (validFiles.length > 0) {
+    imageArray = [...imageArray, ...validFiles];
+    refreshImageDisplay();
+    updateImageCount();
+  }
+
+  // 입력 초기화
+  e.target.value = '';
+}
 
 // 폼 제출 처리
-form.addEventListener('submit', async (e) => {
+function handleSubmit(e) {
   e.preventDefault();
 
   const title = form.querySelector('[name="boardTitle"]').value.trim();
 
-  // 유효성 검사
   if (title.length === 0) {
     alert('제목을 작성해주세요.');
     form.querySelector('[name="boardTitle"]').focus();
     return;
   }
 
-  if (getTotalImageCount() === 0) {
+  const totalImageCount = imageList.querySelectorAll('.image-preview[data-no]').length + imageArray.length;
+  if (totalImageCount === 0) {
     alert('최소 1장 이상의 사진이 필요합니다.');
     return;
   }
 
-  try {
-    // FormData 생성
-    const formData = new FormData(form);
+  const formData = new FormData(form);
+  
+  // 삭제된 이미지 번호 추가
+  deleteOrderList.forEach(imageNo => {
+    formData.append('deleteList', imageNo);
+  });
 
-    // 삭제된 이미지 번호 추가
-    deletedImages.forEach(imageNo => {
-      formData.append('deleteList', imageNo);
+  // 기존 이미지 필드 제거 (중복 방지)
+  formData.delete('images');
+  // 새로운 이미지 파일들을 추가
+  imageArray.forEach(file => {
+    formData.append('images', file);
+  });
+
+  fetch(form.action, {
+    method: 'POST',
+    body: formData
+  })
+    .then(response => {
+      if(response.ok) return response.text();
+      throw new Error("게시글 수정 중 오류가 발생했습니다.");
+    })
+    .then(result => {
+      if (result !== null) {
+        location.href = result;
+      } else {
+        alert(data.message || '게시글 수정에 실패했습니다.');
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert(error.message);
     });
-
-    // 새로 추가된 이미지 파일 추가
-    currentImages.forEach(file => {
-      formData.append('images', file);
-    });
-
-    // 서버로 전송
-    const response = await fetch(form.action, {
-      method: 'POST',
-      body: formData
-    });
-
-    const data = await response.json();
-
-    if (data.success) {
-      alert('게시글이 성공적으로 수정되었습니다.');
-      location.href = data.redirectUrl;
-    } else {
-      alert(data.message || '게시글 수정에 실패했습니다.');
-    }
-  } catch (error) {
-    console.error('Error:', error);
-    alert('게시글 수정 중 오류가 발생했습니다.');
-  }
-});
+}
 
 // 취소 버튼 처리
 document.getElementById('cancelBtn').addEventListener('click', () => {
@@ -230,4 +235,18 @@ document.getElementById('cancelBtn').addEventListener('click', () => {
     if(!result) return;
     history.back();
   })
+
+// 이벤트 리스너 등록
+document.addEventListener('DOMContentLoaded', () => {
+  // 기존 이미지 초기화
+  const existingImages = imageList.querySelectorAll('.image-preview[data-no]');
+  existingImages.forEach(preview => {
+    const img = preview.querySelector('.preview');
+    createPreviewElement(img, null, true, preview.dataset.no);
+  });
+  
+  updateImageCount();
+  imageInput.addEventListener('change', handleFileSelect);
+  form.addEventListener('submit', handleSubmit);
+  document.getElementById('cancelBtn').addEventListener('click', handleCancel);
 });
