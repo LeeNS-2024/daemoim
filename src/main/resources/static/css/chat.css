@@ -19,7 +19,7 @@
   max-height: 55vh;
   border: 3px solid black;
   border-radius: 8px;
-  background-color: rgba(163, 237, 255, 0.4);
+  background-color: rgba(163, 237, 255, 0.7);
   padding: 10px;
   margin: 0;
 
@@ -81,7 +81,7 @@
 .chat-body>.chat-mainBody>.chat-nickDiv{
   min-width: 150px;
   max-width: 150px;
-  background-color: rgb(163, 237, 255, 0.5);
+  background-color: rgb(163, 237, 255, 0.8);
   border-radius: 5px;
   overflow-y: auto;
   flex-grow: 0;
@@ -181,9 +181,9 @@
 }
 .chat-body>.chat-footBody button:hover{cursor: pointer;}
 .chat-onBtn, .chat-offBtn{
-  position: fixed; 
+  position: fixed;
   bottom: 20px; 
-  right: 80px; 
+  right: 60px; 
   z-index: 2;
 }
 .chat-onBtn, .chat-offBtn:hover{
