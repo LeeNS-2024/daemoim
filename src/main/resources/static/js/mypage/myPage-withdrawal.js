@@ -32,8 +32,8 @@ withdrawal?.addEventListener("submit", e=>{
 
 
   //3) confirm을 이용해서 탈퇴할건지 확인
-  if(confirm("진짜 탈퇴 할껴?") === false){// 취소 클릭시 
-    alert("오케이");
+  if(confirm("탈퇴하시겠습니까??") === false){// 취소 클릭시 
+    alert("취소되었습니다");
     e.preventDefault();
     return;
 

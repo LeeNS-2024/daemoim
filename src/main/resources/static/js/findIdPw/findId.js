@@ -88,6 +88,8 @@ findIdmemberEmail.addEventListener("input", e => {
     emailMessage.classList.remove("error");
     checkObj.findIdmemberEmail = true; // 유효한 이메일임을 기록
 
+    findPwMemberEmail.disabled = true;
+
   })
   .catch( err => console.error(err) );
 

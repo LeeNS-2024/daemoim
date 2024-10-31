@@ -22,7 +22,7 @@ public class FilterConfig {
 		
 		filter.setFilter(loginFilter);
 		
-		String[] filteringUrl = {"/siteManage", "/siteManage/*", "/groupManage/*", "/groupMemberManage/*", "/board/*"};
+		String[] filteringUrl = {"/siteManage", "/siteManage/*", "/groupManage/*", "/groupMemberManage/*", "/board/*", "/myPage"};
 		filter.setUrlPatterns( Arrays.asList(filteringUrl) );
 		
 		filter.setName("loginFilter");

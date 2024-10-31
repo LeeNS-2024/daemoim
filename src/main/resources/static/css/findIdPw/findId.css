@@ -1,97 +1,103 @@
+/* 색상 팔레트 */
+:root {
+  --primary-color: #333;
+  --accent-color: #fc9562;
+  --background-color: #f9f9f9;
+  --text-color: #333;
+  --button-color: #fc9562;
+  --button-hover-color: #e28353;
+  --input-border-color: #ddd;
+  --input-background-color: #f1f1f1;
+  --input-text-color: #555;
+}
+
+/* 기본 페이지 설정 */
 body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: var(--background-color);
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background-color: #f0f0f0;
+  min-height: 100vh;
 }
 
+/* 전체 컨테이너 */
 .container {
-  background-color: #fff;
+  background-color: white;
   padding: 40px;
   border-radius: 10px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-  max-width: 400px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   width: 100%;
+  max-width: 450px;
+  box-sizing: border-box;
 }
 
-h1.searchTitle, h3.searchIdTitle, h3.searchPwTitle {
-  text-align: center;
-  color: #333;
-  margin-bottom: 20px;
-}
-
-label {
-  display: block;
-  margin-bottom: 10px;
+/* 제목 스타일 */
+.searchTitle {
+  font-size: 28px;
   font-weight: bold;
-  color: #555;
-}
-
-.input-area {
-  display: flex;
-  flex-direction: column;
+  color: var(--primary-color);
+  text-align: center;
   margin-bottom: 20px;
 }
 
-input[type="text"] {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  outline: none;
-  font-size: 16px;
-  margin-bottom: 10px;
+/* 소제목 스타일 */
+.searchIdTitle {
+  font-size: 20px;
+  font-weight: bold;
+  color: var(--primary-color);
+  margin-bottom: 20px;
+  text-align: center;
 }
 
+/* 입력 필드 컨테이너 */
+.searchId-input-area,
+.checkIdAuthKeyBtn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+/* 입력 필드 스타일 */
+.searchId-input-area input,
+.checkIdAuthKeyBtn input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid var(--input-border-color);
+  border-radius: 5px;
+  background-color: var(--input-background-color);
+  color: var(--input-text-color);
+}
+
+/* 버튼 스타일 */
 button {
-  padding: 12px;
-  background-color: #007bff;
-  color: #fff;
+  padding: 10px 15px;
+  font-size: 14px;
+  font-weight: bold;
+  background-color: var(--button-color);
+  color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 16px;
+  transition: background-color 0.3s;
 }
 
 button:hover {
-  background-color: #0056b3;
+  background-color: var(--button-hover-color);
 }
 
-span.required {
+/* 메시지 스타일 */
+.findId-message,
+.FindId-message {
+  font-size: 14px;
+  color: var(--text-color);
+  margin-top: 5px;
+}
+
+/* 필수 항목 표시 */
+.required {
   color: red;
-  margin-right: 5px;
 }
-
-.idSearch, .pwSearch {
-  margin-bottom: 30px;
-}
-
-.auth-button {
-  align-self: flex-end;
-  margin-top: -40px;
-  margin-bottom: 10px;
-}
-
-#hiddenModal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.modal-content {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  text-align: center;
-  width: 300px;
-}
-
-.popup-hidden{ display: none; }

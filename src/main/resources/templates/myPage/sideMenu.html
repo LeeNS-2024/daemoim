@@ -1,26 +1,19 @@
-<a href="/" style="font-family:'PartialSansKR-Regular'; z-index : 1000000000000000 ;" class="logo">
-  대모임 <!-- 로고 텍스트(로고를 png로 넣을지 글씨로 할지 고민) -->
-</a>
-<link rel="stylesheet" href="/css/main-style.css">
+<link rel="stylesheet" href="/css/myPage/sideMenu.css">
 <section class="left-side" id="side-menu">
-  <div class="circle" onclick="location.href='/';">
-  </div>
-  <ul class="list-group">
-    <li>
+
+  <header>
+    <div>
+      <a href="/" class="logo"><img src="/images/mainHeader/logo.png"></a>
+    </div>
+     </header>
+
+    <div class="sidebar">
       <a href="/myPage/info">내 정보</a>
-    </li>
-    <li>
       <a href="/myPage/myGroup">가입한 모임</a>
-    </li>
-    <li>
-      <a href="/myPage/changePw">비밀번호 변경</a><!-- 확인후 복사 붙여 넣기 하고 수정 하기 -->
-    </li>
-    <li>
+      <a href="/myPage/changePw">비밀번호 변경</a>
       <a href="/myPage/withdrawal">회원 탈퇴</a>
-    </li>
-  </ul>
+   </div>
 </section>
-<style></style>
 
 <!--  <th:block th:if= "${session.loginMember?.memberNo}==${board.memberNo}">
         로그인회원과 세션에 로그인이 일치해야 띄워주는 코드  -->
