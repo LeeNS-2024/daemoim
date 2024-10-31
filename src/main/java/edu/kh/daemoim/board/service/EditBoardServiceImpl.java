@@ -129,7 +129,6 @@ public class EditBoardServiceImpl implements EditBoardService{
 	public int boardUpdate(Board inputBoard, List<MultipartFile> images, String deleteOrderList) {
 	// 1. 게시글 부분(제목/내용) 수정
 			int result = mapper.boardUpdate(inputBoard);
-			log.info("[기능] 게시글수정 :{}", result);
 			if(result == 0) return 0; // 수정 실패 시
 			
 			
@@ -139,7 +138,6 @@ public class EditBoardServiceImpl implements EditBoardService{
 			// deleteOrderList에 작성된 값이 있다면
 			if(deleteOrderList != null && deleteOrderList.equals("") == false) {
 				
-				log.info("[기능] 이미지 딜리트됨, 순서 :{}", deleteOrderList);
 				result = mapper.deleteImage(deleteOrderList, inputBoard.getBoardNo());
 				
 				// 삭제된 행이 없을 경우 -> SQL 실패
@@ -155,7 +153,6 @@ public class EditBoardServiceImpl implements EditBoardService{
 			for(BoardImg img : imgList) {
 				oderList.add( img.getBoardImgOrder() );
 			}
-			log.info("[기능] 이미지 수정, 순서 :{}", oderList.toString());
 			// 3. 업로드된 이미지가 있을 경우
 			//    UPDATE 또는 INSERT +  transferTo()
 			
@@ -170,7 +167,6 @@ public class EditBoardServiceImpl implements EditBoardService{
 				
 				// 업로드된 파일이 있으면
 				String originalName = images.get(i).getOriginalFilename();
-				log.info("[기능] 이미지 업로드됨, 순서 : %d, 이름 : %s", i, originalName);
 				String rename = FileUtil.rename(originalName);
 				
 				// 필요한 모든 값을 저장한 DTO 생성
@@ -197,7 +193,6 @@ public class EditBoardServiceImpl implements EditBoardService{
 				uploadList.add(img); // 업로드된 파일 리스트에 img 추가
 			}// for end
 			
-			log.info("[기능] 이미지 업로드 uploadList.isEmpty() {}", uploadList.isEmpty() + "");
 			// 새로운 이미지가 없는 경우
 			if(uploadList.isEmpty()) return result;
 			
