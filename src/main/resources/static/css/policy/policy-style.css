@@ -89,13 +89,14 @@ dl, ul, ol, menu, li {
   vertical-align: middle;
   color: white;
   text-decoration: none;
-
 }
 a {
   color: #333;
   text-decoration: none;
 }
+
+
 .link_policy:hover, .on .link_policy {
-  background-color: #555;
+  background-color: #fc732f;
   border-radius: 5px;
 }

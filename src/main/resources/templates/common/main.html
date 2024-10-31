@@ -11,7 +11,9 @@
 </head>
 <body>
   <th:block th:replace="~{common/header}"></th:block>
-  
+  <svg viewBox="0 0 1440 320" class="wave">
+    <path fill="#000000" fill-opacity="1" d="M0,160L60,154.7C120,149,240,139,360,160C480,181,600,235,720,234.7C840,235,960,181,1080,149.3C1200,117,1320,107,1380,101.3L1440,96L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z"></path>
+  </svg>
   <main class="main">
 
 
@@ -43,6 +45,10 @@
       </section>
 
       <!-- 추천 모임 목록 -->
+
+      <th:block th:if="${#lists.isEmpty(recommendedGroups)}">
+        <p>추천 모임이 없습니다.</p>
+      </th:block>
       <th:block th:if="${recommendedGroups != null && !#lists.isEmpty(recommendedGroups)}">
         <h4 class="centered-title" style="color: rgb(28, 138, 106);"> &nbsp;&nbsp; ★ 추천 모임</h4>
         <h1 class="centered-title" style="color: black;">" 마음으로 이어진 모임 " <br><br> </h1>
@@ -74,11 +80,15 @@
                     [[${group.currentPopulation}]] / [[${group.maxPopulation}]]
                   </div>
                 </div>
+                
                 <div class="profile-images">
-                  <img th:src="${member.memberImg != null ? member.memberImg : '/images/default-profile.png'}" 
-                       alt="프로필 이미지" class="profile-image" 
-                       th:each="member : ${group.members}" />
+                  <div th:each="member : ${group.members}">
+                    <img th:src="${member.memberImg != null ? member.memberImg : '/images/default-profile.png'}" 
+                         alt="프로필 이미지" class="profile-image" 
+                         onerror="this.src='/images/default-profile.png'">
+                  </div>
                 </div>
+                
               </div>
             </div>
           </div>
@@ -87,9 +97,9 @@
    
 
     
-        <!-- 최신 채팅 모임 목록 -->
+        <!-- 최근 채팅 모임 목록 -->
         <th:block th:if="${recentChatGroups != null && !#lists.isEmpty(recentChatGroups)}">
-          <h4 class="centered-title" style="color: #1082fd;"><br><br><br><br><br><br><br><br><br> &nbsp;&nbsp; 💬 최신 채팅 모임</h4>
+          <h4 class="centered-title" style="color: #1082fd;"><br><br><br><br><br><br><br><br><br> &nbsp;&nbsp; 💬 최근 채팅 모임</h4>
           <div class="centered-title" style="text-align: center; color: black;">
             <h1 style="display: inline; font-size: 2em;">" 대</h1>
             <h3 style="display: inline;">화로</h3>
@@ -111,7 +121,7 @@
                       </div>
                       <div class="details">
                           <div class="location">[[${group.categoryName}]]
-                            <span class="lastChatBtn"> [[${recentChatTimes[group.groupNo]}]] 마지막 대화</span>
+                            <span class="lastChatBtn"> [[${recentChatTimes[group.groupNo]}]] </span>
                           </div>
                           
                           <a th:href="@{/groupMain/{groupNo}(groupNo=${group.groupNo})}" 
@@ -127,10 +137,14 @@
                             </div>
                         </div>
                         <div class="profile-images">
-                          <img th:src="${member.memberImg != null ? member.memberImg : '/images/default-profile.png'}" 
-                               alt="프로필 이미지" class="profile-image" 
-                               th:each="member : ${group.members}" />
+                          <div th:each="member : ${group.members}">
+                            <img th:src="${member.memberImg != null ? member.memberImg : '/images/default-profile.png'}" 
+                                  alt="프로필 이미지" class="profile-image"
+                                  onerror="this.src='/images/default-profile.png'">
+
+                          </div>
                         </div>
+                        
                       </div>
                   </div>
               </div>
@@ -181,14 +195,23 @@
       </th:block>
     </th:block>
 
-    <section class="scroll-top">
+ <!--    <section class="scroll-top">
       <button id="scrollTopBtn"><i class="fa-solid fa-circle-chevron-up"></i></button>
-    </section>
+    </section> -->
     <br>
     <br>
+  <!-- <script>
+    document.getElementById('scrollTopBtn').addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+  </script> -->
 
     <th:block th:replace="~{common/footer}"></th:block>
   </main>
+
 
   
   <script src="/js/main.js"></script>

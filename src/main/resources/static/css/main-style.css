@@ -50,7 +50,9 @@ body {
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  box-shadow: 0 10px 16px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 16px rgba(0, 0, 0, 0.4);
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
 }
 
 .logo {
@@ -491,8 +493,8 @@ body {
 }
 
 .profile-image {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   object-fit: cover;
   border: 1px solid #ddd;
@@ -521,7 +523,7 @@ body {
 }
 
 .create-group-btn:hover {
-  background-color: #ff6f3c;
+  background-color: #c44c21;
   transform: scale(1.05); /* 약간의 확대 효과 */
 }
 
@@ -540,6 +542,11 @@ body {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
   transition: background-color 0.3s, transform 0.3s;
   gap: 8px;
+}
+
+.headerSearchBtn:hover{
+  background-color: #0653a7;
+  transform: scale(1.05); /* 약간의 확대 효과 */
 }
 
 /************ 로그인 섹션 css ************/
@@ -629,19 +636,19 @@ body {
 
 /************ 위로가기 버튼 css ************/
 .scroll-top {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 1000;
+  position: fixed; 
+  bottom: 20px; 
+  right: 20px; 
+  z-index: 1800;
 }
-
 .scroll-top button {
   font-size: 30px;
   background: none;
-  border: none;
-  cursor: pointer;
-  outline: none;
-  color: black;
+  border: none; 
+  box-shadow: none;
+  cursor: pointer; 
+  outline: none; 
+  color: black; 
 }
 
 /************ 푸터 css ************/
