@@ -28,9 +28,11 @@ function createPreviewElement(file, index) {
   deleteBtn.onclick = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    if (window.confirm('사진을 삭제하시겠습니까?')) {
-      removeImage(index);
-    }
+    confirmM("사진을 삭제하시겠습니까?")
+      .then(result => {
+        if (!result) return;
+        removeImage(index);
+      })
   };
 
   const fileName = document.createElement('div');
@@ -143,16 +145,16 @@ function handleSubmit(e) {
     formData.append('images', file);
   });
 
-  fetch(form.action+'2', {
+  fetch(form.action + '2', {
     method: 'POST',
     body: formData
   })
-    .then(response =>{
-      if(response.ok) return response.text();
+    .then(response => {
+      if (response.ok) return response.text();
       throw new Error("게시글 등록 중 오류가 발생했습니다.");
-      })
+    })
     .then(result => {
-      if (result !==null) {
+      if (result !== null) {
         location.href = result;
       } else {
         alert(data.message || '게시글 등록에 실패했습니다.');
@@ -167,9 +169,11 @@ function handleSubmit(e) {
 // 취소 버튼 처리
 function handleCancel(e) {
   e.preventDefault();
-  if (confirm('작성을 취소하시겠습니까?')) {
-    history.back();
-  }
+  confirmM("작성을 취소하시겠습니까?")
+    .then(result => {
+      if (!result) return;
+    })
+  history.back();
 }
 
 

@@ -35,15 +35,23 @@
         <h5>이미지 업로드 (<span id="imageCount">0</span>/20)</h5>
         <div class="img-box" id="imageList">
           <!-- 기존 이미지 목록 -->
-          <th:block th:each="image : ${boardImg.imageList}">
-            <div class="image-preview" th:data-no="${boardImg.boardImgNo}">
-              <div class="preview-wrapper">
-                <img class="preview" th:src="${boardImg.boardImgPath}" th:alt="${boardImg.boardImgOriginalName}">
-                <button type="button" class="delete-image">×</button>
-                <div class="file-name" th:text="${boardImg.boardImgOriginalName}"></div>
-              </div>
+          <th:block th:each="image : ${board.imageList}">
+            <div class="preview-wrapper existing-image">
+              <img class="preview" th:src="${boardImage.boardImgPath}" th:alt="${boardImage.boardImgOriginalName}">
+              <span class="file-name" th:text="${boardImage.imageOriginal}"></span>
+              <input type="hidden" name="existingImages" th:value="${boardImage.imageNo}">
+              <button type="button" class="delete-image">×</button>
             </div>
           </th:block>
+          <!-- 이미지 프리뷰 템플릿 -->
+          <div class="image-preview-template" style="display: none;">
+            <div class="preview-wrapper">
+              <img class="preview" alt="이미지 미리보기">
+              <span class="file-name"></span>
+            </div>
+            <button type="button" class="delete-image">×</button>
+          </div>
+
 
           <!-- 이미지 추가 버튼 -->
           <div class="add-image-btn">
@@ -51,6 +59,8 @@
               <i class="fas fa-plus"></i>
               <span>이미지 추가</span>
             </label>
+            <input type="file" id="imageInput" name="images" 
+                   multiple accept="image/*" style="display: none;">
           </div>
           <input type="file" id="imageInput" multiple accept="image/*">
         </div>

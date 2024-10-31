@@ -19,30 +19,77 @@ function createPreviewElement(file, index, isExisting = false, imageNo = null) {
     preview.dataset.index = index;
   }
 
-  const previewWrapper = document.createElement('div');
-  previewWrapper.className = 'preview-wrapper';
+// 페이지 로드 시 초기화
+document.addEventListener('DOMContentLoaded', () => {
+  initializeExistingImages();
+  updateImageCount();
+  setupHoverPreview();
+});
 
-  const img = document.createElement('img');
-  img.className = 'preview';
+// 기존 이미지 초기화
+function initializeExistingImages() {
+  const existingImages = document.querySelectorAll('.existing-image');
 
-  const deleteBtn = document.createElement('button');
-  deleteBtn.className = 'delete-image';
-  deleteBtn.type = 'button';
-  deleteBtn.innerHTML = '×';
-  deleteBtn.onclick = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (window.confirm('사진을 삭제하시겠습니까?')) {
-      if (isExisting) {
-        deleteOrderList.add(imageNo);
-        preview.remove();
-      } else {
-        removeImage(index);
-      }
-      updateImageCount();
-    }
+  existingImages.forEach(wrapper => {
+    // 삭제 버튼 이벤트 추가
+    const deleteBtn = wrapper.querySelector('.delete-image');
+    const imageNo = wrapper.querySelector('input[name="existingImages"]').value;
+
+    deleteBtn.addEventListener('click', () => {
+      confirmM("사진을 삭제하시겠습니까?")
+        .then(result => {
+          if(!result) return;
+          deletedImages.add(imageNo);
+          wrapper.remove();
+          updateImageCount();
+        });
+    });
+  }
+  )
+}
+
+
+
+
+
+// 이미지 미리보기 생성
+function createPreviewElement(file) {
+  const template = document.querySelector('.image-preview-template');
+  const preview = template.cloneNode(true);
+  preview.style.display = 'block';
+  preview.classList.remove('image-preview-template');
+
+  const img = preview.querySelector('.preview');
+  const fileName = preview.querySelector('.file-name');
+  const deleteBtn = preview.querySelector('.delete-image');
+
+  // 이미지 미리보기 설정
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    img.src = e.target.result;
   };
+  reader.readAsDataURL(file);
 
+  // 파일명 표시
+  fileName.textContent = file.name;
+
+  // 삭제 버튼 이벤트
+  deleteBtn.addEventListener('click', () => {
+    confirmM("추가한 사진을 삭제하시겠습니까?")
+    .then(result => {
+      if(!result) return;
+      currentImages.delete(file);
+      preview.remove();
+      updateImageCount();
+    });
+  });
+
+  return preview;
+}
+
+// 호버 시 미리보기 설정
+function setupHoverPreview() {
+  const previewWrappers = document.querySelectorAll('.preview-wrapper');
   const fileName = document.createElement('div');
   fileName.className = 'file-name';
   fileName.textContent = isExisting ? file.alt : file.name;
@@ -182,12 +229,12 @@ function handleSubmit(e) {
 }
 
 // 취소 버튼 처리
-function handleCancel(e) {
-  e.preventDefault();
-  if (confirm('수정을 취소하시겠습니까?\n변경사항이 저장되지 않습니다.')) {
+document.getElementById('cancelBtn').addEventListener('click', () => {
+  confirmM("수정을 취소하시겠습니까?\n변경사항이 저장되지 않습니다.")
+  .then(result => {
+    if(!result) return;
     history.back();
-  }
-}
+  })
 
 // 이벤트 리스너 등록
 document.addEventListener('DOMContentLoaded', () => {
