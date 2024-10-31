@@ -45,6 +45,7 @@ public class CommentController {
 	 * @param loginMember
 	 * @return
 	 */
+	@ResponseBody
 	@PutMapping("comment")
 	public int commentUpdate(
 		@RequestBody Comment comment,

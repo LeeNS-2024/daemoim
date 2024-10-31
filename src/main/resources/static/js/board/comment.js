@@ -25,20 +25,23 @@ const selectCommentList = () => {
 // 댓글 내용
 const commentContent = document.querySelector("#commentContent");
 
-// 댓글 등록
+// 댓글 등록 (1031 수정함)
 const insertComment = (parentCommentNo) => {
+  const commentContentElement = parentCommentNo !== undefined 
+                                ? document.querySelector(".child-comment-content") 
+                                : commentContent;
 
-  const data = {};
-  data.boardNo = boardNo;
-  data.commentContent = commentContent.value;
-
-  if (parentCommentNo !== undefined) {
-    data.parentCommentNo = parentCommentNo;
-
-    data.commentContent = document.querySelector(".child-comment-content").value;
+  if (!commentContentElement || !commentContentElement.value.trim()) {
+    alertM("내용을 입력해주세요");
+    return;
   }
 
-  // Ajax
+  const data = {
+    boardNo: boardNo,
+    commentContent: commentContentElement.value
+  };
+
+  // Ajax 요청
   fetch("/comment", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -54,37 +57,13 @@ const insertComment = (parentCommentNo) => {
         return;
       }
 
-      alertM("댓글이 등록 되었습니다.")
+      alertM("댓글이 등록 되었습니다.");
       commentContent.value = "";
-      selectCommentList();
-
-      // {닉네임}님이 {게시글 제목} 게시글에 댓글을 작성했습니다
-      // 알림 클릭 시 작성된 댓글 또는 답글 위치로 바로 이동
-      // if (parentCommentNo === undefined) {
-      //   const content = `<string>${memberNickname}</string>님이 <strong>${boardDetail.boardTitle}</strong> 게시글에 댓글을 작성했습니다`
-
-      //   // type, url, pkNo, content
-      //   sendNotification(
-      //     "insertComment",
-      //     `${location.pathname}?cn=${commentNo}`,
-      //     boardDetail.boardNo,
-      //     content
-      //   );
-      // }
-      // else {
-      //   const content = `<string>${memberNickname}</string>님이 <strong>${boardDetail.boardTitle}</strong> 답글을 작성했습니다`
-
-      //   // type, url, pkNo, content
-      //   sendNotification(
-      //     "insertChildComment",
-      //     `${location.pathname}?cn=${commentNo}`,
-      //     parentCommentNo,
-      //     content
-      //   );
-      // }
+      selectCommentList(); // 댓글 목록 갱신
     })
     .catch(err => console.error(err));
-}
+};
+
 
 // 답글 버튼 클릭 시 confirm 띄우는 함수
 const ChildCommentCheck = (btn) => {
@@ -130,116 +109,150 @@ let beforeCommentRow;
 const UpdateCommentCheck = (btn) => {
 
   /* 댓글 수정 화면이 1개만 열려 있을 수 있게 하기 */
-  const temp = document.querySelectorAll(".update-textarea");
+  // == 이미 열려있는 수정 화면이 있으면 닫아버리기
+  const temp = document.querySelector(".update-textarea");
 
-  if(temp.length > 0){
-  confirmM("수정중인 댓글이 있습니다." + "현재 댓글을 수정하시겠습니까?")
-    .then(result => {
-      if (!result) return;
+  if(temp != null){ // 이미 열려있는 수정 화면이 있을 경우
 
-      const commentRow = temp.parentElement; // 열려있는 댓글행
+    if(confirm("수정 중인 댓글이 있습니다. " 
+              + "현재 댓글을 수정 하시겠습니까?") === true){
+                
+      const commentRow = temp.parentElement; // 열려있는 댓글 행
       commentRow.after(beforeCommentRow); // 백업본을 다음 요소로 추가
       commentRow.remove(); // 열려있던 행 삭제
-
-                              // 클릭된 답글 버튼이 속해있는 댓글(li) 찾기
-                          const li = btn.closest("li");
-
-                          // 답글이 작성되는 댓글(부모 댓글) 번호 얻어오기
-                          const parentCommentNo = li.dataset.commentNo;
-
-
-                          // 답글을 작성할 textarea 요소 생성
-                          const textarea = document.createElement("textarea");
-                          textarea.classList.add("child-comment-content");
-
-                          li.append(textarea);
-
-                          // 답글 버튼 영역 + 등록/취소 버튼 생성 및 추가
-                          const commentBtnArea = document.createElement("div");
-                          commentBtnArea.classList.add("update-comment-btn");
-                          
-                          const insertBtn = document.createElement("button");
-                          insertBtn.innerText = "수정";
-                          
-                          /* 등록 버튼 클릭 시 댓글 등록 함수 호출(부모 댓글 번호 전달)  */
-                          insertBtn.addEventListener("click", () => insertComment(parentCommentNo));
-                          
-                          const cancelBtn = document.createElement("button");
-                          cancelBtn.classList.add("delete-comment-btn");
-                          cancelBtn.innerText = "취소";
-
-                          // 취소버튼 -> 답글 작성영역 삭제
-                          cancelBtn.addEventListener("click", () => {
-
-                            li.lastElementChild.remove(); // li (부모요소에) lastElementChild
-                            li.lastElementChild.remove();
-                          });
-
-                          // 답글 버튼 영역의 자식으로 등록/취소 버튼 추가
-                          commentBtnArea.append(insertBtn, cancelBtn);
-
-                          // 답글 버튼 영역을 화면에 추가된 textarea 뒤쪽에 추가
-                          textarea.after(commentBtnArea);
-
+      
       // 백업본 버튼에 이벤트 추가
-      const updateCommentBtn = beforeCommentRow.querySelector(".update-comment-btn"); // 수정
-      const deleteCommentBtn = beforeCommentRow.querySelector(".delete-comment-btn"); // 취소
+      const childeCommentBtn = beforeCommentRow.querySelector(".child-comment-btn");
+      const updateCommentBtn = beforeCommentRow.querySelector(".update-comment-btn");
+      const deleteCommentBtn = beforeCommentRow.querySelector(".delete-comment-btn");
 
-      updateCommentBtn.addEventListener("click", () => UpdateCommentCheck(updateCommentBtn));
-      deleteCommentBtn.addEventListener("click", () => deleteCommentCheck(deleteCommentBtn));
-      createUpdateArea(btn);
-    });
-  } else {
-                              // 클릭된 답글 버튼이 속해있는 댓글(li) 찾기
-                              const li = btn.closest("li");
-
-                              // 답글이 작성되는 댓글(부모 댓글) 번호 얻어오기
-                              const parentCommentNo = li.dataset.commentNo;
+      childeCommentBtn.addEventListener("click", () => showChildComment(childeCommentBtn));
+      updateCommentBtn.addEventListener("click", () => showUpdateComment(updateCommentBtn));
+      deleteCommentBtn.addEventListener("click", () => deleteComment(deleteCommentBtn));
     
-    
-                              // 답글을 작성할 textarea 요소 생성
-                              const textarea = document.createElement("textarea");
-                              textarea.classList.add("child-comment-content");
-    
-                              li.append(textarea);
-    
-                              // 답글 버튼 영역 + 등록/취소 버튼 생성 및 추가
-                              const commentBtnArea = document.createElement("div");
-                              commentBtnArea.classList.add("update-comment-btn");
-                              
-                              const insertBtn = document.createElement("button");
-                              insertBtn.innerText = "수정";
-                              
-                              /* 등록 버튼 클릭 시 댓글 등록 함수 호출(부모 댓글 번호 전달)  */
-                              insertBtn.addEventListener("click", () => insertComment(parentCommentNo));
-                              
-                              const cancelBtn = document.createElement("button");
-                              cancelBtn.classList.add("delete-comment-btn");
-                              cancelBtn.innerText = "취소";
-    
-                              // 취소버튼 -> 답글 작성영역 삭제
-                              cancelBtn.addEventListener("click", () => {
-    
-                                li.lastElementChild.remove(); // li (부모요소에) lastElementChild
-                                li.lastElementChild.remove();
-                              });
-    
-                              // 답글 버튼 영역의 자식으로 등록/취소 버튼 추가
-                              commentBtnArea.append(insertBtn, cancelBtn);
-    
-                              // 답글 버튼 영역을 화면에 추가된 textarea 뒤쪽에 추가
-                              textarea.after(commentBtnArea);
-    
-          // 백업본 버튼에 이벤트 추가
-          const updateCommentBtn = beforeCommentRow.querySelector(".update-comment-btn"); // 수정
-          const deleteCommentBtn = beforeCommentRow.querySelector(".delete-comment-btn"); // 취소
-
-    updateCommentBtn.addEventListener("click", () => UpdateCommentCheck(updateCommentBtn));
-    deleteCommentBtn.addEventListener("click", () => deleteCommentCheck(deleteCommentBtn));
-    createUpdateArea(btn);
+    } else{
+      return;
+    }
   }
 
-}
+
+  // 1. 수정하려는 댓글(li) 요소 얻어오기
+  const commentRow = btn.closest("li");
+  const commentNo = commentRow.dataset.commentNo; // 댓글 번호
+
+  // 2. 취소 버튼 동작에 대비하여
+  //    현재 댓글(commentRow)의 요소를 복제해서 백업
+  beforeCommentRow = commentRow.cloneNode(true);
+
+  /* 요소.cloneNode(true);
+    - 요소 복제하여 반환
+    - 매개 변수 true : 복제하려는 요소의 하위 요소들도 복제
+   */
+
+  // 3. 기존 댓글에 작성된 내용만 얻어오기
+  let beforeContent = commentRow.children[1].innerText;
+
+  // 4. 댓글 행 내부를 모두 삭제
+  commentRow.innerHTML = "";
+
+  // 5. textarea 생성 + 클래스 추가 + 내용 추가
+  const textarea = document.createElement("textarea");
+  textarea.classList.add("update-textarea");
+  textarea.value = beforeContent;
+
+  // 6. 댓글 행에 textarea 추가
+  commentRow.append(textarea);
+
+  // 7. 버튼 영역 생성
+  const commentBtnArea = document.createElement("div");
+  commentBtnArea.classList.add("comment-btn-area");
+
+  // 8. 수정 버튼 생성
+  const updateBtn = document.createElement("button");
+  updateBtn.innerText = "수정";
+
+  // 수정 버튼 클릭 시 댓글 수정 (ajax)
+  updateBtn.addEventListener("click", () => {
+    const data = {
+      "commentNo" : commentNo,
+      "commentContent" : textarea.value
+    }
+
+    fetch("/comment", {
+      method : "PUT",
+      headers : {"Content-Type" : "application/json"},
+      body : JSON.stringify(data)
+    })
+    .then(response => {
+      if(response.ok) return response.text();
+      throw new Error("댓글 수정 실패");
+    })
+    .then(result => {
+      if(result > 0){
+        alert("댓글이 수정 되었습니다");
+        selectCommentList(); // 댓글 목록 비동기 조회
+
+      } else {
+        alert("댓글 수정 실패");
+      }
+    })
+    .catch(err => console.error(err));
+
+
+  })
+
+
+
+
+
+  // 9. 취소 버튼 생성
+  const cancelBtn = document.createElement("button");
+  cancelBtn.innerText = "취소";
+
+  cancelBtn.addEventListener("click", () => {
+
+    // 취소 안함 -> 수정 계속 진행
+    if(confirm("취소 하시겠습니까?") === false) return;
+
+    // 현재 댓글 행 다음 위치에 백업한 원본 댓글 추가
+    commentRow.after(beforeCommentRow);
+    commentRow.remove(); // 수정 화면으로 변환된 행 삭제
+
+    /* 원상 복구된 댓글의 버튼에 이벤트 추가하기 */
+    const childCommentBtn 
+      = beforeCommentRow.querySelector(".child-comment-btn");
+
+    childCommentBtn.addEventListener("click", () => {
+      showChildComment(childCommentBtn);
+    });
+
+
+    const updateCommentBtn 
+      = beforeCommentRow.querySelector(".update-comment-btn");
+
+    updateCommentBtn.addEventListener("click", () => {
+      showUpdateComment(updateCommentBtn);
+    });
+
+
+    const deleteCommentBtn 
+      = beforeCommentRow.querySelector(".delete-comment-btn");
+
+    deleteCommentBtn.addEventListener("click", () => {
+      deleteComment(deleteCommentBtn);
+    })
+
+
+  })
+
+
+  // 10. 버튼 영역에 수정/취소 버튼 추가 후
+  //     댓글 행에 버튼 영역 추가
+  commentBtnArea.append(updateBtn, cancelBtn);
+  commentRow.append(commentBtnArea);
+
+} // 수정 버튼 end
+
 const createUpdateArea = (btn) => {
 // 1. 수정하려는 댓글(li) 요소 얻어오기
 const commentRow = btn.closest("li");
