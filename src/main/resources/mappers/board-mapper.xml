@@ -141,8 +141,7 @@
 	AND
 		(SELECT COUNT(*)
 		 FROM BOARD_IMG I 
-		 WHERE BOARD_IMG_ORDER = 0 
-		 AND I.BOARD_NO = B.BOARD_NO) != 0
+		 WHERE BOARD_IMG_ORDER = 0) != 0
 	</if> 
   	AND 
   		GROUP_NO = #{groupNo}
@@ -347,6 +346,7 @@
   		 WHERE S.SCHEDULE_NO = M.SCHEDULE_NO) AS COUNT
 	FROM SCHEDULE S
 	WHERE S.GROUP_NO = #{groupNo}
+	AND SCHEDULE_DATE > CURRENT_DATE
   </select>
   
   
@@ -357,10 +357,17 @@
 	WHERE M.SCHEDULE_NO = #{scheduleNo}
   </select>
   
+  <select id="checkSchedule" resultType="_int">
+  	SELECT COUNT(*) FROM SCHEDULE_MEMBER
+  	WHERE SCHEDULE_NO = #{scheduleNo}
+	AND MEMBER_NO = #{memberNo}
+	AND GROUP_NO = #{groupNo}
+  </select>
+  
  
-	<update id="attendSchedule">
-  	INSERT INTO SCHEDULE_MEMBER
-  	VALUES(#{scheduleNo}, #{memberNo}, #{groupNo})
+  <update id="attendSchedule">
+  	INSERT INTO SCHEDULE_MEMBER 
+	VALUES(#{scheduleNo}, #{memberNo}, #{groupNo})
   </update>
   
 

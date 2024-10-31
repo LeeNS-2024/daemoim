@@ -7,62 +7,83 @@
     <link rel="stylesheet" href="/css/board/boardSchedule.css">
 </head>
 <body>
+    <!-- Header -->
+    <div class="header">
+        <img th:src="${groupHeaderImg}" alt="보드해더이미지">
+    </div>
 
-    <div class="container">
-        <div class="header">
-            <img src="https://www.url.com/모임배경사진.png" alt="모임 배경사진">
-        </div>
+    <section class="container">
+        <nav>
+            <!-- Sidebar (왼쪽 배너) -->
+            <ul>
+                <li class="banner2">
+                    <a href="/">홈</a>
+                </li>
+                <li class="banner2">
+                    <a th:href="@{/board/{groupNo}(groupNo = ${groupNo})}">모임 메인 게시판</a>
+                </li>
+                <li class="banner2">
+                    <a th:href="@{/board/{groupNo}/3(groupNo = ${groupNo})}">사진 게시판</a>
+                </li>
+                <li class="banner2">
+                    <a th:href="@{/board/boardSchedule/{groupNo}(groupNo = ${groupNo})}">일정</a>
+                </li>
+            </ul>
+        </nav>
+       
 
-        <th:block th:if="${#lists.isEmpty(scheduleList)}">
-            <div>
-                <h3>일정이 존재하지 않습니다.</h3>
-            </div>
-        </th:block>
+        <div class="list-wrapper">  
+            <th:block th:if="${#lists.isEmpty(scheduleList)}">
+                <div>
+                    <h3>일정이 존재하지 않습니다.</h3>
+                </div>
+            </th:block>
 
-        <th:block th:unless="${#lists.isEmpty(scheduleList)}">
-            <section class="schedule-box" th:each="schedule : ${scheduleList}" th:object="${schedule}">
-                <p><strong>일정 날짜:</strong></p><p th:text="*{scheduleDate}"></p>
-                <p><strong>위치:</strong></p><p th:text="*{location}"></p>
-                <p><strong>비용:</strong></p><p th:text="*{cost}"></p>
-                <p><strong>참석 인원:</strong></p><p th:text="*{count}"></p>
-                <div class="attendees">
-                    <div th:each="profile : *{memberImages}">
-                        <img th:src="${profile}">
+            <th:block th:unless="${#lists.isEmpty(scheduleList)}">
+                <section class="schedule-box" th:each="schedule : ${scheduleList}" th:object="${schedule}">
+                    <p><strong>일정 날짜:</strong></p><p th:text="*{scheduleDate}"></p>
+                    <p><strong>위치:</strong></p><p th:text="*{location}"></p>
+                    <p><strong>비용:</strong></p><p th:text="*{cost}"></p>
+                    <p><strong>참석 인원:</strong></p><p th:text="*{count}"></p>
+                    <div class="attendees">
+                        <div th:each="profile : *{memberImages}">
+                                <img th:src="${profile}">
+                        </div>
                     </div>
+                    <div class="input" th:text="*{scheduleNo}" hidden></div>
+                    <div class="input2" th:text="*{groupNo}" hidden></div>
+                    <div class="action-btn">
+                        <button class="attend">참석</button>
+                        <button class="cancel">취소</button>
+                    </div>
+                </section>
+            </th:block>
+
+            <div class="create-button">
+                <button id="createScheduleBtn">일정 만들기</button>
+            </div>
+
+            <!-- 팝업창 HTML -->
+            <div id="popup" class="popup hidden">
+                <div class="popup-content">
+                    <h3>일정 생성</h3>
+                    <form id="createScheduleForm">
+                        <label for="scheduleDate">일정 날짜:</label>
+                        <input type="datetime-local" id="scheduleDate" name="scheduleDate" required>
+                        
+                        <label for="location">위치:</label>
+                        <input type="text" id="location" name="location" required>
+                        
+                        <label for="cost">비용:</label>
+                        <input type="number" id="cost" name="cost" required>
+
+                        <button type="submit">생성</button>
+                        <button type="button" id="closePopup">닫기</button>
+                    </form>
                 </div>
-                <div class="input" th:text="*{scheduleNo}" hidden></div>
-                <div class="input2" th:text="*{groupNo}" hidden></div>
-                <div class="action-btn">
-                    <button class="attend">참석</button>
-                    <button class="cancel">취소</button>
-                </div>
-            </section>
-        </th:block>
-
-        <div class="create-button">
-            <button id="createScheduleBtn">일정 만들기</button>
-        </div>
-    </div>
-
-    <!-- 팝업창 HTML -->
-    <div id="popup" class="popup hidden">
-        <div class="popup-content">
-            <h3>일정 생성</h3>
-            <form id="createScheduleForm">
-                <label for="scheduleDate">일정 날짜:</label>
-                <input type="datetime-local" id="scheduleDate" name="scheduleDate" required>
-                
-                <label for="location">위치:</label>
-                <input type="text" id="location" name="location" required>
-                
-                <label for="cost">비용:</label>
-                <input type="number" id="cost" name="cost" required>
-
-                <button type="submit">생성</button>
-                <button type="button" id="closePopup">닫기</button>
-            </form>
-        </div>
-    </div>
+            </div>
+        </div>  
+    </section>
 
 
     <script src="/js/board/boardSchedule.js"></script>

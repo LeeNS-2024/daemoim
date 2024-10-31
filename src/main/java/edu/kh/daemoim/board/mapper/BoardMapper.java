@@ -69,6 +69,18 @@ public interface BoardMapper {
 	 */
 	List<Schedule> selectScheduleList(int groupNo);
 
+	/**
+	 * 일정 참석 여부 확인
+	 * @param scheduleNo
+	 * @param groupNo
+	 * @param memberNo
+	 * @return result
+	 */
+	int checkSchedule(	
+			@Param("scheduleNo") int scheduleNo, 
+			@Param("groupNo") int groupNo,
+			@Param("memberNo") int memberNo);
+	
 	/** 일정 참석
 	 * @param scheduleNo
 	 * @return
@@ -126,4 +138,6 @@ public interface BoardMapper {
 	 * @return
 	 */
 	int reportInsert(StopMember report);
+
+
 }

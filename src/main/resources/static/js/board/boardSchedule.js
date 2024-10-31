@@ -6,9 +6,17 @@ function attendSchedule(scheduleNo, groupNo) {
       body: new URLSearchParams({scheduleNo: scheduleNo, groupNo: groupNo})
   })
   .then(response => {
-          console.log(response);
-          location.reload();
+          return response.text();
+  }).then(result => {
+    if(result == 0) alert("이미 참석 중입니다");
+    else{
+      alert("참석 완료");
+      location.reload();
+    }
+
   })
+
+
   .catch(error => {
       console.error('참석 요청 중 오류 발생:', error);
   });

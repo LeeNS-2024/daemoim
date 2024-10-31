@@ -172,7 +172,6 @@ function handleCancel(e) {
   }
 }
 
-
 // 이벤트 리스너 등록
 document.addEventListener('DOMContentLoaded', () => {
   imageInput.addEventListener('change', handleFileSelect);
