@@ -104,6 +104,9 @@ public class BoardServiceImpl implements BoardService{
 	// 일정 참석
 	@Override
 	public int attendSchedule(int scheduleNo, int groupNo, int memberNo) {
+		int result = mapper.checkSchedule(scheduleNo, groupNo, memberNo);
+		
+		if(result == 1) return 0;
 		return mapper.attendSchedule(scheduleNo, groupNo, memberNo);
 	}
 	

@@ -6,21 +6,33 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title th:text="${boardName}">이미지 게시판</title>
-
-  <th:block th:replace="~{common/common}"></th:block>
-
   <link rel="stylesheet" th:href="@{/css/board/imageAlbumList.css}">
 </head>
-
 <body>
-  <main>
-    <!-- <th:block th:replace="~{common/header}"></th:block> -->
-    <!-- Header -->
-    <div>
-      <img th:src="${groupHeaderImg}" alt="보드해더이미지" style="width: 99vw;">
-    </div>
+  <!-- Header -->
+  <div class="header">
+    <img th:src="${groupHeaderImg}" alt="보드해더이미지" style="width: 99vw;">
+  </div>
 
-    <th:block th:replace="~{common/header2}"></th:block>
+  <div class="container">
+      <nav>
+        <!-- Sidebar (왼쪽 배너) -->
+        <ul>
+            <li class="banner2">
+                <a href="/">홈</a>
+            </li>
+            <li class="banner2">
+                <a th:href="@{/board/{groupNo}(groupNo = ${groupNo})}">모임 메인 게시판</a>
+            </li>
+            <li class="banner2">
+                <a th:href="@{/board/{groupNo}/3(groupNo = ${groupNo})}">사진 게시판</a>
+            </li>
+            <li class="banner2">
+                <a th:href="@{/board/boardSchedule/{groupNo}(groupNo = ${groupNo})}">일정</a>
+            </li>
+        </ul>
+      </nav>
+    
     <section class="image-board-list">
       <h1 class="board-name" th:text="${boardName}">이미지 게시판</h1>
 
@@ -102,7 +114,8 @@
         </form>
       </div>
     </section>
-  </main>
+    <section class="blank"></section>
+  </div>
 
   <script th:inline="javascript">
     const pagination = /*[[${pagination}]]*/ "페이지네이션객체";
