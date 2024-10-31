@@ -143,7 +143,7 @@ function handleSubmit(e) {
     formData.append('images', file);
   });
 
-  fetch(form.action, {
+  fetch(form.action+'2', {
     method: 'POST',
     body: formData
   })
