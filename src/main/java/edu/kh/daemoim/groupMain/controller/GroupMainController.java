@@ -10,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -25,7 +27,8 @@ import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
-@Configuration
+@RequestMapping("groupMain")
+// @Configuration
 @SessionAttributes("loginMember") // 세션에서 loginMember 사용 선언
 
 public class GroupMainController {
@@ -42,7 +45,7 @@ public class GroupMainController {
 	 * @return
 	 */
 
-	@GetMapping("groupMain/{groupNo}")
+	@GetMapping("{groupNo}")
 	public String groupMain(Model model, @SessionAttribute(value = "loginMember", required = false) MyPage loginMember,
 			@PathVariable("groupNo") int groupNo) {
 
@@ -76,10 +79,11 @@ public class GroupMainController {
 	 * 
 	 * @return
 	 */
-	@GetMapping("/board/boardList")
+	@GetMapping("boardList")
 	@ResponseBody // JSON으로 응답
-	public List<Notice> selectBoardList() {
-		return service.selectBoardList();
+	public List<Notice> selectBoardList(@RequestParam("groupNo") int groupNo) {
+		System.out.println("=======================================");
+		return service.selectBoardList(groupNo);
 	}
 
 	/**
@@ -88,7 +92,7 @@ public class GroupMainController {
 	 * @param loginMember
 	 * @return
 	 */
-	@PostMapping("/groupMain/joinGroup/{groupNo}")
+	@PostMapping("joinGroup/{groupNo}")
 	@ResponseBody
 	public String joinGroup( @PathVariable("groupNo") int groupNo,
 			@SessionAttribute(value = "loginMember", required = false) MyPage loginMember) {
