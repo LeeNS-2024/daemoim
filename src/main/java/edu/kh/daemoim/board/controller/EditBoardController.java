@@ -79,6 +79,7 @@ public class EditBoardController {
 		String message = null;
 		if (boardNo == 0) {
 			path = "/editBoard/" + groupNo + "/" + boardTypeCode + "/insert";
+
 			message = "게시글작성을 실패하였습니다";
 		} else {
 			path =  "/board/" + groupNo + "/" + boardTypeCode + "/" + boardNo;
