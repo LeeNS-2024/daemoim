@@ -92,10 +92,6 @@ public interface BoardService {
 	 */
 	int getCurrentPage(Map<String, Object> paramMap);
 
-	/** 신고내용 DB에 저장
-	 * @param report
-	 * @return
-	 */
-	int reportInsert(StopMember report);
+
 
 }
