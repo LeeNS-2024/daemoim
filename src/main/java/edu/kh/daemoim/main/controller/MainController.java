@@ -51,8 +51,13 @@ public class MainController {
 
         List<MainDTO> recommendedGroups = service.getRecommendedGroups();
         List<MainDTO> recentChatGroups = service.getRecentChatGroups();
+        
+        
+        
+        
         model.addAttribute("recommendedGroups", recommendedGroups);
         model.addAttribute("recentChatGroups", recentChatGroups);
+        
         
         // 시간 차이 계산
         Map<Integer, String> recentChatTimes = new HashMap<>();

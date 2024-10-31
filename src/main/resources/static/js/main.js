@@ -21,41 +21,37 @@ document.addEventListener("DOMContentLoaded", () => {
     loginBtn.addEventListener("click", () => {
       const loginWrapper = document.querySelector(".login-wrapper");
 
-      
-
       // 알림 버튼 클릭 시
       const alertBtn = document.getElementById("alert-btn");
-      alertBtn.addEventListener("click", () => {
-        // 알림 기능 로직 추가
-      });
+      if (alertBtn) {
+        alertBtn.addEventListener("click", () => {
+          // 알림 기능 로직 추가
+        });
+      }
 
       // 마이페이지 버튼 클릭 시
       const mypageBtn = document.getElementById("mypage-btn");
-      mypageBtn.addEventListener("click", () => {
-        // 마이페이지 이동 로직 추가
-      });
+      if (mypageBtn) {
+        mypageBtn.addEventListener("click", () => {
+          // 마이페이지 이동 로직 추가
+        });
+      }
     });
   }
-});
-
-document.getElementById('scrollTopBtn').addEventListener('click', () => {
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth'
-  });
-});
 
 
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.category-box').forEach(box => {
-    box.addEventListener('click', (event) => {
-      if (event.target.tagName === 'A') {
-        return;
-      }
-      const link = box.querySelector('a.categoryGroup-name');
-      if (link) {
-        window.location.href = link.href;
-      }
-    });
-  });
+
+ // 카테고리 박스 클릭 시 페이지 이동
+ document.querySelectorAll(".category-box").forEach(box => {
+   box.addEventListener("click", (event) => {
+     if (event.target.tagName === "A") {
+       return;
+     }
+     const link = box.querySelector("a.categoryGroup-name");
+     if (link) {
+       window.location.href = link.href;
+     }
+   });
+ });
 });
+

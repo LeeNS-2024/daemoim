@@ -173,7 +173,7 @@ const sendNotification = (content, sendMemberNo, receiveMemberNo, groupNo, url, 
 // 비동기로 알림 목록 조회
 // 알림 읽음 처리
 const updateNotification = (notificationNo) => {
-  fetch(`/notification?notificationNo=${notificationNo}`, {
+  return fetch(`/notification?notificationNo=${notificationNo}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ notificationNo }) 
@@ -183,13 +183,11 @@ const updateNotification = (notificationNo) => {
 
       if (response.ok) {
         notReadCheck();
-
-          const notificationItem = document.querySelector(`.notification-item[data-notification-id='${notificationNo}']`);
-          if (notificationItem) {
-            notificationItem.classList.remove('not-read');
-            notificationItem.classList.add('read');
-          }
-
+        const notificationItem = document.querySelector(`.notification-item[data-notification-id='${notificationNo}']`);
+        if (notificationItem) {
+          notificationItem.classList.remove('not-read');
+          notificationItem.classList.add('read');
+        }
       } else {
           throw new Error("알림 읽음 처리 실패");
       }
@@ -304,17 +302,17 @@ const selectNotificationList = () => {
               // 클릭 시 읽음 처리
               notiText.addEventListener("click", (e) => {
                 e.preventDefault();
-
-                  if (data.notificationCheck === 'N') {
-                    updateNotification(data.notificationNo)
+                if (data.notificationCheck === 'N') {
+                  // 읽지 않은 알림 클릭 시 업데이트 후 이동
+                  updateNotification(data.notificationNo)
                     .then(() => {
                       window.location.href = data.notificationUrl;
                     })
-                    .catch(err => console.error("알림 업데이트 오류 : ", err));
-
-                  } else {
-                    window.location.href = data.notificationUrl;
-                  }
+                    .catch(err => console.error("알림 업데이트 오류: ", err));
+                } else {
+                  // 이미 읽은 알림 클릭 시 바로 이동
+                  window.location.href = data.notificationUrl;
+                }
               });
 
               const senderProfile = document.createElement("img");
