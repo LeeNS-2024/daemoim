@@ -61,7 +61,7 @@ public class InterceptorConfig implements WebMvcConfigurer{
 		
 		registry.addInterceptor( boardFilterInterceptor() )
 				.addPathPatterns("/board/**")
-				.excludePathPatterns("/board/boardSchedule/**");
+				.excludePathPatterns("/board/boardSchedule/**", "/board/boardCalendar/**");
 		
 		registry.addInterceptor( boardScheduleFilterInterceptor() )
 				.addPathPatterns("/board/boardSchedule/**");

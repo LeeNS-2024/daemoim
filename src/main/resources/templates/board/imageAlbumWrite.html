@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title th:text="${boardName}">이미지 게시판</title>
+  <title th:text="${boardName}">사진첩</title>
 
   <th:block th:replace="~{common/common}"></th:block>
   <link rel="stylesheet" href="/css/board/imageAlbumWrite.css">
@@ -19,7 +19,7 @@
           class="board-write" 
           enctype="multipart/form-data">
 
-      <h1 class="board-name" th:text="${boardName}">게시판 이름</h1>
+      <h1 class="board-name" th:text="${boardTitle}">사진첩</h1>
 
       <!-- 제목 입력 영역 -->
       <div class="board-title">

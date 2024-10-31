@@ -63,7 +63,6 @@ public class EditBoardController {
 	 * @param ra
 	 * @return
 	 */
-	
 	@PostMapping("{groupNo:[0-9]+}/{boardTypeCode:[0-9]+}/insert")
 	public String boardInsert(
 			@PathVariable("groupNo") int groupNo, 
@@ -80,6 +79,7 @@ public class EditBoardController {
 		String message = null;
 		if (boardNo == 0) {
 			path = "/editBoard/" + groupNo + "/" + boardTypeCode + "/insert";
+
 			message = "게시글작성을 실패하였습니다";
 		} else {
 			path =  "/board/" + groupNo + "/" + boardTypeCode + "/" + boardNo;
@@ -88,6 +88,32 @@ public class EditBoardController {
 		ra.addFlashAttribute("message", message);
 
 		return "redirect:" + path;
+	}
+	
+	@ResponseBody
+	@PostMapping("{groupNo:[0-9]+}/{boardTypeCode:[0-9]+}/insert2")
+	public String boardInsert2(
+			@PathVariable("groupNo") int groupNo, 
+			@PathVariable("boardTypeCode") int boardTypeCode,
+			@ModelAttribute Board inputBoard, 
+			@SessionAttribute("loginMember") MyPage loginMember,
+			@RequestParam("images") List<MultipartFile> images, 
+			RedirectAttributes ra) {
+
+		inputBoard.setMemberNo(loginMember.getMemberNo());
+
+		int boardNo = service.boardInsert(inputBoard, images);
+		String path = null;
+		String message = null;
+		if (boardNo == 0) {
+			message = "게시글작성을 실패하였습니다";
+		} else {
+			path =  "/board/" + groupNo + "/" + boardTypeCode + "/" + boardNo;
+			message = "게시글이 작성되었습니다";
+		}
+		ra.addFlashAttribute("message", message);
+
+		return path;
 	}
 	
 	/** 게시글 삭제
@@ -155,7 +181,7 @@ public class EditBoardController {
 		// 게시글이 존재하지 않는 경우
 		if(board == null) {
 			ra.addFlashAttribute("message", "해당 게시글이 존재하지 않습니다.");
-			return "redirect:/board/" + groupNo; // 게시글 목록
+			return "redirect:/board/" + groupNo + "/" + boardTypeCode; // 게시글 목록
 		}
 		
 		// 게시글 작성자가 로그인한 회원이 아닌 경우
