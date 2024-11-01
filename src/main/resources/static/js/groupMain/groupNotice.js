@@ -29,7 +29,12 @@ document.addEventListener("DOMContentLoaded", function () {
       row.appendChild(cellNotice);
 
       const cellTitle = document.createElement("td");
-      cellTitle.textContent = board.boardTitle;
+      const a1 = document.createElement("a");
+      a1.href = "/board/" + groupNo + "/1/" + board.boardNo;
+      a1.innerText = board.boardTitle;
+      a1.style.color = "black";
+      a1.style.textDecoration = "none";
+      cellTitle.appendChild(a1);
       row.appendChild(cellTitle);
 
       const cellDate = document.createElement("td");

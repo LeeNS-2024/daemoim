@@ -1,6 +1,10 @@
 *{
   box-sizing: border-box;
 }
+.bigbox{
+  display: flex;
+  flex-direction: column;
+}
 body {
   font-family: 'Noto Sans KR', sans-serif;
   margin: 0;
@@ -269,7 +273,6 @@ table tbody tr td {
   font-size: 18px;
 
 }
-
 .schedule {
   background-color: #d7e8d4;
   padding: 20px;
