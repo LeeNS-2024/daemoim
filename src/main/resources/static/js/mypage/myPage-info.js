@@ -213,3 +213,34 @@ profileForm?.addEventListener("submit", e => {
   }
 
 })
+
+
+const textarea = document.getElementById("memberIm");
+
+textarea.addEventListener("input", () => {
+  const maxCols = 20; // 가로 글자 수 제한
+  const maxRows = 5; // 세로 줄 수 제한
+
+  // 텍스트를 줄별로 나누기
+  let lines = textarea.value.split("\n");
+
+  // 각 줄에서 가로 글자 수 초과 시 자동 줄바꿈 추가
+  lines = lines.flatMap(line => {
+    const wrappedLines = [];
+    while (line.length > maxCols) {
+      wrappedLines.push(line.slice(0, maxCols));
+      line = line.slice(maxCols);
+    }
+    wrappedLines.push(line);
+    return wrappedLines;
+  });
+
+  // 줄 수가 초과할 경우 제한하고 경고 메시지 띄우기
+  if (lines.length > maxRows) {
+    alert("5 줄을 초과할 수 없습니다.");
+    lines = lines.slice(0, maxRows); // 최대 줄 수까지만 유지
+  }
+
+  // 텍스트 박스에 다시 설정
+  textarea.value = lines.join("\n");
+});

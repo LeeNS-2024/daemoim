@@ -131,11 +131,6 @@ public interface BoardMapper {
 	 */
 	int getCurrentPage(Map<String, Object> paramMap);
 
-	/** 신고 내용 DB에 저장
-	 * @param report
-	 * @return
-	 */
-	int reportInsert(StopMember report);
 
 	/** 좋아요 DB에 저장
 	 * @param boardNo

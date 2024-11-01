@@ -28,8 +28,8 @@ public class MyPage {
 	private String memberDelFl;
 	private int authority;
 	
-//	private int groupNo;
-//	private int boardTypeCode;
-//	private int boardNo;
+	private int groupNo;
+	private int boardTypeCode;
+	private int boardNo;
 
 }

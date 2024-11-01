@@ -6,6 +6,7 @@ const chatBtnOff = document.querySelector(".chat-offBtn");
 const chatBtnOn = document.querySelector(".chat-onBtn");
 
 let openChatRoom = null;
+let scrollFlag = true;
 
 /* ******************************************************** */
 /* 채팅창 크기변경 */
@@ -156,8 +157,9 @@ const openChat = (groupNo) => {
 
     
     chatUls[1].style.height = (chatBody.offsetHeight - 175) + 'px';
-    chatUls[1].scrollTop = chatUls[1].scrollHeight; // 스크롤 제일 밑으로
-
+    if(scrollFlag){
+      chatUls[1].scrollTop = chatUls[1].scrollHeight; // 스크롤 제일 밑으로
+    }
     /* websocket으로 회원닉네임리스트 호출 */
     const obj = {
       "loginMemberNo" : chatLoginMemberNo,
@@ -181,7 +183,7 @@ const contentOthers = (chat) => {
       div1.innerText = chat.memberNickname;
       let url;
       if(chat.memberProfileUrl) url = chat.memberProfileUrl;
-      else url = "/images/default"
+      else url = "/images/default.png"
       if (url) {
         const img = new Image();
         img.src = url;
@@ -246,6 +248,7 @@ const contentSelf = (chat) => {
 chatBtnOn?.addEventListener("click", ()=>{
   chatBtnOn.classList.add("display-none");
   chatBtnOff.classList.remove("display-none");
+  scrollFlag = true;
   chatInfo(chatLoginMemberNo);
   addCloseChat();
 });
@@ -280,6 +283,7 @@ const sendChat = ()=>{
   if(openChatRoom === null) return; // 채팅창 안열었을때 반환
   const msg = chatTextarea.value;
   if(msg.trim().length === 0) return; // 입력한 메세지 없으면 반환
+  scrollFlag = true;
 
   const obj = {
     "memberNo" : chatLoginMemberNo,
@@ -357,12 +361,14 @@ if(chatsocket != null){
     else contentSelf(chat);
 
     chatUls[1].style.height = (chatBody.offsetHeight - 175) + 'px';
-    chatUls[1].scrollTop = chatUls[1].scrollHeight; // 스크롤 제일 밑으로
-
+    scrollFlag = true;
+    if(scrollFlag) chatUls[1].scrollTop = chatUls[1].scrollHeight; // 스크롤 제일 밑으로
     // 15초 후 채팅창 새로고침
     setTimeout(() => {
-      if(!chatBody.classList.contains("display-none"))
-      chatInfo(chatLoginMemberNo);
+      if(!chatBody.classList.contains("display-none")){
+        scrollFlag = false;
+        chatInfo(chatLoginMemberNo);
+      }
     }, 15000);
   });
 
@@ -381,11 +387,12 @@ if(memsocket != null){
       li.innerText = chat.memberNickname;
       chatUls[0].append(li);
     });
-
     // 15초 후 채팅창 새로고침
     setTimeout(() => {
-      if(!chatBody.classList.contains("display-none"))
-      chatInfo(chatLoginMemberNo);
+      if(!chatBody.classList.contains("display-none")){
+        scrollFlag = false;
+        chatInfo(chatLoginMemberNo);
+      }
     }, 15000);
   });
 

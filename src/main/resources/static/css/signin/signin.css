@@ -30,6 +30,8 @@ body {
     max-width: 400px;
     box-sizing: border-box;
     text-align: center;
+    margin: auto;
+    padding: auto;
 }
 
 /* 로그인 타이틀 */

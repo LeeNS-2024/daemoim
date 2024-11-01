@@ -145,18 +145,34 @@ body {
 }
 
 /* 입력 필드 스타일 */
-.myPage-row input,
+.myPage-row input{
+  padding: 12px;
+  font-size: 18px;
+  border: 1px solid var(--input-border-color);
+  border-radius: 5px;
+  width: 100%;
+  max-width: 100%;
+  height: auto; /* 높이는 자동 */
+  background-color: var(--input-background-color);
+  color: var(--input-text-color);
+  box-sizing: border-box;
+}
+
 .profile-introduce-section input {
   padding: 12px;
   font-size: 18px;
   border: 1px solid var(--input-border-color);
   border-radius: 5px;
   width: 100%;
-  margin-bottom: 10px;
+  max-width: 100%;
+  height: 120px; /* 높이를 늘려서 여러 줄의 텍스트가 표시되도록 함 */
   background-color: var(--input-background-color);
   color: var(--input-text-color);
   box-sizing: border-box;
+  overflow-y: auto; /* 텍스트가 넘칠 경우 스크롤 가능 */
+  white-space: pre-wrap; /* 텍스트 줄바꿈 허용 */
 }
+
 
 .myPage-row input::placeholder,
 .profile-introduce-section input::placeholder {
@@ -176,4 +192,53 @@ footer {
   position: relative;
   bottom: 0;
   left: 0;
+}
+
+/* 변경 버튼을 감싸는 레이블 스타일 */
+.changeBtnDesign {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+/* 변경 버튼 스타일 */
+.changeBtnDesign button {
+  background-color: var(--button-color); /* 메인 버튼 색상 */
+  color: white;
+  padding: 12px 30px; /* 패딩으로 버튼 크기 조정 */
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+}
+
+/* 버튼 호버 효과 */
+.changeBtnDesign button:hover {
+  background-color: var(--button-hover-color);
+  transform: translateY(-2px); /* 마우스를 올렸을 때 살짝 떠오르는 효과 */
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* 그림자 강화 */
+}
+
+/* 버튼 클릭 효과 */
+.changeBtnDesign button:active {
+  transform: translateY(0); /* 클릭할 때 위치 초기화 */
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); /* 클릭 시 그림자 감소 */
+}
+
+.memberIm {
+  padding: 12px;
+  font-size: 18px;
+  border: 1px solid var(--input-border-color);
+  border-radius: 5px;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  background-color: var(--input-background-color);
+  color: var(--input-text-color);
+  box-sizing: border-box;
+  resize: none; /* 크기 조절 비활성화 */
+  overflow-y: auto; /* 텍스트가 넘칠 경우 스크롤 가능 */
 }

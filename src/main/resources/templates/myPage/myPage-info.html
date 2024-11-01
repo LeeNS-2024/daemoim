@@ -39,14 +39,15 @@
       <div class="profile-details">
         <div class="profile-introduce-section">
           <label for="memberIm">자기소개</label><br>
-          <input type="text" th:value="${session.loginMember.memberIm}" id="memberIm" placeholder="자기소개 입력" name="memberIm">
+          <textarea th:text="${session.loginMember.memberIm}" id="memberIm" class="memberIm" placeholder="자기소개 입력" name="memberIm" rows="5" cols="30"></textarea>
         </div>
-        <button id="changeBtn" type="submit" >변경</button>
+       <label class="changeBtnDesign"> <button id="changeBtn" type="submit" >변경</button></label>
       </div>
     </form>
+  
+
   </main>
 
-   <th:block th:replace="~{common/footer}"></th:block>
 
   <script src="/js/myPage/myPage-info.js"></script>
 </body>

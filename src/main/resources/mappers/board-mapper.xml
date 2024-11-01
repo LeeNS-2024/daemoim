@@ -472,27 +472,6 @@
 			)
 	</select>
 
-	<!-- 신고 DB에 저장 -->
-	<insert id="reportInsert" parameterType="StopMember" useGeneratedKeys="true">
-	
-		<selectKey order="BEFORE" resultType="_int" keyProperty="reportNo">
-			SELECT
-				SEQ_REPORT_NO.NEXTVAL,
-				SEQ_REPORT_LIST_NO.NEXTVAL
-			FROM
-				DUAL
-		</selectKey>
-		
-		INSERT INTO "REPORT"
-		VALUES(
-			#{memberNo},
-			DEFAULT,
-			#{reportDetail},
-			#{reportNo},
-			DEFAULT,
-			#{reportListNo}
-			)
-	</insert>
 
 	<!-- 좋아요 DB에 저장 -->
 	<insert id="insertBoardLike">

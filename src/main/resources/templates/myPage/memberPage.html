@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>내정보 페이지</title>
+  <title>${memberNickname} 님의 페이지</title>
   <link rel="stylesheet" href="/css/myPage/myPage-info.css">
 </head>
 
@@ -12,9 +12,7 @@
   <section id="sideMenu"> 
   </section>
   <main class="profile-container">
-    <h1 class="myPage-title">프로필</h1>
-    <span class="myPage-subject">프로필 이미지를 변경할 수 있습니다.</span>
-
+    <h1 class="myPage-title">${memberNickname} 님의 페이지</h1>
       <div class="profile-image-area">
         <img th:with="user=#{user.default.image}" 
          th:text="${userInfo.memberIm}" id="memberIm" placeholder="자기소개 입력" name="memberIm"
@@ -24,7 +22,6 @@
       <div class="profile-btn-area">
         <label for="imageInput">이미지 선택</label>
         <input type="file" name="profileImg" id="imageInput" accept="image/*">
-        <button type="submit">변경하기</button>
       </div>
     </form>
     <form action="info" method="POST" name="myPageFrm">
@@ -38,8 +35,8 @@
           <label for="memberIm">자기소개</label><br>
           <input th:text="${userInfo.memberIm}" id="memberIm" placeholder="자기소개 입력" name="memberIm">
         </div>
-
       </div>
+      
   </main>
 
 </body>

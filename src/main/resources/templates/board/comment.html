@@ -6,7 +6,8 @@
 
 			<!-- 대댓글(자식)인 경우 child-comment 클래스 추가 -->
 			<li class="comment-row" th:each="comment : ${board.commentList} "
-				th:classappend="${comment.parentCommentNo} != 0 ? child-comment" th:object="${comment}" th:id="|c*{commentNo}|"
+				th:classappend="${comment.parentCommentNo} != 0 ? child-comment" th:object="${comment}" 
+				th:id="|c*{commentNo}|"
 				th:data-comment-no="*{commentNo}">
 
 				<th:block th:if="*{commentDelFl} == 'Y'">

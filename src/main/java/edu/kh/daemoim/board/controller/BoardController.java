@@ -3,6 +3,9 @@ package edu.kh.daemoim.board.controller;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -164,7 +167,7 @@ public class BoardController {
 					}
 		  }
 		  // 조회수가 증가된 경우 쿠키세팅(하루에 한 번 조회수 늘릴 수 있게 / 필요시 사용가능하게 주석으로 만들어둠)
-		  /*
+		  
 		  if(result > 0){
 		  	board.setReadCount(board.getReadCount() + 1);
 		  	c.setPath("/");
@@ -184,7 +187,7 @@ public class BoardController {
 		  	c.setMaxAge((int)diff);
 		  	resp.addCookie(c);
 		  }
-		  */
+		  
 	  }
 	  model.addAttribute("board",board);
 	  
@@ -201,28 +204,8 @@ public class BoardController {
 		else
 		return "board/boardDetail";
 	}
-	
-	
-	
-	
-	// 신고 등록
-	@PostMapping("{groupNo:[0-9]+}/{boardTypeCode:[0-9]+}/{boardNo:[0-9]+}/report")
-	public String reportInsert(
-		@PathVariable("groupNo") 				int groupNo,
-		@PathVariable("boardTypeCode") 	int boardTypeCode,
-		@PathVariable("boardNo") 				int boardNo,
-		StopMember report,
-		@SessionAttribute("loginMember") MyPage loginMember,
-		@RequestHeader("referer") String referer) {
-		
-		report.setMemberNo(loginMember.getMemberNo());
-		
-		int result = service.reportInsert(report);
-		
-		return "redirect:/" + groupNo + "/" + boardTypeCode + "/" + boardNo;
-	}
-	
-	
+  
+  
 	@GetMapping("/boardSchedule/{groupNo:[0-9]+}")
 	public String boardScheduleList(
 		@PathVariable("groupNo") int groupNo,
