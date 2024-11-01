@@ -819,7 +819,7 @@ const btnsAddEvent = () => {
 // 수락&거절 요청
 const inviteSubmit = (inviteObj) => {
 
-  fetch("/groupMember", {
+  fetch("/groupMember/invite", {
     method : "POST",
     headers : {"Content-Type" : "application/json"},
     body : JSON.stringify(inviteObj)
@@ -905,7 +905,15 @@ const tableAjaxRequest = (int) => {
           const td11 = document.createElement("td");
             td11.innerText = member.memberId;
           const td12 = document.createElement("td");
-            td12.innerText = member.memberImg; 
+            const img121 = document.createElement("img");
+          img121.style.width = '40px';
+              img121.style.height = '40px';
+            if(member.memberImg != null){
+              img121.src = member.memberImg;
+            } else {
+              img121.src = "/images/dafault.png";
+            }
+            td12.append(img121);
           const td13 = document.createElement("td");
             td13.innerText = member.memberNickname;
           const td14 = document.createElement("td");
@@ -934,7 +942,15 @@ const tableAjaxRequest = (int) => {
           const td21 = document.createElement("td");
             td21.innerText = member.memberId;
           const td22 = document.createElement("td");
-            td22.innerText = member.memberImg; 
+            const img221 = document.createElement("img");
+              img221.style.width = '40px';
+              img221.style.height = '40px';
+              if(member.memberImg != null){
+                img221.src = member.memberImg;
+              } else {
+                img221.src = "/images/dafault.png";
+              }
+            td22.append(img221);
           const td23 = document.createElement("td");
             td23.innerText = member.memberNickname;
           const td24 = document.createElement("td");
@@ -959,7 +975,15 @@ const tableAjaxRequest = (int) => {
           const td31 = document.createElement("td");
             td31.innerText = member.memberId;
           const td32 = document.createElement("td");
-            td32.innerText = member.memberImg; 
+            const img321 = document.createElement("img");
+              img321.style.width = '40px';
+              img321.style.height = '40px';
+              if(member.memberImg != null){
+                img321.src = member.memberImg;
+              } else {
+                img321.src = "/images/dafault.png";
+              }
+              td32.append(img321);
           const td33 = document.createElement("td");
             td33.innerText = member.memberNickname;
           const td34 = document.createElement("td");
@@ -976,15 +1000,13 @@ const tableAjaxRequest = (int) => {
       }
       
       tableBody.append(tr);
-
+      
     });
-
-    // 버튼 이벤트추가 함수
-
-    // 모임가입 수락, 거절버튼
-    if(inviteAgreeBtns !== undefined){
-      btnsAddEvent();
-    }
+    
+    backupMemberArrBtn();
+    btnsAddEvent();
+    delegateArrBtn();
+    removeMemberArrBtn();
 
   })
   .catch();

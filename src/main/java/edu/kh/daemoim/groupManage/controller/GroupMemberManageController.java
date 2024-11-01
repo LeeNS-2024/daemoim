@@ -120,10 +120,10 @@ public class GroupMemberManageController {
      	4 : 강퇴인원
      	5 : 이미 가입된 회원
 	 */
-	@PostMapping("")
+	@PostMapping("invite")
 	public int inviteMember(
 			@RequestBody Map<String, Object> map,
-			@SessionAttribute("loginMEmber") MyPage loginMember) {
+			@SessionAttribute("loginMember") MyPage loginMember) {
 		
 		/* Session에서 로그인 멤버 얻어오셔야 합니다 */
 		int loginMemberNo = loginMember.getMemberNo();
