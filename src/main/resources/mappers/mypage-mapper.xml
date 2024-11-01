@@ -54,7 +54,7 @@
                	   MEMBER_NICKNAME AS memberNickname,
                	   MEMBER_IMG AS memberImg       
              FROM MEMBER     	   
-              WHERE MEMBER_NO = #{memberNickname}   
+              WHERE MEMBER_NICKNAME = #{memberNickname}   
 	</select>
 	
 	  <select id="findMyGroup" resultType="MainDTO">
