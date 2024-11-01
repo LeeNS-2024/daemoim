@@ -14,8 +14,9 @@
 	<main>
 		<!-- <form th:action="@{/editBoard/{boardCode}/insert(boardCode=${boardCode})}"  -->
 		<form action="insert" 
-				th:object="${board}" method="POST" class="board-write" id="boardWriteFrm"
-				enctype="multipart/form-data">
+				th:object="${board}" method="POST" class="board-write" 
+				id="boardWriteFrm"
+				>
 
 			<h1 class="board-name" th:text="${boardName}">게시판 이름</h1>
 
