@@ -210,6 +210,10 @@ public class EditBoardServiceImpl implements EditBoardService{
 			return result;
 	}
 
+	@Override
+	public int boardInsert1(Board inputBoard) {
+		return mapper.boardInsert(inputBoard);
+	}
 	
 	
 }

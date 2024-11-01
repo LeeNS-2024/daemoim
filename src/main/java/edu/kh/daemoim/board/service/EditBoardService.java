@@ -31,4 +31,6 @@ public interface EditBoardService {
 	 */
 	int boardUpdate(Board inputBoard, List<MultipartFile> images, String deleteOrderList);
 
+	int boardInsert1(Board inputBoard);
+
 }
