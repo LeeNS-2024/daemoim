@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -203,7 +204,8 @@ public class BoardController {
 		else
 		return "board/boardDetail";
 	}
-	
+  
+  
 	@GetMapping("/boardSchedule/{groupNo:[0-9]+}")
 	public String boardScheduleList(
 		@PathVariable("groupNo") int groupNo,
@@ -346,7 +348,7 @@ public class BoardController {
 		int cp = service.getCurrentPage(paramMap);
 		
 		// 일반 목록 조회
-		String url = "redirect:/board/" + groupNo + "/" + "boardTypeCode" + "?cp=" + cp;
+		String url = "redirect:/board/" + groupNo + "/" + boardTypeCode + "?cp=" + cp;
 		
 		// 검색해서 들어왔을 경우(검색 목록 조회)
 		if(paramMap.get("key") != null) {

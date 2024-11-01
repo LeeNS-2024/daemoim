@@ -469,16 +469,8 @@
 					AND MEMBER_NICKNAME LIKE '%' || #{query} || '%'
 				</when>
 			</choose>
-	
 			)
-		WHERE
-			GROUP_NO = #{groupNo}
-		AND
-			BOARD_TYPE_CODE = #{boardTypeCode}
-		AND
-			BOARD_NO = #{boardNo}
 	</select>
-
 
 
 	<!-- 좋아요 DB에 저장 -->
@@ -500,7 +492,7 @@
 	<select id="getLikeCount">
 		SELECT COUNT(*)
 		FROM "LIKE"
-		WGERE BOARD_NO = #{boardNo}
+		WHERE BOARD_NO = #{boardNo}
 	</select>
 
 
