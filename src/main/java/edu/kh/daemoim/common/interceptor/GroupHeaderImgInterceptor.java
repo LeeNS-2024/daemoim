@@ -7,8 +7,10 @@ import org.springframework.web.servlet.ModelAndView;
 import edu.kh.daemoim.groupManage.service.GroupManageService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 
 // 모임 해더이미지 전달
+@Slf4j
 public class GroupHeaderImgInterceptor implements HandlerInterceptor {
 	
 	@Autowired
@@ -26,7 +28,9 @@ public class GroupHeaderImgInterceptor implements HandlerInterceptor {
 		if(groupNo != null && groupNo.matches("\\d+")) { // 숫자인 경우에만 시행
 			// 모임 상단이미지 덮어쓰기
 			String groupHeaderImg = service.getGroupHeaderImg(groupNo);
-			
+			request.setAttribute("groupHeaderImg", groupHeaderImg);
+		} else if(groupNo != null && url.split("/")[3].matches("\\d+")) {
+			String groupHeaderImg = service.getGroupHeaderImg(url.split("/")[3]);
 			request.setAttribute("groupHeaderImg", groupHeaderImg);
 		}
 		
