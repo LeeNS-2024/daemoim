@@ -16,7 +16,7 @@
 
 				<th:block th:if="*{commentDelFl} == 'N'">
 					<p class="comment-writer">
-					<a th:href="|/memberPage/@{memberNo}|">
+					<a th:href="|/myPage/memberInfo/*{memberNickname}|">
 						<!-- 프로필 이미지 없을 경우 -->
 						<img th:unless="*{memberImg}" th:src="#{user.default.image}">
 						<!-- 프로필 이미지 있을 경우 -->

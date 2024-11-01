@@ -44,7 +44,7 @@
       <a href="#" class="sidebar-link">일반 게시판</a>
       <a href="#" class="sidebar-link">사진첩</a>
       <a href="#" class="sidebar-link">일정</a>
-      <a href="#" id="manageA" class="sidebar-link">모임 관리페이지</a>
+      <a href="#" class="sidebar-link">모임 관리페이지</a>
       <a href="#" id="joinGroupBtn" class="sidebar-link">모임 가입신청</a>
     </div>
 
@@ -157,11 +157,28 @@
 
   <script th:inline="javascript">
     const groupNo = location.pathname.split("/")[2];
-    const manageA = document.querySelector("#manageA");
-    manageA.addEventListener("click", e => {
+    const sidebarLinkArr = document.querySelectorAll(".sidebar-link");
+    sidebarLinkArr[0].addEventListener("click", e => {
+      e.preventDefault();
+      location.href = "/board/" + groupNo;
+    })
+    sidebarLinkArr[1].addEventListener("click", e => {
+      e.preventDefault();
+      location.href = "/board/" + groupNo;
+    })
+    sidebarLinkArr[2].addEventListener("click", e => {
+      e.preventDefault();
+      location.href = "/board/" + groupNo + "/3";
+    })
+    sidebarLinkArr[3].addEventListener("click", e => {
+      e.preventDefault();
+      location.href = "/board/boardSchedule/" + groupNo;
+    })
+    sidebarLinkArr[4].addEventListener("click", e => {
       e.preventDefault();
       location.href = "/groupManage/" + groupNo + "/manageGroup";
     })
+
     const isLoginMember = /*[[${loginMember != null}]]*/ false;
     const memberGroupCheck = /*[[${memberGroupCheck}]]*/ false;
 

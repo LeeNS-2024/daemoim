@@ -1,5 +1,7 @@
 package edu.kh.daemoim.common.interceptor;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,15 +24,20 @@ public class GroupHeaderImgInterceptor implements HandlerInterceptor {
 		
 		String url = request.getRequestURI();
 			// /board/{groupNo}/**
-		String groupNo = url.split("/")[2];
-			// {boardNo}
+		String[] urlList = url.split("/");
+		int length = urlList.length;
+		String groupNo1 = null;
+		if(length>2) groupNo1 = url.split("/")[2];
+		String groupNo2 = null;
+		if(length>3) groupNo2 = url.split("/")[3];
+
 		
-		if(groupNo != null && groupNo.matches("\\d+")) { // 숫자인 경우에만 시행
+		if(groupNo1 != null && groupNo1.matches("\\d+")) { // 숫자인 경우에만 시행
 			// 모임 상단이미지 덮어쓰기
-			String groupHeaderImg = service.getGroupHeaderImg(groupNo);
+			String groupHeaderImg = service.getGroupHeaderImg(groupNo1);
 			request.setAttribute("groupHeaderImg", groupHeaderImg);
-		} else if(groupNo != null && url.split("/")[3].matches("\\d+")) {
-			String groupHeaderImg = service.getGroupHeaderImg(url.split("/")[3]);
+		} else if(groupNo2 != null && groupNo2.matches("\\d+")) {
+			String groupHeaderImg = service.getGroupHeaderImg(groupNo2);
 			request.setAttribute("groupHeaderImg", groupHeaderImg);
 		}
 		
