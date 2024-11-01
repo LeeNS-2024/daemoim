@@ -28,7 +28,8 @@
   <!-- 모임 배경사진 -->
   <div class="screen">
     <a href="/" th:href="@{/}"> <!-- 메인 페이지로 이동하는 링크 추가 -->
-        <img th:src="${groupHeaderImg}" alt="모임배경사진">
+        <img th:with="groupHeaderDefault=#{groupHeader.default.image}"
+        th:src="${groupHeaderImg ?: groupHeaderDefault}" alt="모임배경사진">
     </a>
   </div>
   
