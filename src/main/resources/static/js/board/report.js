@@ -18,11 +18,24 @@ closeReportBtn.addEventListener("click", () => {
     closePopup();
 });
 
+
+const insertReport = () => {
+
+    
+}
+
+
+
+
+
+
+
+
+
 // form 제출 처리
 const formTag = document.querySelector("#formTag");
 formTag.addEventListener("submit", (e) => {
-    e.preventDefault();
-    
+    // e.preventDefault();
     const reportReason = document.getElementById('reportReason');
     const reportDetails = document.getElementById('reportDetails');
     const reasonError = document.getElementById('reasonError');
@@ -37,6 +50,7 @@ formTag.addEventListener("submit", (e) => {
         reasonError.textContent = "신고사유를 선택해주세요";
         reasonError.style.display = 'inline';
         reportReason.focus();
+        e.preventDefault();
         return;
     }
 
@@ -44,39 +58,53 @@ formTag.addEventListener("submit", (e) => {
         detailsError.textContent = "신고내용을 자세하게 적어주세요";
         detailsError.style.display = 'inline';
         reportDetails.focus();
+        e.preventDefault();
         return;
     }
 
-    // form에 hidden input 추가
-    const reasonInput = document.createElement('input');
-    reasonInput.type = 'hidden';
-    reasonInput.name = 'reportReason';
-    reasonInput.value = reportReason.value;
-    formTag.appendChild(reasonInput);
-    
-    const detailsInput = document.createElement('input');
-    detailsInput.type = 'hidden';
-    detailsInput.name = 'reportDetails';
-    detailsInput.value = reportDetails.value;
-    formTag.appendChild(detailsInput);
+    const inputType = document.createElement("input");
+    inputType.type='hidden';
+    inputType.value=document.querySelector("#reportReason").value;
+    inputType.name = 'reportNo';
+    formTag.append(inputType);
 
-    // reason 내용과 details 내용을 합쳐야 되는데
+    const inputNo = document.createElement("input");
+    inputNo.type='hidden';
+    inputNo.value=reportBtn.dataset.memberNo;
+    inputNo.name = 'memberNo';
+    formTag.append(inputNo);
 
-    // 모든 검증 통과 시
-    const url = location.pathname + "/report";
-    formTag.action = url;
-    
-    try {
-        alert('신고가 접수되었습니다.');
-        formTag.submit();
-        clearForm();
-        closePopup();
-    } catch (error) {
-        console.error('Form submission error:', error);
-        alert('신고 접수 중 오류가 발생했습니다.');
+    let str = "";
+    switch(reportReason.value){
+        case "1": str = "욕설 또는 부적절한 언행"; break;
+        case "2": str = "사이버범죄 및 범행예고"; break;
+        case "3": str = "도배"; break;
+        case "4": str = "악의적이거나 타인을 괴롭히는 내용"; break;
+        case "5": str = "불쾌한거나 부적절한 이름"; break;
+        case "6": str = "기타"; break;
+        default : str = "";
     }
+    // reason 내용과 details 내용을 \n을 써서 합친 내용이 담긴 
+    // reportDetail(DB명과 맞춤)
+    const reportDetail =  `${str}\n ${reportDetails.value}`;
+    const input112 = document.createElement("input");
+    input112.type='hidden';
+    input112.value=reportDetail;
+    input112.name = 'reportDetail';
+    formTag.append(input112);
+    
+    // try {
+    //     alert('신고가 접수되었습니다.');
+    //     formTag.submit();
+    //     clearForm();
+    //     closePopup();
+    // } catch (error) {
+    //     console.error('Form submission error:', error);
+    //     alert('신고 접수 중 오류가 발생했습니다.');
+    // }
 });
 
+// ----- 기능들 -----
 
 
 // 신고 사유 선택 시 에러 메시지 제거
