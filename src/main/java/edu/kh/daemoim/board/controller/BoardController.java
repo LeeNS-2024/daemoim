@@ -204,20 +204,6 @@ public class BoardController {
 		return "board/boardDetail";
 	}
 	
-	
-	
-	
-	// 신고 등록
-	@PostMapping("report")
-	public String reportInsert(
-		@RequestBody StopMember report
-		) {
-		// 고쳐야됨
-
-		return null;
-	}
-	
-	
 	@GetMapping("/boardSchedule/{groupNo:[0-9]+}")
 	public String boardScheduleList(
 		@PathVariable("groupNo") int groupNo,

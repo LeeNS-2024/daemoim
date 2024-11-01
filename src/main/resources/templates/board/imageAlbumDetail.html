@@ -85,7 +85,7 @@
           <button id="deleteBtn">삭제</button>
         </th:block>
         <button id="goToListBtn">목록으로</button>
-        <button id="reportBtn">신고</button>
+        <button id="reportBtn" th:data-member-no="${board.memberNo}">신고</button>
       </div>
     </section>
   </main>
@@ -114,7 +114,7 @@
   <script src="/js/board/imageAlbumDetail.js"></script>
   <script src="/js/board/comment.js"></script>
   <script src="/js/board/report.js"></script>
-  <script src="/js/header.js"></script>
+   <!-- <script src="/js/header.js"></script>  -->
 </body>
 
 </html>
