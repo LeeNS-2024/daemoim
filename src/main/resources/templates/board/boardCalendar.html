@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang='en' xmlns:th="http://www.thymeleaf.org">
+<html lang='en' xmlns="http://www.thymeleaf.org">
   <head>
     <meta charset='utf-8' />
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
@@ -8,26 +8,48 @@
   <body>
     <!-- Header -->
     <div class="header">
-      <h1>모임배경사진</h1>
+      <img th:src="${groupHeaderImg}" alt="보드해더이미지">
     </div>
 
-    <!-- FullCalendar -->
-    <div id='calendar'></div>
+    <section class="container">
+      <nav>
+        <!-- Sidebar (왼쪽 배너) -->
+        <ul>
+            <li class="banner2">
+                <a href="/" style="font-family: 'NEXON Lv1 Gothic OTF';">홈</a>
+            </li>
+            <li class="banner2">
+                <a th:href="@{/board/{groupNo}(groupNo = ${groupNo})}"
+                  style="font-family: 'NEXON Lv1 Gothic OTF';">모임 메인 게시판</a>
+            </li>
+            <li class="banner2">
+                <a th:href="@{/board/{groupNo}/3(groupNo = ${groupNo})}"
+                  style="font-family: 'NEXON Lv1 Gothic OTF';">사진 게시판</a>
+            </li>
+            <li class="banner2">
+                <a th:href="@{/board/boardSchedule/{groupNo}(groupNo = ${groupNo})}"
+                  style="font-family: 'NEXON Lv1 Gothic OTF';">일정</a>
+            </li>
+        </ul>
+      </nav>
+      <!-- FullCalendar -->
+      <div id='calendar'></div>
 
-    <!-- Popup for displaying events of a selected date -->
-    <div class="popup" id="popup">
-      <div id="popup-content">일정 목록이 여기에 표시됩니다.</div>
-      <button id="popup-close">닫기</button>
-    </div>
+      <!-- Popup for displaying events of a selected date -->
+      <div class="popup" id="popup">
+        <div id="popup-content">일정 목록이 여기에 표시됩니다.</div>
+        <button id="popup-close">닫기</button>
+      </div>
 
-    <!-- Dialog for displaying event details -->
-    <div class="dialog" id="dialog">
-      <div id="detail">이벤트 세부 정보</div>
-      <button id="dialog-close">닫기</button>
-    </div>
+      <!-- Dialog for displaying event details -->
+      <div class="dialog" id="dialog">
+        <div id="detail">이벤트 세부 정보</div>
+        <button id="dialog-close">닫기</button>
+      </div>
 
-    <!-- Overlay to darken background -->
-    <div class="overlay" id="overlay"></div>
+      <!-- Overlay to darken background -->
+      <div class="overlay" id="overlay"></div>
+    </section>
 
     <script src="/js/board/boardCalendar.js"></script>
   </body>

@@ -6,8 +6,11 @@
     <title>게시글 상세 페이지</title>
     <link rel="stylesheet" href="/css/board/boardDetail.css">
     <th:block th:replace="~{common/common}"></th:block>
+    <link rel="stylesheet" href="/css/board/comment.css">
+    <link rel="stylesheet" href="/css/board/report.css">
 </head>
 <body>
+    <th:block th:replace="~{board/report}"></th:block>
     <div class="header-image">
         <img th:src="${groupHeaderImg}" alt="보드해더이미지" style="width: 99vw;">
     </div>
@@ -120,12 +123,30 @@
                  </th:block>
 
                 <button id="goToListBtn">목록으로</button>
+                <button id="reportBtn">신고</button>
             </div>
 
+            
+            
         </section>
+        <!-- 댓글 영역-->
+        <th:block th:replace="~{board/comment}"></th:block>
     </div>
+    <th:block th:replace="~{common/footer}"></th:block>
 </body>
 
+
+<script th:inline="javascript">
+    // 로그인 true, 비회원 false
+    const loginCheck = /*[[${session.loginMember != null}]]*/ false;
+    // 로그인한 회원 닉네임
+    const memberNickname = /*[[${session.loginMember?.memberNickname}]]*/ null;
+    // 상세조회한 게시글 정보
+    const boardDetail = /*[[${board}]]*/ null;
+  </script>
+
 <script src="/js/board/boardDetail.js"></script>
+<script src="/js/board/comment.js"></script>
+<script src="/js/board/report.js"></script>
 </html>
 

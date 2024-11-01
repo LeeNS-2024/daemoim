@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -205,14 +206,20 @@ public class BoardController {
 	
 	
 	// 신고 등록
-	@PostMapping("report")
-	public int reportInsert(
-		@RequestBody StopMember report,
-		@SessionAttribute("loginMember") MyPage loginMember) {
+	@PostMapping("{groupNo:[0-9]+}/{boardTypeCode:[0-9]+}/{boardNo:[0-9]+}/report")
+	public String reportInsert(
+		@PathVariable("groupNo") 				int groupNo,
+		@PathVariable("boardTypeCode") 	int boardTypeCode,
+		@PathVariable("boardNo") 				int boardNo,
+		StopMember report,
+		@SessionAttribute("loginMember") MyPage loginMember,
+		@RequestHeader("referer") String referer) {
 		
 		report.setMemberNo(loginMember.getMemberNo());
 		
-		return service.reportInsert(report);
+		int result = service.reportInsert(report);
+		
+		return "redirect:/" + groupNo + "/" + boardTypeCode + "/" + boardNo;
 	}
 	
 	
@@ -358,7 +365,7 @@ public class BoardController {
 		int cp = service.getCurrentPage(paramMap);
 		
 		// 일반 목록 조회
-		String url = "redirect:/board/" + groupNo + "/" + "boardTypeCode" + "?cp=" + cp;
+		String url = "redirect:/board/" + groupNo + "/" + boardTypeCode + "?cp=" + cp;
 		
 		// 검색해서 들어왔을 경우(검색 목록 조회)
 		if(paramMap.get("key") != null) {

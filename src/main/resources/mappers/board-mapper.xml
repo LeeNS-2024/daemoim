@@ -469,14 +469,7 @@
 					AND MEMBER_NICKNAME LIKE '%' || #{query} || '%'
 				</when>
 			</choose>
-	
 			)
-		WHERE
-			GROUP_NO = #{groupNo}
-		AND
-			BOARD_TYPE_CODE = #{boardTypeCode}
-		AND
-			BOARD_NO = #{boardNo}
 	</select>
 
 	<!-- 신고 DB에 저장 -->
@@ -484,12 +477,13 @@
 	
 		<selectKey order="BEFORE" resultType="_int" keyProperty="reportNo">
 			SELECT
-				SEQ_REPORT_NO.NEXTVAL
+				SEQ_REPORT_NO.NEXTVAL,
+				SEQ_REPORT_LIST_NO.NEXTVAL
 			FROM
 				DUAL
 		</selectKey>
 		
-		INSERT INTO "COMMENT"
+		INSERT INTO "REPORT"
 		VALUES(
 			#{memberNo},
 			DEFAULT,
@@ -519,7 +513,7 @@
 	<select id="getLikeCount">
 		SELECT COUNT(*)
 		FROM "LIKE"
-		WGERE BOARD_NO = #{boardNo}
+		WHERE BOARD_NO = #{boardNo}
 	</select>
 
 

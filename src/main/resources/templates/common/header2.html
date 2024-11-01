@@ -7,6 +7,7 @@
           <a class="banner" th:href="@{/board/{groupNo}/{boardTypeCode}(groupNo = ${groupNo}, boardTypeCode = ${boardType.boardTypeCode})}"
              th:text="${boardType.boardName}"
              th:classappend="${boardType.boardName} == ${boardName} ? current-board : ''"
+             style="font-family: 'NEXON Lv1 Gothic OTF';"
              >게시판 이름</a>
       </li>
       <li class="banner2">
