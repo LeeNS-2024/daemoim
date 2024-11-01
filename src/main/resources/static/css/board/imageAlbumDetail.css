@@ -76,12 +76,12 @@
 }
 
 .image-item {
+  max-height: 400px;
   position: relative;
   border-radius: 8px;
   overflow: hidden;
   aspect-ratio: 1;
 }
-
 .image-item img {
   width: 100%;
   height: 100%;
