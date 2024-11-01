@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,7 +12,9 @@
 <body>
     <th:block th:replace="~{board/report}"></th:block>
     <div class="header-image">
-        <img th:src="${groupHeaderImg}" alt="보드해더이미지" style="width: 99vw;">
+        <a href="/" th:href="@{/}"> <!-- 메인 페이지로 이동하는 링크 추가 -->
+            <img th:src="${groupHeaderImg}" alt="모임배경사진" >
+        </a>
     </div>
     <div class="container">
         <section class="board-detail" th:object="${board}">  
@@ -30,7 +32,7 @@
                     
                     <!-- 프로필 이미지가 있을 경우 출력 (예정)-->
                     <img th:if= "*{memberImg}"
-                         th:src="#{memberImg}">
+                         th:src="*{memberImg}">
 
 
                     <span th:text="*{memberNickname}">작성자 닉네임</span>

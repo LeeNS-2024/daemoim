@@ -13,7 +13,9 @@
 <body>
     <!-- Header -->
     <div class="header">
-        <img th:src="${groupHeaderImg}" alt="보드해더이미지">
+        <a href="/" th:href="@{/}"> <!-- 메인 페이지로 이동하는 링크 추가 -->
+            <img th:src="${groupHeaderImg}" alt="모임배경사진" >
+        </a>
     </div>
 
     <!-- Container -->
