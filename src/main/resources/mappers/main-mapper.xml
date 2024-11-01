@@ -141,6 +141,7 @@
 	        mg.GROUP_NO = #{groupNo}
 	        AND mg.MEMBER_GROUP_BAN = 'N'
 	        AND mg.MEMBER_GROUP_DEL_FL = 'N'
+	    ORDER BY MEMBER_GROUP_ENROLL_DATE DESC
 	        
 		)	   WHERE ROWNUM &lt;= 8
 	</select>
