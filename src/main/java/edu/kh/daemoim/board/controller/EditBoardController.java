@@ -68,16 +68,16 @@ public class EditBoardController {
 			@PathVariable("groupNo") int groupNo, 
 			@PathVariable("boardTypeCode") int boardTypeCode,
 			@ModelAttribute Board inputBoard, 
-			@SessionAttribute("loginMember") MyPage loginMember,
-			@RequestParam("images") List<MultipartFile> images, 
+			@SessionAttribute("loginMember") MyPage loginMember, 
 			RedirectAttributes ra) {
 
 		inputBoard.setMemberNo(loginMember.getMemberNo());
 
-		int boardNo = service.boardInsert(inputBoard, images);
+		int result = service.boardInsert1(inputBoard);
+		int boardNo = inputBoard.getBoardNo();
 		String path = null;
 		String message = null;
-		if (boardNo == 0) {
+		if (result == 0) {
 			path = "/editBoard/" + groupNo + "/" + boardTypeCode + "/insert";
 
 			message = "게시글작성을 실패하였습니다";

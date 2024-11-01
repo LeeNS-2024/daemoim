@@ -123,7 +123,7 @@
                  </th:block>
 
                 <button id="goToListBtn">목록으로</button>
-                <button id="reportBtn">신고</button>
+                <button th:if="${board.boardTypeCode != 1 }" id="reportBtn" th:data-member-no="${board.memberNo}">신고</button>
             </div>
 
             
