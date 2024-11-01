@@ -228,3 +228,17 @@ footer {
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); /* 클릭 시 그림자 감소 */
 }
 
+.memberIm {
+  padding: 12px;
+  font-size: 18px;
+  border: 1px solid var(--input-border-color);
+  border-radius: 5px;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  background-color: var(--input-background-color);
+  color: var(--input-text-color);
+  box-sizing: border-box;
+  resize: none; /* 크기 조절 비활성화 */
+  overflow-y: auto; /* 텍스트가 넘칠 경우 스크롤 가능 */
+}
