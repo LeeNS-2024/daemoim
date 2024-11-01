@@ -1,4 +1,28 @@
+/* Font */
+@font-face {
+  font-family: 'PartialSansKR-Regular';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-1@1.1/PartialSansKR-Regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'NEXON Lv1 Gothic OTF';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/NEXON Lv1 Gothic OTF.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Cafe24Nyangi-W-v1.0';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2410-1@1.0/Cafe24Nyangi-W-v1.0.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+
+
 /* 검색창을 화면 중앙에 정렬 */
+.categoryBody{
+  font-family: 'NEXON Lv1 Gothic OTF';
+}
 .search-section {
   margin-top: 250px;
   display: flex;
@@ -78,11 +102,12 @@
   margin-bottom: 10px;
 }
 
-.group-name {
+.group-name2 {
   font-size: 16px;
+  margin-top:  10px;
   margin-bottom: 10px;
   display: -webkit-box;
-  -webkit-line-clamp: 5; /* 표시할 줄 수: 5줄로 설정 */
+  -webkit-line-clamp: 10; /* 표시할 줄 수: 5줄로 설정 */
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
