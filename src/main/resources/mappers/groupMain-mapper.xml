@@ -54,7 +54,8 @@
 
 		WHERE
 		B.GROUP_NO = #{groupNo}
-		FETCH FIRST 2 ROWS ONLY
+		ORDER BY B.BOARD_WRITE_DATE DESC
+		FETCH FIRST 4 ROWS ONLY
 	</select>
 
 	<select id="getSchedule" resultType="Schedule">

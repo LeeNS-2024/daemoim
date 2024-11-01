@@ -23,138 +23,141 @@
 </head>
 
 <body>
-
-<!-- 모임 배경사진 -->
-<div class="screen">
-  <a href="/" th:href="@{/}"> <!-- 메인 페이지로 이동하는 링크 추가 -->
-      <img th:src="${groupHeaderImg}" alt="모임배경사진">
-  </a>
-</div>
-
-  <!-- 모임 소개 -->
-  <div class="introduce-box">
-    <th:block th:each="introduce : ${introduces}">
-      <div th:text="${introduce}"></div>
+<section class="bigbox">
+  
+  <!-- 모임 배경사진 -->
+  <div class="screen">
+    <a href="/" th:href="@{/}"> <!-- 메인 페이지로 이동하는 링크 추가 -->
+        <img th:src="${groupHeaderImg}" alt="모임배경사진">
+    </a>
   </div>
-
-  <main class="main-container">
-    <!-- 왼쪽 사이드바 -->
-    <div class="sidebar">
-      <a href="#" class="sidebar-link">공지사항</a>
-      <a href="#" class="sidebar-link">일반 게시판</a>
-      <a href="#" class="sidebar-link">사진첩</a>
-      <a href="#" class="sidebar-link">일정</a>
-      <a href="#" class="sidebar-link">모임 관리페이지</a>
-      <a href="#" id="joinGroupBtn" class="sidebar-link">모임 가입신청</a>
+  
+    <!-- 모임 소개 -->
+    <div class="introduce-box">
+      <th:block th:each="introduce : ${introduces}">
+        <div th:text="${introduce}"></div>
     </div>
-
-    <!-- 모임 가입 신청 모달 -->
-    <div id="joinGroupModal" class="modal" style="display: none;">
-      <div class="modal-content">
-        <span class="close" id="closeModal">&times;</span>
-        <p id="modalMessage" th:text="${groupName} + '에 가입하시겠습니까?'">모임에 가입하시겠습니까?</p>
-        <button id="confirmJoin">가입</button>
-        <button id="cancelJoin">취소</button>
+  
+    <main class="main-container">
+      <!-- 왼쪽 사이드바 -->
+      <div class="sidebar">
+        <a href="#" class="sidebar-link">공지사항</a>
+        <a href="#" class="sidebar-link">일반 게시판</a>
+        <a href="#" class="sidebar-link">사진첩</a>
+        <a href="#" class="sidebar-link">일정</a>
+        <a href="#" class="sidebar-link">모임 관리페이지</a>
+        <a href="#" id="joinGroupBtn" class="sidebar-link">모임 가입신청</a>
       </div>
-    </div>
-
-    <!-- 컨텐츠 영역 -->
-    <section class="container-row">
-      <!-- 박스 레이아웃 -->
-      <section class="box-container">
-        <!-- 공지사항-->
-        <h3>공지사항</h3>
-        <div class="notice">
-          <table>
-            <thead>
-              <tr>
-
-              </tr>
-            </thead>
-            <tbody>
-              <tr th:each="board : ${boardList}">
-                <td>공지</td>
-                <td>
-                  <a th:href="@{/board/{groupNo}/{boardTypeCode}/{boardNo}(groupNo=${board.groupNo},boardTypeCode=${board.boardTypeCode},boardNo=${board.boardNo})}"
-                      th:text="${board.boardTitle}">제목</a>
-                </td>
-               <!--  <a th:href="@{/notice/{id}(id=${board.boardId})}" th:text="${board.boardTitle}">공지 제목</a> -->
-                <td th:text="${board.boardWriteDate}">날짜</td>
-              </tr>
-            </tbody>
-          </table>
-
+  
+      <!-- 모임 가입 신청 모달 -->
+      <div id="joinGroupModal" class="modal" style="display: none;">
+        <div class="modal-content">
+          <span class="close" id="closeModal">&times;</span>
+          <p id="modalMessage" th:text="${groupName} + '에 가입하시겠습니까?'">모임에 가입하시겠습니까?</p>
+          <button id="confirmJoin">가입</button>
+          <button id="cancelJoin">취소</button>
         </div>
-
-
-        <!-- 사진첩 -->
-
-
-        <!-- 사진첩 섹션 -->
-        <div class="photo-gallery">
-          <h3>사진첩</h3>
-
-          <div class="gallery-grid">
-
-            <th:block th:each="photo : ${photos}" th:object="${photo}">
-              <div class="photo-item">
-               <!--  <a th:href="@{/photo/{id}(id=${photo.boardImgNo})}"></a> -->
-                <img th:src="${photo.fileLocation}" th:alt="*{boardImgOriginalName}" class="gallery-photo">
-                <p th:text="*{boardImgOriginalName}">사진 제목</p>
+      </div>
+  
+      <!-- 컨텐츠 영역 -->
+      <section class="container-row">
+        <!-- 박스 레이아웃 -->
+        <section class="box-container">
+          <!-- 공지사항-->
+          <h3>공지사항</h3>
+          <div class="notice">
+            <table>
+              <thead>
+                <tr>
+  
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="board : ${boardList}">
+                  <td>공지</td>
+                  <td>
+                    <a th:href="@{/board/{groupNo}/{boardTypeCode}/{boardNo}(groupNo=${board.groupNo},boardTypeCode=${board.boardTypeCode},boardNo=${board.boardNo})}"
+                        th:text="${board.boardTitle}">제목</a>
+                  </td>
+                 <!--  <a th:href="@{/notice/{id}(id=${board.boardId})}" th:text="${board.boardTitle}">공지 제목</a> -->
+                  <td th:text="${board.boardWriteDate}">날짜</td>
+                </tr>
+              </tbody>
+            </table>
+  
+          </div>
+  
+  
+          <!-- 사진첩 -->
+  
+  
+          <!-- 사진첩 섹션 -->
+          <div class="photo-gallery">
+            <h3>사진첩</h3>
+  
+            <div class="gallery-grid">
+  
+              <th:block th:each="photo : ${photos}" th:object="${photo}">
+                <div class="photo-item">
+                 <!--  <a th:href="@{/photo/{id}(id=${photo.boardImgNo})}"></a> -->
+                  <img th:src="${photo.fileLocation}" th:alt="*{boardImgOriginalName}" class="gallery-photo">
+                  <!-- <p th:text="*{boardImgOriginalName}">사진 제목</p> -->
+                </div>
+  
+              </th:block>
+            </div>
+          </div>
+  
+          <!-- 
+              <div class="photo-box bg-white rounded-lg shadow p-4">
+                <div class="flex items-center justify-between mb-4">
+                    <button class="text-sm text-gray-500">더보기</button>
+                </div>
+            
+                <div class="grid grid-cols-2 gap-2">
+                    <div th:each="photo : ${photos}">
+                        <img th:src="@{'/' + ${photo.boardImgPath} + '/' + ${photo.boardImgRename}}"
+                             th:alt="${photo.boardImgOriginalName}"
+                             class="w-full h-32 object-cover rounded-lg" />
+                    </div>
+                </div>
+            </div> -->
+        </section>
+  
+        <!-- 모임일정 -->
+  
+        <section class="group-section">
+          <div class="schedule-box">
+            <th:block th:each="schedule : ${schedules}" th:object="${schedule}">
+              <div class="schedule-item">
+  <!--               <a th:href="@{/schedule/{id}(id=${schedule.scheduleId})}"> -->
+                <div class="item date">
+                   
+                  <span th:if="${schedule.dDay == 0}">D-day</span>
+                  <span th:unless="${schedule.dDay == 0}">D - <span th:text="${schedule.dDay}"></span></span>
+                </div>
+                <div class="item detail-date">상세 일시 : <span th:text="${schedule.scheduleDate}"></span></div>
+                <div class="item location">위치 : <span th:text="${schedule.location}"></span></div>
+                <div class="item cost">비용 : <span th:text="${schedule.cost}"></span></div>
+                <i class="fa-solid fa-users"></i>
+                <div class="item number"><span th:text="${schedule.memberCount}"></span>/50</div>
+  
               </div>
-
             </th:block>
           </div>
+        </section>
+  
         </div>
-
-        <!-- 
-            <div class="photo-box bg-white rounded-lg shadow p-4">
-              <div class="flex items-center justify-between mb-4">
-                  <button class="text-sm text-gray-500">더보기</button>
-              </div>
-          
-              <div class="grid grid-cols-2 gap-2">
-                  <div th:each="photo : ${photos}">
-                      <img th:src="@{'/' + ${photo.boardImgPath} + '/' + ${photo.boardImgRename}}"
-                           th:alt="${photo.boardImgOriginalName}"
-                           class="w-full h-32 object-cover rounded-lg" />
-                  </div>
-              </div>
-          </div> -->
+        
+        
+        
+        
       </section>
-
-      <!-- 모임일정 -->
-
-      <section class="group-section">
-        <div class="schedule-box">
-          <th:block th:each="schedule : ${schedules}" th:object="${schedule}">
-            <div class="schedule-item">
-<!--               <a th:href="@{/schedule/{id}(id=${schedule.scheduleId})}"> -->
-              <div class="item date">
-                 
-                <span th:if="${schedule.dDay == 0}">D-day</span>
-                <span th:unless="${schedule.dDay == 0}">D - <span th:text="${schedule.dDay}"></span></span>
-              </div>
-              <div class="item detail-date">상세 일시 : <span th:text="${schedule.scheduleDate}"></span></div>
-              <div class="item location">위치 : <span th:text="${schedule.location}"></span></div>
-              <div class="item cost">비용 : <span th:text="${schedule.cost}"></span></div>
-              <i class="fa-solid fa-users"></i>
-              <div class="item number"><span th:text="${schedule.memberCount}"></span>/50</div>
-
-            </div>
-          </th:block>
-        </div>
-      </section>
-
-      </div>
-
-
-
-
-    </section>
-
-  </main>
-
+      
+    </main>
+    <th:block th:replace= "~{common/footer}" ></th:block>
+</section>
+  
   <script th:inline="javascript">
     const groupNo = location.pathname.split("/")[2];
     const sidebarLinkArr = document.querySelectorAll(".sidebar-link");
@@ -185,7 +188,6 @@
   </script>
   <script src="/js/groupMain/groupNotice.js"></script>
 
-  <th:block th:replace= "~{common/footer}" ></th:block>
   <th:block th:replace= "~{common/common}" ></th:block>
 </body>
 
