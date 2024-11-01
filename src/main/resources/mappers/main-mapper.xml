@@ -142,7 +142,7 @@
 	        AND mg.MEMBER_GROUP_BAN = 'N'
 	        AND mg.MEMBER_GROUP_DEL_FL = 'N'
 	        
-		)	   WHERE ROWNUM &lt;= 9
+		)	   WHERE ROWNUM &lt;= 8
 	</select>
 
 

@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <a href="/groupMain/${group.groupNo}" class="categoryGroup-name" style="color: black; text-decoration: none;">
                         ${group.groupName}
                     </a>
-                    <div class="group-name">${group.groupIntroduce}</div>
+                    <div class="group-name2">${group.groupIntroduce}</div>
                     <div class="participants">
                         <i class="fa-solid fa-users"></i>
                         <div>${group.currentPopulation} / ${group.maxPopulation}</div>
