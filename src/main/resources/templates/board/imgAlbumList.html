@@ -11,7 +11,8 @@
 <body>
   <!-- Header -->
   <div class="header">
-    <img th:src="${groupHeaderImg}" alt="보드해더이미지" style="width: 99vw;">
+    <img th:with="groupHeaderDefault=#{groupHeader.default.image}"
+        th:src="${groupHeaderImg ?: groupHeaderDefault}" alt="모임배경사진">
   </div>
 
   <div class="container">
